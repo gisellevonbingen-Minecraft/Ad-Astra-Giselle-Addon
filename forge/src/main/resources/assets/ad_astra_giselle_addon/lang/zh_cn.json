@@ -1,0 +1,44 @@
+{
+
+  "itemGroup.ad_astra_giselle_addon_tab_main": "Ad Astra: 吉赛尔·Addon",
+  
+  "block.ad_astra_giselle_addon.fuel_loader": "燃油装载机",
+  
+  "module.ad_astra_giselle_addon.space_breathing_unit": "太空呼吸装置",
+  "description.ad_astra_giselle_addon.space_breathing_unit": "可以在地球之外的维度中呼吸\n在雨中，水时也会用氧气填充被保留的物品\n需要在物品栏中启用“氧气罐”",
+  "module.ad_astra_giselle_addon.space_fire_proof_unit": "空间防火装置",
+  "description.ad_astra_giselle_addon.space_fire_proof_unit": "不要在“超越地球”维度中放火烧玩家",
+  "module.ad_astra_giselle_addon.venus_acid_proof_unit": "维纳斯酸防化装置",
+  "description.ad_astra_giselle_addon.venus_acid_proof_unit": "不要在地球之外的维度中受到酸雨的破坏",
+  "module.ad_astra_giselle_addon.gravity_normalizing_unit": "重力发生单元",
+  "description.ad_astra_giselle_addon.gravity_normalizing_unit": "在“超越地球”维度中像主世界一样规范化重力",
+  "description.ad_astra_giselle_addon.instead_gravity_normalizing_unit": "可以使用代替重力发生单元",
+  
+  "item.ad_astra_giselle_addon.oxygen_can": "氧气罐",
+  
+  "description.ad_astra_giselle_addon.charge_mode": "充电模式",
+  
+  "enchantment.ad_astra_giselle_addon.space_breathing": "太空呼吸",
+  "enchantment.ad_astra_giselle_addon.space_breathing.desc": "可以在地球之外的维度中呼吸\n装订物品需要有能量存储\n需要在库存中启用“氧气罐”",
+  "enchantment.ad_astra_giselle_addon.gravity_normalizing": "重力发生",
+  "enchantment.ad_astra_giselle_addon.gravity_normalizing.desc": "在“超越地球”维度中像主世界一样对重力进行归一化\n附着物品需要有能量存储",
+  "enchantment.ad_astra_giselle_addon.space_fire_proof": "太空防火",
+  "enchantment.ad_astra_giselle_addon.space_fire_proof.desc": "不要放火烧超地球维度的玩家\n附魔物品需要有能量储存",
+  "enchantment.ad_astra_giselle_addon.venus_acid_proof": "维纳斯酸防护",
+  "enchantment.ad_astra_giselle_addon.venus_acid_proof.desc": "不要在“地球之外”维度中受到酸雨的伤害\n装魔物品需要有能量存储",
+  
+  "container.ad_astra_giselle_addon.fuel_loader": "燃油装载机",
+  
+  "gui.ad_astra_giselle_addon.workingarea.show": "显示",
+  "gui.ad_astra_giselle_addon.workingarea.hide": "隐藏",
+  
+  "chargemode.ad_astra_giselle_addon.none": "禁用",
+  "chargemode.ad_astra_giselle_addon.armors": "启用：所有护甲",
+  "chargemode.ad_astra_giselle_addon.all": "已启用：所有库存",
+  
+  
+  "jei.category.ad_astra_giselle_addon.fuel_loader": "燃油装载机",
+  "jei.info.ad_astra_giselle_addon.fuel_loader": "内部流体罐可以接收 '%2$s' \n将燃料提供给 'Rover' 或者 'Rockets' 在 %1$s 方块.",
+  
+  "_eof": "eof"
+}

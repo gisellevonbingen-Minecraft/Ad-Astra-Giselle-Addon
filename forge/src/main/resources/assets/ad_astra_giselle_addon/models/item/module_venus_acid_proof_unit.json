@@ -1,0 +1,6 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "ad_astra_giselle_addon:item/module_venus_acid_proof_unit"
+  }
+}

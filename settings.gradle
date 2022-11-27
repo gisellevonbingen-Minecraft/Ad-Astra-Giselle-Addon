@@ -1,0 +1,14 @@
+pluginManagement {
+    repositories {
+        maven { url "https://maven.fabricmc.net" }
+        maven { url "https://maven.minecraftforge.net" }
+        maven { url "https://maven.parchmentmc.org" }
+        gradlePluginPortal()
+        mavenCentral()
+    }
+}
+
+include("fabric")
+include("forge")
+
+rootProject.name = "ad-astra-giselle-addon"

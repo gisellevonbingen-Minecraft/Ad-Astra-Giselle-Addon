@@ -1,0 +1,30 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"result": {
+		"item": "minecraft:enchanted_book",
+		"nbt": {
+			"StoredEnchantments": [
+				{
+					"id": "ad_astra_giselle_addon:venus_acid_proof",
+					"lvl": 1
+				}
+			]
+		}
+	},
+	"pattern": [
+		"R#R",
+		"RBR",
+		"RRR"
+	],
+	"key": {
+		"B": {
+			"item": "minecraft:book"
+		},
+		"#": {
+			"tag": "forge:plates/calorite"
+		},
+		"R": {
+			"item": "ad_astra:venus_stone"
+		}
+	}
+}

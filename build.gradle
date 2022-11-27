@@ -1,0 +1,48 @@
+allprojects {
+    apply plugin: "java"
+    apply plugin: "maven-publish"
+
+    archivesBaseName = rootProject.archives_base_name
+    version = "${rootProject.mc_version}-${rootProject.mod_version}"
+    group = rootProject.maven_group
+
+	repositories {
+		maven {
+			name "JEI"
+			url "https://dvs1.progwml6.com/files/maven"
+		}
+		maven {
+			name "ModMaven"
+			url "https://modmaven.dev"
+		}
+		maven {
+			name "CurseForge"
+			url "https://www.cursemaven.com"
+		}
+		maven {
+			name "Terrarium"
+			url "https://maven.terraformersmc.com"
+		}
+		maven {
+			name "Team Resourceful"
+			url "https://nexus.resourcefulbees.com/repository/maven-public/"
+		}
+		maven {
+			name "shedaniel"
+			url "https://maven.shedaniel.me"
+		}
+		maven {
+			name "Local"
+			url uri("${projectDir}/libs")
+		}
+	}
+
+    tasks.withType(JavaCompile) {
+        options.encoding = "UTF-8"
+        options.release = 17
+    }
+
+    java {
+        withSourcesJar()
+    }
+}

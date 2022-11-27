@@ -1,0 +1,21 @@
+{
+	"type": "mekanism:crushing",
+	"conditions": [
+		{
+			"type": "forge:mod_loaded",
+			"modid": "mekanism"
+		},
+		{
+			"type": "forge:mod_loaded",
+			"modid": "ae2"
+		}
+	],
+	"input": {
+		"ingredient": {
+			"item": "ad_astra:sky_stone"
+		}
+	},
+	"output": {
+		"item": "ae2:sky_dust"
+	}
+}

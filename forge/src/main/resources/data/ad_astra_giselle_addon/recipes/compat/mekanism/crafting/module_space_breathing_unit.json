@@ -1,0 +1,31 @@
+{
+   "type":"minecraft:crafting_shaped",
+   "conditions":[
+      {
+         "type":"forge:item_exists",
+         "item":"ad_astra_giselle_addon:module_space_breathing_unit"
+      }
+   ],
+   "result":{
+      "item":"ad_astra_giselle_addon:module_space_breathing_unit"
+   },
+   "pattern":[
+      "I#I",
+      "IAI",
+      "PPP"
+   ],
+   "key":{
+      "I":{
+         "tag":"mekanism:alloys/infused"
+      },
+      "A":{
+         "item":"mekanism:module_base"
+      },
+      "#":{
+         "item":"ad_astra:space_suit"
+      },
+      "P":{
+         "item":"mekanism:hdpe_sheet"
+      }
+   }
+}

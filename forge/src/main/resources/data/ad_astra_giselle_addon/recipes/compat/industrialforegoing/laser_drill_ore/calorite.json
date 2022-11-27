@@ -1,0 +1,47 @@
+{
+	"type": "forge:conditional",
+	"conditions": [
+		{
+			"type": "forge:mod_loaded",
+			"modid": "industrialforegoing"
+		}
+	],
+	"recipes": [
+		{
+			"conditions": [
+				{
+					"value": {
+						"tag": "forge:raw_materials/calorite",
+						"type": "forge:tag_empty"
+					},
+					"type": "forge:not"
+				}
+			],
+			"recipe": {
+				"output": {
+					"tag": "forge:raw_materials/calorite"
+				},
+				"rarity": [
+					{
+						"whitelist": {
+							"type": "minecraft:worldgen/biome",
+							"values": [
+								"ad_astra:venus_desert",
+								"ad_astra:infernal_venus_barrens"
+							]
+						},
+						"blacklist": {},
+						"depth_min": 0,
+						"depth_max": 80,
+						"weight": 10
+					}
+				],
+				"pointer": 0,
+				"catalyst": {
+					"item": "industrialforegoing:laser_lens14"
+				},
+				"type": "industrialforegoing:laser_drill_ore"
+			}
+		}
+	]
+}

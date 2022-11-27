@@ -1,0 +1,59 @@
+{
+
+  "itemGroup.ad_astra_giselle_addon_tab_main": "Ad Astra: Giselle Addon",
+  
+  "block.ad_astra_giselle_addon.fuel_loader": "연료 적재기",
+  
+  "module.ad_astra_giselle_addon.space_breathing_unit": "우주 호흡 기구",
+  "description.ad_astra_giselle_addon.space_breathing_unit": "Ad Astra 차원에서 호흡할 수 있습니다\n비, 물속에서 들고있는 아이템에 산소를 충전합니다\n인벤토리에 활성화된 '산소 캔'이 필요합니다",
+  "module.ad_astra_giselle_addon.space_fire_proof_unit": "우주 내화성 기구",
+  "description.ad_astra_giselle_addon.space_fire_proof_unit": "Ad Astra 차원에서 불이 붙지 않습니다",
+  "module.ad_astra_giselle_addon.venus_acid_proof_unit": "우주 내산성 기구",
+  "description.ad_astra_giselle_addon.venus_acid_proof_unit": "Ad Astra 차원에서 산성비 피해를 입지 않습니다",
+  "module.ad_astra_giselle_addon.gravity_normalizing_unit": "중력 정규화 기구",
+  "description.ad_astra_giselle_addon.gravity_normalizing_unit": "Ad Astra 차원에서 중력을 오버월드 처럼 정규화합니다",
+  "description.ad_astra_giselle_addon.instead_gravity_normalizing_unit": "중력 정규화 기구를 대신할 수 있습니다",
+  
+  "item.ad_astra_giselle_addon.oxygen_can": "산소 캔",
+  
+  "description.ad_astra_giselle_addon.charge_mode": "충전 모드",
+  
+  "enchantment.ad_astra_giselle_addon.space_breathing": "우주 호흡성",
+  "enchantment.ad_astra_giselle_addon.space_breathing.desc": "Ad Astra 차원에서 호흡할 수 있습니다\n갑옷의 에너지 혹은 내구도를 소모합니다\n인벤토리에 활성화된 '산소 캔'이 필요합니다",
+  "enchantment.ad_astra_giselle_addon.gravity_normalizing": "중력 정규화",
+  "enchantment.ad_astra_giselle_addon.gravity_normalizing.desc": "Ad Astra 차원에서 중력을 오버월드 처럼 정규화합니다\n갑옷의 에너지 혹은 내구도를 소모합니다",
+  "enchantment.ad_astra_giselle_addon.space_fire_proof": "우주 내화성",
+  "enchantment.ad_astra_giselle_addon.space_fire_proof.desc": "Ad Astra 차원에서 불이 붙지 않습니다\n갑옷의 에너지 혹은 내구도를 소모합니다",
+  "enchantment.ad_astra_giselle_addon.venus_acid_proof": "우주 내산성",
+  "enchantment.ad_astra_giselle_addon.venus_acid_proof.desc": "Ad Astra 차원에서 산성비 피해를 입지 않습니다\n갑옷의 에너지 혹은 내구도를 소모합니다",
+  
+  "container.ad_astra_giselle_addon.fuel_loader": "연료 적재기",
+  
+  "gui.ad_astra_giselle_addon.workingarea.show": "표시",
+  "gui.ad_astra_giselle_addon.workingarea.hide": "숨김",
+  
+  "chargemode.ad_astra_giselle_addon.none": "비활성화",
+  "chargemode.ad_astra_giselle_addon.armors": "활성화: 모든 갑옷",
+  "chargemode.ad_astra_giselle_addon.all": "활성화: 인벤토리 전체",
+  
+  
+  "jei.category.ad_astra_giselle_addon.fuel_loader": "연료 적재기",
+  "jei.info.ad_astra_giselle_addon.fuel_loader": "%2$s 태그가 지정된 유체를 받을 수 있습니다\n%1$s 블럭 이내에 존재하는 '로버' 혹은 '로켓'에게 연료를 채웁니다",
+  
+  "item.ad_astra_giselle_addon.pneumatic_space_breathing_upgrade": "우주 호흡 업그레이드",
+  "item.ad_astra_giselle_addon.pneumatic_gravity_normalizing_upgrade": "중력 정규화 업그레이드",
+  "item.ad_astra_giselle_addon.pneumatic_space_fire_proof_upgrade": "우주 내화성 업그레이드",
+  "item.ad_astra_giselle_addon.pneumatic_venus_acid_proof_upgrade": "우주 내산성 업그레이드",
+  
+  "pneumaticcraft.armor.upgrade.ad_astra_giselle_addon.space_breathing" : "우주 호흡",
+  "pneumaticcraft.armor.upgrade.ad_astra_giselle_addon.gravity_normalizing" : "중력 정규화",
+  "pneumaticcraft.armor.upgrade.ad_astra_giselle_addon.space_fire_proof" : "우주 내화성",
+  "pneumaticcraft.armor.upgrade.ad_astra_giselle_addon.venus_acid_proof" : "우주 내산성",
+  
+  "pneumaticcraft.gui.tab.info.item.armor.generic.ad_astra_giselle_addon.space_breathingUpgrade": "Ad Astra 차원에서 호흡할 수 있습니다\n인벤토리에 활성화된 '산소 캔'이 필요합니다",
+  "pneumaticcraft.gui.tab.info.item.armor.generic.ad_astra_giselle_addon.gravity_normalizingUpgrade": "Ad Astra 차원에서 중력을 오버월드 처럼 정규화합니다",
+  "pneumaticcraft.gui.tab.info.item.armor.generic.ad_astra_giselle_addon.space_fire_proofUpgrade": "Ad Astra 차원에서 불이 붙지 않습니다",
+  "pneumaticcraft.gui.tab.info.item.armor.generic.ad_astra_giselle_addon.venus_acid_proofUpgrade": "Ad Astra 차원에서 산성비 피해를 입지 않습니다",
+  
+  "_eof": "eof"
+}

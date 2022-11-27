@@ -1,0 +1,43 @@
+{
+	"type": "forge:conditional",
+	"conditions": [
+		{
+			"type": "forge:mod_loaded",
+			"modid": "industrialforegoing"
+		}
+	],
+	"recipes": [
+		{
+			"conditions": [
+				{
+					"item": "ad_astra:moon_cheese_ore",
+					"type": "forge:item_exists"
+				}
+			],
+			"recipe": {
+				"output": {
+					"item": "ad_astra:moon_cheese_ore"
+				},
+				"rarity": [
+					{
+						"whitelist": {
+							"type": "minecraft:worldgen/biome",
+							"values": [
+								"ad_astra:moon_desert"
+							]
+						},
+						"blacklist": {},
+						"depth_min": 0,
+						"depth_max": 192,
+						"weight": 10
+					}
+				],
+				"pointer": 0,
+				"catalyst": {
+					"item": "industrialforegoing:laser_lens4"
+				},
+				"type": "industrialforegoing:laser_drill_ore"
+			}
+		}
+	]
+}

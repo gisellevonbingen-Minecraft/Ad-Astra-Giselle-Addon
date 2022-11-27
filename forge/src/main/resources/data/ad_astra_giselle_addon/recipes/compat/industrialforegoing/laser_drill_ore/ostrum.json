@@ -1,0 +1,48 @@
+{
+	"type": "forge:conditional",
+	"conditions": [
+		{
+			"type": "forge:mod_loaded",
+			"modid": "industrialforegoing"
+		}
+	],
+	"recipes": [
+		{
+			"conditions": [
+				{
+					"value": {
+						"tag": "forge:raw_materials/ostrum",
+						"type": "forge:tag_empty"
+					},
+					"type": "forge:not"
+				}
+			],
+			"recipe": {
+				"output": {
+					"tag": "forge:raw_materials/ostrum"
+				},
+				"rarity": [
+					{
+						"whitelist": {
+							"type": "minecraft:worldgen/biome",
+							"values": [
+								"ad_astra:mars_desert",
+								"ad_astra:mars_rocky_plains",
+								"ad_astra:mars_ice_spikes"
+							]
+						},
+						"blacklist": {},
+						"depth_min": 0,
+						"depth_max": 80,
+						"weight": 10
+					}
+				],
+				"pointer": 0,
+				"catalyst": {
+					"item": "industrialforegoing:laser_lens10"
+				},
+				"type": "industrialforegoing:laser_drill_ore"
+			}
+		}
+	]
+}

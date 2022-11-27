@@ -1,0 +1,19 @@
+{
+   "type":"minecraft:crafting_shaped",
+   "result":{
+      "item":"ad_astra_giselle_addon:oxygen_can"
+   },
+   "pattern":[
+      " R ",
+      "P P",
+      "PPP"
+   ],
+   "key":{
+      "R":{
+         "tag":"forge:rods/iron"
+      },
+      "P":{
+         "tag":"forge:plates/iron"
+      }
+   }
+} 

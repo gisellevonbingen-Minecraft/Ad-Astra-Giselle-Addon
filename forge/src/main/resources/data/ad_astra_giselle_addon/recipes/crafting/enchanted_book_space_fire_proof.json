@@ -1,0 +1,30 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"result": {
+		"item": "minecraft:enchanted_book",
+		"nbt": {
+			"StoredEnchantments": [
+				{
+					"id": "ad_astra_giselle_addon:space_fire_proof",
+					"lvl": 1
+				}
+			]
+		}
+	},
+	"pattern": [
+		"R#R",
+		"RBR",
+		"RRR"
+	],
+	"key": {
+		"B": {
+			"item": "minecraft:book"
+		},
+		"#": {
+			"tag": "forge:plates/ostrum"
+		},
+		"R": {
+			"item": "ad_astra:mercury_stone"
+		}
+	}
+}

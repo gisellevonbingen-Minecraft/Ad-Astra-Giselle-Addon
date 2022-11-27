@@ -1,0 +1,31 @@
+{
+   "type":"minecraft:crafting_shaped",
+   "conditions":[
+      {
+         "type":"forge:item_exists",
+         "item":"ad_astra_giselle_addon:module_space_fire_proof_unit"
+      }
+   ],
+   "result":{
+      "item":"ad_astra_giselle_addon:module_space_fire_proof_unit"
+   },
+   "pattern":[
+      "I#I",
+      "IAI",
+      "PPP"
+   ],
+   "key":{
+      "I":{
+         "tag":"mekanism:alloys/reinforced"
+      },
+      "A":{
+         "item":"mekanism:module_base"
+      },
+      "#":{
+         "tag":"forge:plates/ostrum"
+      },
+      "P":{
+         "tag":"forge:pellets/polonium"
+      }
+   }
+}
