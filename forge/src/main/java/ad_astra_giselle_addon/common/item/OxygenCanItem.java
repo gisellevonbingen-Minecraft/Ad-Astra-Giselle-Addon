@@ -3,7 +3,7 @@ package ad_astra_giselle_addon.common.item;
 import java.util.List;
 import java.util.function.BiPredicate;
 
-import ad_astra_giselle_addon.common.config.AddonConfigs;
+import ad_astra_giselle_addon.common.config.ItemsConfig;
 import ad_astra_giselle_addon.common.content.oxygen.ChargeMode;
 import ad_astra_giselle_addon.common.content.oxygen.IChargeMode;
 import ad_astra_giselle_addon.common.content.oxygen.IOxygenCharger;
@@ -46,7 +46,7 @@ public class OxygenCanItem extends Item implements FluidContainingItem, IOxygenC
 	@Override
 	public long getTankSize()
 	{
-		return AddonConfigs.Common.items.oxygenCan_OxygenCapacity.get();
+		return ItemsConfig.OXYGEN_CAN_FLUID_CAPACITY;
 	}
 
 	@Override
@@ -186,7 +186,7 @@ public class OxygenCanItem extends Item implements FluidContainingItem, IOxygenC
 			@Override
 			public long getTransferAmount()
 			{
-				return AddonConfigs.Common.items.oxygenCan_OxygenTransfer.get();
+				return ItemsConfig.OXYGEN_CAN_FLUID_TRANSFER;
 			}
 
 			@Override

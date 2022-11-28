@@ -1,19 +1,25 @@
 package ad_astra_giselle_addon.common.config;
 
-import org.apache.commons.lang3.tuple.Pair;
+import com.teamresourceful.resourcefulconfig.common.annotations.Config;
+import com.teamresourceful.resourcefulconfig.common.annotations.InlineCategory;
 
-import net.minecraftforge.common.ForgeConfigSpec;
+import ad_astra_giselle_addon.common.AdAstraGiselleAddon;
 
-public class AddonConfigs
+@Config(AddonConfigs.ID)
+public final class AddonConfigs
 {
-	public static final CommonConfig Common;
-	public static final ForgeConfigSpec CommonSpec;
+	public static final String ID = AdAstraGiselleAddon.MOD_ID;
+	public static final String PREFIX = "config." + ID;
 
-	static
-	{
-		Pair<CommonConfig, ForgeConfigSpec> common = new ForgeConfigSpec.Builder().configure(CommonConfig::new);
-		Common = common.getLeft();
-		CommonSpec = common.getRight();
-	}
+	@InlineCategory
+	public static ItemsConfig ITEMS;
 
+	@InlineCategory
+	public static MachinesConfig MACHINES;
+
+	@InlineCategory
+	public static EnchantmentsConfig ENCHANTMENTS;
+
+	@InlineCategory
+	public static CompatsConfig COMPATS;
 }

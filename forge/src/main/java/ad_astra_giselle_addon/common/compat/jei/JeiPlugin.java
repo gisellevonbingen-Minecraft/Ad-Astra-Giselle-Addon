@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 import ad_astra_giselle_addon.common.AdAstraGiselleAddon;
-import ad_astra_giselle_addon.common.config.AddonConfigs;
+import ad_astra_giselle_addon.common.config.MachinesConfig;
 import ad_astra_giselle_addon.common.registries.AddonBlocks;
 import earth.terrarium.ad_astra.client.screens.GuiUtil;
 import earth.terrarium.ad_astra.registry.ModTags;
@@ -121,7 +121,7 @@ public class JeiPlugin implements IModPlugin
 			recipeCategory.registerRecipes(registration);
 		}
 
-		this.addIngredientInfo(registration, AddonBlocks.FUEL_LOADER.get(), AddonConfigs.Common.machines.fuelLoader_range.get(), ModTags.FUELS.location());
+		this.addIngredientInfo(registration, AddonBlocks.FUEL_LOADER.get(), MachinesConfig.FUEL_LOADER_WORKING_RANGE, ModTags.FUELS.location());
 	}
 
 	public void addIngredientInfo(IRecipeRegistration registration, ItemLike itemLike, Object... objects)
