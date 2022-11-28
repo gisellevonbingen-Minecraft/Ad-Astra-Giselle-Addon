@@ -8,7 +8,6 @@ import ad_astra_giselle_addon.common.compat.CompatibleManager;
 import ad_astra_giselle_addon.common.config.AddonConfigs;
 import ad_astra_giselle_addon.common.content.oxygen.EventListenerOxygenCharger;
 import ad_astra_giselle_addon.common.content.proof.ProofAbstractUtils;
-import ad_astra_giselle_addon.common.item.crafting.TagPreference;
 import ad_astra_giselle_addon.common.network.AddonNetwork;
 import ad_astra_giselle_addon.common.registries.AddonBlockEntityTypes;
 import ad_astra_giselle_addon.common.registries.AddonBlocks;
@@ -61,7 +60,6 @@ public class AdAstraGiselleAddon
 		forge_bus.register(EventListenerOxygenCharger.class);
 
 		ProofAbstractUtils.register(forge_bus);
-		TagPreference.register(forge_bus);
 	}
 
 	public static ResourceLocation rl(String path)
