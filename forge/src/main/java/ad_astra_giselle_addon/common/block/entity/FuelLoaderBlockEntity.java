@@ -93,7 +93,7 @@ public class FuelLoaderBlockEntity extends AbstractMachineBlockEntity implements
 
 			if (slot == this.getSlotFluidSource())
 			{
-				return !FluidHooks2.extractFluid(itemFluidHandler, FluidPredicates::isFuel, 1, true).isEmpty();
+				return !FluidHooks2.extractFluid(itemFluidHandler, FluidPredicates::isFuel, Integer.MAX_VALUE, true).isEmpty();
 			}
 			else if (slot == this.getSlotFluidSink())
 			{
@@ -114,7 +114,7 @@ public class FuelLoaderBlockEntity extends AbstractMachineBlockEntity implements
 
 			if (slot == this.getSlotFluidSource())
 			{
-				return FluidHooks2.extractFluid(itemFluidHandler, FluidPredicates::isFuel, 1, true).isEmpty();
+				return FluidHooks2.extractFluid(itemFluidHandler, FluidPredicates::isFuel, Integer.MAX_VALUE, true).isEmpty();
 			}
 			else if (slot == this.getSlotFluidSink())
 			{
