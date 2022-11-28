@@ -10,7 +10,7 @@ import ad_astra_giselle_addon.common.fluid.FluidPredicates;
 import ad_astra_giselle_addon.common.fluid.UniveralFluidHandler;
 import ad_astra_giselle_addon.common.item.ItemStackConsumers;
 import ad_astra_giselle_addon.common.item.ItemStackReference;
-import ad_astra_giselle_addon.common.menu.FuelLoaderContainerMenu;
+import ad_astra_giselle_addon.common.menu.FuelLoaderMenu;
 import ad_astra_giselle_addon.common.registries.AddonBlockEntityTypes;
 import earth.terrarium.ad_astra.blocks.machines.entity.AbstractMachineBlockEntity;
 import earth.terrarium.ad_astra.entities.vehicles.Vehicle;
@@ -56,10 +56,20 @@ public class FuelLoaderBlockEntity extends AbstractMachineBlockEntity implements
 	{
 		if (this.fluidTank == null)
 		{
-			this.fluidTank = new SimpleUpdatingFluidContainer(this, tank -> (long) AddonConfigs.Common.machines.fuelLoader_capacity.get(), 1, FluidPredicates::isFuel);
+			return this.fluidTank = new SimpleUpdatingFluidContainer(this, tank -> (long) AddonConfigs.Common.machines.fuelLoader_capacity.get(), 1, FluidPredicates::isFuel);
+		}
+		else
+		{
+			return this.fluidTank;
 		}
 
-		return this.fluidTank;
+	}
+
+	@Override
+	public void update()
+	{
+		this.setChanged();
+		this.getLevel().sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), Block.UPDATE_ALL);
 	}
 
 	@Override
@@ -69,9 +79,15 @@ public class FuelLoaderBlockEntity extends AbstractMachineBlockEntity implements
 	}
 
 	@Override
-	public boolean canPlaceItemThroughFace(int slot, ItemStack stack, Direction dir)
+	public boolean canPlaceItem(int slot, ItemStack stack)
 	{
-		if (FluidHooks.isFluidContainingItem(stack) == true)
+		return this.canPlaceItemThroughFace(slot, stack, null);
+	}
+
+	@Override
+	public boolean canPlaceItemThroughFace(int slot, ItemStack stack, @Nullable Direction dir)
+	{
+		if (FluidHooks.isFluidContainingItem(stack))
 		{
 			UniveralFluidHandler itemFluidHandler = UniveralFluidHandler.from(new ItemStackHolder(stack));
 
@@ -90,9 +106,9 @@ public class FuelLoaderBlockEntity extends AbstractMachineBlockEntity implements
 	}
 
 	@Override
-	public boolean canTakeItemThroughFace(int slot, ItemStack stack, Direction dir)
+	public boolean canTakeItemThroughFace(int slot, ItemStack stack, @Nullable Direction dir)
 	{
-		if (FluidHooks.isFluidContainingItem(stack) == true)
+		if (FluidHooks.isFluidContainingItem(stack))
 		{
 			UniveralFluidHandler itemFluidHandler = UniveralFluidHandler.from(new ItemStackHolder(stack));
 
@@ -114,7 +130,7 @@ public class FuelLoaderBlockEntity extends AbstractMachineBlockEntity implements
 	@Nullable
 	public AbstractContainerMenu createMenu(int windowId, Inventory inv, Player player)
 	{
-		return new FuelLoaderContainerMenu(windowId, inv, this);
+		return new FuelLoaderMenu(windowId, inv, this);
 	}
 
 	@Override
@@ -122,7 +138,7 @@ public class FuelLoaderBlockEntity extends AbstractMachineBlockEntity implements
 	{
 		Level level = this.getLevel();
 
-		if (level.isClientSide() == false)
+		if (!level.isClientSide())
 		{
 			this.processTank();
 			boolean worked = this.exchangeFuelItemAround();
@@ -158,7 +174,7 @@ public class FuelLoaderBlockEntity extends AbstractMachineBlockEntity implements
 
 		for (Vehicle vehicle : vehicles)
 		{
-			if (this.giveFuel(vehicle) == true)
+			if (this.giveFuel(vehicle))
 			{
 				worked = true;
 			}
@@ -256,13 +272,6 @@ public class FuelLoaderBlockEntity extends AbstractMachineBlockEntity implements
 	public int getSlotFluidSink()
 	{
 		return this.getSlotFluidStart() + SLOT_FLUID_SINK;
-	}
-
-	@Override
-	public void update()
-	{
-		this.setChanged();
-		this.getLevel().sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), Block.UPDATE_ALL);
 	}
 
 }

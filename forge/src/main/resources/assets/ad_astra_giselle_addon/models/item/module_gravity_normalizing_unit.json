@@ -1,6 +1,0 @@
-{
-  "parent": "item/generated",
-  "textures": {
-    "layer0": "ad_astra_giselle_addon:item/module_gravity_normalizing_unit"
-  }
-}

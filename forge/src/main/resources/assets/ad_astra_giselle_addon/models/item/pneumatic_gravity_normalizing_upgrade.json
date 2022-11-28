@@ -1,7 +1,0 @@
-{
-   "textures" : {
-      "layer0" : "pneumaticcraft:item/upgrades/upgrade_layer0",
-      "layer1" : "ad_astra_giselle_addon:item/pneumatic_gravity_normalizing_upgrade"
-   },
-   "parent" : "item/generated"
-}

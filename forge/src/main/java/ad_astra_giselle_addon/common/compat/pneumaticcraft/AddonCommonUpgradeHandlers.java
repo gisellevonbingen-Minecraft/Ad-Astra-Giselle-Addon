@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.function.Function;
 
 import ad_astra_giselle_addon.common.AdAstraGiselleAddon;
-import ad_astra_giselle_addon.common.compat.pneumaticcraft.pneumatic_armor.handlers.GravityNormalizingCommonHandler;
 import ad_astra_giselle_addon.common.compat.pneumaticcraft.pneumatic_armor.handlers.SpaceBreathingCommonHandler;
 import ad_astra_giselle_addon.common.compat.pneumaticcraft.pneumatic_armor.handlers.SpaceFireProofCommonHandler;
 import ad_astra_giselle_addon.common.compat.pneumaticcraft.pneumatic_armor.handlers.VenusAcidProofCommonHandler;
@@ -20,7 +19,6 @@ public class AddonCommonUpgradeHandlers
 	private static final List<IArmorUpgradeHandler<?>> READONLY_LIST = Collections.unmodifiableList(HANDLERS);
 
 	public static final SpaceBreathingCommonHandler SPACE_BREATHING = register("space_breathing", SpaceBreathingCommonHandler::new);
-	public static final GravityNormalizingCommonHandler GRAVITY_NORMALIZING = register("gravity_normalizing", GravityNormalizingCommonHandler::new);
 	public static final SpaceFireProofCommonHandler SPACE_FIRE_PROOF = register("space_fire_proof", SpaceFireProofCommonHandler::new);
 	public static final VenusAcidProofCommonHandler VENUS_ACID_PROOF = register("venus_acid_proof", VenusAcidProofCommonHandler::new);
 

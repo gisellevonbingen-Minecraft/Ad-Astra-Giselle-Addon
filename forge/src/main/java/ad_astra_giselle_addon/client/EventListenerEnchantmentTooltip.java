@@ -28,7 +28,7 @@ public class EventListenerEnchantmentTooltip
 
 	public static boolean tooltipEnabled()
 	{
-		if (tooltipEnabeldCached == true)
+		if (tooltipEnabeldCached)
 		{
 			return tooltipEnabled;
 		}
@@ -43,9 +43,9 @@ public class EventListenerEnchantmentTooltip
 
 	public static void addDescriptionMod(String modid)
 	{
-		if (DESCRIPTION_MODS.add(modid) == true)
+		if (DESCRIPTION_MODS.add(modid))
 		{
-			tooltipEnabled = tooltipEnabled() == true && ModList.get().isLoaded(modid) == false;
+			tooltipEnabled = tooltipEnabled() && !ModList.get().isLoaded(modid);
 		}
 
 	}
@@ -54,7 +54,7 @@ public class EventListenerEnchantmentTooltip
 	{
 		for (String mod : DESCRIPTION_MODS)
 		{
-			if (ModList.get().isLoaded(mod) == true)
+			if (ModList.get().isLoaded(mod))
 			{
 				return true;
 			}
@@ -76,7 +76,7 @@ public class EventListenerEnchantmentTooltip
 
 		if (itemstack.getItem() instanceof EnchantedBookItem)
 		{
-			if (tooltipEnabled() == false)
+			if (!tooltipEnabled())
 			{
 				return;
 			}
@@ -89,7 +89,7 @@ public class EventListenerEnchantmentTooltip
 				{
 					if (line.getContents() instanceof TranslatableContents contents)
 					{
-						if (contents.getKey().equals(enchantment.getDescriptionId()) == true)
+						if (contents.getKey().equals(enchantment.getDescriptionId()))
 						{
 							lines.add(lines.indexOf(line) + 1, EnchantmentHelper2.getDescriptionText(enchantment));
 							break;

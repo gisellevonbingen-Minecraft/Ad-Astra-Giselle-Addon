@@ -5,8 +5,8 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import ad_astra_giselle_addon.common.content.oxygen.OxygenChargerUtils;
 import ad_astra_giselle_addon.common.registries.AddonItems;
 import ad_astra_giselle_addon.common.util.TranslationUtils;
-import earth.terrarium.ad_astra.AdAstra;
 import earth.terrarium.ad_astra.client.screens.PlayerOverlayScreen;
+import earth.terrarium.ad_astra.config.AdAstraConfig;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -25,12 +25,12 @@ public class OxygenCanOverlay implements IGuiOverlay
 		Minecraft minecraft = Minecraft.getInstance();
 		Player player = minecraft.player;
 
-		if (player.isSpectator() == true)
+		if (player.isSpectator())
 		{
 			return;
 		}
 
-		if (PlayerOverlayScreen.shouldRenderOxygen == true && minecraft.options.renderDebug == false)
+		if (PlayerOverlayScreen.shouldRenderOxygen && !minecraft.options.renderDebug)
 		{
 			OxygenChargerUtils.getInventoryStorageRatio(player).ifPresent(ratio ->
 			{
@@ -39,8 +39,8 @@ public class OxygenCanOverlay implements IGuiOverlay
 				int textureWidth = 62;
 				int textureHeight = 52;
 				int width = font.width(component);
-				float x = 5 + AdAstra.CONFIG.general.oxygenBarXOffset + (textureWidth - width) / 2.0F;
-				float y = 25 + AdAstra.CONFIG.general.oxygenBarYOffset + textureHeight + font.lineHeight + 3;
+				float x = 5 + AdAstraConfig.oxygenBarXOffset + (textureWidth - width) / 2.0F;
+				float y = 25 + AdAstraConfig.oxygenBarYOffset + textureHeight + font.lineHeight + 3;
 				font.drawShadow(poseStack, component, Math.max(x, 0), y, 0xFFFFFF);
 			});
 

@@ -10,9 +10,6 @@
   "description.ad_astra_giselle_addon.space_fire_proof_unit": "不要在“超越地球”维度中放火烧玩家",
   "module.ad_astra_giselle_addon.venus_acid_proof_unit": "维纳斯酸防化装置",
   "description.ad_astra_giselle_addon.venus_acid_proof_unit": "不要在地球之外的维度中受到酸雨的破坏",
-  "module.ad_astra_giselle_addon.gravity_normalizing_unit": "重力发生单元",
-  "description.ad_astra_giselle_addon.gravity_normalizing_unit": "在“超越地球”维度中像主世界一样规范化重力",
-  "description.ad_astra_giselle_addon.instead_gravity_normalizing_unit": "可以使用代替重力发生单元",
   
   "item.ad_astra_giselle_addon.oxygen_can": "氧气罐",
   
@@ -20,8 +17,6 @@
   
   "enchantment.ad_astra_giselle_addon.space_breathing": "太空呼吸",
   "enchantment.ad_astra_giselle_addon.space_breathing.desc": "可以在地球之外的维度中呼吸\n装订物品需要有能量存储\n需要在库存中启用“氧气罐”",
-  "enchantment.ad_astra_giselle_addon.gravity_normalizing": "重力发生",
-  "enchantment.ad_astra_giselle_addon.gravity_normalizing.desc": "在“超越地球”维度中像主世界一样对重力进行归一化\n附着物品需要有能量存储",
   "enchantment.ad_astra_giselle_addon.space_fire_proof": "太空防火",
   "enchantment.ad_astra_giselle_addon.space_fire_proof.desc": "不要放火烧超地球维度的玩家\n附魔物品需要有能量储存",
   "enchantment.ad_astra_giselle_addon.venus_acid_proof": "维纳斯酸防护",

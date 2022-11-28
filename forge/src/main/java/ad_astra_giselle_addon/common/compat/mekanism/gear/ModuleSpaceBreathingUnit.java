@@ -62,7 +62,7 @@ public class ModuleSpaceBreathingUnit implements ICustomModule<ModuleSpaceBreath
 	 */
 	public int provideOxygen(IModule<ModuleSpaceBreathingUnit> module, LivingEntity entity)
 	{
-		if (this.useResources(module, entity) == true)
+		if (this.useResources(module, entity))
 		{
 			return this.getOxygenDuration();
 		}
@@ -106,7 +106,7 @@ public class ModuleSpaceBreathingUnit implements ICustomModule<ModuleSpaceBreath
 		long oxygenUsed = productionRateFirst - productionRate;
 		FloatingLong multiply = energyUsing.multiply(oxygenUsed);
 
-		if (player.getLevel().isClientSide() == false)
+		if (!player.getLevel().isClientSide())
 		{
 			module.useEnergy(player, multiply);
 		}

@@ -5,6 +5,7 @@ import javax.annotation.Nonnull;
 import ad_astra_giselle_addon.common.config.AddonConfigs;
 import ad_astra_giselle_addon.common.content.oxygen.IOxygenCharger;
 import ad_astra_giselle_addon.common.content.oxygen.OxygenChargerUtils;
+import ad_astra_giselle_addon.common.content.proof.LivingSpaceFireProofEvent;
 import ad_astra_giselle_addon.common.content.proof.LivingSpaceOxygenProofEvent;
 import ad_astra_giselle_addon.common.content.proof.LivingVenusAcidProofEvent;
 import ad_astra_giselle_addon.common.fluid.FluidHooks2;
@@ -25,7 +26,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 public class PneumaticCraftEventHandler
 {
 	@SubscribeEvent
-	public static void onLivingSpaceOxygenProofEvent(LivingSpaceOxygenProofEvent e)
+	public static void onLivingSpaceOxygenProof(LivingSpaceOxygenProofEvent e)
 	{
 		LivingEntity entity = e.getEntity();
 
@@ -66,7 +67,19 @@ public class PneumaticCraftEventHandler
 	}
 
 	@SubscribeEvent
-	public static void onLivingSetVenusRain(LivingVenusAcidProofEvent e)
+	public static void onLivingSpaceFireProof(LivingSpaceFireProofEvent e)
+	{
+		boolean cancelled = tryCancel(e, AddonCommonUpgradeHandlers.SPACE_FIRE_PROOF, AddonConfigs.Common.pneumaticcraft.upgrade_space_fire_proof_airUsing.get());
+
+		if (cancelled)
+		{
+			e.setProofDuration(1);
+		}
+
+	}
+
+	@SubscribeEvent
+	public static void onLivingVenusAcidProof(LivingVenusAcidProofEvent e)
 	{
 		boolean cancelled = tryCancel(e, AddonCommonUpgradeHandlers.VENUS_ACID_PROOF, AddonConfigs.Common.pneumaticcraft.upgrade_venus_acid_proof_airUsing.get());
 

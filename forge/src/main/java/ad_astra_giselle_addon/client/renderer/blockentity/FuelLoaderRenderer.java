@@ -26,7 +26,7 @@ public class FuelLoaderRenderer implements BlockEntityRenderer<FuelLoaderBlockEn
 	@Override
 	public void render(FuelLoaderBlockEntity blockEntity, float partialTick, PoseStack stack, MultiBufferSource renderer, int light, int overlayLight)
 	{
-		if (blockEntity.isWorkingAreaVisible() == true)
+		if (blockEntity.isWorkingAreaVisible())
 		{
 			int rl = 78;
 			int gl = 197;

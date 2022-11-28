@@ -26,7 +26,7 @@ public class MekanismCommand
 		ServerPlayer player = source.getPlayerOrException();
 
 		player.setItemSlot(EquipmentSlot.HEAD, makeFull(MekanismItems.MEKASUIT_HELMET.get(), AddonMekanismModules.SPACE_BREATHING_UNIT));
-		player.setItemSlot(EquipmentSlot.CHEST, makeFull(MekanismItems.MEKASUIT_BODYARMOR.get(), AddonMekanismModules.VENUS_ACID_PROOF_UNIT));
+		player.setItemSlot(EquipmentSlot.CHEST, makeFull(MekanismItems.MEKASUIT_BODYARMOR.get(), AddonMekanismModules.SPACE_FIRE_PROOF_UNIT, AddonMekanismModules.VENUS_ACID_PROOF_UNIT));
 		player.setItemSlot(EquipmentSlot.LEGS, makeFull(MekanismItems.MEKASUIT_PANTS.get()));
 		player.setItemSlot(EquipmentSlot.FEET, makeFull(MekanismItems.MEKASUIT_BOOTS.get()));
 

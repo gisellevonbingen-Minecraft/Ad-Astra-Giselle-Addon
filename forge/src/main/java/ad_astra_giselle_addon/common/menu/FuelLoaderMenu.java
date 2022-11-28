@@ -11,10 +11,11 @@ import earth.terrarium.ad_astra.screen.menu.AbstractMachineMenu;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
 
-public class FuelLoaderContainerMenu extends AbstractMachineMenu<FuelLoaderBlockEntity>
+public class FuelLoaderMenu extends AbstractMachineMenu<FuelLoaderBlockEntity>
 {
-	public FuelLoaderContainerMenu(int windowId, Inventory inv, FuelLoaderBlockEntity blockEntity)
+	public FuelLoaderMenu(int windowId, Inventory inv, FuelLoaderBlockEntity blockEntity)
 	{
 		super(AddonMenuTypes.FUEL_LOADER.get(), windowId, inv, blockEntity, getSlots(blockEntity));
 	}
@@ -25,7 +26,14 @@ public class FuelLoaderContainerMenu extends AbstractMachineMenu<FuelLoaderBlock
 
 		for (int i = blockEntity.getSlotFluidStart(); i < blockEntity.getSlotFluidEnd(); i++)
 		{
-			list.add(new Slot(blockEntity, i, 95, 28 + 30 * i));
+			list.add(new Slot(blockEntity, i, 95, 28 + 30 * i)
+			{
+				@Override
+				public boolean mayPlace(ItemStack pStack)
+				{
+					return blockEntity.canPlaceItem(this.index, pStack);
+				}
+			});
 		}
 
 		return list.toArray(new Slot[0]);

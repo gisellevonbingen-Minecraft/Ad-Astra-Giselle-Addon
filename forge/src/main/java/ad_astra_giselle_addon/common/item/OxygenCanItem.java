@@ -60,7 +60,7 @@ public class OxygenCanItem extends Item implements FluidContainingItem, IOxygenC
 	{
 		super.fillItemCategory(group, list);
 
-		if (this.allowedIn(group) == true)
+		if (this.allowedIn(group))
 		{
 			ItemStackHolder full = new ItemStackHolder(new ItemStack(this));
 			IOxygenCharger oxygenCharger = OxygenChargerUtils.get(full);
@@ -84,7 +84,7 @@ public class OxygenCanItem extends Item implements FluidContainingItem, IOxygenC
 
 		if (oxygenCharger != null && oxygenCharger.getChargeMode() != ChargeMode.NONE)
 		{
-			if (FluidHooks2.extractFluid(oxygenCharger.getFluidHandler(), FluidPredicates::isOxygen, 1L, true).isEmpty() == false)
+			if (!FluidHooks2.extractFluid(oxygenCharger.getFluidHandler(), FluidPredicates::isOxygen, 1L, true).isEmpty())
 			{
 				return true;
 			}
@@ -107,7 +107,7 @@ public class OxygenCanItem extends Item implements FluidContainingItem, IOxygenC
 		ItemStackReference holder = new ItemStackReference(item, ItemStackConsumers.hand(hand, player::setItemInHand));
 		IOxygenCharger oxygenCharger = OxygenChargerUtils.get(holder);
 
-		if (oxygenCharger != null && player.isShiftKeyDown() == false)
+		if (oxygenCharger != null && !player.isShiftKeyDown())
 		{
 			IChargeMode chargeMode = oxygenCharger.getChargeMode();
 			List<IChargeMode> modes = oxygenCharger.getAvailableChargeModes();

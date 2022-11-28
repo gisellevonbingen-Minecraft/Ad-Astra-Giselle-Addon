@@ -111,7 +111,7 @@ dependencies {
     implementation fg.deobf("curse.maven:curios-635042:${ad_astra_file}")
     implementation fg.deobf("earth.terrarium:botarium-forge-${mc_version}:${botarium_version}")
     implementation fg.deobf("com.teamresourceful.resourcefullib:resourcefullib-forge-${mc_version}:${resourcefullib_version}")
-    implementation fg.deobf("me.shedaniel.cloth:cloth-config-forge:${cloth_config_version}")
+    implementation fg.deobf("com.teamresourceful.resourcefulconfig:resourcefulconfig-forge-${mc_version}:${resourcefulconfig_version}")
 
     // Ad Astra - Optional
     implementation fg.deobf("mezz.jei:jei-${mc_version}-forge:${jei_version}")

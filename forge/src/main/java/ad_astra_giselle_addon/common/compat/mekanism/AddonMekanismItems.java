@@ -13,7 +13,6 @@ public class AddonMekanismItems
 	public static final ItemDeferredRegister ITEMS = new ItemDeferredRegister(AdAstraGiselleAddon.MOD_ID);
 
 	public static final ItemRegistryObject<ItemModule> SPACE_BREATHING_UNIT = registerModule(ITEMS, AddonMekanismModules.SPACE_BREATHING_UNIT);
-	public static final ItemRegistryObject<ItemModule> GRAVITY_NORMALIZING_UNIT = registerModule(ITEMS, AddonMekanismModules.GRAVITY_NORMALIZING_UNIT);
 	public static final ItemRegistryObject<ItemModule> SPACE_FIRE_PROOF_UNIT = registerModule(ITEMS, AddonMekanismModules.SPACE_FIRE_PROOF_UNIT);
 	public static final ItemRegistryObject<ItemModule> VENUS_ACID_PROOF_UNIT = registerModule(ITEMS, AddonMekanismModules.VENUS_ACID_PROOF_UNIT);
 

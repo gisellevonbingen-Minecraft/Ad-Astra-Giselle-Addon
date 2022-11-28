@@ -15,7 +15,6 @@ import ad_astra_giselle_addon.common.registries.AddonBlocks;
 import ad_astra_giselle_addon.common.registries.AddonEnchantments;
 import ad_astra_giselle_addon.common.registries.AddonItems;
 import ad_astra_giselle_addon.common.registries.AddonMenuTypes;
-import earth.terrarium.ad_astra.AdAstra;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
@@ -29,7 +28,6 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 @Mod(AdAstraGiselleAddon.MOD_ID)
 public class AdAstraGiselleAddon
 {
-	public static final String PMODID = AdAstra.MOD_ID;
 	public static final String MOD_ID = "ad_astra_giselle_addon";
 	public static final Logger LOGGER = LogManager.getLogger();
 
@@ -79,16 +77,6 @@ public class AdAstraGiselleAddon
 	public static String tl(String category, ResourceLocation rl)
 	{
 		return category + "." + rl.getNamespace() + "." + rl.getPath();
-	}
-
-	public static String tl(String category, ResourceLocation rl, String path)
-	{
-		return tl(category, rl) + "." + path;
-	}
-
-	public static ResourceLocation prl(String path)
-	{
-		return new ResourceLocation(PMODID, path);
 	}
 
 }

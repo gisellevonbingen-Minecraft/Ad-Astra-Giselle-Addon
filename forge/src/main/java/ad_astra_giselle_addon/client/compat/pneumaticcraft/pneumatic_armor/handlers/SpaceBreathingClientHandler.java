@@ -65,7 +65,7 @@ public class SpaceBreathingClientHandler<T extends IArmorUpgradeHandler<?>> exte
 	{
 		super.tickClient(armorHandler, isEnabled);
 
-		if (isEnabled == true && this.stat.isStatOpen() == true)
+		if (isEnabled && this.stat.isStatOpen())
 		{
 			Player player = armorHandler.getPlayer();
 			double ratio = OxygenChargerUtils.getInventoryStorageRatio(player).orElse(0.0D);
@@ -78,7 +78,7 @@ public class SpaceBreathingClientHandler<T extends IArmorUpgradeHandler<?>> exte
 			this.oxygenEmpty = true;
 		}
 
-		if (HAD_TICK == false)
+		if (!HAD_TICK)
 		{
 			HAD_TICK = true;
 			UniveralFluidHandler fluidHandler = OxygenChargerUtils.get(new ItemStackHolder(ICON_FULL)).getFluidHandler();
@@ -99,7 +99,7 @@ public class SpaceBreathingClientHandler<T extends IArmorUpgradeHandler<?>> exte
 			int xl = this.stat.getBaseX() + 4;
 			int yt = this.stat.getBaseY() + 16;
 
-			if (this.stat.isLeftSided() == true)
+			if (this.stat.isLeftSided())
 			{
 				xl -= stat.getStatWidth();
 			}

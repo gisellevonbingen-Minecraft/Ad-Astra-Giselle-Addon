@@ -3,6 +3,8 @@
 	"package": "ad_astra_giselle_addon.common.mixin",
 	"compatibilityLevel": "JAVA_17",
 	"mixins": [
+		"ad_astra.EntityAcidRainSystemMixin",
+		"ad_astra.EntityTemperatureSystemMixin",
 		"pneumaticcraft.ApplicableUpgradesDBInject"
 	],
 	"injectors": {

@@ -1,7 +1,5 @@
 package ad_astra_giselle_addon.common.content.proof;
 
-import javax.annotation.Nullable;
-
 import ad_astra_giselle_addon.common.config.AddonConfigs;
 import ad_astra_giselle_addon.common.content.oxygen.IOxygenCharger;
 import ad_astra_giselle_addon.common.content.oxygen.OxygenChargerUtils;
@@ -16,24 +14,11 @@ import net.minecraft.world.item.ItemStack;
 
 public class SpaceOxygenProofEnchantmentSession extends ProofEnchantmentSession
 {
-	@Nullable
-	private IOxygenCharger oxygenCharger;
+	private IOxygenCharger testedOxygenCharger;
 
 	public SpaceOxygenProofEnchantmentSession(LivingEntity entity, EnchantmentEnergyStorageOrDamageable enchantment)
 	{
 		super(entity, enchantment);
-
-		if (LivingEntityHelper.isPlayingMode(entity))
-		{
-			int oxygenUsing = this.getOxygenUsing();
-			ItemStack enchantedItem = this.getEnchantedItem();
-			this.oxygenCharger = OxygenChargerUtils.firstExtractable(entity, oxygenUsing, enchantedItem);
-		}
-		else
-		{
-			this.oxygenCharger = null;
-		}
-
 	}
 
 	@Override
@@ -48,7 +33,9 @@ public class SpaceOxygenProofEnchantmentSession extends ProofEnchantmentSession
 
 		if (LivingEntityHelper.isPlayingMode(entity))
 		{
-			IOxygenCharger oxygenCharger = this.getOxygenCharger();
+			int oxygenUsing = this.getOxygenUsing();
+			ItemStack enchantedItem = this.getEnchantedItem();
+			IOxygenCharger oxygenCharger = OxygenChargerUtils.firstExtractable(entity, oxygenUsing, enchantedItem);
 
 			if (oxygenCharger == null)
 			{
@@ -56,13 +43,13 @@ public class SpaceOxygenProofEnchantmentSession extends ProofEnchantmentSession
 			}
 
 			UniveralFluidHandler fluidHandler = oxygenCharger.getFluidHandler();
-			int oxygenUsing = this.getOxygenUsing();
 
 			if (FluidHooks2.extractFluid(fluidHandler, FluidPredicates::isOxygen, oxygenUsing, true).getFluidAmount() < oxygenUsing)
 			{
 				return false;
 			}
 
+			this.testedOxygenCharger = oxygenCharger;
 		}
 
 		return true;
@@ -77,7 +64,7 @@ public class SpaceOxygenProofEnchantmentSession extends ProofEnchantmentSession
 
 		if (LivingEntityHelper.isPlayingMode(entity))
 		{
-			IOxygenCharger oxygenCharger = this.getOxygenCharger();
+			IOxygenCharger oxygenCharger = this.testedOxygenCharger;
 
 			if (oxygenCharger != null && !entity.getLevel().isClientSide())
 			{
@@ -124,12 +111,6 @@ public class SpaceOxygenProofEnchantmentSession extends ProofEnchantmentSession
 			return 0;
 		}
 
-	}
-
-	@Nullable
-	public IOxygenCharger getOxygenCharger()
-	{
-		return this.oxygenCharger;
 	}
 
 	public int getOxygenUsing()

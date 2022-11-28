@@ -8,7 +8,6 @@ import java.util.function.Function;
 import ad_astra_giselle_addon.client.compat.pneumaticcraft.pneumatic_armor.handlers.AddonSimpleToggleableHandler;
 import ad_astra_giselle_addon.client.compat.pneumaticcraft.pneumatic_armor.handlers.SpaceBreathingClientHandler;
 import ad_astra_giselle_addon.common.compat.pneumaticcraft.AddonCommonUpgradeHandlers;
-import ad_astra_giselle_addon.common.compat.pneumaticcraft.pneumatic_armor.handlers.GravityNormalizingCommonHandler;
 import ad_astra_giselle_addon.common.compat.pneumaticcraft.pneumatic_armor.handlers.SpaceBreathingCommonHandler;
 import ad_astra_giselle_addon.common.compat.pneumaticcraft.pneumatic_armor.handlers.SpaceFireProofCommonHandler;
 import ad_astra_giselle_addon.common.compat.pneumaticcraft.pneumatic_armor.handlers.VenusAcidProofCommonHandler;
@@ -23,7 +22,6 @@ public class AddonClientUpgradeHandlers
 	private static final List<IArmorUpgradeClientHandler<? extends IArmorUpgradeHandler<?>>> READONLY_LIST = Collections.unmodifiableList(HANDLERS);
 
 	public static final SpaceBreathingClientHandler<SpaceBreathingCommonHandler> SPACE_BREATHING = register(AddonCommonUpgradeHandlers.SPACE_BREATHING, SpaceBreathingClientHandler::new);
-	public static final SimpleToggleableHandler<GravityNormalizingCommonHandler> GRAVITY_NORMALIZING = register(AddonCommonUpgradeHandlers.GRAVITY_NORMALIZING, AddonSimpleToggleableHandler::new);
 	public static final SimpleToggleableHandler<SpaceFireProofCommonHandler> SPACE_FIRE_PROOF = register(AddonCommonUpgradeHandlers.SPACE_FIRE_PROOF, AddonSimpleToggleableHandler::new);
 	public static final SimpleToggleableHandler<VenusAcidProofCommonHandler> VENUS_ACID_PROOF = register(AddonCommonUpgradeHandlers.VENUS_ACID_PROOF, AddonSimpleToggleableHandler::new);
 

@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.List;
 
 import ad_astra_giselle_addon.client.screens.FuelLoaderScreen;
-import ad_astra_giselle_addon.common.menu.FuelLoaderContainerMenu;
+import ad_astra_giselle_addon.common.menu.FuelLoaderMenu;
 import ad_astra_giselle_addon.common.util.TranslationUtils;
 import earth.terrarium.ad_astra.client.screens.GuiUtil;
 import earth.terrarium.botarium.api.fluid.FluidHolder;
@@ -43,7 +43,7 @@ public class FuelLoaderGuiContainerHandler implements IGuiContainerHandler<FuelL
 			{
 				int tank = 0;
 				List<Component> list = new ArrayList<>();
-				FuelLoaderContainerMenu menu = containerScreen.getMenu();
+				FuelLoaderMenu menu = containerScreen.getMenu();
 				FluidHolder fluid = menu.getFluids().get(tank);
 				long capacity = menu.getMachine().getFluidContainer().getTankCapacity(tank);
 				list.add(TranslationUtils.fluid(fluid, capacity));
@@ -59,7 +59,7 @@ public class FuelLoaderGuiContainerHandler implements IGuiContainerHandler<FuelL
 	{
 		Rectangle fluidTankBounds = containerScreen.getFluidTankBounds();
 
-		if (GuiUtil.isHovering(fluidTankBounds, mouseX, mouseY) == true)
+		if (GuiUtil.isHovering(fluidTankBounds, mouseX, mouseY))
 		{
 			return containerScreen.getMenu().getMachine().getFluidContainer().getFluids().get(0).getFluid();
 		}

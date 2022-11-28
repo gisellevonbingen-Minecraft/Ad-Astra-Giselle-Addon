@@ -16,6 +16,7 @@ public abstract class ProofAbstractUtils
 	public static void register(IEventBus bus)
 	{
 		bus.register(SpaceOxygenProofUtils.INSTANCE);
+		bus.register(SpaceFireProofUtils.INSTANCE);
 		bus.register(VenusAcidProofUtils.INSTANCE);
 	}
 

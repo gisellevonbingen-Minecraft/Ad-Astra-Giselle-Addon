@@ -5,12 +5,12 @@ import ad_astra_giselle_addon.common.registries.AddonEnchantments;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-public class VenusAcidProofUtils extends ProofAbstractUtils
+public class SpaceFireProofUtils extends ProofAbstractUtils
 {
-	public static final String NBT_KEY = AdAstraGiselleAddon.rl("venus_acid_proof").toString();
-	public static final VenusAcidProofUtils INSTANCE = new VenusAcidProofUtils();
+	public static final String NBT_KEY = AdAstraGiselleAddon.rl("space_fire_proof").toString();
+	public static final SpaceFireProofUtils INSTANCE = new SpaceFireProofUtils();
 
-	private VenusAcidProofUtils()
+	private SpaceFireProofUtils()
 	{
 
 	}
@@ -24,14 +24,14 @@ public class VenusAcidProofUtils extends ProofAbstractUtils
 	@Override
 	public LivingProofEvent createEvent(LivingEntity entity)
 	{
-		return new LivingVenusAcidProofEvent(entity);
+		return new LivingSpaceFireProofEvent(entity);
 	}
 
 	@SubscribeEvent
-	public void onProofEnchantment(LivingVenusAcidProofEvent e)
+	public void onProofEnchantment(LivingSpaceFireProofEvent e)
 	{
 		LivingEntity entity = e.getEntity();
-		ProofSession session = new VenusAcidProofEnchantmentSession(entity, AddonEnchantments.VENUS_ACID_PROOF.get());
+		ProofSession session = new SpaceFireProofEnchantmentSession(entity, AddonEnchantments.SPACE_FIRE_PROOF.get());
 		e.setProofDuration(session.provide());
 	}
 
