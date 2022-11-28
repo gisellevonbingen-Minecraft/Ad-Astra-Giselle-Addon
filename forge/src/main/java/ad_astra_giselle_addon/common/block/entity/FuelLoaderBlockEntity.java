@@ -32,7 +32,6 @@ import net.minecraft.world.phys.AABB;
 public class FuelLoaderBlockEntity extends AbstractMachineBlockEntity implements FluidHoldingBlock
 {
 	public static final String DATA_WORKINGAREA_VISIBLE_KEY = "workingAreaVisible";
-	public static final String DATA_WORKED_KEY = "worked";
 
 	public static final int SLOTS_FLUID = 2;
 	public static final int SLOT_FLUID_SOURCE = 0;
@@ -141,8 +140,7 @@ public class FuelLoaderBlockEntity extends AbstractMachineBlockEntity implements
 		if (!level.isClientSide())
 		{
 			this.processTank();
-			boolean worked = this.exchangeFuelItemAround();
-			this.setWorked(worked);
+			this.exchangeFuelItemAround();
 		}
 
 	}
@@ -224,21 +222,6 @@ public class FuelLoaderBlockEntity extends AbstractMachineBlockEntity implements
 	{
 		double half = range / 2.0D;
 		return new AABB(pos).inflate(range, half, range).move(0.0D, half, 0.0D);
-	}
-
-	public boolean isWorked()
-	{
-		return this.getPersistentData().getBoolean(DATA_WORKED_KEY);
-	}
-
-	protected void setWorked(boolean newWorked)
-	{
-		if (this.isWorked() != newWorked)
-		{
-			this.getPersistentData().putBoolean(DATA_WORKED_KEY, newWorked);
-			this.setChanged();
-		}
-
 	}
 
 	public boolean giveFuel(Vehicle vehicle)
