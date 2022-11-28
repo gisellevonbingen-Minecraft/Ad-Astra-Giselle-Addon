@@ -1,68 +1,54 @@
 package ad_astra_giselle_addon.common.config;
 
-import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
+import com.teamresourceful.resourcefulconfig.common.annotations.Category;
+import com.teamresourceful.resourcefulconfig.common.annotations.ConfigEntry;
+import com.teamresourceful.resourcefulconfig.common.config.EntryType;
 
-public class EnchantmentsConfig
+@Category(id = EnchantmentsConfig.ID, translation = EnchantmentsConfig.PREFIX)
+public final class EnchantmentsConfig
 {
-	public final ConfigValue<Boolean> tooltip_Enabled;
-	public final ConfigValue<Boolean> tooltip_Ignore;
+	public static final String ID = "enchantments";
+	public static final String PREFIX = AddonConfigs.PREFIX + "." + ID;
 
-	public final ConfigValue<Integer> space_breathing_energy_using;
-	public final ConfigValue<Integer> space_breathing_energy_duration;
-	public final ConfigValue<Integer> space_breathing_energy_oxygen;
-	public final ConfigValue<Integer> space_breathing_durabiltiy_using;
-	public final ConfigValue<Integer> space_breathing_durability_duration;
-	public final ConfigValue<Integer> space_breathing_durability_oxygen;
+	@ConfigEntry(id = "tooltip_enabled", type = EntryType.BOOLEAN, translation = PREFIX + ".tooltip_enabled")
+	public static boolean TOOLTIP_ENABLED = true;
+	@ConfigEntry(id = "tooltip_ignore", type = EntryType.BOOLEAN, translation = PREFIX + ".tooltip_ignore")
+	public static boolean TOOLTIP_IGNORE = false;
 
-	public final ConfigValue<Integer> space_fire_proof_energy_using;
-	public final ConfigValue<Integer> space_fire_proof_energy_duration;
-	public final ConfigValue<Integer> space_fire_proof_durability_using;
-	public final ConfigValue<Integer> space_fire_proof_durability_duration;
+	public static final String SPACE_BREATHING_ID = "space_breathing";
+	public static final String SPACE_BREATHING_PREFIX = PREFIX + "." + SPACE_BREATHING_ID;
+	@ConfigEntry(id = SPACE_BREATHING_ID + ".energy_using", type = EntryType.INTEGER, translation = SPACE_BREATHING_PREFIX + ".energy_using")
+	public static int SPACE_BREATHING_ENERGY_USING = 10;
+	@ConfigEntry(id = SPACE_BREATHING_ID + ".energy_duration", type = EntryType.INTEGER, translation = SPACE_BREATHING_PREFIX + ".energy_duration")
+	public static int SPACE_BREATHING_ENERGY_DURATION = 4;
+	@ConfigEntry(id = SPACE_BREATHING_ID + ".energy_oxygen", type = EntryType.INTEGER, translation = SPACE_BREATHING_PREFIX + ".energy_oxygen")
+	public static int SPACE_BREATHING_ENERGY_OXYGEN = 1;
+	@ConfigEntry(id = SPACE_BREATHING_ID + ".durabiltiy_using", type = EntryType.INTEGER, translation = SPACE_BREATHING_PREFIX + ".durabiltiy_using")
+	public static int SPACE_BREATHING_DURABILITY_USING = 1;
+	@ConfigEntry(id = SPACE_BREATHING_ID + ".durability_duration", type = EntryType.INTEGER, translation = SPACE_BREATHING_PREFIX + ".durability_duration")
+	public static int SPACE_BREATHING_DURABILITY_DURATION = 60;
+	@ConfigEntry(id = SPACE_BREATHING_ID + ".durability_oxygen", type = EntryType.INTEGER, translation = SPACE_BREATHING_PREFIX + ".durability_oxygen")
+	public static int SPACE_BREATHING_DURABILITY_OXYGEN = 15;
 
-	public final ConfigValue<Integer> venus_acid_proof_energy_using;
-	public final ConfigValue<Integer> venus_acid_proof_energy_duration;
-	public final ConfigValue<Integer> venus_acid_proof_durability_using;
-	public final ConfigValue<Integer> venus_acid_proof_durability_duration;
+	public static final String SPACE_FIRE_PROOF_ID = "space_fire_proof";
+	public static final String SPACE_FIRE_PROOF_PREFIX = PREFIX + "." + SPACE_FIRE_PROOF_ID;
+	@ConfigEntry(id = SPACE_FIRE_PROOF_ID + ".energy_using", type = EntryType.INTEGER, translation = SPACE_FIRE_PROOF_PREFIX + ".energy_using")
+	public static int SPACE_FIRE_PROOF_ENERGY_USING = 10;
+	@ConfigEntry(id = SPACE_FIRE_PROOF_ID + ".energy_duration", type = EntryType.INTEGER, translation = SPACE_FIRE_PROOF_PREFIX + ".energy_duration")
+	public static int SPACE_FIRE_PROOF_ENERGY_DURATION = 1;
+	@ConfigEntry(id = SPACE_FIRE_PROOF_ID + ".durabiltiy_using", type = EntryType.INTEGER, translation = SPACE_FIRE_PROOF_PREFIX + ".durabiltiy_using")
+	public static int SPACE_FIRE_PROOF_DURABILITY_USING = 1;
+	@ConfigEntry(id = SPACE_FIRE_PROOF_ID + ".durability_duration", type = EntryType.INTEGER, translation = SPACE_FIRE_PROOF_PREFIX + ".durability_duration")
+	public static int SPACE_FIRE_PROOF_DURABILITY_DURATION = 60;
 
-	public EnchantmentsConfig(ForgeConfigSpec.Builder builder)
-	{
-		builder.push("common");
-
-		builder.push("tooltip");
-
-		builder.comment("show tooltip on THIS mod's enchanted book");
-		this.tooltip_Enabled = builder.define("enabled", true);
-		builder.comment("tooltip will don't show when 'Enchantment Descriptions' or 'CoFH Core' installed", //
-				"but, if this set 'true' show tooltip with ignore that mods");
-		this.tooltip_Ignore = builder.define("ignore", false);
-
-		builder.pop();
-
-		builder.pop();
-
-		builder.push("space_breathing");
-		this.space_breathing_energy_using = builder.comment("Energy usage for space breathing").define("energyUsing", 10);
-		this.space_breathing_energy_duration = builder.comment("Space breathing duration using energy").define("oxygenDuration", 4);
-		this.space_breathing_energy_oxygen = builder.comment("Oxygen usage using energy").define("energyOxygen", 1);
-		this.space_breathing_durabiltiy_using = builder.comment("Durability usage for space breathing").define("durabilityUsing", 1);
-		this.space_breathing_durability_duration = builder.comment("Space breathing duration using durability").define("oxygenDurationUsingDurability", 60);
-		this.space_breathing_durability_oxygen = builder.comment("Oxygen usage using durability").define("durabilityOxygen", 15);
-		builder.pop();
-
-		builder.push("space_fire_proof");
-		this.space_fire_proof_energy_using = builder.comment("Energy usage for space fire proof").define("energyUsing", 10);
-		this.space_fire_proof_energy_duration = builder.comment("Space fire proof duration using energy").define("energyDuration", 1);
-		this.space_fire_proof_durability_using = builder.comment("Durability usage for space fire proof").define("durabilityUsing", 1);
-		this.space_fire_proof_durability_duration = builder.comment("Space fire proof duration using durability").define("durabilityDuration", 60);
-		builder.pop();
-
-		builder.push("venus_acid_proof");
-		this.venus_acid_proof_energy_using = builder.comment("Energy usage for venus acid proof").define("energyUsing", 10);
-		this.venus_acid_proof_energy_duration = builder.comment("Venus acid proof duration using energy").define("energyDuration", 1);
-		this.venus_acid_proof_durability_using = builder.comment("Durability usage for venus acid proof").define("durabilityUsing", 1);
-		this.venus_acid_proof_durability_duration = builder.comment("Venus acid proof duration using durability").define("durabilityDuration", 60);
-		builder.pop();
-	}
-
+	public static final String VENUS_ACID_PROOF_ID = "venus_acid_proof";
+	public static final String VENUS_ACID_PROOF_PREFIX = PREFIX + "." + VENUS_ACID_PROOF_ID;
+	@ConfigEntry(id = VENUS_ACID_PROOF_ID + ".energy_using", type = EntryType.INTEGER, translation = VENUS_ACID_PROOF_PREFIX + ".energy_using")
+	public static int VENUS_ACID_PROOF_ENERGY_USING = 10;
+	@ConfigEntry(id = VENUS_ACID_PROOF_ID + ".energy_duration", type = EntryType.INTEGER, translation = VENUS_ACID_PROOF_PREFIX + ".energy_duration")
+	public static int VENUS_ACID_PROOF_ENERGY_DURATION = 1;
+	@ConfigEntry(id = VENUS_ACID_PROOF_ID + ".durabiltiy_using", type = EntryType.INTEGER, translation = VENUS_ACID_PROOF_PREFIX + ".durabiltiy_using")
+	public static int VENUS_ACID_PROOF_DURABILITY_USING = 1;
+	@ConfigEntry(id = VENUS_ACID_PROOF_ID + ".durability_duration", type = EntryType.INTEGER, translation = VENUS_ACID_PROOF_PREFIX + ".durability_duration")
+	public static int VENUS_ACID_PROOF_DURABILITY_DURATION = 60;
 }

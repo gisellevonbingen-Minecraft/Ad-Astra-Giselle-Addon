@@ -6,7 +6,6 @@ import java.util.Set;
 
 import com.google.common.collect.Sets;
 
-import ad_astra_giselle_addon.common.config.AddonConfigs;
 import ad_astra_giselle_addon.common.config.EnchantmentsConfig;
 import ad_astra_giselle_addon.common.enchantment.EnchantmentHelper2;
 import ad_astra_giselle_addon.common.registries.AddonEnchantments;
@@ -23,20 +22,19 @@ public class EventListenerEnchantmentTooltip
 {
 	private static final Set<String> DESCRIPTION_MODS = Sets.newHashSet("enchdesc", "cofh_core");
 
-	private static boolean tooltipEnabeldCached = false;
-	private static boolean tooltipEnabled = false;
+	private static boolean TOOLTIP_ENABELD_CACHED = false;
+	private static boolean TOOLTIP_ENABLED = false;
 
 	public static boolean tooltipEnabled()
 	{
-		if (tooltipEnabeldCached)
+		if (TOOLTIP_ENABELD_CACHED)
 		{
-			return tooltipEnabled;
+			return TOOLTIP_ENABLED;
 		}
 		else
 		{
-			tooltipEnabeldCached = true;
-			EnchantmentsConfig config = AddonConfigs.Common.enchantments;
-			return tooltipEnabled = config.tooltip_Enabled.get() && (config.tooltip_Ignore.get() || !isDescriptionModsLoaded());
+			TOOLTIP_ENABELD_CACHED = true;
+			return TOOLTIP_ENABLED = EnchantmentsConfig.TOOLTIP_ENABLED && (EnchantmentsConfig.TOOLTIP_IGNORE || !isDescriptionModsLoaded());
 		}
 
 	}
@@ -45,7 +43,7 @@ public class EventListenerEnchantmentTooltip
 	{
 		if (DESCRIPTION_MODS.add(modid))
 		{
-			tooltipEnabled = tooltipEnabled() && !ModList.get().isLoaded(modid);
+			TOOLTIP_ENABLED = tooltipEnabled() && !ModList.get().isLoaded(modid);
 		}
 
 	}

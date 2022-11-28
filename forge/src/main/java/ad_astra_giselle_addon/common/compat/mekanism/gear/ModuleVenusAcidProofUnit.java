@@ -1,6 +1,6 @@
 package ad_astra_giselle_addon.common.compat.mekanism.gear;
 
-import ad_astra_giselle_addon.common.config.AddonConfigs;
+import ad_astra_giselle_addon.common.compat.mekanism.AddonMekanismConfig;
 import mekanism.api.gear.ICustomModule;
 import mekanism.api.gear.IModule;
 import mekanism.api.gear.config.ModuleConfigItemCreator;
@@ -15,7 +15,7 @@ public class ModuleVenusAcidProofUnit implements ICustomModule<ModuleVenusAcidPr
 	{
 		ICustomModule.super.init(module, configItemCreator);
 
-		this.energyUsing = FloatingLong.create(AddonConfigs.Common.mekanism.moduleVenusAcidProof_energyUsing.get());
+		this.energyUsing = FloatingLong.create(AddonMekanismConfig.MODULES_VENUS_ACID_PROOF_ENERGY_USING);
 	}
 
 	public FloatingLong getEnergyUsing()

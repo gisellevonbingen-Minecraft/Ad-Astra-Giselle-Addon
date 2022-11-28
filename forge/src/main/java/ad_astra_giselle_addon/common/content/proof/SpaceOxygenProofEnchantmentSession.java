@@ -1,6 +1,6 @@
 package ad_astra_giselle_addon.common.content.proof;
 
-import ad_astra_giselle_addon.common.config.AddonConfigs;
+import ad_astra_giselle_addon.common.config.EnchantmentsConfig;
 import ad_astra_giselle_addon.common.content.oxygen.IOxygenCharger;
 import ad_astra_giselle_addon.common.content.oxygen.OxygenChargerUtils;
 import ad_astra_giselle_addon.common.enchantment.EnchantmentEnergyStorageOrDamageable;
@@ -82,11 +82,11 @@ public class SpaceOxygenProofEnchantmentSession extends ProofEnchantmentSession
 	{
 		if (resource == ItemUsableResource.Energy)
 		{
-			return AddonConfigs.Common.enchantments.space_breathing_energy_using.get();
+			return EnchantmentsConfig.SPACE_BREATHING_ENERGY_USING;
 		}
 		else if (resource == ItemUsableResource.Durability)
 		{
-			return AddonConfigs.Common.enchantments.space_breathing_durabiltiy_using.get();
+			return EnchantmentsConfig.SPACE_BREATHING_DURABILITY_USING;
 		}
 		else
 		{
@@ -100,11 +100,11 @@ public class SpaceOxygenProofEnchantmentSession extends ProofEnchantmentSession
 	{
 		if (resource == ItemUsableResource.Energy)
 		{
-			return AddonConfigs.Common.enchantments.space_breathing_energy_duration.get();
+			return EnchantmentsConfig.SPACE_BREATHING_ENERGY_DURATION;
 		}
 		else if (resource == ItemUsableResource.Durability)
 		{
-			return AddonConfigs.Common.enchantments.space_breathing_durability_duration.get();
+			return EnchantmentsConfig.SPACE_BREATHING_DURABILITY_DURATION;
 		}
 		else
 		{
@@ -123,11 +123,11 @@ public class SpaceOxygenProofEnchantmentSession extends ProofEnchantmentSession
 	{
 		if (resource == ItemUsableResource.Energy)
 		{
-			return AddonConfigs.Common.enchantments.space_breathing_energy_oxygen.get();
+			return EnchantmentsConfig.SPACE_BREATHING_ENERGY_OXYGEN;
 		}
 		else if (resource == ItemUsableResource.Durability)
 		{
-			return AddonConfigs.Common.enchantments.space_breathing_durability_oxygen.get();
+			return EnchantmentsConfig.SPACE_BREATHING_DURABILITY_OXYGEN;
 		}
 		else
 		{

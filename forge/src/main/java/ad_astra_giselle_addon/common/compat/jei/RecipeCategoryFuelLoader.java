@@ -4,7 +4,7 @@ import java.util.List;
 
 import ad_astra_giselle_addon.client.screens.FuelLoaderScreen;
 import ad_astra_giselle_addon.common.AdAstraGiselleAddon;
-import ad_astra_giselle_addon.common.config.AddonConfigs;
+import ad_astra_giselle_addon.common.config.MachinesConfig;
 import ad_astra_giselle_addon.common.fluid.FluidPredicates;
 import ad_astra_giselle_addon.common.registries.AddonBlocks;
 import earth.terrarium.ad_astra.client.screens.GuiUtil;
@@ -59,7 +59,7 @@ public class RecipeCategoryFuelLoader extends RecipeCategory<Fluid>
 	{
 		super.setRecipe(builder, recipe, focuses);
 
-		long capacity = AddonConfigs.Common.machines.fuelLoader_capacity.get();
+		long capacity = MachinesConfig.FUEL_LOADER_FLUID_CAPACITY;
 
 		builder.addSlot(RecipeIngredientRole.INPUT, TANK_LEFT, TANK_TOP) //
 				.addFluidStack(recipe, capacity) //

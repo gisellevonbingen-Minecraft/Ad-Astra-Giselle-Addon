@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-import ad_astra_giselle_addon.common.config.AddonConfigs;
+import ad_astra_giselle_addon.common.config.MachinesConfig;
 import ad_astra_giselle_addon.common.fluid.FluidHooks2;
 import ad_astra_giselle_addon.common.fluid.FluidPredicates;
 import ad_astra_giselle_addon.common.fluid.UniveralFluidHandler;
@@ -14,6 +14,7 @@ import ad_astra_giselle_addon.common.menu.FuelLoaderMenu;
 import ad_astra_giselle_addon.common.registries.AddonBlockEntityTypes;
 import earth.terrarium.ad_astra.blocks.machines.entity.AbstractMachineBlockEntity;
 import earth.terrarium.ad_astra.entities.vehicles.Vehicle;
+import earth.terrarium.botarium.api.fluid.FluidHolder;
 import earth.terrarium.botarium.api.fluid.FluidHoldingBlock;
 import earth.terrarium.botarium.api.fluid.FluidHooks;
 import earth.terrarium.botarium.api.fluid.SimpleUpdatingFluidContainer;
@@ -55,7 +56,7 @@ public class FuelLoaderBlockEntity extends AbstractMachineBlockEntity implements
 	{
 		if (this.fluidTank == null)
 		{
-			return this.fluidTank = new SimpleUpdatingFluidContainer(this, tank -> (long) AddonConfigs.Common.machines.fuelLoader_capacity.get(), 1, FluidPredicates::isFuel);
+			return this.fluidTank = new SimpleUpdatingFluidContainer(this, tank -> MachinesConfig.FUEL_LOADER_FLUID_CAPACITY, 1, FluidPredicates::isFuel);
 		}
 		else
 		{
@@ -163,23 +164,17 @@ public class FuelLoaderBlockEntity extends AbstractMachineBlockEntity implements
 		return new ItemStackReference(this.getItem(slot), ItemStackConsumers.index(slot, this::setItem));
 	}
 
-	public boolean exchangeFuelItemAround()
+	public void exchangeFuelItemAround()
 	{
 		Level level = this.getLevel();
 		AABB workingArea = this.getWorkingArea();
 		List<Vehicle> vehicles = level.getEntitiesOfClass(Vehicle.class, workingArea);
-		boolean worked = false;
 
 		for (Vehicle vehicle : vehicles)
 		{
-			if (this.giveFuel(vehicle))
-			{
-				worked = true;
-			}
-
+			this.giveFuel(vehicle);
 		}
 
-		return worked;
 	}
 
 	@Override
@@ -205,7 +200,7 @@ public class FuelLoaderBlockEntity extends AbstractMachineBlockEntity implements
 
 	public int getWorkingRange()
 	{
-		return AddonConfigs.Common.machines.fuelLoader_range.get();
+		return MachinesConfig.FUEL_LOADER_WORKING_RANGE;
 	}
 
 	public AABB getWorkingArea()
@@ -224,12 +219,16 @@ public class FuelLoaderBlockEntity extends AbstractMachineBlockEntity implements
 		return new AABB(pos).inflate(range, half, range).move(0.0D, half, 0.0D);
 	}
 
-	public boolean giveFuel(Vehicle vehicle)
+	public FluidHolder giveFuel(Vehicle vehicle)
 	{
-		long transfer = AddonConfigs.Common.machines.fuelLoader_transfer.get();
+		return this.giveFuel(vehicle, MachinesConfig.FUEL_LOADER_FLUID_TRANSFER);
+	}
+
+	private FluidHolder giveFuel(Vehicle vehicle, long transfer)
+	{
 		UniveralFluidHandler from = UniveralFluidHandler.from(this.getFluidContainer());
 		UniveralFluidHandler to = UniveralFluidHandler.from(vehicle.getTank());
-		return FluidHooks2.moveFluidAny(from, to, FluidPredicates::isFuel, transfer, false).isEmpty();
+		return FluidHooks2.moveFluidAny(from, to, FluidPredicates::isFuel, transfer, false);
 	}
 
 	public int getSlotFluidStart()
