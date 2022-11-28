@@ -1,4 +1,4 @@
-package ad_astra_giselle_addon.common.config;
+package ad_astra_giselle_addon.common.compat.mekanism;
 
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;

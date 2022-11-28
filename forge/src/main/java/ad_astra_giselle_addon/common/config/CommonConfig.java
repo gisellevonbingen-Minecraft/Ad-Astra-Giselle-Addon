@@ -1,5 +1,7 @@
 package ad_astra_giselle_addon.common.config;
 
+import ad_astra_giselle_addon.common.compat.mekanism.MekanismConfig;
+import ad_astra_giselle_addon.common.compat.pneumaticcraft.PneumaticCraftConfig;
 import net.minecraftforge.common.ForgeConfigSpec;
 
 public class CommonConfig
