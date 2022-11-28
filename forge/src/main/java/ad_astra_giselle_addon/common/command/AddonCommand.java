@@ -7,6 +7,7 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import ad_astra_giselle_addon.common.compat.CompatibleManager;
 import ad_astra_giselle_addon.common.compat.mekanism.MekanismCommand;
 import ad_astra_giselle_addon.common.compat.pneumaticcraft.PneumaticCraftCommand;
+import ad_astra_giselle_addon.common.compat.redstonearsenal.RSACommand;
 import ad_astra_giselle_addon.common.fluid.UniveralFluidHandler;
 import ad_astra_giselle_addon.common.registries.AddonEnchantments;
 import earth.terrarium.ad_astra.registry.ModFluids;
@@ -77,6 +78,11 @@ public class AddonCommand
 			if (CompatibleManager.PNEUMATICCRAFT.isLoaded())
 			{
 				builder.then(Commands.literal("pneumatic_armor").executes(PneumaticCraftCommand::pneumatic_armor));
+			}
+
+			if (CompatibleManager.REDSTONE_ARSENAL.isLoaded())
+			{
+				builder.then(Commands.literal("flux_armor").executes(RSACommand::flux_armor));
 			}
 
 			return builder;
