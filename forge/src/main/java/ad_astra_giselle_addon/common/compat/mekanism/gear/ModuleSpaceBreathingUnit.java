@@ -4,7 +4,7 @@ import java.util.Map;
 import java.util.function.Consumer;
 
 import ad_astra_giselle_addon.common.AdAstraGiselleAddon;
-import ad_astra_giselle_addon.common.config.AddonConfigs;
+import ad_astra_giselle_addon.common.compat.mekanism.AddonMekanismConfig;
 import ad_astra_giselle_addon.common.content.oxygen.IOxygenCharger;
 import ad_astra_giselle_addon.common.content.oxygen.OxygenChargerUtils;
 import ad_astra_giselle_addon.common.fluid.FluidHooks2;
@@ -50,9 +50,9 @@ public class ModuleSpaceBreathingUnit implements ICustomModule<ModuleSpaceBreath
 	{
 		ICustomModule.super.init(module, configItemCreator);
 
-		this.oxygenDuration = AddonConfigs.Common.mekanism.moduleSpaceBreathing_oxygenDuration.get();
-		this.energyUsingProvide = FloatingLong.create(AddonConfigs.Common.mekanism.moduleSpaceBreathing_energyUsingProvide.get());
-		this.energyUsingProduce = FloatingLong.create(AddonConfigs.Common.mekanism.moduleSpaceBreathing_energyUsingProduce.get());
+		this.oxygenDuration = AddonMekanismConfig.MODULES_SPACE_BREATHING_OXYGEN_DURATION;
+		this.energyUsingProvide = FloatingLong.create(AddonMekanismConfig.MODULES_SPACE_BREATHING_ENERGY_USING_PROVIDE);
+		this.energyUsingProduce = FloatingLong.create(AddonMekanismConfig.MODULES_SPACE_BREATHING_ENERGY_USING_PRODUCE);
 	}
 
 	/**

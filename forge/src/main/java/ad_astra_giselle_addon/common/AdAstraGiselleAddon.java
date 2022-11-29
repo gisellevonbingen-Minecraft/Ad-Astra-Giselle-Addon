@@ -3,6 +3,8 @@ package ad_astra_giselle_addon.common;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.teamresourceful.resourcefulconfig.common.config.Configurator;
+
 import ad_astra_giselle_addon.client.AdAstraGiselleAddonClientProxy;
 import ad_astra_giselle_addon.common.compat.CompatibleManager;
 import ad_astra_giselle_addon.common.config.AddonConfigs;
@@ -19,9 +21,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 @Mod(AdAstraGiselleAddon.MOD_ID)
@@ -29,10 +29,11 @@ public class AdAstraGiselleAddon
 {
 	public static final String MOD_ID = "ad_astra_giselle_addon";
 	public static final Logger LOGGER = LogManager.getLogger();
+	public static final Configurator CONFIGURATOR = new Configurator();
 
 	public AdAstraGiselleAddon()
 	{
-		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, AddonConfigs.CommonSpec);
+		CONFIGURATOR.registerConfig(AddonConfigs.class);
 
 		registerFML();
 		registerForge();

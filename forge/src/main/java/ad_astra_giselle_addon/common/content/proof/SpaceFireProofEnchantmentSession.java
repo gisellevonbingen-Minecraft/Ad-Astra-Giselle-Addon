@@ -1,6 +1,6 @@
 package ad_astra_giselle_addon.common.content.proof;
 
-import ad_astra_giselle_addon.common.config.AddonConfigs;
+import ad_astra_giselle_addon.common.config.EnchantmentsConfig;
 import ad_astra_giselle_addon.common.enchantment.EnchantmentEnergyStorageOrDamageable;
 import ad_astra_giselle_addon.common.item.ItemUsableResource;
 import net.minecraft.world.entity.LivingEntity;
@@ -17,11 +17,11 @@ public class SpaceFireProofEnchantmentSession extends ProofEnchantmentSession
 	{
 		if (resource == ItemUsableResource.Energy)
 		{
-			return AddonConfigs.Common.enchantments.space_fire_proof_energy_using.get();
+			return EnchantmentsConfig.SPACE_FIRE_PROOF_ENERGY_USING;
 		}
 		else if (resource == ItemUsableResource.Durability)
 		{
-			return AddonConfigs.Common.enchantments.space_fire_proof_durability_using.get();
+			return EnchantmentsConfig.SPACE_FIRE_PROOF_DURABILITY_USING;
 		}
 		else
 		{
@@ -35,11 +35,11 @@ public class SpaceFireProofEnchantmentSession extends ProofEnchantmentSession
 	{
 		if (resource == ItemUsableResource.Energy)
 		{
-			return AddonConfigs.Common.enchantments.space_fire_proof_energy_duration.get();
+			return EnchantmentsConfig.SPACE_FIRE_PROOF_ENERGY_DURATION;
 		}
 		else if (resource == ItemUsableResource.Durability)
 		{
-			return AddonConfigs.Common.enchantments.space_fire_proof_durability_duration.get();
+			return EnchantmentsConfig.SPACE_FIRE_PROOF_DURABILITY_DURATION;
 		}
 		else
 		{

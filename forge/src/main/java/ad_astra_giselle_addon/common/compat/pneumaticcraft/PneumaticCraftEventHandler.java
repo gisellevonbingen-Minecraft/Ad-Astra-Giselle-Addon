@@ -2,7 +2,6 @@ package ad_astra_giselle_addon.common.compat.pneumaticcraft;
 
 import javax.annotation.Nonnull;
 
-import ad_astra_giselle_addon.common.config.AddonConfigs;
 import ad_astra_giselle_addon.common.content.oxygen.IOxygenCharger;
 import ad_astra_giselle_addon.common.content.oxygen.OxygenChargerUtils;
 import ad_astra_giselle_addon.common.content.proof.LivingSpaceFireProofEvent;
@@ -43,7 +42,7 @@ public class PneumaticCraftEventHandler
 		}
 
 		IAirHandlerItem airHandler = stack.getCapability(PNCCapabilities.AIR_HANDLER_ITEM_CAPABILITY).orElse(null);
-		int airUsing = AddonConfigs.Common.pneumaticcraft.upgrade_space_breating_airUsing.get();
+		int airUsing = AddonPneumaticCraftConfig.SPACE_BREATHING_AIR_USING;
 
 		if (airHandler != null && useAir(airHandler, airUsing, true))
 		{
@@ -59,7 +58,7 @@ public class PneumaticCraftEventHandler
 					useAir(airHandler, airUsing, false);
 				}
 
-				e.setProofDuration(AddonConfigs.Common.pneumaticcraft.upgrade_space_breating_oxygenDuration.get());
+				e.setProofDuration(AddonPneumaticCraftConfig.SPACE_BREATHING_OXYGEN_DURATION);
 			}
 
 		}
@@ -69,7 +68,7 @@ public class PneumaticCraftEventHandler
 	@SubscribeEvent
 	public static void onLivingSpaceFireProof(LivingSpaceFireProofEvent e)
 	{
-		boolean cancelled = tryCancel(e, AddonCommonUpgradeHandlers.SPACE_FIRE_PROOF, AddonConfigs.Common.pneumaticcraft.upgrade_space_fire_proof_airUsing.get());
+		boolean cancelled = tryCancel(e, AddonCommonUpgradeHandlers.SPACE_FIRE_PROOF, AddonPneumaticCraftConfig.SPACE_FIRE_PROOF_AIR_USING);
 
 		if (cancelled)
 		{
@@ -81,7 +80,7 @@ public class PneumaticCraftEventHandler
 	@SubscribeEvent
 	public static void onLivingVenusAcidProof(LivingVenusAcidProofEvent e)
 	{
-		boolean cancelled = tryCancel(e, AddonCommonUpgradeHandlers.VENUS_ACID_PROOF, AddonConfigs.Common.pneumaticcraft.upgrade_venus_acid_proof_airUsing.get());
+		boolean cancelled = tryCancel(e, AddonCommonUpgradeHandlers.VENUS_ACID_PROOF, AddonPneumaticCraftConfig.VENUS_ACID_PROOF_AIR_USING);
 
 		if (cancelled)
 		{

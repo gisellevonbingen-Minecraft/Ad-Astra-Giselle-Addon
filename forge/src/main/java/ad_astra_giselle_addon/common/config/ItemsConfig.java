@@ -1,20 +1,21 @@
 package ad_astra_giselle_addon.common.config;
 
+import com.teamresourceful.resourcefulconfig.common.annotations.Category;
+import com.teamresourceful.resourcefulconfig.common.annotations.ConfigEntry;
+import com.teamresourceful.resourcefulconfig.common.config.EntryType;
+
 import earth.terrarium.botarium.api.fluid.FluidHooks;
-import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
 
-public class ItemsConfig
+@Category(id = ItemsConfig.ID, translation = ItemsConfig.PREFIX)
+public final class ItemsConfig
 {
-	public final ConfigValue<Long> oxygenCan_OxygenCapacity;
-	public final ConfigValue<Long> oxygenCan_OxygenTransfer;
+	public static final String ID = "items";
+	public static final String PREFIX = AddonConfigs.PREFIX + "." + ID;
 
-	public ItemsConfig(ForgeConfigSpec.Builder builder)
-	{
-		builder.push("oxygen_can");
-		this.oxygenCan_OxygenCapacity = builder.define("oxygenCapacity", FluidHooks.buckets(2));
-		this.oxygenCan_OxygenTransfer = builder.define("oxygenTransfer", FluidHooks.toMillibuckets(256));
-		builder.pop();
-	}
-
+	public static final String OXYGEN_CAN_ID = "oxygen_can";
+	public static final String OXYGEN_CAN_PREFIX = PREFIX + "." + OXYGEN_CAN_ID;
+	@ConfigEntry(id = OXYGEN_CAN_ID + ".fluid_capacity", type = EntryType.LONG, translation = OXYGEN_CAN_PREFIX + ".fluid_capacity")
+	public static long OXYGEN_CAN_FLUID_CAPACITY = FluidHooks.buckets(2);
+	@ConfigEntry(id = OXYGEN_CAN_ID + ".fluid_transfer", type = EntryType.LONG, translation = OXYGEN_CAN_PREFIX + ".fluid_transfer")
+	public static long OXYGEN_CAN_FLUID_TRANSFER = FluidHooks.toMillibuckets(256);
 }
