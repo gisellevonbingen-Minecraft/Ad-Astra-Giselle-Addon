@@ -12,26 +12,26 @@ public final class AddonPneumaticCraftConfig
 {
 	public static final String ID = PneumaticCraftCompat.MODID;
 	public static final String PREFIX = CompatsConfig.PREFIX + "." + ID;
-	public static final String UPGRADE_ID = "modules";
+	public static final String UPGRADE_ID = "upgades";
 
 	public static final String SPACE_BREATHING_ID = UPGRADE_ID + ".space_breathing";
 	public static final String SPACE_BREATHING_PREFIX = PREFIX + "." + SPACE_BREATHING_ID;
 	@ConfigEntry(id = SPACE_BREATHING_ID + ".oxygen_duration", type = EntryType.INTEGER, translation = SPACE_BREATHING_PREFIX + ".oxygen_duration")
-	@Comment("Duration of provided oxygen (oxygen provide interval)")
+	@Comment(value = "Duration of provided oxygen (oxygen provide interval)", translation = SPACE_BREATHING_PREFIX + ".oxygen_duration.comment")
 	public static int SPACE_BREATHING_OXYGEN_DURATION = 4;
 	@ConfigEntry(id = SPACE_BREATHING_ID + ".air_using", type = EntryType.INTEGER, translation = SPACE_BREATHING_PREFIX + ".air_using")
-	@Comment("Air usage when provide Ad Astra oxygen to player in space")
+	@Comment(value = "Air usage for provide oxygen in every ticks", translation = SPACE_BREATHING_PREFIX + ".air_using.comment")
 	public static int SPACE_BREATHING_AIR_USING = 20;
 
 	public static final String SPACE_FIRE_PROOF_ID = UPGRADE_ID + ".space_fire_proof";
 	public static final String SPACE_FIRE_PROOF_PREFIX = PREFIX + "." + SPACE_FIRE_PROOF_ID;
 	@ConfigEntry(id = SPACE_FIRE_PROOF_ID + ".air_using", type = EntryType.INTEGER, translation = SPACE_FIRE_PROOF_PREFIX + ".air_using")
-	@Comment("Air usage when prevent fire every tick in Ad Astra hot planets (e.g. Venus, Mercury)")
+	@Comment(value = "Air usage for proof in every ticks", translation = SPACE_FIRE_PROOF_PREFIX + ".air_using.comment")
 	public static int SPACE_FIRE_PROOF_AIR_USING = 5;
 
 	public static final String VENUS_ACID_PROOFID = UPGRADE_ID + ".venus_acid_proof";
 	public static final String VENUS_ACID_PROOF_PREFIX = PREFIX + "." + VENUS_ACID_PROOFID;
 	@ConfigEntry(id = VENUS_ACID_PROOFID + ".air_using", type = EntryType.INTEGER, translation = VENUS_ACID_PROOF_PREFIX + ".air_using")
-	@Comment("Air usage when prevent acid rain damage every tick in Ad Astra Venus")
+	@Comment(value = "Air usage for proof in every ticks", translation = VENUS_ACID_PROOF_PREFIX + ".air_using.comment")
 	public static int VENUS_ACID_PROOF_AIR_USING = 5;
 }
