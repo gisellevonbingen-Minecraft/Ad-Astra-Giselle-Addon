@@ -32,3 +32,11 @@ issueTrackerURL="https://github.com/gisellevonbingen/Minecraft-Ad-Astra-Giselle-
     versionRange="[${ad_astra_version},)"
     ordering="AFTER"
     side="BOTH"
+
+[[dependencies.ad_astra_giselle_addon]]
+    modId="resourcefulconfig"
+    mandatory=true
+    versionRange="[${resourcefulconfig_version},)"
+    ordering="AFTER"
+    side="BOTH"
+    
