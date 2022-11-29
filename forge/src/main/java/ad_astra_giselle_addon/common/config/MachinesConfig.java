@@ -3,6 +3,7 @@ package ad_astra_giselle_addon.common.config;
 import com.teamresourceful.resourcefulconfig.common.annotations.Category;
 import com.teamresourceful.resourcefulconfig.common.annotations.Comment;
 import com.teamresourceful.resourcefulconfig.common.annotations.ConfigEntry;
+import com.teamresourceful.resourcefulconfig.common.annotations.ConfigSeparator;
 import com.teamresourceful.resourcefulconfig.common.config.EntryType;
 
 import earth.terrarium.botarium.api.fluid.FluidHooks;
@@ -15,6 +16,7 @@ public final class MachinesConfig
 
 	public static final String FUEL_LOADER_ID = "fuel_loader";
 	public static final String FUEL_LOADER_PREFIX = PREFIX + "." + FUEL_LOADER_ID;
+	@ConfigSeparator(translation = FUEL_LOADER_PREFIX)
 	@ConfigEntry(id = FUEL_LOADER_ID + ".fluid_capacity", type = EntryType.LONG, translation = FUEL_LOADER_PREFIX + ".fluid_capacity")
 	public static long FUEL_LOADER_FLUID_CAPACITY = FluidHooks.buckets(8);
 	@ConfigEntry(id = FUEL_LOADER_ID + ".fluid_transfer", type = EntryType.LONG, translation = FUEL_LOADER_PREFIX + ".fluid_transfer")

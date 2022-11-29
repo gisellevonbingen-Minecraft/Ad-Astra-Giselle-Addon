@@ -3,6 +3,7 @@ package ad_astra_giselle_addon.common.config;
 import com.teamresourceful.resourcefulconfig.common.annotations.Category;
 import com.teamresourceful.resourcefulconfig.common.annotations.Comment;
 import com.teamresourceful.resourcefulconfig.common.annotations.ConfigEntry;
+import com.teamresourceful.resourcefulconfig.common.annotations.ConfigSeparator;
 import com.teamresourceful.resourcefulconfig.common.config.EntryType;
 
 @Category(id = EnchantmentsConfig.ID, translation = EnchantmentsConfig.PREFIX)
@@ -20,6 +21,7 @@ public final class EnchantmentsConfig
 
 	public static final String SPACE_BREATHING_ID = "space_breathing";
 	public static final String SPACE_BREATHING_PREFIX = PREFIX + "." + SPACE_BREATHING_ID;
+	@ConfigSeparator(translation = SPACE_BREATHING_PREFIX)
 	@ConfigEntry(id = SPACE_BREATHING_ID + ".energy_using", type = EntryType.INTEGER, translation = SPACE_BREATHING_PREFIX + ".energy_using")
 	@Comment(value = "Energy usage for breath", translation = SPACE_BREATHING_PREFIX + ".energy_using.comment")
 	public static int SPACE_BREATHING_ENERGY_USING = 10;
@@ -41,6 +43,7 @@ public final class EnchantmentsConfig
 
 	public static final String SPACE_FIRE_PROOF_ID = "space_fire_proof";
 	public static final String SPACE_FIRE_PROOF_PREFIX = PREFIX + "." + SPACE_FIRE_PROOF_ID;
+	@ConfigSeparator(translation = SPACE_FIRE_PROOF_PREFIX)
 	@ConfigEntry(id = SPACE_FIRE_PROOF_ID + ".energy_using", type = EntryType.INTEGER, translation = SPACE_FIRE_PROOF_PREFIX + ".energy_using")
 	@Comment(value = "Energy usage for proof", translation = SPACE_FIRE_PROOF_PREFIX + ".energy_using.comment")
 	public static int SPACE_FIRE_PROOF_ENERGY_USING = 10;
@@ -56,6 +59,7 @@ public final class EnchantmentsConfig
 
 	public static final String VENUS_ACID_PROOF_ID = "venus_acid_proof";
 	public static final String VENUS_ACID_PROOF_PREFIX = PREFIX + "." + VENUS_ACID_PROOF_ID;
+	@ConfigSeparator(translation = VENUS_ACID_PROOF_PREFIX)
 	@ConfigEntry(id = VENUS_ACID_PROOF_ID + ".energy_using", type = EntryType.INTEGER, translation = VENUS_ACID_PROOF_PREFIX + ".energy_using")
 	@Comment(value = "Energy usage for proof", translation = VENUS_ACID_PROOF_PREFIX + ".energy_using.comment")
 	public static int VENUS_ACID_PROOF_ENERGY_USING = 10;
