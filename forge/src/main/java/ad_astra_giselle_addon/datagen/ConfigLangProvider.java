@@ -1,4 +1,4 @@
-package ad_astra_giselle_addon.datagen.lang;
+package ad_astra_giselle_addon.datagen;
 
 import java.lang.reflect.Field;
 import java.util.Map.Entry;
@@ -19,7 +19,7 @@ public class ConfigLangProvider extends LanguageProvider
 {
 	public ConfigLangProvider(DataGenerator gen)
 	{
-		super(gen, AdAstraGiselleAddon.MOD_ID + "_platform", "en_us");
+		super(gen, AdAstraGiselleAddon.MOD_ID, "en_us");
 	}
 
 	@Override

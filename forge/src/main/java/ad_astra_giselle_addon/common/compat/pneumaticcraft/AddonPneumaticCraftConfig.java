@@ -17,10 +17,10 @@ public final class AddonPneumaticCraftConfig
 	public static final String SPACE_BREATHING_ID = UPGRADE_ID + ".space_breathing";
 	public static final String SPACE_BREATHING_PREFIX = PREFIX + "." + SPACE_BREATHING_ID;
 	@ConfigEntry(id = SPACE_BREATHING_ID + ".oxygen_duration", type = EntryType.INTEGER, translation = SPACE_BREATHING_PREFIX + ".oxygen_duration")
-	@Comment(value = "Duration of provided oxygen (oxygen provide interval)", translation = SPACE_BREATHING_PREFIX + ".oxygen_duration.comment")
+	@Comment(value = "Duration of provided oxygen [tick] (oxygen provide interval)", translation = SPACE_BREATHING_PREFIX + ".oxygen_duration.comment")
 	public static int SPACE_BREATHING_OXYGEN_DURATION = 4;
 	@ConfigEntry(id = SPACE_BREATHING_ID + ".air_using", type = EntryType.INTEGER, translation = SPACE_BREATHING_PREFIX + ".air_using")
-	@Comment(value = "Air usage for provide oxygen in every ticks", translation = SPACE_BREATHING_PREFIX + ".air_using.comment")
+	@Comment(value = "Air usage for provide oxygen", translation = SPACE_BREATHING_PREFIX + ".air_using.comment")
 	public static int SPACE_BREATHING_AIR_USING = 20;
 
 	public static final String SPACE_FIRE_PROOF_ID = UPGRADE_ID + ".space_fire_proof";

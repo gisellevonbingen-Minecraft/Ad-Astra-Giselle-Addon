@@ -1,7 +1,6 @@
 package ad_astra_giselle_addon.datagen;
 
 import ad_astra_giselle_addon.common.AdAstraGiselleAddon;
-import ad_astra_giselle_addon.datagen.lang.ConfigLangProvider;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.data.event.GatherDataEvent;
