@@ -1,0 +1,13 @@
+{
+	"required": true,
+	"package": "ad_astra_giselle_addon.common.mixin",
+	"compatibilityLevel": "JAVA_17",
+	"mixins": [
+		"minecraft.LivingEntityMixin",
+		"ad_astra.EntityAcidRainSystemMixin",
+		"ad_astra.EntityTemperatureSystemMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}

@@ -1,0 +1,29 @@
+{
+	"replace": false,
+	"values": [
+		{
+			"required": false,
+			"id": "#forge:diesel"
+		},
+		{
+			"required": false,
+			"id": "#forge:biodiesel"
+		},
+		{
+			"required": false,
+			"id": "#forge:biofuel"
+		},
+		{
+			"id": "thermal:refined_fuel",
+			"required": false
+		},
+		{
+			"id": "vehicle:fuelium",
+			"required": false
+		},
+		{
+			"id": "car:bio_diesel",
+			"required": false
+		}
+	]
+}

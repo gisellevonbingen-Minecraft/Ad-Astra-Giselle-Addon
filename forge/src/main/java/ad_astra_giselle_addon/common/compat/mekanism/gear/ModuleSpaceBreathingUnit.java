@@ -55,24 +55,6 @@ public class ModuleSpaceBreathingUnit implements ICustomModule<ModuleSpaceBreath
 		this.energyUsingProduce = FloatingLong.create(AddonMekanismConfig.MODULES_SPACE_BREATHING_ENERGY_USING_PRODUCE);
 	}
 
-	/**
-	 *
-	 * @param entity
-	 * @return provided oxygen to entity
-	 */
-	public int provideOxygen(IModule<ModuleSpaceBreathingUnit> module, LivingEntity entity)
-	{
-		if (this.useResources(module, entity))
-		{
-			return this.getOxygenDuration();
-		}
-		else
-		{
-			return 0;
-		}
-
-	}
-
 	@Override
 	public void tickServer(IModule<ModuleSpaceBreathingUnit> module, Player player)
 	{
@@ -137,7 +119,7 @@ public class ModuleSpaceBreathingUnit implements ICustomModule<ModuleSpaceBreath
 		return 0L;
 	}
 
-	public boolean useResources(IModule<ModuleSpaceBreathingUnit> module, LivingEntity living)
+	public boolean useResources(IModule<ModuleSpaceBreathingUnit> module, LivingEntity living, boolean simulate)
 	{
 		int oxygenUsing = 1;
 		IOxygenCharger oxygenCharger = OxygenChargerUtils.firstExtractable(living, oxygenUsing, module.getContainer());
@@ -152,7 +134,7 @@ public class ModuleSpaceBreathingUnit implements ICustomModule<ModuleSpaceBreath
 
 				if (module.canUseEnergy(living, energyUsing))
 				{
-					if (!living.getLevel().isClientSide())
+					if (!simulate && !living.getLevel().isClientSide())
 					{
 						FluidHooks2.extractFluid(fluidHandler, FluidPredicates::isOxygen, oxygenUsing, false);
 						module.useEnergy(living, energyUsing);

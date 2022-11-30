@@ -9,16 +9,15 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-import ad_astra_giselle_addon.common.registries.DeferredRegisterWrapper;
+import ad_astra_giselle_addon.common.delegate.DelegateRegistryFactory;
+import ad_astra_giselle_addon.common.registries.DelegateObjectCollection;
+import ad_astra_giselle_addon.common.registries.DelegateObjectHolder;
 import me.desht.pneumaticcraft.api.item.PNCUpgrade;
 import me.desht.pneumaticcraft.common.core.ModUpgrades;
 import me.desht.pneumaticcraft.common.item.UpgradeItem;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Item;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
 
 public class UpgradeDeferredRegister
 {
@@ -28,8 +27,8 @@ public class UpgradeDeferredRegister
 	private final Set<UpgradeRegistryObject<?, ?>> objects;
 	private final Set<UpgradeRegistryObject<?, ?>> readonlyObjects;
 
-	protected final DeferredRegisterWrapper<PNCUpgrade> primaryRegister;
-	protected final DeferredRegisterWrapper<Item> secondaryRegister;
+	protected final DelegateObjectCollection<PNCUpgrade> primaryRegister;
+	protected final DelegateObjectCollection<Item> secondaryRegister;
 
 	public UpgradeDeferredRegister(String modid)
 	{
@@ -37,8 +36,8 @@ public class UpgradeDeferredRegister
 		this.objects = new HashSet<>();
 		this.readonlyObjects = Collections.unmodifiableSet(this.objects);
 
-		this.primaryRegister = DeferredRegisterWrapper.create(modid, REGISTRY_KEY);
-		this.secondaryRegister = DeferredRegisterWrapper.create(modid, ForgeRegistries.ITEMS);
+		this.primaryRegister = new DelegateObjectCollection<>(modid, REGISTRY_KEY);
+		this.secondaryRegister = new DelegateObjectCollection<>(modid, Registry.ITEM_REGISTRY);
 	}
 
 	public UpgradeRegistryObject<AddonPNCUpgrade, UpgradeItem> register(String name, Supplier<Item.Properties> propertiesSup)
@@ -52,28 +51,28 @@ public class UpgradeDeferredRegister
 	}
 
 	@SuppressWarnings("unchecked")
-	public <U extends AddonPNCUpgrade, I extends UpgradeItem> UpgradeRegistryObject<U, I> register(String name, Supplier<? extends U> upgradeSup, Function<RegistryObject<PNCUpgrade>, ? extends I> itemFunc)
+	public <U extends AddonPNCUpgrade, I extends UpgradeItem> UpgradeRegistryObject<U, I> register(String name, Supplier<? extends U> upgradeSup, Function<DelegateObjectHolder<PNCUpgrade>, ? extends I> itemFunc)
 	{
 		U upgrade = upgradeSup.get();
 		int maxTier = upgrade.getMaxTier();
-		RegistryObject<? extends PNCUpgrade> upgradeRegistry = this.primaryRegister.register(name, () -> upgrade);
+		DelegateObjectHolder<? extends PNCUpgrade> upgradeRegistry = this.primaryRegister.register(name, () -> upgrade);
 
-		List<RegistryObject<I>> items = new ArrayList<>();
+		List<DelegateObjectHolder<I>> items = new ArrayList<>();
 
 		for (int i = 0; i < upgrade.getMaxTier(); i++)
 		{
-			items.add(this.secondaryRegister.register(AddonPNCUpgrade.getItemName(name, maxTier, i + 1), () -> itemFunc.apply((RegistryObject<PNCUpgrade>) upgradeRegistry)));
+			items.add(this.secondaryRegister.register(AddonPNCUpgrade.getItemName(name, maxTier, i + 1), () -> itemFunc.apply((DelegateObjectHolder<PNCUpgrade>) upgradeRegistry)));
 		}
 
-		UpgradeRegistryObject<U, I> registryObject = new UpgradeRegistryObject<>((RegistryObject<U>) upgradeRegistry, items);
+		UpgradeRegistryObject<U, I> registryObject = new UpgradeRegistryObject<>((DelegateObjectHolder<U>) upgradeRegistry, items);
 		this.objects.add(registryObject);
 		return registryObject;
 	}
 
-	public void register(IEventBus bus)
+	public void register(DelegateRegistryFactory factory)
 	{
-		this.primaryRegister.register(bus);
-		this.secondaryRegister.register(bus);
+		this.primaryRegister.register(factory);
+		this.secondaryRegister.register(factory);
 	}
 
 	public String getModid()

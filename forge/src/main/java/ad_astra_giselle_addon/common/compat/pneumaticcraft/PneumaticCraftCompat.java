@@ -1,13 +1,17 @@
 package ad_astra_giselle_addon.common.compat.pneumaticcraft;
 
+import java.util.List;
+
+import com.mojang.brigadier.builder.ArgumentBuilder;
+
 import ad_astra_giselle_addon.client.compat.pneumaticcraft.AddonPneumaticCraftCompatClient;
+import ad_astra_giselle_addon.common.AdAstraGiselleAddon;
 import ad_astra_giselle_addon.common.compat.CompatibleMod;
+import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.commands.Commands;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 public class PneumaticCraftCompat extends CompatibleMod
 {
@@ -19,7 +23,7 @@ public class PneumaticCraftCompat extends CompatibleMod
 	}
 
 	@Override
-	public String getModID()
+	public String getModId()
 	{
 		return MODID;
 	}
@@ -27,14 +31,19 @@ public class PneumaticCraftCompat extends CompatibleMod
 	@Override
 	protected void onLoad()
 	{
-		IEventBus fml_bus = FMLJavaModLoadingContext.get().getModEventBus();
-		AddonPNCUpgrades.UPGRADES.register(fml_bus);
+		AddonPNCUpgrades.UPGRADES.register(AdAstraGiselleAddon.delegate().getRegistryFactory());
 		AddonCommonUpgradeHandlers.register();
 
-		IEventBus forge_bus = MinecraftForge.EVENT_BUS;
-		forge_bus.register(PneumaticCraftEventHandler.class);
+		AdAstraGiselleAddon.eventBus().register(new PneumaticCraftProofProvidingHandler());
 
 		DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> AddonPneumaticCraftCompatClient::new);
+	}
+
+	@Override
+	public void collectEquipCommands(List<ArgumentBuilder<CommandSourceStack, ?>> list)
+	{
+		super.collectEquipCommands(list);
+		list.add(Commands.literal("pneumatic_armor").executes(PneumaticCraftCommand::pneumatic_armor));
 	}
 
 }

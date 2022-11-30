@@ -18,7 +18,7 @@ public class CuriosCompat extends CompatibleMod
 	}
 
 	@Override
-	public String getModID()
+	public String getModId()
 	{
 		return MODID;
 	}

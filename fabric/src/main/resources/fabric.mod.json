@@ -1,30 +1,33 @@
 {
-  "schemaVersion": 1,
-  "id": "ad_astra_giselle_addon",
-  "version": "${mod_version}",
-  "name": "${mod_name}",
-  "description": "${mod_description}",
-  "authors": [
-    "gisellevonbingen"
-  ],
-  "contact": {
-    "homepage": "${mod_homepage}",
-    "sources": "${mod_source}",
-    "issues": "${mod_issues}"
-  },
-  "license": "${mod_license}",
-  "icon": "icon.png",
-  "environment": "*",
-  "entrypoints": {
-  },
-  "mixins": [
-    "ad_astra_giselle_addon.mixin.common.json",
-    "ad_astra_giselle_addon.mixin.client.json"
-  ],
-  "depends": {
-    "fabric": "*",
-    "minecraft": ">=${mc_version}",
-    "ad_astra": ">=${ad_astra_version}",
-    "resourcefulconfig": ">=${resourcefulconfig_version}"
-  }
+	"schemaVersion": 1,
+	"id": "ad_astra_giselle_addon",
+	"version": "${mod_version}",
+	"name": "${mod_name}",
+	"description": "${mod_description}",
+	"authors": [
+		"gisellevonbingen"
+	],
+	"contact": {
+		"homepage": "${mod_homepage}",
+		"sources": "${mod_source}",
+		"issues": "${mod_issues}"
+	},
+	"license": "${mod_license}",
+	"icon": "icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"ad_astra_giselle_addon.common.AdAstraGiselleAddonFabric"
+		]
+	},
+	"mixins": [
+		"ad_astra_giselle_addon.mixin.common.json",
+		"ad_astra_giselle_addon.mixin.client.json"
+	],
+	"depends": {
+		"fabric": "*",
+		"minecraft": ">=${mc_version}",
+		"ad_astra": ">=${ad_astra_version}",
+		"resourcefulconfig": ">=${resourcefulconfig_version}"
+	}
 }

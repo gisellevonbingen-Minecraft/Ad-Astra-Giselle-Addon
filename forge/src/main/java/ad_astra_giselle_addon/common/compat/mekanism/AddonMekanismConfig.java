@@ -6,13 +6,13 @@ import com.teamresourceful.resourcefulconfig.common.annotations.ConfigEntry;
 import com.teamresourceful.resourcefulconfig.common.annotations.ConfigSeparator;
 import com.teamresourceful.resourcefulconfig.common.config.EntryType;
 
-import ad_astra_giselle_addon.common.config.CompatsConfig;
+import ad_astra_giselle_addon.common.config.ForgeCompatsConfig;
 
 @Category(id = AddonMekanismConfig.ID, translation = AddonMekanismConfig.PREFIX)
 public final class AddonMekanismConfig
 {
 	public static final String ID = MekanismCompat.MODID;
-	public static final String PREFIX = CompatsConfig.PREFIX + "." + ID;
+	public static final String PREFIX = ForgeCompatsConfig.PREFIX + "." + ID;
 	public static final String MODULES_ID = "modules";
 
 	public static final String MODULES_SPACE_BREATHING_ID = MODULES_ID + ".space_breathing";

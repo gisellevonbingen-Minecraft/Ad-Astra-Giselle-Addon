@@ -9,6 +9,7 @@ import com.google.common.collect.Sets;
 import ad_astra_giselle_addon.common.config.EnchantmentsConfig;
 import ad_astra_giselle_addon.common.enchantment.EnchantmentHelper2;
 import ad_astra_giselle_addon.common.registries.AddonEnchantments;
+import ad_astra_giselle_addon.common.registries.DelegateObjectHolder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.world.item.EnchantedBookItem;
@@ -81,8 +82,10 @@ public class EventListenerEnchantmentTooltip
 
 			List<Component> lines = e.getToolTip();
 
-			for (Enchantment enchantment : AddonEnchantments.ENCHANTMENTS.getObjects())
+			for (DelegateObjectHolder<Enchantment> holder : AddonEnchantments.ENCHANTMENTS.getObjects())
 			{
+				Enchantment enchantment = holder.get();
+
 				for (Component line : lines)
 				{
 					if (line.getContents() instanceof TranslatableContents contents)

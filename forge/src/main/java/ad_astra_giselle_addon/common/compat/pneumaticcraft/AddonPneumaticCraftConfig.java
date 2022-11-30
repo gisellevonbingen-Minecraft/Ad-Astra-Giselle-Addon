@@ -6,13 +6,13 @@ import com.teamresourceful.resourcefulconfig.common.annotations.ConfigEntry;
 import com.teamresourceful.resourcefulconfig.common.annotations.ConfigSeparator;
 import com.teamresourceful.resourcefulconfig.common.config.EntryType;
 
-import ad_astra_giselle_addon.common.config.CompatsConfig;
+import ad_astra_giselle_addon.common.config.ForgeCompatsConfig;
 
 @Category(id = AddonPneumaticCraftConfig.ID, translation = AddonPneumaticCraftConfig.PREFIX)
 public final class AddonPneumaticCraftConfig
 {
 	public static final String ID = PneumaticCraftCompat.MODID;
-	public static final String PREFIX = CompatsConfig.PREFIX + "." + ID;
+	public static final String PREFIX = ForgeCompatsConfig.PREFIX + "." + ID;
 	public static final String UPGRADE_ID = "upgades";
 
 	public static final String SPACE_BREATHING_ID = UPGRADE_ID + ".space_breathing";

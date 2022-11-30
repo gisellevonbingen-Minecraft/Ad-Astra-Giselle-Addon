@@ -46,7 +46,7 @@ minecraft {
             property "forge.logging.markers", "REGISTRIES"
             property "forge.logging.console.level", "debug"
             property "forge.enabledGameTestNamespaces", "ad_astra_giselle_addon"
-            args "-mixin.config=ad_astra_giselle_addon.mixin.common.json", "-mixin.config=ad_astra_giselle_addon.mixin.client.json"
+            args "-mixin.config=ad_astra_giselle_addon.mixin.common.json", "-mixin.config=ad_astra_giselle_addon.mixin.client.json", "-mixin.config=ad_astra_giselle_addon.mixin.forge.client.json", "-mixin.config=ad_astra_giselle_addon.mixin.forge.client.json"
 
             mods {
                 ad_astra_giselle_addon {
@@ -62,7 +62,7 @@ minecraft {
             property "forge.logging.markers", "REGISTRIES"
             property "forge.logging.console.level", "debug"
             property "forge.enabledGameTestNamespaces", "ad_astra_giselle_addon"
-            args "-mixin.config=ad_astra_giselle_addon.mixin.common.json", "-mixin.config=ad_astra_giselle_addon.mixin.client.json"
+            args "-mixin.config=ad_astra_giselle_addon.mixin.common.json", "-mixin.config=ad_astra_giselle_addon.mixin.client.json", "-mixin.config=ad_astra_giselle_addon.mixin.forge.client.json", "-mixin.config=ad_astra_giselle_addon.mixin.forge.client.json"
 
             mods {
                 ad_astra_giselle_addon {
