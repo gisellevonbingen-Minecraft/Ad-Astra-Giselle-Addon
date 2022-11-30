@@ -2,40 +2,43 @@ allprojects {
     apply plugin: "java"
     apply plugin: "maven-publish"
 
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+
     archivesBaseName = rootProject.archives_base_name
     version = "${rootProject.mc_version}-${rootProject.mod_version}"
     group = rootProject.maven_group
 
-	repositories {
-		maven {
-			name "JEI"
-			url "https://dvs1.progwml6.com/files/maven"
-		}
-		maven {
-			name "ModMaven"
-			url "https://modmaven.dev"
-		}
-		maven {
-			name "CurseForge"
-			url "https://www.cursemaven.com"
-		}
-		maven {
-			name "Terrarium"
-			url "https://maven.terraformersmc.com"
-		}
-		maven {
-			name "Team Resourceful"
-			url "https://nexus.resourcefulbees.com/repository/maven-public/"
-		}
-		maven {
-			name "shedaniel"
-			url "https://maven.shedaniel.me"
-		}
-		maven {
-			name "Local"
-			url uri("${projectDir}/libs")
-		}
-	}
+    repositories {
+        maven {
+            name "JEI"
+            url "https://dvs1.progwml6.com/files/maven"
+        }
+        maven {
+            name "ModMaven"
+            url "https://modmaven.dev"
+        }
+        maven {
+            name "CurseForge"
+            url "https://www.cursemaven.com"
+        }
+        maven {
+            name "Terrarium"
+            url "https://maven.terraformersmc.com"
+        }
+        maven {
+            name "Team Resourceful"
+            url "https://nexus.resourcefulbees.com/repository/maven-public/"
+        }
+        maven {
+            name "shedaniel"
+            url "https://maven.shedaniel.me"
+        }
+        maven {
+            name "Local"
+            url uri("${projectDir}/libs")
+        }
+    }
 
     tasks.withType(JavaCompile) {
         options.encoding = "UTF-8"
@@ -44,5 +47,35 @@ allprojects {
 
     java {
         withSourcesJar()
+    }
+
+    def resourceTargets = ["META-INF/mods.toml", "fabric.mod.json"]
+    def intoTargets = ["$rootDir/out/production/resources/", "$rootDir/out/production/${project.name}.main/", "$rootDir/${project.name}/bin/main/"]
+    def replaceProperties = [mc_version: mc_version,
+        mod_version: mod_version, mod_name: mod_name, mod_description: mod_description, mod_license: mod_license, mod_homepage: mod_homepage, mod_source: mod_source, mod_issues: mod_issues,
+        fabric_api_version: fabric_api_version, fabric_loader_version: fabric_loader_version,
+        forge_api_version: forge_api_version, forge_loader_version: forge_loader_version,
+        ad_astra_version: ad_astra_version, resourcefulconfig_version: resourcefulconfig_version
+    ]
+        
+    processResources {
+        inputs.properties replaceProperties
+        replaceProperties.put "project", project
+
+        filesMatching(resourceTargets) {
+            expand replaceProperties
+        }
+
+        intoTargets.each { target ->
+            if (file(target).exists()) {
+                copy {
+                    from(sourceSets.main.resources) {
+                        include resourceTargets
+                        expand replaceProperties
+                    }
+                    into target
+                }
+            }
+        }
     }
 }

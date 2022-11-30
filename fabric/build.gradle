@@ -1,3 +1,8 @@
+plugins {
+    id "fabric-loom" version "1.0-SNAPSHOT"
+}
+ 
+version = "fabric-${rootProject.mc_version}-${rootProject.mod_version}"
 
 sourceSets {
     main {
@@ -11,5 +16,57 @@ sourceSets {
             srcDirs += "../common/src/generated/resources"
             exclude ".cache"
         }
+    }
+}
+
+loom {
+    runs {
+        client {
+            client()
+            setConfigName("fabric_client")
+            ideConfigGenerated(true)
+            runDir("run")
+        }
+        server {
+            server()
+            setConfigName("fabric_server")
+            ideConfigGenerated(true)
+            runDir("run")
+        }
+    }
+}
+
+dependencies {
+    // Mod
+    minecraft "com.mojang:minecraft:${mc_version}"
+	mappings loom.layered() {
+        officialMojangMappings()
+        parchment("org.parchmentmc.data:parchment-${mc_version}:${parchment_version}@zip")
+    }
+
+    modImplementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
+    modApi "net.fabricmc.fabric-api:fabric-api:${fabric_api_version}+${mc_version}"
+
+    // Ad Astra - Required
+    modImplementation "curse.maven:ad-astra-635042:${ad_astra_fabric_file}"
+    modImplementation "earth.terrarium:botarium-fabric-${mc_version}:${botarium_version}"
+    modImplementation "com.teamresourceful.resourcefullib:resourcefullib-fabric-${mc_version}:${resourcefullib_version}"
+    modImplementation "com.teamresourceful.resourcefulconfig:resourcefulconfig-fabric-${mc_version}:${resourcefulconfig_version}"
+
+    // Ad Astra - Optional
+    modImplementation "com.terraformersmc:modmenu:${modmenu_version}"
+
+    // Implementation
+
+    // Runtiem Only
+    modRuntimeOnly "curse.maven:badpackets-615134:${badpackets_file}"
+    modRuntimeOnly "curse.maven:wthit-440979:${wthit_file}"
+}
+
+processResources {
+    inputs.property "version", project.version
+
+    filesMatching("fabric.mod.json") {
+        expand "version": project.version
     }
 }
