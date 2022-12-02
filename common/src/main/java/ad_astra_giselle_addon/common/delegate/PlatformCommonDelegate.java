@@ -15,4 +15,6 @@ public interface PlatformCommonDelegate
 	DelegateFluidHelper getFluidHelper();
 
 	DelegateScreenHelper getScreenHelper();
+	
+	Class<?> getConfigClass();
 }

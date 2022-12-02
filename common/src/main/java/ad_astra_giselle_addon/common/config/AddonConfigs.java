@@ -1,5 +1,10 @@
 package ad_astra_giselle_addon.common.config;
 
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import com.teamresourceful.resourcefulconfig.common.annotations.Config;
 import com.teamresourceful.resourcefulconfig.common.annotations.InlineCategory;
 
@@ -19,4 +24,23 @@ public final class AddonConfigs
 
 	@InlineCategory
 	public static EnchantmentsConfig ENCHANTMENTS;
+
+	public static void validConfig(Class<?> clazz)
+	{
+		List<String> requireFields = getCatoryFieldNames(AddonConfigs.class);
+		List<String> currentFields = getCatoryFieldNames(clazz);
+		requireFields.removeAll(currentFields);
+
+		if (requireFields.size() > 0)
+		{
+			throw new IllegalArgumentException("config class (" + clazz + ") has missing categoris: " + requireFields);
+		}
+
+	}
+
+	private static List<String> getCatoryFieldNames(Class<?> clazz)
+	{
+		return new ArrayList<>(Arrays.stream(clazz.getDeclaredFields()).filter(f -> f.getAnnotation(InlineCategory.class) != null).map(Field::getName).toList());
+	}
+
 }

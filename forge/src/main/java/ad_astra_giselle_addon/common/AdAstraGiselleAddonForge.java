@@ -2,6 +2,7 @@ package ad_astra_giselle_addon.common;
 
 import ad_astra_giselle_addon.client.AdAstraGiselleAddonClientProxyForge;
 import ad_astra_giselle_addon.common.compat.ForgeCompatibleManager;
+import ad_astra_giselle_addon.common.config.AddonForgeConfigs;
 import ad_astra_giselle_addon.common.delegate.CreativeModeTabBuilder;
 import ad_astra_giselle_addon.common.delegate.DelegateFluidHelper;
 import ad_astra_giselle_addon.common.delegate.DelegateLivingHelper;
@@ -89,6 +90,12 @@ public class AdAstraGiselleAddonForge implements PlatformCommonDelegate
 	public DelegateScreenHelper getScreenHelper()
 	{
 		return () -> !ForgeCompatibleManager.JEI.isLoaded();
+	}
+
+	@Override
+	public Class<?> getConfigClass()
+	{
+		return AddonForgeConfigs.class;
 	}
 
 }

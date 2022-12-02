@@ -3,6 +3,7 @@ package ad_astra_giselle_addon.common;
 import java.util.Collections;
 
 import ad_astra_giselle_addon.common.command.AddonCommand;
+import ad_astra_giselle_addon.common.config.AddonConfigs;
 import ad_astra_giselle_addon.common.delegate.CreativeModeTabBuilder;
 import ad_astra_giselle_addon.common.delegate.DelegateFluidHelper;
 import ad_astra_giselle_addon.common.delegate.DelegateLivingHelper;
@@ -60,6 +61,12 @@ public class AdAstraGiselleAddonFabric implements ModInitializer, PlatformCommon
 	public DelegateScreenHelper getScreenHelper()
 	{
 		return () -> true;
+	}
+
+	@Override
+	public Class<?> getConfigClass()
+	{
+		return AddonConfigs.class;
 	}
 
 }

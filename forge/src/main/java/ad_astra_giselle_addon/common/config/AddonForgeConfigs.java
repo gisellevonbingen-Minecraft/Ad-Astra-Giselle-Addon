@@ -4,8 +4,16 @@ import com.teamresourceful.resourcefulconfig.common.annotations.Config;
 import com.teamresourceful.resourcefulconfig.common.annotations.InlineCategory;
 
 @Config(AddonConfigs.ID)
-public class AddonForgeConfig
+public final class AddonForgeConfigs
 {
+	@InlineCategory
+	public static ItemsConfig ITEMS;
+
+	@InlineCategory
+	public static MachinesConfig MACHINES;
+
+	@InlineCategory
+	public static EnchantmentsConfig ENCHANTMENTS;
 
 	@InlineCategory
 	public static ForgeCompatsConfig COMPATS;

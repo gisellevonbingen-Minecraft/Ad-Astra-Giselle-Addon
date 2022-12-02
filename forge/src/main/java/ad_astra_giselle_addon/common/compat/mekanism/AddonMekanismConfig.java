@@ -20,7 +20,7 @@ public final class AddonMekanismConfig
 	public static final String MODULES_SPACE_BREATHING_ID = MODULES_ID + ".space_breathing";
 	public static final String MODULES_SPACE_BREATHING_PREFIX = PREFIX + "." + MODULES_SPACE_BREATHING_ID;
 	@ConfigSeparator(translation = MODULES_SPACE_BREATHING_PREFIX)
-	@ConfigEntry(id = MODULES_SPACE_BREATHING_ID + ".oxygen_using", type = EntryType.INTEGER, translation = MODULES_SPACE_BREATHING_PREFIX + ".oxygen_using")
+	@ConfigEntry(id = MODULES_SPACE_BREATHING_ID + ".energy_using_provide", type = EntryType.INTEGER, translation = MODULES_SPACE_BREATHING_PREFIX + ".energy_using_provide")
 	@Comment(value = "Energy usage for provide oxygen " + EnchantmentsConfig.OXYGEN_ENERGY_INTERVAL_TOOLTIP, translation = MODULES_SPACE_BREATHING_PREFIX + ".energy_using_provide.comment")
 	public static int MODULES_SPACE_BREATHING_ENERGY_USING_PROVIDE = 10 * ProofAbstractUtils.OXYGEN_PROOF_INTERVAL;
 	@ConfigEntry(id = MODULES_SPACE_BREATHING_ID + ".energy_using_produce", type = EntryType.INTEGER, translation = MODULES_SPACE_BREATHING_PREFIX + ".energy_using_produce")

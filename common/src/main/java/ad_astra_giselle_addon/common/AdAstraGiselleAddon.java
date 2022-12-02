@@ -50,12 +50,14 @@ public class AdAstraGiselleAddon
 
 	public static ResourcefulConfig config()
 	{
-		return CONFIGURATOR.getConfig(AddonConfigs.class);
+		return CONFIGURATOR.getConfig(delegate().getConfigClass());
 	}
 
 	public static void initCommon(PlatformCommonDelegate delegate)
 	{
-		CONFIGURATOR.registerConfig(AddonConfigs.class);
+		Class<?> configClass = delegate.getConfigClass();
+		AddonConfigs.validConfig(configClass);
+		CONFIGURATOR.registerConfig(configClass);
 
 		AdAstraGiselleAddon.delegate = delegate;
 
