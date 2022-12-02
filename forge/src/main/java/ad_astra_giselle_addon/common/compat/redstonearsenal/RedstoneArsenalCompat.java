@@ -11,17 +11,17 @@ import net.minecraft.resources.ResourceLocation;
 
 public class RedstoneArsenalCompat extends CompatibleMod
 {
-	public static final String MODID = "redstone_arsenal";
+	public static final String MOD_ID = "redstone_arsenal";
 
 	public static ResourceLocation rl(String path)
 	{
-		return new ResourceLocation(MODID, path);
+		return new ResourceLocation(MOD_ID, path);
 	}
 
 	@Override
 	public String getModId()
 	{
-		return MODID;
+		return MOD_ID;
 	}
 
 	@Override

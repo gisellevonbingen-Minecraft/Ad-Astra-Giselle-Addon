@@ -10,17 +10,17 @@ import top.theillusivec4.curios.api.SlotTypePreset;
 
 public class CuriosCompat extends CompatibleMod
 {
-	public static final String MODID = "curios";
+	public static final String MOD_ID = "curios";
 
 	public static ResourceLocation rl(String path)
 	{
-		return new ResourceLocation(MODID, path);
+		return new ResourceLocation(MOD_ID, path);
 	}
 
 	@Override
 	public String getModId()
 	{
-		return MODID;
+		return MOD_ID;
 	}
 
 	@Override
@@ -31,7 +31,7 @@ public class CuriosCompat extends CompatibleMod
 
 	public void registerSlots(InterModEnqueueEvent event)
 	{
-		InterModComms.sendTo(MODID, SlotTypeMessage.REGISTER_TYPE, () -> SlotTypePreset.CURIO.getMessageBuilder().build());
+		InterModComms.sendTo(MOD_ID, SlotTypeMessage.REGISTER_TYPE, () -> SlotTypePreset.CURIO.getMessageBuilder().build());
 	}
 
 }

@@ -11,7 +11,7 @@ import ad_astra_giselle_addon.common.config.ForgeCompatsConfig;
 @Category(id = AddonMekanismConfig.ID, translation = AddonMekanismConfig.PREFIX)
 public final class AddonMekanismConfig
 {
-	public static final String ID = MekanismCompat.MODID;
+	public static final String ID = MekanismCompat.MOD_ID;
 	public static final String PREFIX = ForgeCompatsConfig.PREFIX + "." + ID;
 	public static final String MODULES_ID = "modules";
 

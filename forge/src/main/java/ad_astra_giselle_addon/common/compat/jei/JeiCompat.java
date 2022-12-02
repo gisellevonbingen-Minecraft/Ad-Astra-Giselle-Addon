@@ -5,17 +5,17 @@ import net.minecraft.resources.ResourceLocation;
 
 public class JeiCompat extends CompatibleMod
 {
-	public static final String MODID = "jei";
+	public static final String MOD_ID = "jei";
 
 	public static ResourceLocation rl(String path)
 	{
-		return new ResourceLocation(MODID, path);
+		return new ResourceLocation(MOD_ID, path);
 	}
 
 	@Override
 	public String getModId()
 	{
-		return MODID;
+		return MOD_ID;
 	}
 
 	@Override

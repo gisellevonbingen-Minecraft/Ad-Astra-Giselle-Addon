@@ -11,7 +11,7 @@ import ad_astra_giselle_addon.common.config.ForgeCompatsConfig;
 @Category(id = AddonPneumaticCraftConfig.ID, translation = AddonPneumaticCraftConfig.PREFIX)
 public final class AddonPneumaticCraftConfig
 {
-	public static final String ID = PneumaticCraftCompat.MODID;
+	public static final String ID = PneumaticCraftCompat.MOD_ID;
 	public static final String PREFIX = ForgeCompatsConfig.PREFIX + "." + ID;
 	public static final String UPGRADE_ID = "upgades";
 
