@@ -20,7 +20,7 @@ public final class MachinesConfig
 	@ConfigEntry(id = FUEL_LOADER_ID + ".fluid_capacity", type = EntryType.LONG, translation = FUEL_LOADER_PREFIX + ".fluid_capacity")
 	public static long FUEL_LOADER_FLUID_CAPACITY = FluidHooks.buckets(8);
 	@ConfigEntry(id = FUEL_LOADER_ID + ".fluid_transfer", type = EntryType.LONG, translation = FUEL_LOADER_PREFIX + ".fluid_transfer")
-	public static long FUEL_LOADER_FLUID_TRANSFER = FluidHooks.toMillibuckets(256);
+	public static long FUEL_LOADER_FLUID_TRANSFER = FluidHooks.buckets(1) / 4;
 	@ConfigEntry(id = FUEL_LOADER_ID + ".working_range", type = EntryType.INTEGER, translation = FUEL_LOADER_PREFIX + ".working_range")
 	@Comment(value = "Blocks from Fuel Loader to each direction", translation = FUEL_LOADER_PREFIX + ".working_range.comment")
 	public static int FUEL_LOADER_WORKING_RANGE = 2;

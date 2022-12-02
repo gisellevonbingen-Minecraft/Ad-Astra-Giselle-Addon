@@ -19,5 +19,5 @@ public final class ItemsConfig
 	@ConfigEntry(id = OXYGEN_CAN_ID + ".fluid_capacity", type = EntryType.LONG, translation = OXYGEN_CAN_PREFIX + ".fluid_capacity")
 	public static long OXYGEN_CAN_FLUID_CAPACITY = FluidHooks.buckets(2);
 	@ConfigEntry(id = OXYGEN_CAN_ID + ".fluid_transfer", type = EntryType.LONG, translation = OXYGEN_CAN_PREFIX + ".fluid_transfer")
-	public static long OXYGEN_CAN_FLUID_TRANSFER = FluidHooks.toMillibuckets(256);
+	public static long OXYGEN_CAN_FLUID_TRANSFER = FluidHooks.buckets(1) / 4;
 }

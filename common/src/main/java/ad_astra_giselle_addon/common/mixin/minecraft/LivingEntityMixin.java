@@ -15,6 +15,7 @@ import ad_astra_giselle_addon.common.content.oxygen.OxygenChargerUtils;
 import ad_astra_giselle_addon.common.content.proof.ProofAbstractUtils;
 import ad_astra_giselle_addon.common.content.proof.SpaceOxygenProofUtils;
 import ad_astra_giselle_addon.common.entity.IProofDurationAccesor;
+import ad_astra_giselle_addon.common.fluid.FluidHooks2;
 import ad_astra_giselle_addon.common.util.NBTUtils;
 import earth.terrarium.ad_astra.registry.ModDamageSource;
 import net.minecraft.nbt.CompoundTag;
@@ -91,7 +92,7 @@ public abstract class LivingEntityMixin extends Entity implements IProofDuration
 
 		if (!living.getLevel().isClientSide())
 		{
-			OxygenChargerUtils.streamExtractable(living, 1L, null).forEach(c ->
+			OxygenChargerUtils.streamExtractable(living, FluidHooks2.MB_1, null).forEach(c ->
 			{
 				OxygenChargerUtils.distributeToItems(living, c);
 			});
