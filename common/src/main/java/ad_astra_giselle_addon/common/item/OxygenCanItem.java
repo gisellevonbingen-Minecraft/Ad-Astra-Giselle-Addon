@@ -84,7 +84,9 @@ public class OxygenCanItem extends Item implements FluidContainingItem, IOxygenC
 
 		if (oxygenCharger != null && oxygenCharger.getChargeMode() != ChargeMode.NONE)
 		{
-			if (!FluidHooks2.extractFluid(oxygenCharger.getFluidHandler(), FluidPredicates::isOxygen, FluidHooks2.MB_1, true).isEmpty())
+			long storedAmount = FluidHooks2.getStoredAmount(oxygenCharger.getFluidHandler());
+
+			if (storedAmount > 0)
 			{
 				return true;
 			}

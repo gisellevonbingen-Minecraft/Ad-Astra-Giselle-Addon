@@ -89,26 +89,34 @@ public abstract class UniveralFluidHandler implements PlatformFluidHandler
 			this.item = item;
 		}
 
-		public ItemStackHolder getItem()
+		private ItemStackHolder getItem(boolean simulate)
 		{
-			return this.item;
+			if (simulate)
+			{
+				return new ItemStackHolder(this.item.getStack().copy());
+			}
+			else
+			{
+				return this.item;
+			}
+			
 		}
 
-		public PlatformFluidItemHandler getInternalHandler()
+		private PlatformFluidItemHandler getInternalHandler()
 		{
-			return FluidHooks.getItemFluidManager(this.getItem().getStack());
+			return FluidHooks.getItemFluidManager(this.getItem(false).getStack());
 		}
 
 		@Override
 		public long insertFluid(FluidHolder fluid, boolean simulate)
 		{
-			return this.getInternalHandler().insertFluid(this.getItem(), fluid, simulate);
+			return this.getInternalHandler().insertFluid(this.getItem(simulate), fluid, simulate);
 		}
 
 		@Override
 		public FluidHolder extractFluid(FluidHolder fluid, boolean simulate)
 		{
-			return this.getInternalHandler().extractFluid(this.getItem(), fluid, simulate);
+			return this.getInternalHandler().extractFluid(this.getItem(simulate), fluid, simulate);
 		}
 
 		@Override
