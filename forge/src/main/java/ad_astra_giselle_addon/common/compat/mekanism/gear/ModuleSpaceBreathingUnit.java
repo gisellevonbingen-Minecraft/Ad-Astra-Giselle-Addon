@@ -7,6 +7,7 @@ import ad_astra_giselle_addon.common.AdAstraGiselleAddon;
 import ad_astra_giselle_addon.common.compat.mekanism.AddonMekanismConfig;
 import ad_astra_giselle_addon.common.content.oxygen.IOxygenCharger;
 import ad_astra_giselle_addon.common.content.oxygen.OxygenChargerUtils;
+import ad_astra_giselle_addon.common.content.proof.ProofAbstractUtils;
 import ad_astra_giselle_addon.common.fluid.FluidHooks2;
 import ad_astra_giselle_addon.common.fluid.FluidPredicates;
 import ad_astra_giselle_addon.common.fluid.UniveralFluidHandler;
@@ -50,7 +51,7 @@ public class ModuleSpaceBreathingUnit implements ICustomModule<ModuleSpaceBreath
 	{
 		ICustomModule.super.init(module, configItemCreator);
 
-		this.oxygenDuration = AddonMekanismConfig.MODULES_SPACE_BREATHING_OXYGEN_DURATION;
+		this.oxygenDuration = ProofAbstractUtils.OXYGEN_PROOF_INTERVAL;
 		this.energyUsingProvide = FloatingLong.create(AddonMekanismConfig.MODULES_SPACE_BREATHING_ENERGY_USING_PROVIDE);
 		this.energyUsingProduce = FloatingLong.create(AddonMekanismConfig.MODULES_SPACE_BREATHING_ENERGY_USING_PRODUCE);
 	}
@@ -121,7 +122,7 @@ public class ModuleSpaceBreathingUnit implements ICustomModule<ModuleSpaceBreath
 
 	public boolean useResources(IModule<ModuleSpaceBreathingUnit> module, LivingEntity living, boolean simulate)
 	{
-		int oxygenUsing = 1;
+		long oxygenUsing = ProofAbstractUtils.OXYGEN_PROOF_USING;
 		IOxygenCharger oxygenCharger = OxygenChargerUtils.firstExtractable(living, oxygenUsing, module.getContainer());
 
 		if (oxygenCharger != null)

@@ -8,6 +8,7 @@ import ad_astra_giselle_addon.common.compat.mekanism.gear.ModuleVenusAcidProofUn
 import ad_astra_giselle_addon.common.content.proof.LivingSpaceFireProofProvidingEvent;
 import ad_astra_giselle_addon.common.content.proof.LivingSpaceOxygenProofProvidingEvent;
 import ad_astra_giselle_addon.common.content.proof.LivingVenusAcidProofProvidingEvent;
+import ad_astra_giselle_addon.common.content.proof.ProofAbstractUtils;
 import ad_astra_giselle_addon.common.content.proof.ProofSession;
 import mekanism.common.content.gear.Module;
 
@@ -53,7 +54,7 @@ public class MekanismProofProvidingHandler
 			@Override
 			public int getProofDuration()
 			{
-				return 1;
+				return ProofAbstractUtils.GENERAL_PROOF_INTERVAL;
 			}
 		});
 
@@ -73,7 +74,7 @@ public class MekanismProofProvidingHandler
 			@Override
 			public int getProofDuration()
 			{
-				return 1;
+				return ProofAbstractUtils.GENERAL_PROOF_INTERVAL;
 			}
 		});
 

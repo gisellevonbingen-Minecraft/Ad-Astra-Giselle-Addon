@@ -35,7 +35,7 @@ public class SpaceFireProofEnchantmentSession extends ProofEnchantmentSession
 	{
 		if (resource == ItemUsableResource.Energy)
 		{
-			return EnchantmentsConfig.SPACE_FIRE_PROOF_ENERGY_DURATION;
+			return ProofAbstractUtils.GENERAL_PROOF_INTERVAL;
 		}
 		else if (resource == ItemUsableResource.Durability)
 		{

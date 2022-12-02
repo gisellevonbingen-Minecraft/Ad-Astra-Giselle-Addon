@@ -11,6 +11,7 @@ import ad_astra_giselle_addon.common.content.oxygen.OxygenChargerUtils;
 import ad_astra_giselle_addon.common.content.proof.LivingSpaceFireProofProvidingEvent;
 import ad_astra_giselle_addon.common.content.proof.LivingSpaceOxygenProofProvidingEvent;
 import ad_astra_giselle_addon.common.content.proof.LivingVenusAcidProofProvidingEvent;
+import ad_astra_giselle_addon.common.content.proof.ProofAbstractUtils;
 import ad_astra_giselle_addon.common.content.proof.ProofSession;
 import ad_astra_giselle_addon.common.fluid.FluidHooks2;
 import ad_astra_giselle_addon.common.fluid.FluidPredicates;
@@ -50,7 +51,7 @@ public class PneumaticCraftProofProvidingHandler
 
 			if (airHandler != null && (!LivingHelper.isPlayingMode(player) || PneumaticCraftProofProvidingHandler.useAir(airHandler, airUsing, true)))
 			{
-				int oxygenUsing = 1;
+				long oxygenUsing = ProofAbstractUtils.OXYGEN_PROOF_USING;
 				IOxygenCharger oxygenCharger = OxygenChargerUtils.firstExtractable(player, oxygenUsing, stack);
 
 				if (oxygenCharger != null)
@@ -74,7 +75,7 @@ public class PneumaticCraftProofProvidingHandler
 						@Override
 						public int getProofDuration()
 						{
-							return AddonPneumaticCraftConfig.SPACE_BREATHING_OXYGEN_DURATION;
+							return ProofAbstractUtils.OXYGEN_PROOF_INTERVAL;
 						}
 					};
 				}
@@ -104,7 +105,7 @@ public class PneumaticCraftProofProvidingHandler
 					@Override
 					public int getProofDuration()
 					{
-						return 1;
+						return ProofAbstractUtils.GENERAL_PROOF_INTERVAL;
 					}
 				};
 			}
@@ -130,7 +131,7 @@ public class PneumaticCraftProofProvidingHandler
 					@Override
 					public int getProofDuration()
 					{
-						return 1;
+						return ProofAbstractUtils.GENERAL_PROOF_INTERVAL;
 					}
 				};
 			}

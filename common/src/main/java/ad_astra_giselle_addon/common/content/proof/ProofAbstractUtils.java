@@ -6,11 +6,16 @@ import java.util.function.Function;
 
 import ad_astra_giselle_addon.common.AdAstraGiselleAddon;
 import ad_astra_giselle_addon.common.entity.IProofDurationAccesor;
+import ad_astra_giselle_addon.common.fluid.FluidHooks2;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 
 public abstract class ProofAbstractUtils
 {
+	public static final int GENERAL_PROOF_INTERVAL = 10;
+	public static final int OXYGEN_PROOF_INTERVAL = 30;
+	public static final long OXYGEN_PROOF_USING = FluidHooks2.MB_1;
+
 	private ResourceLocation id;
 
 	public ProofAbstractUtils(ResourceLocation id)

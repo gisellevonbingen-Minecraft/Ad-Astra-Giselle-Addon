@@ -100,7 +100,7 @@ public class SpaceOxygenProofEnchantmentSession extends ProofEnchantmentSession
 	{
 		if (resource == ItemUsableResource.Energy)
 		{
-			return EnchantmentsConfig.SPACE_BREATHING_ENERGY_DURATION;
+			return ProofAbstractUtils.OXYGEN_PROOF_INTERVAL;
 		}
 		else if (resource == ItemUsableResource.Durability)
 		{
@@ -123,7 +123,7 @@ public class SpaceOxygenProofEnchantmentSession extends ProofEnchantmentSession
 	{
 		if (resource == ItemUsableResource.Energy)
 		{
-			return EnchantmentsConfig.SPACE_BREATHING_ENERGY_OXYGEN;
+			return ProofAbstractUtils.OXYGEN_PROOF_USING;
 		}
 		else if (resource == ItemUsableResource.Durability)
 		{

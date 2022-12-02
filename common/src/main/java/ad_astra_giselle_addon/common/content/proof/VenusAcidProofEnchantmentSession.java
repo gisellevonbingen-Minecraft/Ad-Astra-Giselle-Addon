@@ -35,7 +35,7 @@ public class VenusAcidProofEnchantmentSession extends ProofEnchantmentSession
 	{
 		if (resource == ItemUsableResource.Energy)
 		{
-			return EnchantmentsConfig.VENUS_ACID_PROOF_ENERGY_DURATION;
+			return ProofAbstractUtils.GENERAL_PROOF_INTERVAL;
 		}
 		else if (resource == ItemUsableResource.Durability)
 		{
