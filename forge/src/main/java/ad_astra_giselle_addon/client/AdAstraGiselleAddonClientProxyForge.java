@@ -8,7 +8,6 @@ import ad_astra_giselle_addon.client.renderer.blockentity.FuelLoaderRenderer;
 import ad_astra_giselle_addon.client.screens.FuelLoaderScreen;
 import ad_astra_giselle_addon.client.util.RenderHelper;
 import ad_astra_giselle_addon.common.AdAstraGiselleAddon;
-import ad_astra_giselle_addon.common.config.AddonConfigs;
 import ad_astra_giselle_addon.common.registries.AddonBlockEntityTypes;
 import ad_astra_giselle_addon.common.registries.AddonMenuTypes;
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -40,7 +39,7 @@ public class AdAstraGiselleAddonClientProxyForge
 
 		ModLoadingContext.get().registerExtensionPoint(ConfigScreenHandler.ConfigScreenFactory.class, () -> new ConfigScreenHandler.ConfigScreenFactory((client, parent) ->
 		{
-			ResourcefulConfig config = AdAstraGiselleAddon.CONFIGURATOR.getConfig(AddonConfigs.class);
+			ResourcefulConfig config = AdAstraGiselleAddon.config();
 			return config != null ? new ConfigScreen(null, config) : null;
 		}));
 

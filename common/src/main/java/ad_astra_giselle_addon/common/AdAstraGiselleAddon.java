@@ -5,6 +5,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.common.eventbus.EventBus;
 import com.teamresourceful.resourcefulconfig.common.config.Configurator;
+import com.teamresourceful.resourcefulconfig.common.config.ResourcefulConfig;
 
 import ad_astra_giselle_addon.common.compat.CompatibleManager;
 import ad_astra_giselle_addon.common.config.AddonConfigs;
@@ -26,7 +27,7 @@ public class AdAstraGiselleAddon
 {
 	public static final String MOD_ID = "ad_astra_giselle_addon";
 	public static final Logger LOGGER = LogManager.getLogger();
-	public static final Configurator CONFIGURATOR = new Configurator();
+	private static final Configurator CONFIGURATOR = new Configurator();
 
 	private static PlatformCommonDelegate delegate;
 	private static EventBus eventBus;
@@ -45,6 +46,11 @@ public class AdAstraGiselleAddon
 	public static CompatibleManager compats()
 	{
 		return compats;
+	}
+
+	public static ResourcefulConfig config()
+	{
+		return CONFIGURATOR.getConfig(AddonConfigs.class);
 	}
 
 	public static void initCommon(PlatformCommonDelegate delegate)

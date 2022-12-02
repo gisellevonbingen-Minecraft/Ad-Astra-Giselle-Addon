@@ -25,8 +25,7 @@ public class ConfigLangProvider extends LanguageProvider
 	@Override
 	protected void addTranslations()
 	{
-		ResourcefulConfig config = AdAstraGiselleAddon.CONFIGURATOR.getConfig(AddonConfigs.class);
-
+		ResourcefulConfig config = AdAstraGiselleAddon.config();
 		this.add(config, AddonConfigs.PREFIX);
 	}
 

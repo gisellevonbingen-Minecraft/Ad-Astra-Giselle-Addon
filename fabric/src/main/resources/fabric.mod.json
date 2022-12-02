@@ -18,6 +18,9 @@
 	"entrypoints": {
 		"main": [
 			"ad_astra_giselle_addon.common.AdAstraGiselleAddonFabric"
+		],
+		"modmenu": [
+			"ad_astra_giselle_addon.client.compat.modmenu.ModMenuConfig"
 		]
 	},
 	"mixins": [
