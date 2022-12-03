@@ -48,7 +48,9 @@ public abstract class AddonMachineScreen<BLOCK_ENTITY extends AbstractMachineBlo
 		{
 			this.workingAreaVisibleButton = this.addRenderableWidget(new Button(this.leftPos, this.topPos - 20, 20, 20, Component.empty(), this::onChangeModeButtonClick));
 
-			this.setWorkingAreaVisible(this.isWorkingAreaVisible());
+			boolean visible = this.isWorkingAreaVisible();
+			this.cachedWorkingAreaVisible = visible;
+			this.setWorkingAreaVisible(visible);
 			this.refreshWorkingAreaVisibleButtonMessage();
 		}
 

@@ -2,16 +2,15 @@ package ad_astra_giselle_addon.common;
 
 import java.util.Collections;
 
-import ad_astra_giselle_addon.common.command.AddonCommand;
 import ad_astra_giselle_addon.common.config.AddonConfigs;
 import ad_astra_giselle_addon.common.delegate.CreativeModeTabBuilder;
 import ad_astra_giselle_addon.common.delegate.DelegateFluidHelper;
 import ad_astra_giselle_addon.common.delegate.DelegateLivingHelper;
 import ad_astra_giselle_addon.common.delegate.DelegateProvider;
-import ad_astra_giselle_addon.common.delegate.DelegateRegistryFactory;
+import ad_astra_giselle_addon.common.delegate.DelegateRegistryHelper;
 import ad_astra_giselle_addon.common.delegate.DelegateScreenHelper;
 import ad_astra_giselle_addon.common.delegate.FabricFluidHelper;
-import ad_astra_giselle_addon.common.delegate.FabricRegisterFactory;
+import ad_astra_giselle_addon.common.delegate.FabricRegisterHelper;
 import ad_astra_giselle_addon.common.delegate.PlatformCommonDelegate;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
@@ -23,14 +22,15 @@ public class AdAstraGiselleAddonFabric implements ModInitializer, PlatformCommon
 	@Override
 	public void onInitialize()
 	{
-		AdAstraGiselleAddon.initCommon(this);
-		CommandRegistrationCallback.EVENT.register((dispatcher, registry, selection) -> dispatcher.register(AddonCommand.builder()));
+		AdAstraGiselleAddon.initializeCommon(this);
+		AdAstraGiselleAddon.registerConfig(AddonConfigs.class);
+		CommandRegistrationCallback.EVENT.register((dispatcher, registry, selection) -> AdAstraGiselleAddon.registerCommand(dispatcher::register));
 	}
 
 	@Override
-	public DelegateRegistryFactory getRegistryFactory()
+	public DelegateRegistryHelper getRegistryHelper()
 	{
-		return FabricRegisterFactory.INSTANCE;
+		return FabricRegisterHelper.INSTANCE;
 	}
 
 	@Override
@@ -61,12 +61,6 @@ public class AdAstraGiselleAddonFabric implements ModInitializer, PlatformCommon
 	public DelegateScreenHelper getScreenHelper()
 	{
 		return () -> true;
-	}
-
-	@Override
-	public Class<?> getConfigClass()
-	{
-		return AddonConfigs.class;
 	}
 
 }

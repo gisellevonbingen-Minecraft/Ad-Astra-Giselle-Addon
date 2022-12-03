@@ -5,7 +5,7 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-import ad_astra_giselle_addon.common.delegate.DelegateRegistryFactory;
+import ad_astra_giselle_addon.common.delegate.DelegateRegistryHelper;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 
@@ -22,7 +22,7 @@ public class DelegateDoubleCollection<P, S>
 		this.secondaryRegister = new DelegateObjectCollection<>(modid, secondaryRegistry);
 	}
 
-	public void register(DelegateRegistryFactory factory)
+	public void register(DelegateRegistryHelper factory)
 	{
 		this.primaryRegister.register(factory);
 		this.secondaryRegister.register(factory);

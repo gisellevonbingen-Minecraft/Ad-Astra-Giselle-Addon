@@ -1,17 +1,17 @@
 package ad_astra_giselle_addon.common;
 
-import ad_astra_giselle_addon.client.AdAstraGiselleAddonClientProxyForge;
+import ad_astra_giselle_addon.client.AdAstraGiselleAddonClientForge;
 import ad_astra_giselle_addon.common.compat.ForgeCompatibleManager;
 import ad_astra_giselle_addon.common.config.AddonForgeConfigs;
 import ad_astra_giselle_addon.common.delegate.CreativeModeTabBuilder;
 import ad_astra_giselle_addon.common.delegate.DelegateFluidHelper;
 import ad_astra_giselle_addon.common.delegate.DelegateLivingHelper;
 import ad_astra_giselle_addon.common.delegate.DelegateProvider;
-import ad_astra_giselle_addon.common.delegate.DelegateRegistryFactory;
+import ad_astra_giselle_addon.common.delegate.DelegateRegistryHelper;
 import ad_astra_giselle_addon.common.delegate.DelegateScreenHelper;
 import ad_astra_giselle_addon.common.delegate.ForgeFluidHelper;
 import ad_astra_giselle_addon.common.delegate.ForgeLivingHelper;
-import ad_astra_giselle_addon.common.delegate.ForgeRegisterFactory;
+import ad_astra_giselle_addon.common.delegate.ForgeRegisterHelper;
 import ad_astra_giselle_addon.common.delegate.PlatformCommonDelegate;
 import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
@@ -19,6 +19,7 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
@@ -28,22 +29,20 @@ public class AdAstraGiselleAddonForge implements PlatformCommonDelegate
 {
 	public AdAstraGiselleAddonForge()
 	{
-		AdAstraGiselleAddon.initCommon(this);
-
-		registerForge();
-		DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> AdAstraGiselleAddonClientProxyForge::new);
-	}
-
-	public static void registerForge()
-	{
 		IEventBus forge_bus = MinecraftForge.EVENT_BUS;
-		forge_bus.register(EventListenerCommand.class);
+
+		AdAstraGiselleAddon.initializeCommon(this);
+		AdAstraGiselleAddon.registerConfig(AddonForgeConfigs.class);
+
+		forge_bus.addListener((RegisterCommandsEvent e) -> AdAstraGiselleAddon.registerCommand(e.getDispatcher()::register));
+
+		DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> AdAstraGiselleAddonClientForge::new);
 	}
 
 	@Override
-	public DelegateRegistryFactory getRegistryFactory()
+	public DelegateRegistryHelper getRegistryHelper()
 	{
-		return ForgeRegisterFactory.INSTANCE;
+		return ForgeRegisterHelper.INSTANCE;
 	}
 
 	@Override
@@ -90,12 +89,6 @@ public class AdAstraGiselleAddonForge implements PlatformCommonDelegate
 	public DelegateScreenHelper getScreenHelper()
 	{
 		return () -> !ForgeCompatibleManager.JEI.isLoaded();
-	}
-
-	@Override
-	public Class<?> getConfigClass()
-	{
-		return AddonForgeConfigs.class;
 	}
 
 }

@@ -9,19 +9,19 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 
 @SuppressWarnings("unchecked")
-public class FabricRegisterFactory implements DelegateRegistryFactory
+public class FabricRegisterHelper implements DelegateRegistryHelper
 {
-	public static final FabricRegisterFactory INSTANCE = new FabricRegisterFactory();
+	public static final FabricRegisterHelper INSTANCE = new FabricRegisterHelper();
 
 	private final Map<ResourceKey<?>, InternalRegistry<?>> internals = new HashMap<>();
 
-	private FabricRegisterFactory()
+	private FabricRegisterHelper()
 	{
 
 	}
 
 	@Override
-	public <T> DelegateRegistry<T> get(ResourceKey<? extends Registry<T>> key)
+	public <T> DelegateRegistry<T> getRegistry(ResourceKey<? extends Registry<T>> key)
 	{
 		return (DelegateRegistry<T>) this.internals.computeIfAbsent(key, k -> new InternalRegistry<>((ResourceKey<? extends Registry<T>>) k));
 	}
@@ -58,6 +58,12 @@ public class FabricRegisterFactory implements DelegateRegistryFactory
 		public T getValue(ResourceLocation id)
 		{
 			return this.getRegistry().get(id);
+		}
+
+		@Override
+		public Iterable<T> getValues()
+		{
+			return this.getRegistry();
 		}
 
 	}

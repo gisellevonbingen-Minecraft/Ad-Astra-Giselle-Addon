@@ -18,7 +18,7 @@ public class AddonTabs
 			{
 				NonNullList<ItemStack> list = NonNullList.create();
 
-				for (Item item : Registry.ITEM)
+				for (Item item : AdAstraGiselleAddon.delegate().getRegistryHelper().getRegistry(Registry.ITEM_REGISTRY).getValues())
 				{
 					item.fillItemCategory(AddonTabs.tab_main, list);
 				}

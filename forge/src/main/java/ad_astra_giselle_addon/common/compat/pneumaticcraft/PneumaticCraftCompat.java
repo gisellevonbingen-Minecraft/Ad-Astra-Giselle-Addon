@@ -31,7 +31,7 @@ public class PneumaticCraftCompat extends CompatibleMod
 	@Override
 	protected void onLoad()
 	{
-		AddonPNCUpgrades.UPGRADES.register(AdAstraGiselleAddon.delegate().getRegistryFactory());
+		AddonPNCUpgrades.UPGRADES.register(AdAstraGiselleAddon.delegate().getRegistryHelper());
 		AddonCommonUpgradeHandlers.register();
 
 		AdAstraGiselleAddon.eventBus().register(new PneumaticCraftProofProvidingHandler());

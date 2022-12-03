@@ -3,8 +3,7 @@ package ad_astra_giselle_addon.common.delegate;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 
-@FunctionalInterface
-public interface DelegateRegistryFactory
+public interface DelegateRegistryHelper
 {
-	<T> DelegateRegistry<T> get(ResourceKey<? extends Registry<T>> key);
+	<T> DelegateRegistry<T> getRegistry(ResourceKey<? extends Registry<T>> key);
 }

@@ -141,7 +141,7 @@ public class AddonCommand
 
 		public static ItemStack makeFull(ResourceLocation name, Enchantment... enchantments)
 		{
-			Item item = AdAstraGiselleAddon.delegate().getRegistryFactory().get(Registry.ITEM_REGISTRY).getValue(name);
+			Item item = AdAstraGiselleAddon.delegate().getRegistryHelper().getRegistry(Registry.ITEM_REGISTRY).getValue(name);
 			return makeFull(item, enchantments);
 		}
 

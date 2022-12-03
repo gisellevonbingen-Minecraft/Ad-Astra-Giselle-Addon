@@ -7,7 +7,7 @@ import java.util.Set;
 import java.util.function.Supplier;
 
 import ad_astra_giselle_addon.common.delegate.DelegateRegistry;
-import ad_astra_giselle_addon.common.delegate.DelegateRegistryFactory;
+import ad_astra_giselle_addon.common.delegate.DelegateRegistryHelper;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -32,9 +32,9 @@ public class DelegateObjectCollection<T>
 		return new DelegateObjectCollection<>(modid, key);
 	}
 
-	public void register(DelegateRegistryFactory factory)
+	public void register(DelegateRegistryHelper helper)
 	{
-		DelegateRegistry<T> registry = factory.get(this.getKey());
+		DelegateRegistry<T> registry = helper.getRegistry(this.getKey());
 
 		for (DelegateObjectHolder<T> object : this.getObjects())
 		{

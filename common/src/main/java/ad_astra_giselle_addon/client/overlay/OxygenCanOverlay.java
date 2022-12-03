@@ -12,15 +12,12 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.client.gui.overlay.ForgeGui;
-import net.minecraftforge.client.gui.overlay.IGuiOverlay;
 
-public class OxygenCanOverlay implements IGuiOverlay
+public class OxygenCanOverlay
 {
 	public static final String OXYGENCAN_DESCRIPTION_ID = Util.makeDescriptionId("item", AddonItems.OXYGEN_CAN.getId());
 
-	@Override
-	public void render(ForgeGui gui, PoseStack poseStack, float partialTick, int screenWidth, int screenHeight)
+	public static void renderHud(PoseStack poseStack, float partialTick)
 	{
 		Minecraft minecraft = Minecraft.getInstance();
 		Player player = minecraft.player;
@@ -29,8 +26,7 @@ public class OxygenCanOverlay implements IGuiOverlay
 		{
 			return;
 		}
-
-		if (PlayerOverlayScreen.shouldRenderOxygen && !minecraft.options.renderDebug)
+		else if (PlayerOverlayScreen.shouldRenderOxygen && !minecraft.options.renderDebug)
 		{
 			OxygenChargerUtils.getInventoryStorageRatio(player).ifPresent(ratio ->
 			{
@@ -43,7 +39,6 @@ public class OxygenCanOverlay implements IGuiOverlay
 				float y = 25 + AdAstraConfig.oxygenBarYOffset + textureHeight + font.lineHeight + 3;
 				font.drawShadow(poseStack, component, Math.max(x, 0), y, 0xFFFFFF);
 			});
-
 		}
 
 	}

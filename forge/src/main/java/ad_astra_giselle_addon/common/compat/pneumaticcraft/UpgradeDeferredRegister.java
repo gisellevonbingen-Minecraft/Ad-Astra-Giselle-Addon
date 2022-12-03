@@ -9,7 +9,7 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-import ad_astra_giselle_addon.common.delegate.DelegateRegistryFactory;
+import ad_astra_giselle_addon.common.delegate.DelegateRegistryHelper;
 import ad_astra_giselle_addon.common.registries.DelegateObjectCollection;
 import ad_astra_giselle_addon.common.registries.DelegateObjectHolder;
 import me.desht.pneumaticcraft.api.item.PNCUpgrade;
@@ -69,7 +69,7 @@ public class UpgradeDeferredRegister
 		return registryObject;
 	}
 
-	public void register(DelegateRegistryFactory factory)
+	public void register(DelegateRegistryHelper factory)
 	{
 		this.primaryRegister.register(factory);
 		this.secondaryRegister.register(factory);

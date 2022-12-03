@@ -11,4 +11,6 @@ public interface DelegateRegistry<T>
 	ResourceLocation getId(T value);
 
 	T getValue(ResourceLocation id);
+
+	Iterable<T> getValues();
 }

@@ -9,22 +9,23 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistry;
 import net.minecraftforge.registries.RegistryManager;
 
 @SuppressWarnings("unchecked")
-public class ForgeRegisterFactory implements DelegateRegistryFactory
+public class ForgeRegisterHelper implements DelegateRegistryHelper
 {
-	public static final ForgeRegisterFactory INSTANCE = new ForgeRegisterFactory();
+	public static final ForgeRegisterHelper INSTANCE = new ForgeRegisterHelper();
 
 	private final Map<ResourceKey<?>, InternalRegistry<?>> internals = new HashMap<>();
 
-	private ForgeRegisterFactory()
+	private ForgeRegisterHelper()
 	{
 
 	}
 
 	@Override
-	public <T> DelegateRegistry<T> get(ResourceKey<? extends Registry<T>> key)
+	public <T> DelegateRegistry<T> getRegistry(ResourceKey<? extends Registry<T>> key)
 	{
 		return (DelegateRegistry<T>) this.internals.computeIfAbsent(key, k -> new InternalRegistry<>((ResourceKey<? extends Registry<T>>) k));
 	}
@@ -54,16 +55,27 @@ public class ForgeRegisterFactory implements DelegateRegistryFactory
 			return register;
 		}
 
+		private ForgeRegistry<T> getRegistry()
+		{
+			return RegistryManager.ACTIVE.getRegistry(this.key);
+		}
+
 		@Override
 		public ResourceLocation getId(T value)
 		{
-			return RegistryManager.ACTIVE.getRegistry(this.key).getKey(value);
+			return this.getRegistry().getKey(value);
 		}
 
 		@Override
 		public T getValue(ResourceLocation id)
 		{
-			return RegistryManager.ACTIVE.getRegistry(this.key).getValue(id);
+			return this.getRegistry().getValue(id);
+		}
+
+		@Override
+		public Iterable<T> getValues()
+		{
+			return this.getRegistry();
 		}
 
 	}

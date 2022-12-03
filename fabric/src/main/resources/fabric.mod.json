@@ -19,6 +19,9 @@
 		"main": [
 			"ad_astra_giselle_addon.common.AdAstraGiselleAddonFabric"
 		],
+		"client": [
+			"ad_astra_giselle_addon.client.AdAstraGiselleAddonClientFabric"
+		],
 		"modmenu": [
 			"ad_astra_giselle_addon.client.compat.modmenu.ModMenuConfig"
 		]
