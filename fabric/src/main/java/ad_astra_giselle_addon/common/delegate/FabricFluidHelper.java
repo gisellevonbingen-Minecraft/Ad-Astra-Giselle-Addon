@@ -33,7 +33,8 @@ public class FabricFluidHelper implements DelegateFluidHelper
 	{
 		int size = 0;
 
-		for (@SuppressWarnings("unused") StorageView<FluidVariant> view : storage)
+		for (@SuppressWarnings("unused")
+		StorageView<FluidVariant> view : storage)
 		{
 			size++;
 		}

@@ -37,7 +37,7 @@ public class AdAstraGiselleAddon
 	private static PlatformCommonDelegate delegate;
 	private static EventBus eventBus;
 	private static CompatibleManager compats;
-	
+
 	private static Class<?> configClass;
 
 	public static EventBus eventBus()
@@ -59,14 +59,14 @@ public class AdAstraGiselleAddon
 	{
 		return CONFIGURATOR.getConfig(configClass);
 	}
-	
+
 	public static void registerConfig(Class<?> configClass)
 	{
 		AdAstraGiselleAddon.configClass = configClass;
 		AddonConfigs.validConfig(configClass);
 		CONFIGURATOR.registerConfig(configClass);
 	}
-	
+
 	public static void initializeCommon(PlatformCommonDelegate delegate)
 	{
 		AdAstraGiselleAddon.delegate = delegate;

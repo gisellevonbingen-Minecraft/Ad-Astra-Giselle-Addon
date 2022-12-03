@@ -99,7 +99,7 @@ public abstract class UniveralFluidHandler implements PlatformFluidHandler
 			{
 				return this.item;
 			}
-			
+
 		}
 
 		private PlatformFluidItemHandler getInternalHandler()

@@ -46,7 +46,7 @@ public class FuelLoaderBlockEntity extends AbstractMachineBlockEntity implements
 	{
 		super(AddonBlockEntityTypes.FUEL_LOADER.get(), pos, state);
 	}
-	
+
 	@Override
 	public void load(CompoundTag nbt)
 	{

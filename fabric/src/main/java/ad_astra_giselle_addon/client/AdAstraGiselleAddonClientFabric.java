@@ -14,7 +14,7 @@ public class AdAstraGiselleAddonClientFabric implements ClientModInitializer
 		AdAstraGiselleAddonClient.initializeClient();
 		ClientSpriteRegistryCallback.event(InventoryMenu.BLOCK_ATLAS).register((spriteAtlasTexture, registry) -> AdAstraGiselleAddonClient.registerBlockAtlas(registry::register));
 		AdAstraGiselleAddonClient.registerOverlay((id, hud) -> HudRenderCallback.EVENT.register(hud::renderHud));
-        AdAstraGiselleAddonClient.registerBlockEntityRenderer(BlockEntityRendererRegistry::register);
+		AdAstraGiselleAddonClient.registerBlockEntityRenderer(BlockEntityRendererRegistry::register);
 	}
 
 }
