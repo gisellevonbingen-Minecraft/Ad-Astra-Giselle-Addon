@@ -1,7 +1,6 @@
 package ad_astra_giselle_addon.common.fluid;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.function.Predicate;
 
 import org.jetbrains.annotations.Nullable;
@@ -12,7 +11,7 @@ import earth.terrarium.botarium.api.fluid.FluidHooks;
 public class FluidHooks2
 {
 	public static final long MB_1 = FluidHooks.buckets(1) / 1000;
-	
+
 	public static FluidHolder deriveAmount(FluidHolder fluid, long newAmount)
 	{
 		FluidHolder derive = fluid.copyHolder();
@@ -104,6 +103,31 @@ public class FluidHooks2
 		return FluidHooks.emptyFluid();
 	}
 
+	public static FluidHolder extractFluid(UniveralFluidHandler fluidHandler, @Nullable Predicate<FluidHolder> predicate, boolean simulate)
+	{
+		int tanks = fluidHandler.getTankAmount();
+
+		for (int i = 0; i < tanks; i++)
+		{
+			FluidHolder fluid = fluidHandler.getFluidInTank(i);
+
+			if (!notEmptyAndTest(fluid, predicate))
+			{
+				continue;
+			}
+
+			FluidHolder extracting = fluidHandler.extractFluid(fluid, simulate);
+
+			if (!extracting.isEmpty())
+			{
+				return extracting;
+			}
+
+		}
+
+		return FluidHooks.emptyFluid();
+	}
+
 	public static FluidHolder insertFluidAny(UniveralFluidHandler fluidHandler, Collection<FluidHolder> fluids, boolean simulate)
 	{
 		for (FluidHolder fluid : fluids)
@@ -127,34 +151,30 @@ public class FluidHooks2
 
 	public static FluidHolder moveFluidAny(UniveralFluidHandler from, UniveralFluidHandler to, @Nullable Predicate<FluidHolder> predicate, long amount, boolean simulate)
 	{
-		List<FluidHolder> fluids = from.getFluidTanks();
+		FluidHolder extracting = extractFluid(from, predicate, amount, true);
+		FluidHolder inserting = deriveAmount(extracting, to.insertFluid(extracting, true));
 
-		for (FluidHolder fluid : fluids)
+		if (!simulate && !inserting.isEmpty())
 		{
-			if (!notEmptyAndTest(fluid, predicate))
-			{
-				continue;
-			}
-
-			FluidHolder extracting = extractFluid(from, predicate, amount, true);
-			long insertingAmount = to.insertFluid(extracting, true);
-
-			if (insertingAmount > 0L)
-			{
-				FluidHolder inserting = deriveAmount(fluid, insertingAmount);
-
-				if (!simulate)
-				{
-					extractFluid(from, predicate, insertingAmount, false);
-					to.insertFluid(inserting, false);
-				}
-
-				return inserting;
-			}
-
+			from.extractFluid(inserting, false);
+			to.insertFluid(inserting, false);
 		}
 
-		return FluidHooks.emptyFluid();
+		return inserting;
+	}
+
+	public static FluidHolder moveFluidAny(UniveralFluidHandler from, UniveralFluidHandler to, @Nullable Predicate<FluidHolder> predicate, boolean simulate)
+	{
+		FluidHolder extracting = extractFluid(from, predicate, true);
+		FluidHolder inserting = deriveAmount(extracting, to.insertFluid(extracting, true));
+
+		if (!simulate && !inserting.isEmpty())
+		{
+			from.extractFluid(inserting, false);
+			to.insertFluid(inserting, false);
+		}
+
+		return inserting;
 
 	}
 

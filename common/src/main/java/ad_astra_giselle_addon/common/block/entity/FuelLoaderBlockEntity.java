@@ -108,7 +108,7 @@ public class FuelLoaderBlockEntity extends AbstractMachineBlockEntity implements
 			if (FluidHooks.isFluidContainingItem(stack))
 			{
 				UniveralFluidHandler itemFluidHandler = UniveralFluidHandler.from(new ItemStackHolder(stack));
-				return !FluidHooks2.extractFluid(itemFluidHandler, FluidPredicates::isFuel, Integer.MAX_VALUE, true).isEmpty();
+				return !FluidHooks2.extractFluid(itemFluidHandler, FluidPredicates::isFuel, true).isEmpty();
 			}
 
 			return false;
@@ -135,7 +135,7 @@ public class FuelLoaderBlockEntity extends AbstractMachineBlockEntity implements
 			if (FluidHooks.isFluidContainingItem(stack))
 			{
 				UniveralFluidHandler itemFluidHandler = UniveralFluidHandler.from(new ItemStackHolder(stack));
-				return FluidHooks2.extractFluid(itemFluidHandler, FluidPredicates::isFuel, Integer.MAX_VALUE, true).isEmpty();
+				return FluidHooks2.extractFluid(itemFluidHandler, FluidPredicates::isFuel, true).isEmpty();
 			}
 
 		}
@@ -177,11 +177,11 @@ public class FuelLoaderBlockEntity extends AbstractMachineBlockEntity implements
 		UniveralFluidHandler tank = UniveralFluidHandler.from(this.getFluidContainer());
 		UniveralFluidHandler.fromSafe(this.getItemRef(this.getSlotFluidSource())).ifPresent(source ->
 		{
-			FluidHooks2.moveFluidAny(source, tank, FluidPredicates::isFuel, Integer.MAX_VALUE, false);
+			FluidHooks2.moveFluidAny(source, tank, FluidPredicates::isFuel, false);
 		});
 		UniveralFluidHandler.fromSafe(this.getItemRef(this.getSlotFluidSink())).ifPresent(sink ->
 		{
-			FluidHooks2.moveFluidAny(tank, sink, null, Integer.MAX_VALUE, false);
+			FluidHooks2.moveFluidAny(tank, sink, null, false);
 		});
 	}
 
