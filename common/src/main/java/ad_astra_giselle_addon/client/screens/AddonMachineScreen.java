@@ -48,10 +48,17 @@ public abstract class AddonMachineScreen<BLOCK_ENTITY extends AbstractMachineBlo
 		{
 			this.workingAreaVisibleButton = this.addRenderableWidget(new Button(this.leftPos, this.topPos - 20, 20, 20, Component.empty(), this::onChangeModeButtonClick));
 
-			this.resizeWorkingAreaVisibleButton();
+			this.setWorkingAreaVisible(this.isWorkingAreaVisible());
 			this.refreshWorkingAreaVisibleButtonMessage();
 		}
 
+	}
+
+	@Override
+	public void render(PoseStack poseStack, int mouseX, int mouseY, float delta)
+	{
+		super.render(poseStack, mouseX, mouseY, delta);
+		this.updateWorkingAreaVisibleButton();
 	}
 
 	public void resizeWorkingAreaVisibleButton()
@@ -81,7 +88,7 @@ public abstract class AddonMachineScreen<BLOCK_ENTITY extends AbstractMachineBlo
 
 	public void setWorkingAreaVisible(boolean visible)
 	{
-		this.cachedWorkingAreaVisible = visible;
+
 	}
 
 	public void onChangeModeButtonClick(net.minecraft.client.gui.components.Button button)
@@ -105,6 +112,7 @@ public abstract class AddonMachineScreen<BLOCK_ENTITY extends AbstractMachineBlo
 	{
 		Component message = this.getWorkingAreaVisibleText(this.cachedWorkingAreaVisible);
 		this.getWorkingAreaVisibleButton().setMessage(message);
+		this.resizeWorkingAreaVisibleButton();
 	}
 
 	public Button getWorkingAreaVisibleButton()
