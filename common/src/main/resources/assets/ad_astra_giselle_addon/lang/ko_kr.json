@@ -64,7 +64,7 @@
   "config.ad_astra_giselle_addon.enchantments.tooltip_enabled": "마법이 부여된 책에 설명 표시",
   "config.ad_astra_giselle_addon.enchantments.tooltip_enabled.comment": "이 모드의 인챈트의 설명을 마법이 부여된 책에 표시합니다",
   "config.ad_astra_giselle_addon.enchantments.tooltip_ignore": "다른 설명 모드 무시",
-  "config.ad_astra_giselle_addon.enchantments.tooltip_ignore.comment": "설명은 'Enchantment Descriptions' 혹은 'CoFH Core' 모드가 설치된 경우 표시되지 않습니다\n이 설정이 켜진 경우 그대로 설명을 표시합니다",
+  "config.ad_astra_giselle_addon.enchantments.tooltip_ignore.comment": "설명은 'Enchantment Descriptions' 또는 'Enchantment Lore' 또는 'CoFH Core' 모드가 설치된 경우 표시되지 않습니다\n이 설정이 켜진 경우 그대로 설명을 표시합니다",
   "config.ad_astra_giselle_addon.enchantments.space_breathing": "우주 호흡성",
   "config.ad_astra_giselle_addon.enchantments.space_breathing.energy_using": "에너지 사용량",
   "config.ad_astra_giselle_addon.enchantments.space_breathing.energy_using.comment": "호흡에 필요한 에너지 [매 30 틱 마다]",

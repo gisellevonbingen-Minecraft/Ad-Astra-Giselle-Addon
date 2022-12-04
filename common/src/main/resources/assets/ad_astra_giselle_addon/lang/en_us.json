@@ -64,7 +64,7 @@
   "config.ad_astra_giselle_addon.enchantments.tooltip_enabled": "Show Tooltip in Enchanted Book",
   "config.ad_astra_giselle_addon.enchantments.tooltip_enabled.comment": "Show tooltip on this mod's enchanted book",
   "config.ad_astra_giselle_addon.enchantments.tooltip_ignore": "Ignore Other Tooltip Mods",
-  "config.ad_astra_giselle_addon.enchantments.tooltip_ignore.comment": "Tooltip will don't show when 'Enchantment Descriptions' or 'CoFH Core' installed.\nbut, if this set 'true' show tooltip with ignore that mods.",
+  "config.ad_astra_giselle_addon.enchantments.tooltip_ignore.comment": "Tooltip will don't show when 'Enchantment Descriptions' or 'Enchantment Lore' or 'CoFH Core' installed.\nbut, if this set 'true' show tooltip with ignore that mods.",
   "config.ad_astra_giselle_addon.enchantments.space_breathing": "Space Breathing",
   "config.ad_astra_giselle_addon.enchantments.space_breathing.energy_using": "Energy Usage",
   "config.ad_astra_giselle_addon.enchantments.space_breathing.energy_using.comment": "Energy usage for breath [in every 30 ticks]",

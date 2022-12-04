@@ -22,7 +22,7 @@ public final class EnchantmentsConfig
 	@Comment(value = "Show tooltip on this mod's enchanted book", translation = PREFIX + ".tooltip_enabled.comment")
 	public static boolean TOOLTIP_ENABLED = true;
 	@ConfigEntry(id = "tooltip_ignore", type = EntryType.BOOLEAN, translation = PREFIX + ".tooltip_ignore")
-	@Comment(value = "Tooltip will don't show when 'Enchantment Descriptions' or 'CoFH Core' installed.\nbut, if this set 'true' show tooltip with ignore that mods.", translation = PREFIX + ".tooltip_ignore.comment")
+	@Comment(value = "Tooltip will don't show when 'Enchantment Descriptions' or 'Enchantment Lore' or 'CoFH Core' installed.\nbut, if this set 'true' show tooltip with ignore that mods.", translation = PREFIX + ".tooltip_ignore.comment")
 	public static boolean TOOLTIP_IGNORE = false;
 
 	public static final String SPACE_BREATHING_ID = "space_breathing";

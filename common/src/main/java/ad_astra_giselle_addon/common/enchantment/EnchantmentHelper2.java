@@ -1,5 +1,6 @@
 package ad_astra_giselle_addon.common.enchantment;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -26,6 +27,7 @@ public class EnchantmentHelper2
 {
 	private static final Map<Enchantment, String> DESCRIPTION_KEYS = new HashMap<>();
 	private static final Map<Enchantment, Component> DESCRIPTION_TEXTS = new HashMap<>();
+	private static final Map<Enchantment, List<? extends Component>> DESCRIPTION_TEXTS_MULTILINES = new HashMap<>();
 	private static final List<String> DESCRIPTION_SUFFIXES = Lists.newArrayList("desc", "description");
 
 	public static List<String> getDescriptionSuffixes()
@@ -65,6 +67,19 @@ public class EnchantmentHelper2
 		return DESCRIPTION_TEXTS.computeIfAbsent(enchantment, e ->
 		{
 			return Component.translatable(getDescriptionKey(enchantment)).withStyle(ChatFormatting.GOLD);
+		});
+	}
+
+	public static void clearDescriptionsCache()
+	{
+		DESCRIPTION_TEXTS_MULTILINES.clear();
+	}
+
+	public static List<? extends Component> getDescriptionTexts(Enchantment enchantment)
+	{
+		return DESCRIPTION_TEXTS_MULTILINES.computeIfAbsent(enchantment, e ->
+		{
+			return Arrays.stream(Component.translatable(getDescriptionKey(enchantment)).getString().split("\n")).map(Component::literal).map(s -> s.withStyle(ChatFormatting.GOLD)).toList();
 		});
 	}
 

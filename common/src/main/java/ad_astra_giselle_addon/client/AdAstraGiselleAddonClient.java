@@ -1,5 +1,6 @@
 package ad_astra_giselle_addon.client;
 
+import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
@@ -13,12 +14,20 @@ import ad_astra_giselle_addon.client.renderer.blockentity.FuelLoaderRenderer;
 import ad_astra_giselle_addon.client.screens.FuelLoaderScreen;
 import ad_astra_giselle_addon.client.util.RenderHelper;
 import ad_astra_giselle_addon.common.AdAstraGiselleAddon;
+import ad_astra_giselle_addon.common.enchantment.EnchantmentHelper2;
 import ad_astra_giselle_addon.common.registries.AddonBlockEntityTypes;
 import ad_astra_giselle_addon.common.registries.AddonMenuTypes;
+import ad_astra_giselle_addon.common.util.TriConsumer;
 import earth.terrarium.ad_astra.client.AdAstraClient.RenderHud;
 import earth.terrarium.ad_astra.client.ClientUtils;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.packs.resources.PreparableReloadListener;
+import net.minecraft.server.packs.resources.ResourceManager;
+import net.minecraft.server.packs.resources.ResourceManagerReloadListener;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 
@@ -46,14 +55,32 @@ public class AdAstraGiselleAddonClient
 		register.accept(RenderHelper.TILE_SURFACE);
 	}
 
+	public static void registerOverlay(BiConsumer<String, RenderHud> register)
+	{
+		register.accept("oxygen_can", OxygenCanOverlay::renderHud);
+	}
+
 	public static void registerBlockEntityRenderer(BlockEntityRendererRegister register)
 	{
 		register.regsiter(AddonBlockEntityTypes.FUEL_LOADER.get(), context -> new FuelLoaderRenderer(context));
 	}
 
-	public static void registerOverlay(BiConsumer<String, RenderHud> register)
+	public static void registerItemTooltip(Consumer<TriConsumer<ItemStack, TooltipFlag, List<Component>>> register)
 	{
-		register.accept("oxygen_can", OxygenCanOverlay::renderHud);
+		register.accept(EnchantedBookTooltipHelper::addTooltip);
+	}
+
+	public static void registerReloadListeners(BiConsumer<String, PreparableReloadListener> register)
+	{
+		register.accept("cleardescriptionscache", new ResourceManagerReloadListener()
+		{
+			@Override
+			public void onResourceManagerReload(ResourceManager pResourceManager)
+			{
+				EnchantmentHelper2.clearDescriptionsCache();
+			}
+		}); 
+		
 	}
 
 	public interface BlockEntityRendererRegister

@@ -10,50 +10,33 @@ import ad_astra_giselle_addon.common.config.EnchantmentsConfig;
 import ad_astra_giselle_addon.common.enchantment.EnchantmentHelper2;
 import ad_astra_giselle_addon.common.registries.AddonEnchantments;
 import ad_astra_giselle_addon.common.registries.DelegateObjectHolder;
+import earth.terrarium.botarium.util.CommonHooks;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.world.item.EnchantedBookItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraftforge.event.entity.player.ItemTooltipEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.ModList;
 
-public class EventListenerEnchantmentTooltip
+public class EnchantedBookTooltipHelper
 {
-	private static final Set<String> DESCRIPTION_MODS = Sets.newHashSet("enchdesc", "cofh_core");
-
-	private static boolean TOOLTIP_ENABELD_CACHED = false;
-	private static boolean TOOLTIP_ENABLED = false;
+	private static final Set<String> DESCRIPTION_MODS = Sets.newHashSet("enchdesc", "enchantment_lore", "cofh_core");
 
 	public static boolean tooltipEnabled()
 	{
-		if (TOOLTIP_ENABELD_CACHED)
-		{
-			return TOOLTIP_ENABLED;
-		}
-		else
-		{
-			TOOLTIP_ENABELD_CACHED = true;
-			return TOOLTIP_ENABLED = EnchantmentsConfig.TOOLTIP_ENABLED && (EnchantmentsConfig.TOOLTIP_IGNORE || !isDescriptionModsLoaded());
-		}
-
+		return EnchantmentsConfig.TOOLTIP_ENABLED && (EnchantmentsConfig.TOOLTIP_IGNORE || !isDescriptionModsLoaded());
 	}
 
 	public static void addDescriptionMod(String modid)
 	{
-		if (DESCRIPTION_MODS.add(modid))
-		{
-			TOOLTIP_ENABLED = tooltipEnabled() && !ModList.get().isLoaded(modid);
-		}
-
+		DESCRIPTION_MODS.add(modid);
 	}
 
 	public static boolean isDescriptionModsLoaded()
 	{
 		for (String mod : DESCRIPTION_MODS)
 		{
-			if (ModList.get().isLoaded(mod))
+			if (CommonHooks.isModLoaded(mod))
 			{
 				return true;
 			}
@@ -68,20 +51,10 @@ public class EventListenerEnchantmentTooltip
 		return Collections.unmodifiableSet(DESCRIPTION_MODS);
 	}
 
-	@SubscribeEvent
-	public static void onItemTooltip(ItemTooltipEvent e)
+	public static void addTooltip(ItemStack item, TooltipFlag flags, List<Component> lines)
 	{
-		ItemStack itemstack = e.getItemStack();
-
-		if (itemstack.getItem() instanceof EnchantedBookItem)
+		if (item.getItem() instanceof EnchantedBookItem && tooltipEnabled())
 		{
-			if (!tooltipEnabled())
-			{
-				return;
-			}
-
-			List<Component> lines = e.getToolTip();
-
 			for (DelegateObjectHolder<Enchantment> holder : AddonEnchantments.ENCHANTMENTS.getObjects())
 			{
 				Enchantment enchantment = holder.get();
@@ -92,7 +65,7 @@ public class EventListenerEnchantmentTooltip
 					{
 						if (contents.getKey().equals(enchantment.getDescriptionId()))
 						{
-							lines.add(lines.indexOf(line) + 1, EnchantmentHelper2.getDescriptionText(enchantment));
+							lines.addAll(lines.indexOf(line) + 1, EnchantmentHelper2.getDescriptionTexts(enchantment));
 							break;
 						}
 
