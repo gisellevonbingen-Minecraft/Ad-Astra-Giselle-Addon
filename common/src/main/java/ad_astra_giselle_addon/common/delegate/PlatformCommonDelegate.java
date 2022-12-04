@@ -12,7 +12,5 @@ public interface PlatformCommonDelegate
 
 	DelegateLivingHelper getLivingHelper();
 
-	DelegateFluidHelper getFluidHelper();
-
 	DelegateScreenHelper getScreenHelper();
 }

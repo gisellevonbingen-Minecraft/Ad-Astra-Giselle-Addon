@@ -55,7 +55,7 @@ allprojects {
         mod_version: mod_version, mod_name: mod_name, mod_description: mod_description, mod_license: mod_license, mod_homepage: mod_homepage, mod_source: mod_source, mod_issues: mod_issues,
         fabric_api_version: fabric_api_version, fabric_loader_version: fabric_loader_version,
         forge_api_version: forge_api_version, forge_loader_version: forge_loader_version,
-        ad_astra_version: ad_astra_version, resourcefulconfig_version: resourcefulconfig_version
+        botarium_version: botarium_version, ad_astra_version: ad_astra_version, resourcefulconfig_version: resourcefulconfig_version
     ]
         
     processResources {

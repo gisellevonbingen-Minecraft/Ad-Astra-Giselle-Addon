@@ -33,6 +33,7 @@
 	"depends": {
 		"fabric": "*",
 		"minecraft": ">=${mc_version}",
+		"botarium": ">=${botarium_version}",
 		"ad_astra": ">=${ad_astra_version}",
 		"resourcefulconfig": ">=${resourcefulconfig_version}"
 	}

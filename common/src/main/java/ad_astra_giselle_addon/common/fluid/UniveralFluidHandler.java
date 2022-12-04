@@ -6,7 +6,6 @@ import java.util.Optional;
 
 import org.jetbrains.annotations.Nullable;
 
-import ad_astra_giselle_addon.common.AdAstraGiselleAddon;
 import earth.terrarium.botarium.api.fluid.FluidContainer;
 import earth.terrarium.botarium.api.fluid.FluidHolder;
 import earth.terrarium.botarium.api.fluid.FluidHooks;
@@ -22,8 +21,6 @@ public abstract class UniveralFluidHandler implements PlatformFluidHandler
 	{
 
 	}
-
-	public abstract long getTankCapacity(int tank);
 
 	@Override
 	public boolean supportsInsertion()
@@ -122,7 +119,7 @@ public abstract class UniveralFluidHandler implements PlatformFluidHandler
 		@Override
 		public int getTankAmount()
 		{
-			return AdAstraGiselleAddon.delegate().getFluidHelper().getTankCount(this.getInternalHandler());
+			return this.getInternalHandler().getTankAmount();
 		}
 
 		@Override
@@ -147,7 +144,7 @@ public abstract class UniveralFluidHandler implements PlatformFluidHandler
 		@Override
 		public long getTankCapacity(int tank)
 		{
-			return AdAstraGiselleAddon.delegate().getFluidHelper().getCapacity(this.getInternalHandler(), tank);
+			return this.getInternalHandler().getTankCapacity(tank);
 		}
 
 	}
@@ -193,7 +190,7 @@ public abstract class UniveralFluidHandler implements PlatformFluidHandler
 		@Override
 		public int getTankAmount()
 		{
-			return AdAstraGiselleAddon.delegate().getFluidHelper().getTankCount(this.getInternalHandler());
+			return this.getInternalHandler().getTankAmount();
 		}
 
 		@Override
@@ -218,7 +215,7 @@ public abstract class UniveralFluidHandler implements PlatformFluidHandler
 		@Override
 		public long getTankCapacity(int tank)
 		{
-			return AdAstraGiselleAddon.delegate().getFluidHelper().getCapacity(this.getInternalHandler(), tank);
+			return this.getInternalHandler().getTankCapacity(tank);
 		}
 
 	}

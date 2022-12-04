@@ -27,6 +27,13 @@ issueTrackerURL="${mod_issues}"
     side="BOTH"
 
 [[dependencies.ad_astra_giselle_addon]]
+    modId="botarium"
+    mandatory=true
+    versionRange="[${botarium_version},)"
+    ordering="AFTER"
+    side="BOTH"
+
+[[dependencies.ad_astra_giselle_addon]]
     modId="ad_astra"
     mandatory=true
     versionRange="[${ad_astra_version},)"
