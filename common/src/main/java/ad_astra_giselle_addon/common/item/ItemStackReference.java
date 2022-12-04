@@ -16,6 +16,12 @@ public class ItemStackReference extends ItemStackHolder
 	}
 
 	@Override
+	public ItemStackReference copy()
+	{
+		return new ItemStackReference(this.getStack().copy(), this.setter);
+	}
+
+	@Override
 	public void setStack(ItemStack stack)
 	{
 		super.setStack(stack);
