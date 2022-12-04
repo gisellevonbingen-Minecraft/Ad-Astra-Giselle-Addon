@@ -10,10 +10,10 @@
    ],
    "key":{
       "S":{
-         "tag":"forge:ingots/steel"
+         "tag":"ad_astra_platform:steel_ingots"
       },
       "P":{
-         "tag":"forge:plates/iron"
+         "tag":"ad_astra_platform:iron_plates"
       },
       "B":{
          "item":"minecraft:bucket"

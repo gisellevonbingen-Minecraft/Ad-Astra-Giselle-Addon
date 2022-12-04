@@ -10,10 +10,10 @@
    ],
    "key":{
       "R":{
-         "tag":"forge:rods/iron"
+         "tag":"ad_astra_platform:iron_rods"
       },
       "P":{
-         "tag":"forge:plates/iron"
+         "tag":"ad_astra_platform:iron_plates"
       }
    }
 } 

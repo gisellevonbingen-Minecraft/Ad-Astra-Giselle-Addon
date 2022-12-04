@@ -21,7 +21,7 @@
 			"item": "minecraft:book"
 		},
 		"#": {
-			"tag": "forge:plates/calorite"
+			"tag": "ad_astra_platform:calorite_plates"
 		},
 		"R": {
 			"item": "ad_astra:venus_stone"
