@@ -152,6 +152,12 @@ public class FluidHooks2
 	public static FluidHolder moveFluidAny(UniveralFluidHandler from, UniveralFluidHandler to, @Nullable Predicate<FluidHolder> predicate, long amount, boolean simulate)
 	{
 		FluidHolder extracting = extractFluid(from, predicate, amount, true);
+
+		if (extracting.isEmpty())
+		{
+			return FluidHooks.emptyFluid();
+		}
+
 		FluidHolder inserting = deriveAmount(extracting, to.insertFluid(extracting, true));
 
 		if (!simulate && !inserting.isEmpty())
@@ -166,6 +172,12 @@ public class FluidHooks2
 	public static FluidHolder moveFluidAny(UniveralFluidHandler from, UniveralFluidHandler to, @Nullable Predicate<FluidHolder> predicate, boolean simulate)
 	{
 		FluidHolder extracting = extractFluid(from, predicate, true);
+
+		if (extracting.isEmpty())
+		{
+			return FluidHooks.emptyFluid();
+		}
+
 		FluidHolder inserting = deriveAmount(extracting, to.insertFluid(extracting, true));
 
 		if (!simulate && !inserting.isEmpty())
