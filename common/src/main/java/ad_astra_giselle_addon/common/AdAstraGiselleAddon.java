@@ -13,12 +13,13 @@ import com.teamresourceful.resourcefulconfig.common.config.ResourcefulConfig;
 import ad_astra_giselle_addon.common.command.AddonCommand;
 import ad_astra_giselle_addon.common.compat.CompatibleManager;
 import ad_astra_giselle_addon.common.config.AddonConfigs;
+import ad_astra_giselle_addon.common.content.proof.AcidRainProofUtils;
 import ad_astra_giselle_addon.common.content.proof.SpaceFireProofUtils;
 import ad_astra_giselle_addon.common.content.proof.SpaceOxygenProofUtils;
-import ad_astra_giselle_addon.common.content.proof.AcidRainProofUtils;
 import ad_astra_giselle_addon.common.delegate.DelegateRegistryHelper;
 import ad_astra_giselle_addon.common.delegate.PlatformCommonDelegate;
 import ad_astra_giselle_addon.common.network.AddonNetwork;
+import ad_astra_giselle_addon.common.registries.AddonAttributes;
 import ad_astra_giselle_addon.common.registries.AddonBlockEntityTypes;
 import ad_astra_giselle_addon.common.registries.AddonBlocks;
 import ad_astra_giselle_addon.common.registries.AddonEnchantments;
@@ -78,6 +79,7 @@ public class AdAstraGiselleAddon
 		AddonEnchantments.ENCHANTMENTS.register(registryHelper);
 		AddonBlockEntityTypes.BLOCK_ENTITY_TYPES.register(registryHelper);
 		AddonMenuTypes.MENU_TYPES.register(registryHelper);
+		AddonAttributes.ATTRIBUTES.register(registryHelper);
 		AddonNetwork.registerAll();
 
 		eventBus = new EventBus();

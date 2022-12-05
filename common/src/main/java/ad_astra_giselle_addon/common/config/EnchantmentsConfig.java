@@ -7,6 +7,7 @@ import com.teamresourceful.resourcefulconfig.common.annotations.ConfigSeparator;
 import com.teamresourceful.resourcefulconfig.common.config.EntryType;
 
 import ad_astra_giselle_addon.common.content.proof.ProofAbstractUtils;
+import ad_astra_giselle_addon.common.fluid.FluidHooks2;
 
 @Category(id = EnchantmentsConfig.ID, translation = EnchantmentsConfig.PREFIX)
 public final class EnchantmentsConfig
@@ -31,15 +32,15 @@ public final class EnchantmentsConfig
 	@ConfigEntry(id = SPACE_BREATHING_ID + "_energy_using", type = EntryType.INTEGER, translation = SPACE_BREATHING_PREFIX + "_energy_using")
 	@Comment(value = "Energy usage for breath " + OXYGEN_ENERGY_INTERVAL_TOOLTIP, translation = SPACE_BREATHING_PREFIX + "_energy_using.comment")
 	public static int SPACE_BREATHING_ENERGY_USING = 30;
-	@ConfigEntry(id = SPACE_BREATHING_ID + "_durability_oxygen", type = EntryType.INTEGER, translation = SPACE_BREATHING_PREFIX + "_durability_oxygen")
+	@ConfigEntry(id = SPACE_BREATHING_ID + "_durability_oxygen", type = EntryType.LONG, translation = SPACE_BREATHING_PREFIX + "_durability_oxygen")
 	@Comment(value = "Oxygen usage on using durability", translation = SPACE_BREATHING_PREFIX + "_durability_oxygen.comment")
-	public static int SPACE_BREATHING_DURABILITY_OXYGEN = 2;
+	public static long SPACE_BREATHING_DURABILITY_OXYGEN = 2 * FluidHooks2.MB_1;
 	@ConfigEntry(id = SPACE_BREATHING_ID + "_durability_using", type = EntryType.INTEGER, translation = SPACE_BREATHING_PREFIX + "_durability_using")
 	@Comment(value = "Durability usage for breath", translation = SPACE_BREATHING_PREFIX + "_durability_using.comment")
 	public static int SPACE_BREATHING_DURABILITY_USING = 1;
 	@ConfigEntry(id = SPACE_BREATHING_ID + "_durability_duration", type = EntryType.INTEGER, translation = SPACE_BREATHING_PREFIX + "_durability_duration")
 	@Comment(value = "Breath duration on using durability " + OXYGEN_DURABILITY_TICKS_TOOLTIP, translation = SPACE_BREATHING_PREFIX + "_durability_duration.comment")
-	public static int SPACE_BREATHING_DURABILITY_DURATION = SPACE_BREATHING_DURABILITY_OXYGEN * ProofAbstractUtils.OXYGEN_PROOF_INTERVAL;
+	public static int SPACE_BREATHING_DURABILITY_DURATION = 2 * ProofAbstractUtils.OXYGEN_PROOF_INTERVAL;
 
 	public static final String SPACE_FIRE_PROOF_ID = "space_fire_proof";
 	public static final String SPACE_FIRE_PROOF_PREFIX = PREFIX + "." + SPACE_FIRE_PROOF_ID;

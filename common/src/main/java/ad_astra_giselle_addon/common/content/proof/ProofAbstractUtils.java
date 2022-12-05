@@ -3,12 +3,14 @@ package ad_astra_giselle_addon.common.content.proof;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 import ad_astra_giselle_addon.common.AdAstraGiselleAddon;
-import ad_astra_giselle_addon.common.entity.IProofDurationAccesor;
 import ad_astra_giselle_addon.common.fluid.FluidHooks2;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 
 public abstract class ProofAbstractUtils
 {
@@ -16,11 +18,13 @@ public abstract class ProofAbstractUtils
 	public static final int OXYGEN_PROOF_INTERVAL = 30;
 	public static final long OXYGEN_PROOF_USING = FluidHooks2.MB_1;
 
-	private ResourceLocation id;
+	private final ResourceLocation id;
+	private final Supplier<Attribute> attribute;
 
-	public ProofAbstractUtils(ResourceLocation id)
+	public ProofAbstractUtils(ResourceLocation id, Supplier<Attribute> attribute)
 	{
 		this.id = id;
+		this.attribute = attribute;
 	}
 
 	public ResourceLocation getId()
@@ -28,26 +32,21 @@ public abstract class ProofAbstractUtils
 		return this.id;
 	}
 
+	public Attribute getAttribute()
+	{
+		return this.attribute.get();
+	}
+
 	public int getProofDuration(LivingEntity living)
 	{
-		if (living instanceof IProofDurationAccesor accessor)
-		{
-			return accessor.getProofDuration(this);
-		}
-		else
-		{
-			return 0;
-		}
-
+		return (int) living.getAttribute(this.getAttribute()).getBaseValue();
 	}
 
 	public void setProofDuration(LivingEntity living, int proofDuration)
 	{
-		if (living instanceof IProofDurationAccesor accessor)
-		{
-			accessor.setPoofDuration(this, proofDuration);
-		}
-
+		Attribute attribute = this.getAttribute();
+		AttributeInstance instance = living.getAttribute(attribute);
+		instance.setBaseValue(attribute.sanitizeValue(proofDuration));
 	}
 
 	public boolean tryProvideProof(LivingEntity living)
