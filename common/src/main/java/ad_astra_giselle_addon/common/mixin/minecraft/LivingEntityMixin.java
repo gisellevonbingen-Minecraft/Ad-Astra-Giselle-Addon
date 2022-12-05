@@ -10,7 +10,6 @@ import ad_astra_giselle_addon.common.content.oxygen.OxygenChargerUtils;
 import ad_astra_giselle_addon.common.content.proof.SpaceOxygenProofUtils;
 import ad_astra_giselle_addon.common.fluid.FluidHooks2;
 import ad_astra_giselle_addon.common.registries.AddonAttributes;
-import ad_astra_giselle_addon.common.registries.DelegateObjectHolder;
 import earth.terrarium.ad_astra.registry.ModDamageSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -42,9 +41,8 @@ public abstract class LivingEntityMixin extends Entity
 
 		}
 
-		for (DelegateObjectHolder<Attribute> holder : AddonAttributes.ATTRIBUTES.getObjects())
+		for (Attribute attribute : AddonAttributes.ATTRIBUTES.getValues())
 		{
-			Attribute attribute = holder.get();
 			AttributeInstance instance = living.getAttribute(attribute);
 			double baseValue = instance.getBaseValue();
 

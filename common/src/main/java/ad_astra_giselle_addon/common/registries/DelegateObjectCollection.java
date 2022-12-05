@@ -66,4 +66,9 @@ public class DelegateObjectCollection<T>
 		return this.readonlyObjects;
 	}
 
+	public Collection<T> getValues()
+	{
+		return this.getObjects().stream().map(DelegateObjectHolder<T>::get).toList();
+	}
+
 }

@@ -9,7 +9,6 @@ import com.google.common.collect.Sets;
 import ad_astra_giselle_addon.common.config.EnchantmentsConfig;
 import ad_astra_giselle_addon.common.enchantment.EnchantmentHelper2;
 import ad_astra_giselle_addon.common.registries.AddonEnchantments;
-import ad_astra_giselle_addon.common.registries.DelegateObjectHolder;
 import earth.terrarium.botarium.util.CommonHooks;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.contents.TranslatableContents;
@@ -55,10 +54,8 @@ public class EnchantedBookTooltipHelper
 	{
 		if (item.getItem() instanceof EnchantedBookItem && tooltipEnabled())
 		{
-			for (DelegateObjectHolder<Enchantment> holder : AddonEnchantments.ENCHANTMENTS.getObjects())
+			for (Enchantment enchantment : AddonEnchantments.ENCHANTMENTS.getValues())
 			{
-				Enchantment enchantment = holder.get();
-
 				for (Component line : lines)
 				{
 					if (line.getContents() instanceof TranslatableContents contents)

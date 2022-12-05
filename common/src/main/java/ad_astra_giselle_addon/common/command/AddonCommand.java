@@ -10,6 +10,7 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 
 import ad_astra_giselle_addon.common.AdAstraGiselleAddon;
 import ad_astra_giselle_addon.common.compat.CompatibleMod;
+import ad_astra_giselle_addon.common.delegate.DelegateRegistry;
 import ad_astra_giselle_addon.common.fluid.UniveralFluidHandler;
 import ad_astra_giselle_addon.common.registries.AddonEnchantments;
 import earth.terrarium.ad_astra.registry.ModFluids;
@@ -141,7 +142,7 @@ public class AddonCommand
 
 		public static ItemStack makeFull(ResourceLocation name, Enchantment... enchantments)
 		{
-			Item item = AdAstraGiselleAddon.delegate().getRegistryHelper().getRegistry(Registry.ITEM_REGISTRY).getValue(name);
+			Item item = DelegateRegistry.get(Registry.ITEM_REGISTRY).getValue(name);
 			return makeFull(item, enchantments);
 		}
 

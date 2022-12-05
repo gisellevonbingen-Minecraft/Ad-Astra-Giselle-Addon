@@ -45,9 +45,19 @@ public class DelegateDoubleCollection<P, S>
 		return this.primaryRegister.getObjects();
 	}
 
+	public Collection<P> getPrimaryValues()
+	{
+		return this.primaryRegister.getValues();
+	}
+
 	public Collection<DelegateObjectHolder<S>> getSecondaryObjects()
 	{
 		return this.secondaryRegister.getObjects();
+	}
+
+	public Collection<S> getSecondaryValues()
+	{
+		return this.secondaryRegister.getValues();
 	}
 
 }

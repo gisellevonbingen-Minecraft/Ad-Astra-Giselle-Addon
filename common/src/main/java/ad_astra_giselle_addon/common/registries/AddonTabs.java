@@ -2,6 +2,7 @@ package ad_astra_giselle_addon.common.registries;
 
 import ad_astra_giselle_addon.common.AdAstraGiselleAddon;
 import ad_astra_giselle_addon.common.delegate.CreativeModeTabBuilder;
+import ad_astra_giselle_addon.common.delegate.DelegateRegistry;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.Registry;
 import net.minecraft.world.item.CreativeModeTab;
@@ -18,15 +19,13 @@ public class AddonTabs
 			{
 				NonNullList<ItemStack> list = NonNullList.create();
 
-				for (Item item : AdAstraGiselleAddon.delegate().getRegistryHelper().getRegistry(Registry.ITEM_REGISTRY).getValues())
+				for (Item item : DelegateRegistry.get(Registry.ITEM_REGISTRY).getValues())
 				{
 					item.fillItemCategory(AddonTabs.tab_main, list);
 				}
 
-				for (DelegateObjectHolder<Enchantment> registryObject : AddonEnchantments.ENCHANTMENTS.getObjects())
+				for (Enchantment enchantment : AddonEnchantments.ENCHANTMENTS.getValues())
 				{
-					Enchantment enchantment = registryObject.get();
-
 					for (int i = enchantment.getMinLevel(); i <= enchantment.getMaxLevel(); i++)
 					{
 						ItemStack enchantedBook = EnchantedBookItem.createForEnchantment(new EnchantmentInstance(enchantment, i));
