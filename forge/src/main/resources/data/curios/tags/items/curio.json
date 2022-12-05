@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "ad_astra_giselle_addon:oxygen_can"
+    "ad_astra_giselle_addon:oxygen_can",
+    "ad_astra_giselle_addon:netherite_oxygen_can"
   ]
 }

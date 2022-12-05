@@ -1,0 +1,22 @@
+{
+	"type": "ad_astra:crafting_shaped_space_suit",
+	"result": {
+		"item": "ad_astra_giselle_addon:netherite_oxygen_can"
+	},
+	"pattern": [
+		" N ",
+		"OCO",
+		"OOO"
+	],
+	"key": {
+		"N": {
+			"tag": "ad_astra_platform:netherite_ingots"
+		},
+		"O": {
+			"tag": "ad_astra_platform:ostrum_plates"
+		},
+		"C": {
+			"item": "ad_astra_giselle_addon:oxygen_can"
+		}
+	}
+}

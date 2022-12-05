@@ -5,6 +5,7 @@
   "block.ad_astra_giselle_addon.fuel_loader": "연료 적재기",
   
   "item.ad_astra_giselle_addon.oxygen_can": "산소 캔",
+  "item.ad_astra_giselle_addon.netherite_oxygen_can": "네더라이트 산소 캔",
   
   "container.ad_astra_giselle_addon.fuel_loader": "연료 적재기",
   
@@ -55,6 +56,9 @@
   "config.ad_astra_giselle_addon.items.oxygen_can": "산소 캔",
   "config.ad_astra_giselle_addon.items.oxygen_can_fluid_capacity": "유체 용량",
   "config.ad_astra_giselle_addon.items.oxygen_can_fluid_transfer": "유체 전송량",
+  "config.ad_astra_giselle_addon.items.netherite_oxygen_can": "네더라이트 산소 캔",
+  "config.ad_astra_giselle_addon.items.netherite_oxygen_can_fluid_capacity": "유체 용량",
+  "config.ad_astra_giselle_addon.items.netherite_oxygen_can_fluid_transfer": "유체 전송량",
   "config.ad_astra_giselle_addon.machines": "기계",
   "config.ad_astra_giselle_addon.machines.fuel_loader": "연료 적재기",
   "config.ad_astra_giselle_addon.machines.fuel_loader_fluid_capacity": "유체 용량",

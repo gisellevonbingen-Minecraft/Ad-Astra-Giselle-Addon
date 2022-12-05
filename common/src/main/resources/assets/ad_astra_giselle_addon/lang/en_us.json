@@ -5,6 +5,7 @@
   "block.ad_astra_giselle_addon.fuel_loader": "Fuel Loader",
   
   "item.ad_astra_giselle_addon.oxygen_can": "Oxygen Can",
+  "item.ad_astra_giselle_addon.netherite_oxygen_can": "Netherite Oxygen Can",
   
   "container.ad_astra_giselle_addon.fuel_loader": "Fuel Loader",
   
@@ -55,6 +56,9 @@
   "config.ad_astra_giselle_addon.items.oxygen_can": "Oxygen Can",
   "config.ad_astra_giselle_addon.items.oxygen_can_fluid_capacity": "Fluid Capacity",
   "config.ad_astra_giselle_addon.items.oxygen_can_fluid_transfer": "Fluid Transfer",
+  "config.ad_astra_giselle_addon.items.netherite_oxygen_can": "Netherite Oxygen Can",
+  "config.ad_astra_giselle_addon.items.netherite_oxygen_can_fluid_capacity": "Fluid Capacity",
+  "config.ad_astra_giselle_addon.items.netherite_oxygen_can_fluid_transfer": "Fluid Transfer",
   "config.ad_astra_giselle_addon.machines": "Machines",
   "config.ad_astra_giselle_addon.machines.fuel_loader": "Fuel Loader",
   "config.ad_astra_giselle_addon.machines.fuel_loader_fluid_capacity": "Fluid Capacity",
