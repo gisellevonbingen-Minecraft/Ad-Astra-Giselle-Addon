@@ -68,7 +68,7 @@ public class SpaceBreathingClientHandler<T extends IArmorUpgradeHandler<?>> exte
 		if (isEnabled && this.stat.isStatOpen())
 		{
 			Player player = armorHandler.getPlayer();
-			double ratio = OxygenChargerUtils.getInventoryStorageRatio(player).orElse(0.0D);
+			double ratio = OxygenChargerUtils.getExtractableStoredRatio(player).orElse(0.0D);
 			this.oxygenComponent = TranslationUtils.formatPercent(ratio);
 			this.oxygenEmpty = ratio <= 0.0D;
 		}

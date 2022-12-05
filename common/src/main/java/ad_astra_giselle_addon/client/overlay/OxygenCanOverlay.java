@@ -28,7 +28,7 @@ public class OxygenCanOverlay
 		}
 		else if (PlayerOverlayScreen.shouldRenderOxygen && !minecraft.options.renderDebug)
 		{
-			OxygenChargerUtils.getInventoryStorageRatio(player).ifPresent(ratio ->
+			OxygenChargerUtils.getExtractableStoredRatio(player).ifPresent(ratio ->
 			{
 				Font font = minecraft.font;
 				Component component = Component.translatable(OXYGENCAN_DESCRIPTION_ID).append(": ").append(TranslationUtils.formatPercent(ratio));

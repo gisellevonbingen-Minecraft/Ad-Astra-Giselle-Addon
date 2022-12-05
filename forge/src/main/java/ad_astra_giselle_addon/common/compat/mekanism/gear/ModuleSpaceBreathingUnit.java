@@ -161,7 +161,7 @@ public class ModuleSpaceBreathingUnit implements ICustomModule<ModuleSpaceBreath
 			return;
 		}
 
-		double ratio = OxygenChargerUtils.getInventoryStorageRatio(player).orElse(0.0D);
+		double ratio = OxygenChargerUtils.getExtractableStoredRatio(player).orElse(0.0D);
 		hudElementAdder.accept(MekanismAPI.getModuleHelper().hudElementPercent(ICON, ratio));
 	}
 

@@ -60,21 +60,26 @@ public class OxygenChargerUtils
 
 	}
 
-	public static OptionalDouble getInventoryStorageRatio(LivingEntity living)
+	public static OptionalDouble getExtractableStoredRatio(LivingEntity living)
 	{
 		List<ItemStackReference> items = LivingHelper.getInventoryStacks(living);
 		long stored = 0L;
 		long capacity = 0L;
+		int temperature = (int) ModUtils.getWorldTemperature(living.getLevel());
 
 		for (ItemStackReference item : items)
 		{
 			IOxygenCharger oxygenCharger = OxygenChargerUtils.get(item);
 
-			if (oxygenCharger != null && oxygenCharger.getChargeMode() != ChargeMode.NONE)
+			if (oxygenCharger != null && oxygenCharger.getTemperatureThreshold().contains(temperature))
 			{
-				UniveralFluidHandler fluidHandler = oxygenCharger.getFluidHandler();
-				stored += FluidHooks2.getStoredAmount(fluidHandler);
-				capacity += FluidHooks2.getTotalCapacity(fluidHandler);
+				if (oxygenCharger.getChargeMode() != ChargeMode.NONE)
+				{
+					UniveralFluidHandler fluidHandler = oxygenCharger.getFluidHandler();
+					stored += FluidHooks2.getStoredAmount(fluidHandler);
+					capacity += FluidHooks2.getTotalCapacity(fluidHandler);
+				}
+
 			}
 
 		}
@@ -99,7 +104,7 @@ public class OxygenChargerUtils
 	@Nullable
 	public static Stream<IOxygenCharger> streamExtractable(LivingEntity living, long extracting, @Nullable ItemStack beContains)
 	{
-        int temperature = (int) ModUtils.getWorldTemperature(living.getLevel());
+		int temperature = (int) ModUtils.getWorldTemperature(living.getLevel());
 		return LivingHelper.getInventoryStacks(living).stream().map(OxygenChargerUtils::get).filter(oxygenCharger ->
 		{
 			if (oxygenCharger != null && oxygenCharger.getTemperatureThreshold().contains(temperature))
