@@ -108,7 +108,7 @@ public abstract class LivingEntityMixin extends Entity implements IProofDuration
 	}
 
 	@Inject(method = "hurt", at = @At("HEAD"), cancellable = true)
-	public void tick(DamageSource source, float amount, CallbackInfoReturnable<Boolean> callbackInfo)
+	public void hurt(DamageSource source, float amount, CallbackInfoReturnable<Boolean> callbackInfo)
 	{
 		if (source == ModDamageSource.OXYGEN)
 		{
