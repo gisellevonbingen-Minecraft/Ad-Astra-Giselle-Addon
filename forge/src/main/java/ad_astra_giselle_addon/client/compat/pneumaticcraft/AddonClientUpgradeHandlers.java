@@ -23,7 +23,7 @@ public class AddonClientUpgradeHandlers
 
 	public static final SpaceBreathingClientHandler<SpaceBreathingCommonHandler> SPACE_BREATHING = register(AddonCommonUpgradeHandlers.SPACE_BREATHING, SpaceBreathingClientHandler::new);
 	public static final SimpleToggleableHandler<SpaceFireProofCommonHandler> SPACE_FIRE_PROOF = register(AddonCommonUpgradeHandlers.SPACE_FIRE_PROOF, AddonSimpleToggleableHandler::new);
-	public static final SimpleToggleableHandler<VenusAcidProofCommonHandler> VENUS_ACID_PROOF = register(AddonCommonUpgradeHandlers.VENUS_ACID_PROOF, AddonSimpleToggleableHandler::new);
+	public static final SimpleToggleableHandler<VenusAcidProofCommonHandler> ACID_RAIN_PROOF = register(AddonCommonUpgradeHandlers.ACID_RAIN_PROOF, AddonSimpleToggleableHandler::new);
 
 	private static <C extends IArmorUpgradeHandler<?>, T extends IArmorUpgradeClientHandler<? extends C>> T register(C commonHandler, Function<C, T> func)
 	{

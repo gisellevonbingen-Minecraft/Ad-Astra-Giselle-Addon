@@ -29,7 +29,7 @@ public class VenusAcidProofCommonHandler extends AddonArmorUpgradeCommonHandler<
 	@Override
 	public PNCUpgrade[] getRequiredUpgrades()
 	{
-		return new PNCUpgrade[]{AddonPNCUpgrades.VENUS_ACID_PROOF.get()};
+		return new PNCUpgrade[]{AddonPNCUpgrades.ACID_RAIN_PROOF.get()};
 	}
 
 }

@@ -15,7 +15,7 @@ public class ModuleVenusAcidProofUnit implements ICustomModule<ModuleVenusAcidPr
 	{
 		ICustomModule.super.init(module, configItemCreator);
 
-		this.energyUsing = FloatingLong.create(AddonMekanismConfig.MODULES_VENUS_ACID_PROOF_ENERGY_USING);
+		this.energyUsing = FloatingLong.create(AddonMekanismConfig.MODULES_ACID_RAIN_PROOF_ENERGY_USING);
 	}
 
 	public FloatingLong getEnergyUsing()

@@ -14,7 +14,7 @@ public class AddonMekanismItems
 
 	public static final ItemRegistryObject<ItemModule> SPACE_BREATHING_UNIT = registerModule(ITEMS, AddonMekanismModules.SPACE_BREATHING_UNIT);
 	public static final ItemRegistryObject<ItemModule> SPACE_FIRE_PROOF_UNIT = registerModule(ITEMS, AddonMekanismModules.SPACE_FIRE_PROOF_UNIT);
-	public static final ItemRegistryObject<ItemModule> VENUS_ACID_PROOF_UNIT = registerModule(ITEMS, AddonMekanismModules.VENUS_ACID_PROOF_UNIT);
+	public static final ItemRegistryObject<ItemModule> ACID_RAIN_PROOF_UNIT = registerModule(ITEMS, AddonMekanismModules.ACID_RAIN_PROOF_UNIT);
 
 	public static ItemRegistryObject<ItemModule> registerModule(ItemDeferredRegister register, ModuleRegistryObject<?> moduleDataSupplier)
 	{

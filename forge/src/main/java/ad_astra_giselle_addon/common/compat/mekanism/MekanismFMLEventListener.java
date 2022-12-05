@@ -12,7 +12,7 @@ public class MekanismFMLEventListener
 	{
 		String modid = MekanismCompat.MOD_ID;
 		InterModComms.sendTo(modid, MekanismIMC.ADD_MEKA_SUIT_HELMET_MODULES, AddonMekanismModules.SPACE_BREATHING_UNIT);
-		InterModComms.sendTo(modid, MekanismIMC.ADD_MEKA_SUIT_BODYARMOR_MODULES, AddonMekanismModules.VENUS_ACID_PROOF_UNIT);
+		InterModComms.sendTo(modid, MekanismIMC.ADD_MEKA_SUIT_BODYARMOR_MODULES, AddonMekanismModules.ACID_RAIN_PROOF_UNIT);
 	}
 
 	private MekanismFMLEventListener()

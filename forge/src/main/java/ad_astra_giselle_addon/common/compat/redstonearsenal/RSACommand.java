@@ -17,7 +17,7 @@ public class RSACommand
 		ServerPlayer player = source.getPlayerOrException();
 
 		player.setItemSlot(EquipmentSlot.HEAD, AddonCommand.Equip.makeFull(RedstoneArsenalCompat.rl("flux_helmet"), AddonEnchantments.SPACE_BREATHING.get()));
-		player.setItemSlot(EquipmentSlot.CHEST, AddonCommand.Equip.makeFull(RedstoneArsenalCompat.rl("flux_chestplate"), AddonEnchantments.SPACE_FIRE_PROOF.get(), AddonEnchantments.VENUS_ACID_PROOF.get()));
+		player.setItemSlot(EquipmentSlot.CHEST, AddonCommand.Equip.makeFull(RedstoneArsenalCompat.rl("flux_chestplate"), AddonEnchantments.SPACE_FIRE_PROOF.get(), AddonEnchantments.ACID_RAIN_PROOF.get()));
 		player.setItemSlot(EquipmentSlot.LEGS, AddonCommand.Equip.makeFull(RedstoneArsenalCompat.rl("flux_leggings")));
 		player.setItemSlot(EquipmentSlot.FEET, AddonCommand.Equip.makeFull(RedstoneArsenalCompat.rl("flux_boots")));
 

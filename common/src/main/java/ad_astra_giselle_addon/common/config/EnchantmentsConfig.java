@@ -54,16 +54,16 @@ public final class EnchantmentsConfig
 	@Comment(value = "Proof duration on using durability " + GENERAL_DURABILITY_TICKS_TOOLTIP, translation = SPACE_FIRE_PROOF_PREFIX + "_durability_duration.comment")
 	public static int SPACE_FIRE_PROOF_DURABILITY_DURATION = 6 * ProofAbstractUtils.GENERAL_PROOF_INTERVAL;
 
-	public static final String VENUS_ACID_PROOF_ID = "venus_acid_proof";
-	public static final String VENUS_ACID_PROOF_PREFIX = PREFIX + "." + VENUS_ACID_PROOF_ID;
-	@ConfigSeparator(translation = VENUS_ACID_PROOF_PREFIX)
-	@ConfigEntry(id = VENUS_ACID_PROOF_ID + "_energy_using", type = EntryType.INTEGER, translation = VENUS_ACID_PROOF_PREFIX + "_energy_using")
-	@Comment(value = "Energy usage for proof " + GENERAL_ENERGY_INTERVAL_TOOLTIP, translation = VENUS_ACID_PROOF_PREFIX + "_energy_using.comment")
-	public static int VENUS_ACID_PROOF_ENERGY_USING = 10;
-	@ConfigEntry(id = VENUS_ACID_PROOF_ID + "_durability_using", type = EntryType.INTEGER, translation = VENUS_ACID_PROOF_PREFIX + "_durability_using")
-	@Comment(value = "Durability usage for proof", translation = VENUS_ACID_PROOF_PREFIX + "_durability_using.comment")
-	public static int VENUS_ACID_PROOF_DURABILITY_USING = 1;
-	@ConfigEntry(id = VENUS_ACID_PROOF_ID + "_durability_duration", type = EntryType.INTEGER, translation = VENUS_ACID_PROOF_PREFIX + "_durability_duration")
-	@Comment(value = "Proof duration on using durability " + GENERAL_DURABILITY_TICKS_TOOLTIP, translation = VENUS_ACID_PROOF_PREFIX + "_durability_duration.comment")
-	public static int VENUS_ACID_PROOF_DURABILITY_DURATION = 6 * ProofAbstractUtils.GENERAL_PROOF_INTERVAL;
+	public static final String ACID_RAIN_PROOF_ID = "acid_rain_proof";
+	public static final String ACID_RAIN_PROOF_PREFIX = PREFIX + "." + ACID_RAIN_PROOF_ID;
+	@ConfigSeparator(translation = ACID_RAIN_PROOF_PREFIX)
+	@ConfigEntry(id = ACID_RAIN_PROOF_ID + "_energy_using", type = EntryType.INTEGER, translation = ACID_RAIN_PROOF_PREFIX + "_energy_using")
+	@Comment(value = "Energy usage for proof " + GENERAL_ENERGY_INTERVAL_TOOLTIP, translation = ACID_RAIN_PROOF_PREFIX + "_energy_using.comment")
+	public static int ACID_RAIN_PROOF_ENERGY_USING = 10;
+	@ConfigEntry(id = ACID_RAIN_PROOF_ID + "_durability_using", type = EntryType.INTEGER, translation = ACID_RAIN_PROOF_PREFIX + "_durability_using")
+	@Comment(value = "Durability usage for proof", translation = ACID_RAIN_PROOF_PREFIX + "_durability_using.comment")
+	public static int ACID_RAIN_PROOF_DURABILITY_USING = 1;
+	@ConfigEntry(id = ACID_RAIN_PROOF_ID + "_durability_duration", type = EntryType.INTEGER, translation = ACID_RAIN_PROOF_PREFIX + "_durability_duration")
+	@Comment(value = "Proof duration on using durability " + GENERAL_DURABILITY_TICKS_TOOLTIP, translation = ACID_RAIN_PROOF_PREFIX + "_durability_duration.comment")
+	public static int ACID_RAIN_PROOF_DURABILITY_DURATION = 6 * ProofAbstractUtils.GENERAL_PROOF_INTERVAL;
 }

@@ -15,7 +15,7 @@ import ad_astra_giselle_addon.common.compat.CompatibleManager;
 import ad_astra_giselle_addon.common.config.AddonConfigs;
 import ad_astra_giselle_addon.common.content.proof.SpaceFireProofUtils;
 import ad_astra_giselle_addon.common.content.proof.SpaceOxygenProofUtils;
-import ad_astra_giselle_addon.common.content.proof.VenusAcidProofUtils;
+import ad_astra_giselle_addon.common.content.proof.AcidRainProofUtils;
 import ad_astra_giselle_addon.common.delegate.DelegateRegistryHelper;
 import ad_astra_giselle_addon.common.delegate.PlatformCommonDelegate;
 import ad_astra_giselle_addon.common.network.AddonNetwork;
@@ -83,7 +83,7 @@ public class AdAstraGiselleAddon
 		eventBus = new EventBus();
 		eventBus.register(SpaceOxygenProofUtils.INSTANCE);
 		eventBus.register(SpaceFireProofUtils.INSTANCE);
-		eventBus.register(VenusAcidProofUtils.INSTANCE);
+		eventBus.register(AcidRainProofUtils.INSTANCE);
 
 		compats = new CompatibleManager(delegate.getAddonHelper().getAddons());
 		compats.tryLoad(delegate);

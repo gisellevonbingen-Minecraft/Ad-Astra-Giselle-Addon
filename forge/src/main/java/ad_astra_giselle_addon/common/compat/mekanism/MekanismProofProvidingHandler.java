@@ -68,7 +68,7 @@ public class MekanismProofProvidingHandler
 			@Override
 			public boolean canProvide()
 			{
-				return AddonModuleHelper.useEnergy(this.getLiving(), AddonMekanismModules.VENUS_ACID_PROOF_UNIT, ModuleVenusAcidProofUnit::getEnergyUsing);
+				return AddonModuleHelper.useEnergy(this.getLiving(), AddonMekanismModules.ACID_RAIN_PROOF_UNIT, ModuleVenusAcidProofUnit::getEnergyUsing);
 			}
 
 			@Override
