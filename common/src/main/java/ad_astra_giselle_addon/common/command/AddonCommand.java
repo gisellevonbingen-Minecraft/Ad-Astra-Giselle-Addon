@@ -132,7 +132,7 @@ public class AddonCommand
 			ServerPlayer player = source.getPlayerOrException();
 
 			player.setItemSlot(EquipmentSlot.HEAD, makeFull(Items.DIAMOND_HELMET, AddonEnchantments.SPACE_BREATHING.get()));
-			player.setItemSlot(EquipmentSlot.CHEST, makeFull(Items.DIAMOND_CHESTPLATE, AddonEnchantments.SPACE_FIRE_PROOF.get(), AddonEnchantments.VENUS_ACID_PROOF.get()));
+			player.setItemSlot(EquipmentSlot.CHEST, makeFull(Items.DIAMOND_CHESTPLATE, AddonEnchantments.SPACE_FIRE_PROOF.get(), AddonEnchantments.ACID_RAIN_PROOF.get()));
 			player.setItemSlot(EquipmentSlot.LEGS, makeFull(Items.DIAMOND_LEGGINGS));
 			player.setItemSlot(EquipmentSlot.FEET, makeFull(Items.DIAMOND_BOOTS));
 

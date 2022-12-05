@@ -5,9 +5,9 @@ import ad_astra_giselle_addon.common.enchantment.EnchantmentEnergyStorageOrDamag
 import ad_astra_giselle_addon.common.item.ItemUsableResource;
 import net.minecraft.world.entity.LivingEntity;
 
-public class VenusAcidProofEnchantmentSession extends ProofEnchantmentSession
+public class AcidRainProofEnchantmentSession extends ProofEnchantmentSession
 {
-	public VenusAcidProofEnchantmentSession(LivingEntity entity, EnchantmentEnergyStorageOrDamageable enchantment)
+	public AcidRainProofEnchantmentSession(LivingEntity entity, EnchantmentEnergyStorageOrDamageable enchantment)
 	{
 		super(entity, enchantment);
 	}
@@ -17,11 +17,11 @@ public class VenusAcidProofEnchantmentSession extends ProofEnchantmentSession
 	{
 		if (resource == ItemUsableResource.Energy)
 		{
-			return EnchantmentsConfig.VENUS_ACID_PROOF_ENERGY_USING;
+			return EnchantmentsConfig.ACID_RAIN_PROOF_ENERGY_USING;
 		}
 		else if (resource == ItemUsableResource.Durability)
 		{
-			return EnchantmentsConfig.VENUS_ACID_PROOF_DURABILITY_USING;
+			return EnchantmentsConfig.ACID_RAIN_PROOF_DURABILITY_USING;
 		}
 		else
 		{
@@ -39,7 +39,7 @@ public class VenusAcidProofEnchantmentSession extends ProofEnchantmentSession
 		}
 		else if (resource == ItemUsableResource.Durability)
 		{
-			return EnchantmentsConfig.VENUS_ACID_PROOF_DURABILITY_DURATION;
+			return EnchantmentsConfig.ACID_RAIN_PROOF_DURABILITY_DURATION;
 		}
 		else
 		{

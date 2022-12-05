@@ -31,10 +31,10 @@ public final class AddonPneumaticCraftConfig
 	@Comment(value = "Air usage for proof " + EnchantmentsConfig.GENERAL_ENERGY_INTERVAL_TOOLTIP, translation = SPACE_FIRE_PROOF_PREFIX + "_air_using.comment")
 	public static int SPACE_FIRE_PROOF_AIR_USING = 5 * ProofAbstractUtils.GENERAL_PROOF_INTERVAL;
 
-	public static final String VENUS_ACID_PROOFID = UPGRADE_ID + "_venus_acid_proof";
-	public static final String VENUS_ACID_PROOF_PREFIX = PREFIX + "." + VENUS_ACID_PROOFID;
-	@ConfigSeparator(translation = VENUS_ACID_PROOF_PREFIX)
-	@ConfigEntry(id = VENUS_ACID_PROOFID + "_air_using", type = EntryType.INTEGER, translation = VENUS_ACID_PROOF_PREFIX + "_air_using")
-	@Comment(value = "Air usage for proof " + EnchantmentsConfig.GENERAL_ENERGY_INTERVAL_TOOLTIP, translation = VENUS_ACID_PROOF_PREFIX + "_air_using.comment")
-	public static int VENUS_ACID_PROOF_AIR_USING = 5 * ProofAbstractUtils.GENERAL_PROOF_INTERVAL;
+	public static final String ACID_RAIN_PROOFID = UPGRADE_ID + "_acid_rain_proof";
+	public static final String ACID_RAIN_PROOF_PREFIX = PREFIX + "." + ACID_RAIN_PROOFID;
+	@ConfigSeparator(translation = ACID_RAIN_PROOF_PREFIX)
+	@ConfigEntry(id = ACID_RAIN_PROOFID + "_air_using", type = EntryType.INTEGER, translation = ACID_RAIN_PROOF_PREFIX + "_air_using")
+	@Comment(value = "Air usage for proof " + EnchantmentsConfig.GENERAL_ENERGY_INTERVAL_TOOLTIP, translation = ACID_RAIN_PROOF_PREFIX + "_air_using.comment")
+	public static int ACID_RAIN_PROOF_AIR_USING = 5 * ProofAbstractUtils.GENERAL_PROOF_INTERVAL;
 }

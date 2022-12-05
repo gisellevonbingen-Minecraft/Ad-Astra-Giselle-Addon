@@ -20,7 +20,7 @@ public class AddonCommonUpgradeHandlers
 
 	public static final SpaceBreathingCommonHandler SPACE_BREATHING = register("space_breathing", SpaceBreathingCommonHandler::new);
 	public static final SpaceFireProofCommonHandler SPACE_FIRE_PROOF = register("space_fire_proof", SpaceFireProofCommonHandler::new);
-	public static final VenusAcidProofCommonHandler VENUS_ACID_PROOF = register("venus_acid_proof", VenusAcidProofCommonHandler::new);
+	public static final VenusAcidProofCommonHandler ACID_RAIN_PROOF = register("acid_rain_proof", VenusAcidProofCommonHandler::new);
 
 	private static <T extends IArmorUpgradeHandler<?>> T register(String name, Function<ResourceLocation, T> func)
 	{

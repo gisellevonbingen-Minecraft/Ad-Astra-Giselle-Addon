@@ -23,7 +23,7 @@ public final class ItemsConfig
 
 	public static final String NETHERITE_OXYGEN_CAN_ID = "netherite_oxygen_can";
 	public static final String NETHERITE_OXYGEN_CAN_PREFIX = PREFIX + "." + NETHERITE_OXYGEN_CAN_ID;
-	@ConfigSeparator(translation = OXYGEN_CAN_PREFIX)
+	@ConfigSeparator(translation = NETHERITE_OXYGEN_CAN_PREFIX)
 	@ConfigEntry(id = NETHERITE_OXYGEN_CAN_ID + "_fluid_capacity", type = EntryType.LONG, translation = NETHERITE_OXYGEN_CAN_PREFIX + "_fluid_capacity")
 	public static long NETHERITE_OXYGEN_CAN_FLUID_CAPACITY = FluidHooks.buckets(1);
 	@ConfigEntry(id = NETHERITE_OXYGEN_CAN_ID + "_fluid_transfer", type = EntryType.LONG, translation = NETHERITE_OXYGEN_CAN_PREFIX + "_fluid_transfer")

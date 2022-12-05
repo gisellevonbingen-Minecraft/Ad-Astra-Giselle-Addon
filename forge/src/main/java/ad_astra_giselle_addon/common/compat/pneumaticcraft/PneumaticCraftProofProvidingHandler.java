@@ -125,7 +125,7 @@ public class PneumaticCraftProofProvidingHandler
 					@Override
 					public boolean canProvide()
 					{
-						return useAir(this.getLiving(), AddonCommonUpgradeHandlers.VENUS_ACID_PROOF, AddonPneumaticCraftConfig.VENUS_ACID_PROOF_AIR_USING);
+						return useAir(this.getLiving(), AddonCommonUpgradeHandlers.ACID_RAIN_PROOF, AddonPneumaticCraftConfig.ACID_RAIN_PROOF_AIR_USING);
 					}
 
 					@Override

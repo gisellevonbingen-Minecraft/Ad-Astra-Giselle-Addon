@@ -10,11 +10,11 @@ import ad_astra_giselle_addon.common.registries.AddonEnchantments;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 
-public class VenusAcidProofUtils extends ProofAbstractUtils
+public class AcidRainProofUtils extends ProofAbstractUtils
 {
-	public static final VenusAcidProofUtils INSTANCE = new VenusAcidProofUtils(AdAstraGiselleAddon.rl("venus_acid_proof"));
+	public static final AcidRainProofUtils INSTANCE = new AcidRainProofUtils(AdAstraGiselleAddon.rl("acid_rain_proof"));
 
-	public VenusAcidProofUtils(ResourceLocation id)
+	public AcidRainProofUtils(ResourceLocation id)
 	{
 		super(id);
 	}
@@ -28,7 +28,7 @@ public class VenusAcidProofUtils extends ProofAbstractUtils
 	@Subscribe
 	public void onEnchantmentProviding(LivingVenusAcidProofProvidingEvent e)
 	{
-		e.add(living -> new VenusAcidProofEnchantmentSession(living, AddonEnchantments.VENUS_ACID_PROOF.get()));
+		e.add(living -> new AcidRainProofEnchantmentSession(living, AddonEnchantments.ACID_RAIN_PROOF.get()));
 	}
 
 }

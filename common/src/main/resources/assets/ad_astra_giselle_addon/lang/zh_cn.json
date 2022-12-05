@@ -12,8 +12,8 @@
   "enchantment.ad_astra_giselle_addon.space_breathing.desc": "可以在地球之外的维度中呼吸\n装订物品需要有能量存储\n需要在库存中启用“氧气罐”",
   "enchantment.ad_astra_giselle_addon.space_fire_proof": "太空防火",
   "enchantment.ad_astra_giselle_addon.space_fire_proof.desc": "不要放火烧超地球维度的玩家\n附魔物品需要有能量储存",
-  "enchantment.ad_astra_giselle_addon.venus_acid_proof": "维纳斯酸防护",
-  "enchantment.ad_astra_giselle_addon.venus_acid_proof.desc": "不要在“地球之外”维度中受到酸雨的伤害\n装魔物品需要有能量存储",
+  "enchantment.ad_astra_giselle_addon.acid_rain_proof": "维纳斯酸防护",
+  "enchantment.ad_astra_giselle_addon.acid_rain_proof.desc": "不要在“地球之外”维度中受到酸雨的伤害\n装魔物品需要有能量存储",
   
   "gui.ad_astra_giselle_addon.workingarea.show": "显示",
   "gui.ad_astra_giselle_addon.workingarea.hide": "隐藏",
@@ -33,8 +33,8 @@
   "description.ad_astra_giselle_addon.space_breathing_unit": "可以在地球之外的维度中呼吸\n在雨中，水时也会用氧气填充被保留的物品\n需要在物品栏中启用“氧气罐”",
   "module.ad_astra_giselle_addon.space_fire_proof_unit": "空间防火装置",
   "description.ad_astra_giselle_addon.space_fire_proof_unit": "不要在“超越地球”维度中放火烧玩家",
-  "module.ad_astra_giselle_addon.venus_acid_proof_unit": "维纳斯酸防化装置",
-  "description.ad_astra_giselle_addon.venus_acid_proof_unit": "不要在地球之外的维度中受到酸雨的破坏",
+  "module.ad_astra_giselle_addon.acid_rain_proof_unit": "维纳斯酸防化装置",
+  "description.ad_astra_giselle_addon.acid_rain_proof_unit": "不要在地球之外的维度中受到酸雨的破坏",
   
   "_eof": "eof"
 }

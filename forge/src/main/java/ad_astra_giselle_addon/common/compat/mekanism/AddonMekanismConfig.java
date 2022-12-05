@@ -34,10 +34,10 @@ public final class AddonMekanismConfig
 	@Comment(value = "Energy usage for proof in every ticks " + EnchantmentsConfig.GENERAL_ENERGY_INTERVAL_TOOLTIP, translation = SPACE_FIRE_MODULES_PROOF_PREFIX + "_energy_using.comment")
 	public static int MODULES_SPACE_FIRE_PROOF_ENERGY_USING = 10 * ProofAbstractUtils.GENERAL_PROOF_INTERVAL;
 
-	public static final String MODULES_VENUS_ACID_PROOF_ID = MODULES_ID + "_venus_acid_proof";
-	public static final String MODULES_VENUS_ACID_PROOF_PREFIX = PREFIX + "." + MODULES_VENUS_ACID_PROOF_ID;
-	@ConfigSeparator(translation = MODULES_VENUS_ACID_PROOF_PREFIX)
-	@ConfigEntry(id = MODULES_VENUS_ACID_PROOF_ID + "_energy_using", type = EntryType.INTEGER, translation = MODULES_VENUS_ACID_PROOF_PREFIX + "_energy_using")
-	@Comment(value = "Energy usage for proof in every ticks " + EnchantmentsConfig.GENERAL_ENERGY_INTERVAL_TOOLTIP, translation = MODULES_VENUS_ACID_PROOF_PREFIX + "_energy_using.comment")
-	public static int MODULES_VENUS_ACID_PROOF_ENERGY_USING = 10 * ProofAbstractUtils.GENERAL_PROOF_INTERVAL;
+	public static final String MODULES_ACID_RAIN_PROOF_ID = MODULES_ID + "_acid_rain_proof";
+	public static final String MODULES_ACID_RAIN_PROOF_PREFIX = PREFIX + "." + MODULES_ACID_RAIN_PROOF_ID;
+	@ConfigSeparator(translation = MODULES_ACID_RAIN_PROOF_PREFIX)
+	@ConfigEntry(id = MODULES_ACID_RAIN_PROOF_ID + "_energy_using", type = EntryType.INTEGER, translation = MODULES_ACID_RAIN_PROOF_PREFIX + "_energy_using")
+	@Comment(value = "Energy usage for proof in every ticks " + EnchantmentsConfig.GENERAL_ENERGY_INTERVAL_TOOLTIP, translation = MODULES_ACID_RAIN_PROOF_PREFIX + "_energy_using.comment")
+	public static int MODULES_ACID_RAIN_PROOF_ENERGY_USING = 10 * ProofAbstractUtils.GENERAL_PROOF_INTERVAL;
 }

@@ -1,7 +1,7 @@
 {
    "textures" : {
       "layer0" : "pneumaticcraft:item/upgrades/upgrade_layer0",
-      "layer1" : "ad_astra_giselle_addon:item/pneumatic_venus_acid_proof_upgrade"
+      "layer1" : "ad_astra_giselle_addon:item/pneumatic_acid_rain_proof_upgrade"
    },
    "parent" : "item/generated"
 }
