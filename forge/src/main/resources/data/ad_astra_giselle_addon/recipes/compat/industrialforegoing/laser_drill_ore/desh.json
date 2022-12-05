@@ -26,7 +26,7 @@
 						"whitelist": {
 							"type": "minecraft:worldgen/biome",
 							"values": [
-								"ad_astra:moon_desert"
+								"ad_astra:lunar_wastelands"
 							]
 						},
 						"blacklist": {},
