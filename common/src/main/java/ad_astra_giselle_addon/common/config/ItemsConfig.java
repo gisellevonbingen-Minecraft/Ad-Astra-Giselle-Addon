@@ -16,8 +16,8 @@ public final class ItemsConfig
 	public static final String OXYGEN_CAN_ID = "oxygen_can";
 	public static final String OXYGEN_CAN_PREFIX = PREFIX + "." + OXYGEN_CAN_ID;
 	@ConfigSeparator(translation = OXYGEN_CAN_PREFIX)
-	@ConfigEntry(id = OXYGEN_CAN_ID + ".fluid_capacity", type = EntryType.LONG, translation = OXYGEN_CAN_PREFIX + ".fluid_capacity")
+	@ConfigEntry(id = OXYGEN_CAN_ID + "_fluid_capacity", type = EntryType.LONG, translation = OXYGEN_CAN_PREFIX + "_fluid_capacity")
 	public static long OXYGEN_CAN_FLUID_CAPACITY = FluidHooks.buckets(2);
-	@ConfigEntry(id = OXYGEN_CAN_ID + ".fluid_transfer", type = EntryType.LONG, translation = OXYGEN_CAN_PREFIX + ".fluid_transfer")
+	@ConfigEntry(id = OXYGEN_CAN_ID + "_fluid_transfer", type = EntryType.LONG, translation = OXYGEN_CAN_PREFIX + "_fluid_transfer")
 	public static long OXYGEN_CAN_FLUID_TRANSFER = FluidHooks.buckets(1) / 4;
 }
