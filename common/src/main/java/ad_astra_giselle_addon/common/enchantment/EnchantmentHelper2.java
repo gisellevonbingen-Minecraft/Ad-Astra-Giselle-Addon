@@ -109,7 +109,6 @@ public class EnchantmentHelper2
 		else
 		{
 			return Pair.of(null, level);
-
 		}
 
 	}

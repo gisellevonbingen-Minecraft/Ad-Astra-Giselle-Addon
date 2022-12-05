@@ -11,7 +11,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import com.google.common.collect.Maps;
 
 import ad_astra_giselle_addon.common.registries.AddonAttributes;
-import ad_astra_giselle_addon.common.registries.DelegateObjectHolder;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeMap;
@@ -31,9 +30,8 @@ public class AttributeMapMixin
 	@Inject(method = "<init>", at = @At("TAIL"))
 	private void init(CallbackInfo callbackInfo)
 	{
-		for (DelegateObjectHolder<Attribute> holder : AddonAttributes.ATTRIBUTES.getObjects())
+		for (Attribute attribute : AddonAttributes.ATTRIBUTES.getValues())
 		{
-			Attribute attribute = holder.get();
 			this.attributes.computeIfAbsent(attribute, key -> new AttributeInstance(key, this::onAttributeModified));
 		}
 
