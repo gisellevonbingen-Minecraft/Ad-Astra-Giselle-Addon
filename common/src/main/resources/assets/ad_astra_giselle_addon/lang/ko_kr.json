@@ -18,6 +18,7 @@
   "gui.ad_astra_giselle_addon.workingarea.show": "동작 범위 표시",
   "gui.ad_astra_giselle_addon.workingarea.hide": "동작 범위 숨김",
   
+  "description.ad_astra_giselle_addon.temperature_range": "온도 범위",
   "description.ad_astra_giselle_addon.charge_mode": "충전 모드",
   
   "chargemode.ad_astra_giselle_addon.none": "비활성화",

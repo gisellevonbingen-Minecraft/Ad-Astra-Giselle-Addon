@@ -3,6 +3,8 @@ package ad_astra_giselle_addon.common.item;
 import java.util.List;
 import java.util.function.BiPredicate;
 
+import org.apache.commons.lang3.Range;
+
 import ad_astra_giselle_addon.common.config.ItemsConfig;
 import ad_astra_giselle_addon.common.content.oxygen.ChargeMode;
 import ad_astra_giselle_addon.common.content.oxygen.IChargeMode;
@@ -131,6 +133,7 @@ public class OxygenCanItem extends Item implements FluidContainingItem, IOxygenC
 
 		if (oxygenCharger != null)
 		{
+			tooltip.add(TranslationUtils.descriptionTemperatureRange(oxygenCharger.getTemperatureThreshold()));
 			tooltip.add(TranslationUtils.descriptionChargeMode(oxygenCharger.getChargeMode()));
 
 			UniveralFluidHandler fluidHandler = oxygenCharger.getFluidHandler();
@@ -197,6 +200,10 @@ public class OxygenCanItem extends Item implements FluidContainingItem, IOxygenC
 				return UniveralFluidHandler.from(item);
 			}
 
+			public Range<Integer> getTemperatureThreshold()
+			{
+				return Range.between(-300, 60);
+			}
 		};
 
 	}

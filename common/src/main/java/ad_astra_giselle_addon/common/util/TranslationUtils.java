@@ -4,6 +4,8 @@ import java.text.NumberFormat;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.lang3.Range;
+
 import ad_astra_giselle_addon.common.AdAstraGiselleAddon;
 import ad_astra_giselle_addon.common.content.oxygen.IChargeMode;
 import earth.terrarium.ad_astra.client.screens.GuiUtil;
@@ -20,6 +22,7 @@ public class TranslationUtils
 	public static final int DEFAULT_DIGITS = 1;
 	private static final Map<IChargeMode, Component> CHANGE_MODES = new HashMap<>();
 
+	public static final String TEMPERATURE_RANGE = AdAstraGiselleAddon.tl("description", "temperature_range");
 	public static final String CHARGE_MODE = AdAstraGiselleAddon.tl("description", "charge_mode");
 
 	static
@@ -32,6 +35,11 @@ public class TranslationUtils
 	{
 		MutableComponent value = Component.literal("").withStyle(ChatFormatting.WHITE).append(component);
 		return Component.translatable(key).withStyle(ChatFormatting.BLUE).append(": ").append(value);
+	}
+
+	public static Component descriptionTemperatureRange(Range<Integer> range)
+	{
+		return description(TEMPERATURE_RANGE, Component.literal(range.getMinimum() + "℃ ~ " + range.getMaximum() + "℃"));
 	}
 
 	public static Component descriptionChargeMode(IChargeMode mode)

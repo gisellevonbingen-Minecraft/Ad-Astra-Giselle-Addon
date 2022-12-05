@@ -18,6 +18,7 @@
   "gui.ad_astra_giselle_addon.workingarea.show": "Show",
   "gui.ad_astra_giselle_addon.workingarea.hide": "Hide",
   
+  "description.ad_astra_giselle_addon.temperature_range": "Temperature Range",
   "description.ad_astra_giselle_addon.charge_mode": "Charge Mode",
   
   "chargemode.ad_astra_giselle_addon.none": "Disabled",

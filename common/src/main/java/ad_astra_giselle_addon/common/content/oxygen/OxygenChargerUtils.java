@@ -13,6 +13,7 @@ import ad_astra_giselle_addon.common.item.ItemStackReference;
 import ad_astra_giselle_addon.common.util.LivingHelper;
 import earth.terrarium.ad_astra.items.OxygenTankItem;
 import earth.terrarium.ad_astra.items.armour.SpaceSuit;
+import earth.terrarium.ad_astra.util.ModUtils;
 import earth.terrarium.botarium.api.fluid.FluidHolder;
 import earth.terrarium.botarium.api.item.ItemStackHolder;
 import net.minecraft.world.entity.LivingEntity;
@@ -98,9 +99,10 @@ public class OxygenChargerUtils
 	@Nullable
 	public static Stream<IOxygenCharger> streamExtractable(LivingEntity living, long extracting, @Nullable ItemStack beContains)
 	{
+        int temperature = (int) ModUtils.getWorldTemperature(living.getLevel());
 		return LivingHelper.getInventoryStacks(living).stream().map(OxygenChargerUtils::get).filter(oxygenCharger ->
 		{
-			if (oxygenCharger != null)
+			if (oxygenCharger != null && oxygenCharger.getTemperatureThreshold().contains(temperature))
 			{
 				FluidHolder extract = FluidHooks2.extractFluid(oxygenCharger.getFluidHandler(), FluidPredicates::isOxygen, extracting, true);
 

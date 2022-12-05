@@ -3,6 +3,7 @@ package ad_astra_giselle_addon.common.content.oxygen;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.lang3.Range;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -23,4 +24,6 @@ public interface IOxygenCharger
 	public long getTransferAmount();
 
 	public UniveralFluidHandler getFluidHandler();
+
+	public Range<Integer> getTemperatureThreshold();
 }
