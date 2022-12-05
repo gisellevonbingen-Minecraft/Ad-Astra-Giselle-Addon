@@ -79,8 +79,8 @@ public class AdAstraGiselleAddonClient
 			{
 				EnchantmentHelper2.clearDescriptionsCache();
 			}
-		}); 
-		
+		});
+
 	}
 
 	public interface BlockEntityRendererRegister
