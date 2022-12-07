@@ -5,15 +5,9 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import ad_astra_giselle_addon.client.compat.pneumaticcraft.pneumatic_armor.options.SpaceBreathingOption;
 import ad_astra_giselle_addon.common.compat.pneumaticcraft.AddonPNCUpgrade;
 import ad_astra_giselle_addon.common.compat.pneumaticcraft.AddonPNCUpgrades;
-import ad_astra_giselle_addon.common.content.oxygen.ChargeMode;
-import ad_astra_giselle_addon.common.content.oxygen.IOxygenCharger;
 import ad_astra_giselle_addon.common.content.oxygen.OxygenChargerUtils;
-import ad_astra_giselle_addon.common.fluid.UniveralFluidHandler;
 import ad_astra_giselle_addon.common.registries.AddonItems;
 import ad_astra_giselle_addon.common.util.TranslationUtils;
-import earth.terrarium.ad_astra.registry.ModFluids;
-import earth.terrarium.botarium.api.fluid.FluidHooks;
-import earth.terrarium.botarium.api.item.ItemStackHolder;
 import me.desht.pneumaticcraft.api.client.IGuiAnimatedStat;
 import me.desht.pneumaticcraft.api.client.pneumatic_helmet.IGuiScreen;
 import me.desht.pneumaticcraft.api.client.pneumatic_helmet.IOptionPage;
@@ -31,23 +25,10 @@ import net.minecraft.world.item.ItemStack;
 public class SpaceBreathingClientHandler<T extends IArmorUpgradeHandler<?>> extends AddonSimpleToggleableHandler<T>
 {
 	private static final StatPanelLayout DEFAULT_STAT_LAYOUT = new StatPanelLayout(0.5F, 0.005F, false);
-	private static ItemStack ICON_EMPTY;
-	private static ItemStack ICON_FULL;
-	private static boolean HAD_TICK;
-
-	static
-	{
-		ICON_EMPTY = new ItemStack(AddonItems.OXYGEN_CAN.get());
-
-		ItemStackHolder full = new ItemStackHolder(new ItemStack(AddonItems.OXYGEN_CAN.get()));
-		IOxygenCharger oxygenCharger = OxygenChargerUtils.get(full);
-		oxygenCharger.setChargeMode(ChargeMode.ALL);
-		ICON_FULL = full.getStack();
-	}
+	private static final ItemStack ICON = new ItemStack(AddonItems.OXYGEN_CAN.get());
 
 	private IGuiAnimatedStat stat;
 	private Component oxygenComponent;
-	private boolean oxygenEmpty;
 
 	public SpaceBreathingClientHandler(T commonHandler)
 	{
@@ -70,19 +51,10 @@ public class SpaceBreathingClientHandler<T extends IArmorUpgradeHandler<?>> exte
 			Player player = armorHandler.getPlayer();
 			double ratio = OxygenChargerUtils.getExtractableStoredRatio(player).orElse(0.0D);
 			this.oxygenComponent = TranslationUtils.formatPercent(ratio);
-			this.oxygenEmpty = ratio <= 0.0D;
 		}
 		else
 		{
 			this.oxygenComponent = null;
-			this.oxygenEmpty = true;
-		}
-
-		if (!HAD_TICK)
-		{
-			HAD_TICK = true;
-			UniveralFluidHandler fluidHandler = OxygenChargerUtils.get(new ItemStackHolder(ICON_FULL)).getFluidHandler();
-			fluidHandler.insertFluid(FluidHooks.newFluidHolder(ModFluids.OXYGEN.get(), Integer.MAX_VALUE, null), false);
 		}
 
 	}
@@ -106,7 +78,7 @@ public class SpaceBreathingClientHandler<T extends IArmorUpgradeHandler<?>> exte
 
 			int iconWidth = 16;
 			int iconX = xl;
-			instance.getItemRenderer().renderGuiItem(this.oxygenEmpty ? ICON_EMPTY : ICON_FULL, iconX, yt);
+			instance.getItemRenderer().renderGuiItem(ICON, iconX, yt);
 
 			int componentX = iconX + iconWidth + 2;
 			int componentY = yt + 4;

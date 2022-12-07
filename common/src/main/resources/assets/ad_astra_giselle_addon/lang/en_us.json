@@ -10,7 +10,7 @@
   "container.ad_astra_giselle_addon.fuel_loader": "Fuel Loader",
   
   "enchantment.ad_astra_giselle_addon.space_breathing": "Space Breathing",
-  "enchantment.ad_astra_giselle_addon.space_breathing.desc": "Can breath in Ad Astra dimensions\nUse energy or durability\nRequire enabled 'Oxygen Can' in inventory",
+  "enchantment.ad_astra_giselle_addon.space_breathing.desc": "Can breath in Ad Astra dimensions\nUse energy or durability\nRequire 'Oxygen Can' in inventory",
   "enchantment.ad_astra_giselle_addon.space_fire_proof": "Space Fire Proof",
   "enchantment.ad_astra_giselle_addon.space_fire_proof.desc": "Don't set fire to player in Ad Astra dimensions\nUse energy or durability",
   "enchantment.ad_astra_giselle_addon.acid_rain_proof": "Acid Rain Proof",
@@ -32,7 +32,7 @@
   
   
   "module.ad_astra_giselle_addon.space_breathing_unit": "Space Breathing Unit",
-  "description.ad_astra_giselle_addon.space_breathing_unit": "Can breath in Ad Astra dimensions\nWill also fill held item with oxygen when in rain, water\nRequire enabled 'Oxygen Can' in inventory",
+  "description.ad_astra_giselle_addon.space_breathing_unit": "Can breath in Ad Astra dimensions\nWill also fill held item with oxygen when in rain, water\nRequire 'Oxygen Can' in inventory",
   "module.ad_astra_giselle_addon.space_fire_proof_unit": "Space Fire Proof Unit",
   "description.ad_astra_giselle_addon.space_fire_proof_unit": "Don't set fire to player in Ad Astra dimensions",
   "module.ad_astra_giselle_addon.acid_rain_proof_unit": "Acid Rain Proof Unit",
@@ -47,7 +47,7 @@
   "pneumaticcraft.armor.upgrade.ad_astra_giselle_addon.space_fire_proof" : "Space Fire Proof",
   "pneumaticcraft.armor.upgrade.ad_astra_giselle_addon.acid_rain_proof" : "Acid Rain Proof",
   
-  "pneumaticcraft.gui.tab.info.item.armor.generic.ad_astra_giselle_addon.space_breathingUpgrade": "Can breath in Ad Astra dimensions\nRequire enabled 'Oxygen Can' in inventory",
+  "pneumaticcraft.gui.tab.info.item.armor.generic.ad_astra_giselle_addon.space_breathingUpgrade": "Can breath in Ad Astra dimensions\nRequire 'Oxygen Can' in inventory",
   "pneumaticcraft.gui.tab.info.item.armor.generic.ad_astra_giselle_addon.space_fire_proofUpgrade": "Don't set fire to player in Ad Astra dimensions",
   "pneumaticcraft.gui.tab.info.item.armor.generic.ad_astra_giselle_addon.acid_rain_proofUpgrade": "Don't damage from acid rain in Ad Astra dimensions",
   

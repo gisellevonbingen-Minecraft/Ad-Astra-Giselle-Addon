@@ -66,8 +66,7 @@ public class OxygenCanItem extends Item implements FluidContainingItem, IOxygenC
 		{
 			ItemStackHolder full = new ItemStackHolder(new ItemStack(this));
 			IOxygenCharger oxygenCharger = OxygenChargerUtils.get(full);
-			oxygenCharger.setChargeMode(ChargeMode.ALL);
-			oxygenCharger.getFluidHandler().insertFluid(FluidHooks.newFluidHolder(ModFluids.OXYGEN.get(), Integer.MAX_VALUE, null), false);
+			oxygenCharger.getFluidHandler().insertFluid(FluidHooks.newFluidHolder(ModFluids.OXYGEN.get(), oxygenCharger.getTotalCapacity(), null), false);
 			list.add(full.getStack());
 		}
 

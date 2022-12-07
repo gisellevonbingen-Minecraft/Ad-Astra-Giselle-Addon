@@ -10,7 +10,7 @@
   "container.ad_astra_giselle_addon.fuel_loader": "연료 적재기",
   
   "enchantment.ad_astra_giselle_addon.space_breathing": "우주 호흡성",
-  "enchantment.ad_astra_giselle_addon.space_breathing.desc": "Ad Astra 차원에서 호흡할 수 있습니다\n갑옷의 에너지 혹은 내구도를 소모합니다\n인벤토리에 활성화된 '산소 캔'이 필요합니다",
+  "enchantment.ad_astra_giselle_addon.space_breathing.desc": "Ad Astra 차원에서 호흡할 수 있습니다\n갑옷의 에너지 혹은 내구도를 소모합니다\n인벤토리에 '산소 캔'이 필요합니다",
   "enchantment.ad_astra_giselle_addon.space_fire_proof": "우주 내화성",
   "enchantment.ad_astra_giselle_addon.space_fire_proof.desc": "Ad Astra 차원에서 불이 붙지 않습니다\n갑옷의 에너지 혹은 내구도를 소모합니다",
   "enchantment.ad_astra_giselle_addon.acid_rain_proof": "우주 내산성",
@@ -32,7 +32,7 @@
   
   
   "module.ad_astra_giselle_addon.space_breathing_unit": "우주 호흡성 기구",
-  "description.ad_astra_giselle_addon.space_breathing_unit": "Ad Astra 차원에서 호흡할 수 있습니다\n비, 물속에서 들고있는 아이템에 산소를 충전합니다\n인벤토리에 활성화된 '산소 캔'이 필요합니다",
+  "description.ad_astra_giselle_addon.space_breathing_unit": "Ad Astra 차원에서 호흡할 수 있습니다\n비, 물속에서 들고있는 아이템에 산소를 충전합니다\n인벤토리에 '산소 캔'이 필요합니다",
   "module.ad_astra_giselle_addon.space_fire_proof_unit": "우주 내화성 기구",
   "description.ad_astra_giselle_addon.space_fire_proof_unit": "Ad Astra 차원에서 불이 붙지 않습니다",
   "module.ad_astra_giselle_addon.acid_rain_proof_unit": "우주 내산성 기구",
@@ -47,7 +47,7 @@
   "pneumaticcraft.armor.upgrade.ad_astra_giselle_addon.space_fire_proof" : "우주 내화성",
   "pneumaticcraft.armor.upgrade.ad_astra_giselle_addon.acid_rain_proof" : "우주 내산성",
   
-  "pneumaticcraft.gui.tab.info.item.armor.generic.ad_astra_giselle_addon.space_breathingUpgrade": "Ad Astra 차원에서 호흡할 수 있습니다\n인벤토리에 활성화된 '산소 캔'이 필요합니다",
+  "pneumaticcraft.gui.tab.info.item.armor.generic.ad_astra_giselle_addon.space_breathingUpgrade": "Ad Astra 차원에서 호흡할 수 있습니다\n인벤토리에 '산소 캔'이 필요합니다",
   "pneumaticcraft.gui.tab.info.item.armor.generic.ad_astra_giselle_addon.space_fire_proofUpgrade": "Ad Astra 차원에서 불이 붙지 않습니다",
   "pneumaticcraft.gui.tab.info.item.armor.generic.ad_astra_giselle_addon.acid_rain_proofUpgrade": "Ad Astra 차원에서 산성비 피해를 입지 않습니다",
   

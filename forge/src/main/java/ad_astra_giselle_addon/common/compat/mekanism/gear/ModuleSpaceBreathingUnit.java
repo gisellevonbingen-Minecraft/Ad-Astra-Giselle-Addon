@@ -123,7 +123,7 @@ public class ModuleSpaceBreathingUnit implements ICustomModule<ModuleSpaceBreath
 	public boolean useResources(IModule<ModuleSpaceBreathingUnit> module, LivingEntity living, boolean simulate)
 	{
 		long oxygenUsing = ProofAbstractUtils.OXYGEN_PROOF_USING;
-		IOxygenCharger oxygenCharger = OxygenChargerUtils.firstExtractable(living, oxygenUsing, module.getContainer());
+		IOxygenCharger oxygenCharger = OxygenChargerUtils.firstExtractable(living, oxygenUsing);
 
 		if (oxygenCharger != null)
 		{

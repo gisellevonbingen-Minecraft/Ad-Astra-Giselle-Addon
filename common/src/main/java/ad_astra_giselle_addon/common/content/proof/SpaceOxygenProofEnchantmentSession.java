@@ -9,7 +9,6 @@ import ad_astra_giselle_addon.common.fluid.FluidPredicates;
 import ad_astra_giselle_addon.common.fluid.UniveralFluidHandler;
 import ad_astra_giselle_addon.common.item.ItemUsableResource;
 import ad_astra_giselle_addon.common.util.LivingHelper;
-import earth.terrarium.botarium.api.item.ItemStackHolder;
 import net.minecraft.world.entity.LivingEntity;
 
 public class SpaceOxygenProofEnchantmentSession extends ProofEnchantmentSession
@@ -34,8 +33,7 @@ public class SpaceOxygenProofEnchantmentSession extends ProofEnchantmentSession
 		if (LivingHelper.isPlayingMode(entity))
 		{
 			long oxygenUsing = this.getOxygenUsing();
-			ItemStackHolder enchantedItem = this.getEnchantedItem();
-			IOxygenCharger oxygenCharger = OxygenChargerUtils.firstExtractable(entity, oxygenUsing, enchantedItem.getStack());
+			IOxygenCharger oxygenCharger = OxygenChargerUtils.firstExtractable(entity, oxygenUsing);
 
 			if (oxygenCharger == null)
 			{

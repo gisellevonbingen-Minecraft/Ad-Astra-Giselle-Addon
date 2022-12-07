@@ -18,7 +18,6 @@ import earth.terrarium.botarium.api.fluid.FluidHolder;
 import earth.terrarium.botarium.api.item.ItemStackHolder;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 
 public class OxygenChargerUtils
 {
@@ -73,12 +72,8 @@ public class OxygenChargerUtils
 
 			if (oxygenCharger != null && oxygenCharger.getTemperatureThreshold().contains(temperature))
 			{
-				if (oxygenCharger.getChargeMode() != ChargeMode.NONE)
-				{
-					stored += oxygenCharger.getTotalAmount();
-					capacity += oxygenCharger.getTotalCapacity();
-				}
-
+				stored += oxygenCharger.getTotalAmount();
+				capacity += oxygenCharger.getTotalCapacity();
 			}
 
 		}
@@ -95,13 +90,13 @@ public class OxygenChargerUtils
 	}
 
 	@Nullable
-	public static IOxygenCharger firstExtractable(LivingEntity living, long extracting, @Nullable ItemStack beContains)
+	public static IOxygenCharger firstExtractable(LivingEntity living, long extracting)
 	{
-		return streamExtractable(living, extracting, beContains).findFirst().orElse(null);
+		return streamExtractable(living, extracting).findFirst().orElse(null);
 	}
 
 	@Nullable
-	public static Stream<IOxygenCharger> streamExtractable(LivingEntity living, long extracting, @Nullable ItemStack beContains)
+	public static Stream<IOxygenCharger> streamExtractable(LivingEntity living, long extracting)
 	{
 		int temperature = (int) ModUtils.getWorldTemperature(living.getLevel());
 		return LivingHelper.getInventoryStacks(living).stream().map(OxygenChargerUtils::get).filter(oxygenCharger ->
@@ -112,11 +107,7 @@ public class OxygenChargerUtils
 
 				if (!extract.isEmpty() && extract.getFluidAmount() >= extracting)
 				{
-					if (beContains == null || oxygenCharger.getChargeMode().getItems(living).stream().anyMatch(ref -> ref.getStack() == beContains))
-					{
-						return true;
-					}
-
+					return true;
 				}
 
 			}

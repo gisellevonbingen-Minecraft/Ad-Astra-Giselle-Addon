@@ -52,7 +52,7 @@ public class PneumaticCraftProofProvidingHandler
 			if (airHandler != null && (!LivingHelper.isPlayingMode(player) || PneumaticCraftProofProvidingHandler.useAir(airHandler, airUsing, true)))
 			{
 				long oxygenUsing = ProofAbstractUtils.OXYGEN_PROOF_USING;
-				IOxygenCharger oxygenCharger = OxygenChargerUtils.firstExtractable(player, oxygenUsing, stack);
+				IOxygenCharger oxygenCharger = OxygenChargerUtils.firstExtractable(player, oxygenUsing);
 
 				if (oxygenCharger != null)
 				{
