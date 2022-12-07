@@ -21,7 +21,7 @@ public class FuelLoaderScreen extends AddonMachineScreen<FuelLoaderBlockEntity, 
 {
 	public static final ResourceLocation TEXTURE = AdAstraGiselleAddon.rl("textures/gui/container/fuel_loader.png");
 
-	public static final int TANK_LEFT = 68;
+	public static final int TANK_LEFT = 67;
 	public static final int TANK_TOP = 28;
 
 	private boolean isFluidTankhovering;

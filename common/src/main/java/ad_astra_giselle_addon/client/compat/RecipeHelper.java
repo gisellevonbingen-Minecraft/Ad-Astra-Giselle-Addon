@@ -40,8 +40,8 @@ public class RecipeHelper
 		public static final ResourceLocation BACKGROUND_LOCATION = AdAstraGiselleAddon.rl("textures/jei/fuel_loader.png");
 		public static final int BACKGROUND_WIDTH = 144;
 		public static final int BACKGROUND_HEIGHT = 84;
-		public static final int TANK_LEFT = 53;
-		public static final int TANK_TOP = 20;
+		public static final int TANK_LEFT = 52;
+		public static final int TANK_TOP = 19;
 
 		public static boolean testFluid(Fluid fluid)
 		{
