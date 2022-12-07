@@ -41,43 +41,6 @@ public class FluidHooks2
 		return capacity == 0L ? 0.0D : (double) amount / capacity;
 	}
 
-	public static double getStoredRatio(UniveralFluidHandler fluidHandler)
-	{
-		long amount = getStoredAmount(fluidHandler);
-		long capacity = getTotalCapacity(fluidHandler);
-		return getStoredRatio(amount, capacity);
-	}
-
-	public static long getStoredAmount(UniveralFluidHandler fluidHandler)
-	{
-		long amount = 0L;
-
-		for (FluidHolder fluid : fluidHandler.getFluidTanks())
-		{
-			if (fluid.isEmpty())
-			{
-				continue;
-			}
-
-			amount += fluid.getFluidAmount();
-		}
-
-		return amount;
-	}
-
-	public static long getTotalCapacity(UniveralFluidHandler fluidHandler)
-	{
-		int size = fluidHandler.getTankAmount();
-		long capacity = 0L;
-
-		for (int i = 0; i < size; i++)
-		{
-			capacity += fluidHandler.getTankCapacity(i);
-		}
-
-		return capacity;
-	}
-
 	public static FluidHolder extractFluid(UniveralFluidHandler fluidHandler, @Nullable Predicate<FluidHolder> predicate, long amount, boolean simulate)
 	{
 		int tanks = fluidHandler.getTankAmount();

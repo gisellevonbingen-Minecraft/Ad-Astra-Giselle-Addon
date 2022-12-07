@@ -75,9 +75,8 @@ public class OxygenChargerUtils
 			{
 				if (oxygenCharger.getChargeMode() != ChargeMode.NONE)
 				{
-					UniveralFluidHandler fluidHandler = oxygenCharger.getFluidHandler();
-					stored += FluidHooks2.getStoredAmount(fluidHandler);
-					capacity += FluidHooks2.getTotalCapacity(fluidHandler);
+					stored += oxygenCharger.getTotalAmount();
+					capacity += oxygenCharger.getTotalCapacity();
 				}
 
 			}

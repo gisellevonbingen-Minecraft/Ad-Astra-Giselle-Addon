@@ -7,6 +7,7 @@ import org.apache.commons.lang3.Range;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import ad_astra_giselle_addon.common.fluid.FluidHooks2;
 import ad_astra_giselle_addon.common.fluid.UniveralFluidHandler;
 
 public interface IOxygenCharger
@@ -23,7 +24,45 @@ public interface IOxygenCharger
 
 	public long getTransferAmount();
 
+	public long getFluidCapacity(int tank);
+
 	public UniveralFluidHandler getFluidHandler();
 
 	public Range<Integer> getTemperatureThreshold();
+
+	public default long getTotalAmount()
+	{
+		UniveralFluidHandler fluidHandler = this.getFluidHandler();
+		int size = fluidHandler.getTankAmount();
+		long amount = 0L;
+
+		for (int i = 0; i < size; i++)
+		{
+			amount += fluidHandler.getFluidInTank(i).getFluidAmount();
+		}
+
+		return amount;
+	}
+
+	public default long getTotalCapacity()
+	{
+		UniveralFluidHandler fluidHandler = this.getFluidHandler();
+		int size = fluidHandler.getTankAmount();
+		long capacity = 0L;
+
+		for (int i = 0; i < size; i++)
+		{
+			capacity += this.getFluidCapacity(i);
+		}
+
+		return capacity;
+	}
+
+	public default double getStoredRatio()
+	{
+		long amount = this.getTotalAmount();
+		long capacity = this.getTotalCapacity();
+		return FluidHooks2.getStoredRatio(amount, capacity);
+	}
+
 }
