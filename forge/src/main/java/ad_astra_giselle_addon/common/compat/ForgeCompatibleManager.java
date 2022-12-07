@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.List;
 
 import ad_astra_giselle_addon.common.compat.curios.CuriosCompat;
-import ad_astra_giselle_addon.common.compat.jei.JeiCompat;
 import ad_astra_giselle_addon.common.compat.mekanism.MekanismCompat;
 import ad_astra_giselle_addon.common.compat.pneumaticcraft.PneumaticCraftCompat;
 import ad_astra_giselle_addon.common.compat.redstonearsenal.RedstoneArsenalCompat;
@@ -13,7 +12,6 @@ import ad_astra_giselle_addon.common.compat.redstonearsenal.RedstoneArsenalCompa
 public class ForgeCompatibleManager
 {
 	public static final List<CompatibleMod> MODS;
-	public static final JeiCompat JEI;
 	public static final CuriosCompat CURIOS;
 	public static final MekanismCompat MEKANISM;
 	public static final PneumaticCraftCompat PNEUMATICCRAFT;
@@ -22,7 +20,6 @@ public class ForgeCompatibleManager
 	static
 	{
 		List<CompatibleMod> mods = new ArrayList<>();
-		mods.add(JEI = new JeiCompat());
 		mods.add(CURIOS = new CuriosCompat());
 		mods.add(MEKANISM = new MekanismCompat());
 		mods.add(PNEUMATICCRAFT = new PneumaticCraftCompat());

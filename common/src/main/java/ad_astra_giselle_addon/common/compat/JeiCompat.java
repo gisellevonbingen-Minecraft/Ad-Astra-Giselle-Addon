@@ -1,6 +1,5 @@
-package ad_astra_giselle_addon.common.compat.jei;
+package ad_astra_giselle_addon.common.compat;
 
-import ad_astra_giselle_addon.common.compat.CompatibleMod;
 import net.minecraft.resources.ResourceLocation;
 
 public class JeiCompat extends CompatibleMod
