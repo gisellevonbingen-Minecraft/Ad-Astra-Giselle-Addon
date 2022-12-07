@@ -1,9 +1,9 @@
 package ad_astra_giselle_addon.common.registries;
 
 import ad_astra_giselle_addon.common.AdAstraGiselleAddon;
+import ad_astra_giselle_addon.common.enchantment.EnchantmentAcidRainProof;
 import ad_astra_giselle_addon.common.enchantment.EnchantmentSpaceBreathing;
 import ad_astra_giselle_addon.common.enchantment.EnchantmentSpaceFireProof;
-import ad_astra_giselle_addon.common.enchantment.EnchantmentAcidRainProof;
 import net.minecraft.core.Registry;
 import net.minecraft.world.item.enchantment.Enchantment;
 
