@@ -28,7 +28,7 @@ public class EnchantmentEnergyStorageOrDamageable extends Enchantment
 	@Override
 	public boolean canEnchant(ItemStack stack)
 	{
-		return ItemUsableResource.first(stack) != null;
+		return ItemUsableResource.first(stack) != null && super.canEnchant(stack);
 	}
 
 	@Override
