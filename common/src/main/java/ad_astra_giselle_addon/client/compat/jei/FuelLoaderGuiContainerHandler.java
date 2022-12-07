@@ -52,7 +52,7 @@ public class FuelLoaderGuiContainerHandler implements IGuiContainerHandler<FuelL
 	{
 		if (screen.isFluidTankHovering())
 		{
-			FluidHolder fluid = screen.getMenu().getMachine().getFluidContainer().getFluids().get(0);
+			FluidHolder fluid = screen.getFluid();
 			return IJeiFluidStackHelper.INSTANCE.get(fluid.getFluid(), fluid.getFluidAmount());
 		}
 

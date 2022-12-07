@@ -45,7 +45,7 @@ public class FuelLoaderGuiContainerHandler implements ClickArea<FuelLoaderScreen
 		{
 			if (screen.isFluidTankHovering())
 			{
-				FluidHolder fluid = screen.getMenu().getMachine().getFluidContainer().getFluids().get(0);
+				FluidHolder fluid = screen.getFluid();
 				return CompoundEventResult.interruptTrue(EntryStacks.of(fluid.getFluid(), fluid.getFluidAmount()));
 			}
 

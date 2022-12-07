@@ -63,9 +63,9 @@ public class FuelLoaderScreen extends AddonMachineScreen<FuelLoaderBlockEntity, 
 	protected void renderBg(PoseStack stack, float partialTicks, int mouseX, int mouseY)
 	{
 		super.renderBg(stack, partialTicks, mouseX, mouseY);
-		int tank = 0;
-		FluidHolder fluid = this.getMenu().getFluids().get(tank);
-		long capacity = this.getMenu().getMachine().getFluidContainer().getTankCapacity(tank);
+
+		FluidHolder fluid = this.getFluid();
+		long capacity = this.getCapacity();
 		Rectangle bounds = this.getFluidTankBounds();
 		GuiUtil.drawFluidTank(stack, this.leftPos + bounds.x, this.topPos + bounds.y, capacity, fluid);
 	}
@@ -81,9 +81,8 @@ public class FuelLoaderScreen extends AddonMachineScreen<FuelLoaderBlockEntity, 
 		{
 			if (!AdAstraGiselleAddon.compats().JEI.isLoaded() && !AdAstraGiselleAddon.compats().REI.isLoaded())
 			{
-				int tank = 0;
-				FluidHolder fluid = this.getMenu().getFluids().get(tank);
-				long capacity = this.getMenu().getMachine().getFluidContainer().getTankCapacity(tank);
+				FluidHolder fluid = this.getFluid();
+				long capacity = this.getCapacity();
 				GuiUtil.drawTankTooltip(this, stack, fluid, capacity, mouseX, mouseY);
 			}
 
@@ -103,9 +102,19 @@ public class FuelLoaderScreen extends AddonMachineScreen<FuelLoaderBlockEntity, 
 
 	public Component getFluidTankTooltip()
 	{
-		FluidHolder fluid = this.getMenu().getFluids().get(0);
-		long capacity = menu.getMachine().getFluidContainer().getTankCapacity(0);
+		FluidHolder fluid = this.getFluid();
+		long capacity = this.getCapacity();
 		return TranslationUtils.fluid(fluid, capacity);
+	}
+
+	public FluidHolder getFluid()
+	{
+		return this.getMenu().getFluids().get(0);
+	}
+
+	public long getCapacity()
+	{
+		return this.getMenu().getMachine().getFluidContainer().getTankCapacity(0);
 	}
 
 }
