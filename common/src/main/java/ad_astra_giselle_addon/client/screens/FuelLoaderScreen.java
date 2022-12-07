@@ -9,6 +9,7 @@ import ad_astra_giselle_addon.common.block.entity.FuelLoaderBlockEntity;
 import ad_astra_giselle_addon.common.menu.FuelLoaderMenu;
 import ad_astra_giselle_addon.common.network.AddonNetwork;
 import ad_astra_giselle_addon.common.network.FuelLoaderMessageWorkingAreaVisible;
+import ad_astra_giselle_addon.common.util.TranslationUtils;
 import earth.terrarium.ad_astra.client.screens.GuiUtil;
 import earth.terrarium.botarium.api.fluid.FluidHolder;
 import net.minecraft.network.chat.Component;
@@ -22,6 +23,8 @@ public class FuelLoaderScreen extends AddonMachineScreen<FuelLoaderBlockEntity, 
 
 	public static final int TANK_LEFT = 68;
 	public static final int TANK_TOP = 28;
+
+	private boolean isFluidTankhovering;
 
 	public FuelLoaderScreen(FuelLoaderMenu menu, Inventory inventory, Component title)
 	{
@@ -72,9 +75,11 @@ public class FuelLoaderScreen extends AddonMachineScreen<FuelLoaderBlockEntity, 
 	{
 		super.render(stack, mouseX, mouseY, delta);
 
-		if (GuiUtil.isHovering(this.getFluidTankBounds(), mouseX - this.leftPos, mouseY - this.topPos))
+		this.isFluidTankhovering = GuiUtil.isHovering(this.getFluidTankBounds(), mouseX - this.leftPos, mouseY - this.topPos);
+
+		if (this.isFluidTankHovering())
 		{
-			if (AdAstraGiselleAddon.delegate().getScreenHelper().shouldRenderFluidTank())
+			if (!AdAstraGiselleAddon.compats().JEI.isLoaded() && !AdAstraGiselleAddon.compats().REI.isLoaded())
 			{
 				int tank = 0;
 				FluidHolder fluid = this.getMenu().getFluids().get(tank);
@@ -89,6 +94,18 @@ public class FuelLoaderScreen extends AddonMachineScreen<FuelLoaderBlockEntity, 
 	public Rectangle getFluidTankBounds()
 	{
 		return GuiUtil.getFluidTankBounds(TANK_LEFT, TANK_TOP);
+	}
+
+	public boolean isFluidTankHovering()
+	{
+		return this.isFluidTankhovering;
+	}
+
+	public Component getFluidTankTooltip()
+	{
+		FluidHolder fluid = this.getMenu().getFluids().get(0);
+		long capacity = menu.getMachine().getFluidContainer().getTankCapacity(0);
+		return TranslationUtils.fluid(fluid, capacity);
 	}
 
 }

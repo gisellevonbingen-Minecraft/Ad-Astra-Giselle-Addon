@@ -1,8 +1,9 @@
-package ad_astra_giselle_addon.common.compat.jei;
+package ad_astra_giselle_addon.client.compat.jei;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import ad_astra_giselle_addon.client.compat.RecipeHelper;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.helpers.IGuiHelper;
@@ -16,11 +17,11 @@ import mezz.jei.api.registration.IRecipeTransferRegistration;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 
-public abstract class RecipeCategory<R> implements IRecipeCategory<R>
+public abstract class AddonRecipeCategory<R> implements IRecipeCategory<R>
 {
 	private final RecipeType<R> recipeType;
 
-	public RecipeCategory(RecipeType<R> recipeType)
+	public AddonRecipeCategory(RecipeType<R> recipeType)
 	{
 		this.recipeType = recipeType;
 	}
@@ -37,7 +38,7 @@ public abstract class RecipeCategory<R> implements IRecipeCategory<R>
 	@Override
 	public Component getTitle()
 	{
-		return JeiPlugin.getCategoryTitle(this.getRecipeType().getUid());
+		return RecipeHelper.getCategoryTitle(this.getRecipeType().getUid());
 	}
 
 	@Override
@@ -57,12 +58,12 @@ public abstract class RecipeCategory<R> implements IRecipeCategory<R>
 
 	}
 
-	public void registerRecipes(IRecipeRegistration registration)
+	public void registerRecipes(IRecipeRegistration registry)
 	{
 
 	}
 
-	public void addRecipeTransferHandler(IRecipeTransferRegistration registration)
+	public void addTransferHandler(IRecipeTransferRegistration registry)
 	{
 
 	}
@@ -72,18 +73,18 @@ public abstract class RecipeCategory<R> implements IRecipeCategory<R>
 		return new ArrayList<>();
 	}
 
-	public void registerRecipeCatalysts(IRecipeCatalystRegistration registration)
+	public void registerRecipeCatalysts(IRecipeCatalystRegistration registry)
 	{
 		RecipeType<R> recipeType = this.getRecipeType();
 
 		for (ItemStack itemStack : this.getRecipeCatalystItemStacks())
 		{
-			registration.addRecipeCatalyst(itemStack, recipeType);
+			registry.addRecipeCatalyst(itemStack, recipeType);
 		}
 
 	}
 
-	public void registerGuiHandlers(IGuiHandlerRegistration registration)
+	public void registerGuiHandlers(IGuiHandlerRegistration registry)
 	{
 
 	}

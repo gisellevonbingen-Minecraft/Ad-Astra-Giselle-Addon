@@ -24,6 +24,12 @@
 		],
 		"modmenu": [
 			"ad_astra_giselle_addon.client.compat.modmenu.ModMenuConfig"
+		],
+		"jei_mod_plugin": [
+			"ad_astra_giselle_addon.client.compat.jei.AddonJeiPlugin"
+		],
+		"rei_client": [
+			"ad_astra_giselle_addon.client.compat.rei.AddonReiPlugin"
 		]
 	},
 	"mixins": [

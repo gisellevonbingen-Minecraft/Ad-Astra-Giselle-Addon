@@ -7,7 +7,6 @@ import ad_astra_giselle_addon.common.delegate.CreativeModeTabBuilder;
 import ad_astra_giselle_addon.common.delegate.DelegateLivingHelper;
 import ad_astra_giselle_addon.common.delegate.DelegateProvider;
 import ad_astra_giselle_addon.common.delegate.DelegateRegistryHelper;
-import ad_astra_giselle_addon.common.delegate.DelegateScreenHelper;
 import ad_astra_giselle_addon.common.delegate.FabricRegisterHelper;
 import ad_astra_giselle_addon.common.delegate.PlatformCommonDelegate;
 import net.fabricmc.api.ModInitializer;
@@ -47,12 +46,6 @@ public class AdAstraGiselleAddonFabric implements ModInitializer, PlatformCommon
 	public DelegateProvider getAddonHelper()
 	{
 		return () -> Collections.emptyList();
-	}
-
-	@Override
-	public DelegateScreenHelper getScreenHelper()
-	{
-		return () -> true;
 	}
 
 }
