@@ -11,6 +11,4 @@ public interface PlatformCommonDelegate
 	CreativeModeTab createCreativeModeTab(CreativeModeTabBuilder builder);
 
 	DelegateLivingHelper getLivingHelper();
-
-	DelegateScreenHelper getScreenHelper();
 }
