@@ -7,7 +7,6 @@ import ad_astra_giselle_addon.client.compat.RecipeHelper;
 import ad_astra_giselle_addon.client.screens.FuelLoaderScreen;
 import ad_astra_giselle_addon.common.delegate.DelegateRegistry;
 import ad_astra_giselle_addon.common.registries.AddonBlocks;
-import earth.terrarium.botarium.api.fluid.FluidHolder;
 import earth.terrarium.botarium.api.fluid.FluidHooks;
 import me.shedaniel.math.Point;
 import me.shedaniel.math.Rectangle;
@@ -50,13 +49,11 @@ public class FuelLoaderCategory extends AddonDisplayCategory<FuelLoaderDisplay>
 	public List<Widget> setupDisplay(FuelLoaderDisplay display, Rectangle bounds)
 	{
 		long capacity = FluidHooks.buckets(1);
-		FluidHolder fluid = FluidHooks.newFluidHolder(display.fluid(), capacity, null);
 		Point tankPoint = new Point(bounds.x + RecipeHelper.FuelLoader.TANK_LEFT, bounds.y + RecipeHelper.FuelLoader.TANK_TOP);
 
 		List<Widget> list = new ArrayList<>();
 		list.add(Widgets.createTexturedWidget(RecipeHelper.FuelLoader.BACKGROUND_LOCATION, bounds.x, bounds.y, RecipeHelper.FuelLoader.BACKGROUND_WIDTH, RecipeHelper.FuelLoader.BACKGROUND_HEIGHT));
-		list.add(new FluidTankWidget(tankPoint, capacity, fluid));
-
+		list.add(new FluidTankWidget(tankPoint).entry(EntryStacks.of(display.fluid(), capacity)));
 		return list;
 	}
 
