@@ -11,7 +11,6 @@ import ad_astra_giselle_addon.common.content.oxygen.IChargeMode;
 import ad_astra_giselle_addon.common.content.oxygen.IOxygenCharger;
 import ad_astra_giselle_addon.common.content.oxygen.IOxygenChargerItem;
 import ad_astra_giselle_addon.common.content.oxygen.OxygenChargerUtils;
-import ad_astra_giselle_addon.common.fluid.FluidHooks2;
 import ad_astra_giselle_addon.common.fluid.FluidPredicates;
 import ad_astra_giselle_addon.common.fluid.UniveralFluidHandler;
 import ad_astra_giselle_addon.common.util.NBTUtils;
@@ -75,28 +74,28 @@ public class OxygenCanItem extends Item implements FluidContainingItem, IOxygenC
 	}
 
 	@Override
-	public Rarity getRarity(ItemStack stack)
+	public Rarity getRarity(ItemStack item)
 	{
-		return this.isFoil(stack) ? Rarity.EPIC : super.getRarity(stack);
+		return this.isFoil(item) ? Rarity.EPIC : super.getRarity(item);
 	}
 
 	@Override
-	public boolean isFoil(ItemStack stack)
+	public boolean isFoil(ItemStack item)
 	{
-		IOxygenCharger oxygenCharger = OxygenChargerUtils.get(new ItemStackHolder(stack));
+		IOxygenCharger oxygenCharger = OxygenChargerUtils.get(new ItemStackHolder(item));
 
 		if (oxygenCharger != null && oxygenCharger.getChargeMode() != ChargeMode.NONE)
 		{
-			long storedAmount = FluidHooks2.getStoredAmount(oxygenCharger.getFluidHandler());
+			long totalAmount = oxygenCharger.getTotalAmount();
 
-			if (storedAmount > 0)
+			if (totalAmount > 0)
 			{
 				return true;
 			}
 
 		}
 
-		return super.isFoil(stack);
+		return super.isFoil(item);
 	}
 
 	@Override
@@ -126,11 +125,11 @@ public class OxygenCanItem extends Item implements FluidContainingItem, IOxygenC
 	}
 
 	@Override
-	public void appendHoverText(ItemStack stack, Level level, List<Component> tooltip, TooltipFlag flag)
+	public void appendHoverText(ItemStack item, Level level, List<Component> tooltip, TooltipFlag flag)
 	{
-		super.appendHoverText(stack, level, tooltip, flag);
+		super.appendHoverText(item, level, tooltip, flag);
 
-		IOxygenCharger oxygenCharger = OxygenChargerUtils.get(new ItemStackHolder(stack));
+		IOxygenCharger oxygenCharger = OxygenChargerUtils.get(new ItemStackHolder(item));
 
 		if (oxygenCharger != null)
 		{
@@ -142,7 +141,7 @@ public class OxygenCanItem extends Item implements FluidContainingItem, IOxygenC
 			for (int i = 0; i < fluidHandler.getTankAmount(); i++)
 			{
 				FluidHolder fluid = fluidHandler.getFluidInTank(i);
-				long capacity = fluidHandler.getTankCapacity(i);
+				long capacity = oxygenCharger.getFluidCapacity(i);
 				tooltip.add(TranslationUtils.oxygenStorage(fluid.getFluidAmount(), capacity));
 			}
 
@@ -151,22 +150,22 @@ public class OxygenCanItem extends Item implements FluidContainingItem, IOxygenC
 	}
 
 	@Override
-	public boolean isBarVisible(ItemStack stack)
+	public boolean isBarVisible(ItemStack item)
 	{
 		return true;
 	}
 
 	@Override
-	public int getBarWidth(ItemStack stack)
+	public int getBarWidth(ItemStack item)
 	{
-		double ratio = FluidHooks2.getStoredRatio(UniveralFluidHandler.from(new ItemStackHolder(stack)));
+		double ratio = OxygenChargerUtils.get(new ItemStackHolder(item)).getStoredRatio();
 		return (int) (ratio * 13);
 	}
 
 	@Override
-	public int getBarColor(ItemStack stack)
+	public int getBarColor(ItemStack item)
 	{
-		double ratio = FluidHooks2.getStoredRatio(UniveralFluidHandler.from(new ItemStackHolder(stack)));
+		double ratio = OxygenChargerUtils.get(new ItemStackHolder(item)).getStoredRatio();
 		return Mth.hsvToRgb((float) (ratio / 3.0F), 1.0F, 1.0F);
 	}
 
@@ -193,6 +192,12 @@ public class OxygenCanItem extends Item implements FluidContainingItem, IOxygenC
 			public long getTransferAmount()
 			{
 				return ItemsConfig.OXYGEN_CAN_FLUID_TRANSFER;
+			}
+
+			@Override
+			public long getFluidCapacity(int tank)
+			{
+				return getTankSize();
 			}
 
 			@Override
