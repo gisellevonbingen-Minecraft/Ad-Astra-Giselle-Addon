@@ -4,7 +4,7 @@ import net.minecraft.resources.ResourceLocation;
 
 public class ReiCompat extends CompatibleMod
 {
-	public static final String MOD_ID = "rei";
+	public static final String MOD_ID = "roughlyenoughitems";
 
 	public static ResourceLocation rl(String path)
 	{
