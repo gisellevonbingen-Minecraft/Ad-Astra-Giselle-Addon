@@ -62,11 +62,3 @@ dependencies {
     modRuntimeOnly "curse.maven:badpackets-615134:${badpackets_file}"
     modRuntimeOnly "curse.maven:wthit-440979:${wthit_file}"
 }
-
-processResources {
-    inputs.property "version", project.version
-
-    filesMatching("fabric.mod.json") {
-        expand "version": project.version
-    }
-}
