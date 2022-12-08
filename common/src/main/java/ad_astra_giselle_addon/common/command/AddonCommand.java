@@ -165,7 +165,7 @@ public class AddonCommand
 			{
 				EnergyHooks.safeGetItemEnergyManager(holder.getStack()).ifPresent(energyHandler ->
 				{
-					for (int i = 0; i < 100; i++)
+					for (int i = 0; i < 100000; i++)
 					{
 						if (energyHandler.insert(holder, energyHandler.getCapacity(), false) == 0)
 						{
