@@ -4,7 +4,7 @@ import net.minecraft.world.item.CreativeModeTab;
 
 public interface PlatformCommonDelegate
 {
-	DelegateProvider getAddonHelper();
+	DelegateAddonProvider getAddonHelper();
 
 	DelegateRegistryHelper getRegistryHelper();
 

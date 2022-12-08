@@ -71,7 +71,7 @@ public class AdAstraGiselleAddonForge implements PlatformCommonDelegate
 	}
 
 	@Override
-	public DelegateProvider getAddonHelper()
+	public DelegateAddonProvider getAddonHelper()
 	{
 		return () -> ForgeCompatibleManager.MODS;
 	}

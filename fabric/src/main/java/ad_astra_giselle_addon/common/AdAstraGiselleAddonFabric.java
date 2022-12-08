@@ -2,10 +2,11 @@ package ad_astra_giselle_addon.common;
 
 import java.util.Collections;
 
+import ad_astra_giselle_addon.common.compat.FabricCompatibleManager;
 import ad_astra_giselle_addon.common.config.AddonConfigs;
 import ad_astra_giselle_addon.common.delegate.CreativeModeTabBuilder;
 import ad_astra_giselle_addon.common.delegate.DelegateLivingHelper;
-import ad_astra_giselle_addon.common.delegate.DelegateProvider;
+import ad_astra_giselle_addon.common.delegate.DelegateAddonProvider;
 import ad_astra_giselle_addon.common.delegate.DelegateRegistryHelper;
 import ad_astra_giselle_addon.common.delegate.FabricRegisterHelper;
 import ad_astra_giselle_addon.common.delegate.PlatformCommonDelegate;
@@ -43,9 +44,9 @@ public class AdAstraGiselleAddonFabric implements ModInitializer, PlatformCommon
 	}
 
 	@Override
-	public DelegateProvider getAddonHelper()
+	public DelegateAddonProvider getAddonHelper()
 	{
-		return () -> Collections.emptyList();
+		return () -> FabricCompatibleManager.MODS;
 	}
 
 }

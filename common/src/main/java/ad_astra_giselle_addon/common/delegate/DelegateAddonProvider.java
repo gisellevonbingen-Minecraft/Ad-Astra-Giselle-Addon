@@ -4,7 +4,7 @@ import java.util.List;
 
 import ad_astra_giselle_addon.common.compat.CompatibleMod;
 
-public interface DelegateProvider
+public interface DelegateAddonProvider
 {
 	List<CompatibleMod> getAddons();
 }
