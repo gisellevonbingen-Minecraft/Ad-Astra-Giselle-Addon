@@ -15,7 +15,7 @@ public class NetheriteOxygenCanItem extends OxygenCanItem
 {
 	public NetheriteOxygenCanItem(Properties properties)
 	{
-		super(properties);
+		super(properties.fireResistant());
 	}
 
 	@Override
