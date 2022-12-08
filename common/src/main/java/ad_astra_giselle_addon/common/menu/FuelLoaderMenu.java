@@ -31,9 +31,9 @@ public class FuelLoaderMenu extends AbstractMachineMenu<FuelLoaderBlockEntity>
 				@Override
 				public boolean mayPlace(ItemStack pStack)
 				{
-					pStack = pStack.copy();
-					pStack.setCount(1);
-					return blockEntity.canPlaceItem(this.index, pStack);
+					ItemStack copy = pStack.copy();
+					copy.setCount(1);
+					return blockEntity.canPlaceItem(this.index, copy);
 				}
 			});
 		}
