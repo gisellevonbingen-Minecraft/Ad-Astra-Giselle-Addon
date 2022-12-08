@@ -48,7 +48,7 @@ public class AddonCommand
 
 	public static boolean isPlayerHasPermission(CommandSourceStack cs, int permission)
 	{
-		return cs.hasPermission(2) && cs.getEntity() instanceof ServerPlayer;
+		return cs.hasPermission(permission) && cs.getEntity() instanceof ServerPlayer;
 	}
 
 	public static boolean isPlayerHasPermission2(CommandSourceStack cs)
