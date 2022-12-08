@@ -132,28 +132,39 @@ public class AddonCommand
 			CommandSourceStack source = context.getSource();
 			ServerPlayer player = source.getPlayerOrException();
 
-			player.setItemSlot(EquipmentSlot.HEAD, makeFull(Items.DIAMOND_HELMET, AddonEnchantments.SPACE_BREATHING.get()));
-			player.setItemSlot(EquipmentSlot.CHEST, makeFull(Items.DIAMOND_CHESTPLATE, AddonEnchantments.SPACE_FIRE_PROOF.get(), AddonEnchantments.ACID_RAIN_PROOF.get()));
-			player.setItemSlot(EquipmentSlot.LEGS, makeFull(Items.DIAMOND_LEGGINGS));
-			player.setItemSlot(EquipmentSlot.FEET, makeFull(Items.DIAMOND_BOOTS));
+			player.setItemSlot(EquipmentSlot.HEAD, makeFullWithEnchantments(Items.DIAMOND_HELMET));
+			player.setItemSlot(EquipmentSlot.CHEST, makeFullWithEnchantments(Items.DIAMOND_CHESTPLATE));
+			player.setItemSlot(EquipmentSlot.LEGS, makeFullWithEnchantments(Items.DIAMOND_LEGGINGS));
+			player.setItemSlot(EquipmentSlot.FEET, makeFullWithEnchantments(Items.DIAMOND_BOOTS));
 
 			return sendEquipedMessage(source);
 		}
 
-		public static ItemStack makeFull(ResourceLocation name, Enchantment... enchantments)
+		public static ItemStack makeFullWithEnchantments(ResourceLocation name)
 		{
 			Item item = DelegateRegistry.get(Registry.ITEM_REGISTRY).getValue(name);
-			return makeFull(item, enchantments);
+			return makeFullWithEnchantments(item);
 		}
 
-		private static ItemStack makeFull(Item item, Enchantment... enchantments)
+		private static ItemStack makeFullWithEnchantments(Item item)
+		{
+			ItemStack stack = makeFull(item);
+
+			for (Enchantment enchantment : AddonEnchantments.ENCHANTMENTS.getValues())
+			{
+				if (enchantment.canEnchant(stack))
+				{
+					stack.enchant(enchantment, 1);
+				}
+
+			}
+
+			return stack;
+		}
+
+		private static ItemStack makeFull(Item item)
 		{
 			ItemStackHolder holder = new ItemStackHolder(new ItemStack(item));
-
-			for (Enchantment enchantment : enchantments)
-			{
-				holder.getStack().enchant(enchantment, 1);
-			}
 
 			if (holder.getStack().getItem() instanceof EnergyItem energyItem)
 			{

@@ -30,4 +30,11 @@ public class TechRebornCompat extends CompatibleMod
 
 	}
 
+	@Override
+	public void collectEquipCommands(List<ArgumentBuilder<CommandSourceStack, ?>> list)
+	{
+		super.collectEquipCommands(list);
+		list.add(Commands.literal("quantum_armor").executes(TechRebornCommand::quantum_armor));
+	}
+
 }

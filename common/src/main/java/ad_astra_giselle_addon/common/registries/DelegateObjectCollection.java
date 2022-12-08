@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Supplier;
+import java.util.stream.Stream;
 
 import ad_astra_giselle_addon.common.delegate.DelegateRegistry;
 import ad_astra_giselle_addon.common.delegate.DelegateRegistryHelper;
@@ -66,9 +67,14 @@ public class DelegateObjectCollection<T>
 		return this.readonlyObjects;
 	}
 
+	public Stream<T> stream()
+	{
+		return this.getObjects().stream().map(DelegateObjectHolder<T>::get);
+	}
+
 	public Collection<T> getValues()
 	{
-		return this.getObjects().stream().map(DelegateObjectHolder<T>::get).toList();
+		return this.stream().toList();
 	}
 
 }
