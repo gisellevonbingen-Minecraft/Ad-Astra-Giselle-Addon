@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import ad_astra_giselle_addon.common.content.oxygen.OxygenChargerUtils;
 import ad_astra_giselle_addon.common.content.proof.SpaceOxygenProofUtils;
 import ad_astra_giselle_addon.common.fluid.FluidHooks2;
-import ad_astra_giselle_addon.common.registries.AddonAttributes;
+import ad_astra_giselle_addon.common.registry.AddonAttributes;
 import earth.terrarium.ad_astra.registry.ModDamageSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;

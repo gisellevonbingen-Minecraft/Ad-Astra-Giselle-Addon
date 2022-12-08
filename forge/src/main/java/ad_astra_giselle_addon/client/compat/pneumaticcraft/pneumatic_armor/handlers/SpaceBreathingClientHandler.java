@@ -6,7 +6,7 @@ import ad_astra_giselle_addon.client.compat.pneumaticcraft.pneumatic_armor.optio
 import ad_astra_giselle_addon.common.compat.pneumaticcraft.AddonPNCUpgrade;
 import ad_astra_giselle_addon.common.compat.pneumaticcraft.AddonPNCUpgrades;
 import ad_astra_giselle_addon.common.content.oxygen.OxygenChargerUtils;
-import ad_astra_giselle_addon.common.registries.AddonItems;
+import ad_astra_giselle_addon.common.registry.AddonItems;
 import ad_astra_giselle_addon.common.util.TranslationUtils;
 import me.desht.pneumaticcraft.api.client.IGuiAnimatedStat;
 import me.desht.pneumaticcraft.api.client.pneumatic_helmet.IGuiScreen;

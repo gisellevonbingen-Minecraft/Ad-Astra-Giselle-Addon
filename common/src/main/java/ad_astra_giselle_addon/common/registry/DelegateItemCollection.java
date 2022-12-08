@@ -1,4 +1,4 @@
-package ad_astra_giselle_addon.common.registries;
+package ad_astra_giselle_addon.common.registry;
 
 import net.minecraft.core.Registry;
 import net.minecraft.world.item.Item;

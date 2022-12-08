@@ -1,7 +1,7 @@
 package ad_astra_giselle_addon.common.compat.pneumaticcraft;
 
 import ad_astra_giselle_addon.common.AdAstraGiselleAddon;
-import ad_astra_giselle_addon.common.registries.AddonItems;
+import ad_astra_giselle_addon.common.registry.AddonItems;
 import me.desht.pneumaticcraft.common.item.UpgradeItem;
 
 public class AddonPNCUpgrades

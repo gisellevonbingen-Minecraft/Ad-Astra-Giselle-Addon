@@ -7,7 +7,7 @@ import java.util.List;
 import ad_astra_giselle_addon.client.compat.RecipeHelper;
 import ad_astra_giselle_addon.common.AdAstraGiselleAddon;
 import ad_astra_giselle_addon.common.config.MachinesConfig;
-import ad_astra_giselle_addon.common.registries.AddonBlocks;
+import ad_astra_giselle_addon.common.registry.AddonBlocks;
 import earth.terrarium.ad_astra.client.screens.GuiUtil;
 import earth.terrarium.ad_astra.registry.ModTags;
 import mezz.jei.api.IModPlugin;

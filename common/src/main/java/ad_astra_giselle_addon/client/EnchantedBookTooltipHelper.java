@@ -8,7 +8,7 @@ import com.google.common.collect.Sets;
 
 import ad_astra_giselle_addon.common.config.EnchantmentsConfig;
 import ad_astra_giselle_addon.common.enchantment.EnchantmentHelper2;
-import ad_astra_giselle_addon.common.registries.AddonEnchantments;
+import ad_astra_giselle_addon.common.registry.AddonEnchantments;
 import earth.terrarium.botarium.util.CommonHooks;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.contents.TranslatableContents;

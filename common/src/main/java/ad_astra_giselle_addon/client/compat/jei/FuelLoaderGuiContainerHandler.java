@@ -6,7 +6,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import ad_astra_giselle_addon.client.screens.FuelLoaderScreen;
+import ad_astra_giselle_addon.client.screen.FuelLoaderScreen;
 import earth.terrarium.botarium.api.fluid.FluidHolder;
 import mezz.jei.api.gui.handlers.IGuiClickableArea;
 import mezz.jei.api.gui.handlers.IGuiContainerHandler;

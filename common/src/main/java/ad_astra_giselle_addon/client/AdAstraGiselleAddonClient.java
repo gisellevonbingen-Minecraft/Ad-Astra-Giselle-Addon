@@ -11,12 +11,12 @@ import com.teamresourceful.resourcefulconfig.common.config.ResourcefulConfig;
 
 import ad_astra_giselle_addon.client.overlay.OxygenCanOverlay;
 import ad_astra_giselle_addon.client.renderer.blockentity.FuelLoaderRenderer;
-import ad_astra_giselle_addon.client.screens.FuelLoaderScreen;
+import ad_astra_giselle_addon.client.screen.FuelLoaderScreen;
 import ad_astra_giselle_addon.client.util.RenderHelper;
 import ad_astra_giselle_addon.common.AdAstraGiselleAddon;
 import ad_astra_giselle_addon.common.enchantment.EnchantmentHelper2;
-import ad_astra_giselle_addon.common.registries.AddonBlockEntityTypes;
-import ad_astra_giselle_addon.common.registries.AddonMenuTypes;
+import ad_astra_giselle_addon.common.registry.AddonBlockEntityTypes;
+import ad_astra_giselle_addon.common.registry.AddonMenuTypes;
 import ad_astra_giselle_addon.common.util.TriConsumer;
 import earth.terrarium.ad_astra.client.AdAstraClient.RenderHud;
 import earth.terrarium.ad_astra.client.ClientUtils;

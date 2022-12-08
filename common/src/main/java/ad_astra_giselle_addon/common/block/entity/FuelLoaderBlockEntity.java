@@ -11,7 +11,7 @@ import ad_astra_giselle_addon.common.fluid.UniveralFluidHandler;
 import ad_astra_giselle_addon.common.item.ItemStackConsumers;
 import ad_astra_giselle_addon.common.item.ItemStackReference;
 import ad_astra_giselle_addon.common.menu.FuelLoaderMenu;
-import ad_astra_giselle_addon.common.registries.AddonBlockEntityTypes;
+import ad_astra_giselle_addon.common.registry.AddonBlockEntityTypes;
 import earth.terrarium.ad_astra.blocks.machines.entity.AbstractMachineBlockEntity;
 import earth.terrarium.ad_astra.entities.vehicles.Vehicle;
 import earth.terrarium.botarium.api.fluid.FluidHolder;

@@ -1,4 +1,4 @@
-package ad_astra_giselle_addon.common.registries;
+package ad_astra_giselle_addon.common.registry;
 
 import java.util.function.Function;
 import java.util.function.Supplier;

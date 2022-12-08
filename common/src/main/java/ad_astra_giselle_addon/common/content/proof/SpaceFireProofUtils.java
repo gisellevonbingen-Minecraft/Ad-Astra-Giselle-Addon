@@ -7,8 +7,8 @@ import java.util.function.Supplier;
 import com.google.common.eventbus.Subscribe;
 
 import ad_astra_giselle_addon.common.AdAstraGiselleAddon;
-import ad_astra_giselle_addon.common.registries.AddonAttributes;
-import ad_astra_giselle_addon.common.registries.AddonEnchantments;
+import ad_astra_giselle_addon.common.registry.AddonAttributes;
+import ad_astra_giselle_addon.common.registry.AddonEnchantments;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;

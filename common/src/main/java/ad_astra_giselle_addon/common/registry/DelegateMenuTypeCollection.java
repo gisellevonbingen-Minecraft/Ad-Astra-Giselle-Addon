@@ -1,4 +1,4 @@
-package ad_astra_giselle_addon.common.registries;
+package ad_astra_giselle_addon.common.registry;
 
 import ad_astra_giselle_addon.common.util.TriFunction;
 import earth.terrarium.botarium.api.registry.RegistryHelpers;

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ad_astra_giselle_addon.common.block.entity.FuelLoaderBlockEntity;
-import ad_astra_giselle_addon.common.registries.AddonMenuTypes;
+import ad_astra_giselle_addon.common.registry.AddonMenuTypes;
 import earth.terrarium.ad_astra.networking.NetworkHandling;
 import earth.terrarium.ad_astra.networking.packets.server.MachineInfoPacket;
 import earth.terrarium.ad_astra.screen.menu.AbstractMachineMenu;

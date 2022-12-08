@@ -3,7 +3,7 @@ package ad_astra_giselle_addon.common.compat.pneumaticcraft;
 import java.util.List;
 import java.util.function.Supplier;
 
-import ad_astra_giselle_addon.common.registries.DelegateObjectHolder;
+import ad_astra_giselle_addon.common.registry.DelegateObjectHolder;
 import me.desht.pneumaticcraft.api.item.PNCUpgrade;
 import me.desht.pneumaticcraft.common.item.UpgradeItem;
 import net.minecraft.resources.ResourceLocation;

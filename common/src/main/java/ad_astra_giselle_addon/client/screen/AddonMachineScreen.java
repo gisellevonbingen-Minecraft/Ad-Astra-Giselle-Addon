@@ -1,4 +1,4 @@
-package ad_astra_giselle_addon.client.screens;
+package ad_astra_giselle_addon.client.screen;
 
 import java.text.NumberFormat;
 

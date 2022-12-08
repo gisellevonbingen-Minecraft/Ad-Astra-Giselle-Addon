@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ad_astra_giselle_addon.client.compat.RecipeHelper;
-import ad_astra_giselle_addon.client.screens.FuelLoaderScreen;
+import ad_astra_giselle_addon.client.screen.FuelLoaderScreen;
 import ad_astra_giselle_addon.common.delegate.DelegateRegistry;
-import ad_astra_giselle_addon.common.registries.AddonBlocks;
+import ad_astra_giselle_addon.common.registry.AddonBlocks;
 import earth.terrarium.botarium.api.fluid.FluidHooks;
 import me.shedaniel.math.Point;
 import me.shedaniel.math.Rectangle;

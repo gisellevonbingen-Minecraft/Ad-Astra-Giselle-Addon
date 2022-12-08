@@ -3,7 +3,7 @@ package ad_astra_giselle_addon.client.overlay;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import ad_astra_giselle_addon.common.content.oxygen.OxygenChargerUtils;
-import ad_astra_giselle_addon.common.registries.AddonItems;
+import ad_astra_giselle_addon.common.registry.AddonItems;
 import ad_astra_giselle_addon.common.util.TranslationUtils;
 import earth.terrarium.ad_astra.client.screens.PlayerOverlayScreen;
 import earth.terrarium.ad_astra.config.AdAstraConfig;

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import ad_astra_giselle_addon.client.screens.FuelLoaderScreen;
+import ad_astra_giselle_addon.client.screen.FuelLoaderScreen;
 import dev.architectury.event.CompoundEventResult;
 import earth.terrarium.botarium.api.fluid.FluidHolder;
 import me.shedaniel.math.Point;

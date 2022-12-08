@@ -10,8 +10,8 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 import ad_astra_giselle_addon.common.delegate.DelegateRegistryHelper;
-import ad_astra_giselle_addon.common.registries.DelegateObjectCollection;
-import ad_astra_giselle_addon.common.registries.DelegateObjectHolder;
+import ad_astra_giselle_addon.common.registry.DelegateObjectCollection;
+import ad_astra_giselle_addon.common.registry.DelegateObjectHolder;
 import me.desht.pneumaticcraft.api.item.PNCUpgrade;
 import me.desht.pneumaticcraft.common.core.ModUpgrades;
 import me.desht.pneumaticcraft.common.item.UpgradeItem;
