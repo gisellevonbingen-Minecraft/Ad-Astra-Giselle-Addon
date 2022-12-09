@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.mojang.brigadier.builder.ArgumentBuilder;
 
-import ad_astra_giselle_addon.common.delegate.PlatformCommonDelegate;
 import earth.terrarium.botarium.util.CommonHooks;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.resources.ResourceLocation;
@@ -15,7 +14,7 @@ public abstract class CompatibleMod
 
 	public abstract String getModId();
 
-	public void tryLoad(PlatformCommonDelegate delegate)
+	public void tryLoad()
 	{
 		if (CommonHooks.isModLoaded(this.getModId()))
 		{

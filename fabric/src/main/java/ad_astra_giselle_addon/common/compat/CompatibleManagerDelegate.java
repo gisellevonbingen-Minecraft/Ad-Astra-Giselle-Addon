@@ -6,7 +6,7 @@ import java.util.List;
 
 import ad_astra_giselle_addon.common.compat.techreborn.TechRebornCompat;
 
-public class FabricCompatibleManager
+public class CompatibleManagerDelegate implements CompatibleManager.Delegate
 {
 	public static final List<CompatibleMod> MODS;
 	public static final TechRebornCompat TECH_REBORN;
@@ -17,6 +17,12 @@ public class FabricCompatibleManager
 		mods.add(TECH_REBORN = new TechRebornCompat());
 
 		MODS = Collections.unmodifiableList(mods);
+	}
+
+	@Override
+	public List<CompatibleMod> getMods()
+	{
+		return MODS;
 	}
 
 }

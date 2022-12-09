@@ -9,7 +9,7 @@ import ad_astra_giselle_addon.common.compat.mekanism.MekanismCompat;
 import ad_astra_giselle_addon.common.compat.pneumaticcraft.PneumaticCraftCompat;
 import ad_astra_giselle_addon.common.compat.redstonearsenal.RedstoneArsenalCompat;
 
-public class ForgeCompatibleManager
+public class CompatibleManagerDelegate implements CompatibleManager.Delegate
 {
 	public static final List<CompatibleMod> MODS;
 	public static final CuriosCompat CURIOS;
@@ -26,6 +26,12 @@ public class ForgeCompatibleManager
 		mods.add(REDSTONE_ARSENAL = new RedstoneArsenalCompat());
 
 		MODS = Collections.unmodifiableList(mods);
+	}
+
+	@Override
+	public List<CompatibleMod> getMods()
+	{
+		return MODS;
 	}
 
 }
