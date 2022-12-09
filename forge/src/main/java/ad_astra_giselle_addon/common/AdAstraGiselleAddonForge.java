@@ -2,12 +2,7 @@ package ad_astra_giselle_addon.common;
 
 import ad_astra_giselle_addon.client.AdAstraGiselleAddonClientForge;
 import ad_astra_giselle_addon.common.config.AddonForgeConfigs;
-import ad_astra_giselle_addon.common.delegate.CreativeModeTabBuilder;
 import ad_astra_giselle_addon.common.delegate.PlatformCommonDelegate;
-import net.minecraft.core.NonNullList;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegisterCommandsEvent;
@@ -28,28 +23,6 @@ public class AdAstraGiselleAddonForge implements PlatformCommonDelegate
 		forge_bus.addListener((RegisterCommandsEvent e) -> AdAstraGiselleAddon.registerCommand(e.getDispatcher()::register));
 
 		DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> AdAstraGiselleAddonClientForge::new);
-	}
-
-	@Override
-	public CreativeModeTab createCreativeModeTab(CreativeModeTabBuilder builder)
-	{
-		ResourceLocation id = builder.id();
-		return new CreativeModeTab(id.getNamespace() + "." + id.getPath())
-		{
-			@Override
-			public void fillItemList(NonNullList<ItemStack> list)
-			{
-				builder.appendItems(list);
-			}
-
-			@Override
-			public ItemStack makeIcon()
-			{
-				return builder.icon().get();
-			}
-
-		};
-
 	}
 
 }
