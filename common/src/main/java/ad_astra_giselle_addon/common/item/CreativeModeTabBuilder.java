@@ -1,4 +1,4 @@
-package ad_astra_giselle_addon.common.delegate;
+package ad_astra_giselle_addon.common.item;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -6,10 +6,13 @@ import java.util.List;
 import java.util.function.Supplier;
 
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 
 public class CreativeModeTabBuilder
 {
+	private static final Delegate DELEGATE = new CreativeModeTabBuilderDelegate();
+
 	private final ResourceLocation id;
 	private final List<Supplier<List<ItemStack>>> items;
 
@@ -61,6 +64,16 @@ public class CreativeModeTabBuilder
 	public Supplier<ItemStack> icon()
 	{
 		return this.icon;
+	}
+
+	public CreativeModeTab build()
+	{
+		return DELEGATE.build(this);
+	}
+
+	public static interface Delegate
+	{
+		CreativeModeTab build(CreativeModeTabBuilder builder);
 	}
 
 }
