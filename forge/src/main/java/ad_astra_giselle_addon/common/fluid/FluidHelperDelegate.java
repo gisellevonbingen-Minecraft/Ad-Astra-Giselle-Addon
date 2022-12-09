@@ -4,7 +4,7 @@ import earth.terrarium.botarium.api.fluid.FluidHolder;
 import net.minecraft.network.chat.Component;
 import net.minecraftforge.fluids.FluidStack;
 
-public class FluidHelper implements IFluidHelper
+public class FluidHelperDelegate implements FluidHelper.Delegate
 {
 	@Override
 	public Component getDisplayName(FluidHolder fluid)

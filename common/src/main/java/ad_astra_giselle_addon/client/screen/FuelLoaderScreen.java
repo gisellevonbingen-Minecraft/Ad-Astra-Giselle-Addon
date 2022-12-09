@@ -83,7 +83,7 @@ public class FuelLoaderScreen extends AddonMachineScreen<FuelLoaderBlockEntity, 
 			{
 				FluidHolder fluid = this.getFluid();
 				long capacity = this.getCapacity();
-				GuiUtil.drawTankTooltip(this, stack, fluid, capacity, mouseX, mouseY);
+				this.renderTooltip(stack, TranslationUtils.fluid(fluid, capacity), mouseX, mouseY);
 			}
 
 		}

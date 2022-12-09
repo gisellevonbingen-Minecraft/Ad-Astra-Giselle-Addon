@@ -8,7 +8,7 @@ import org.apache.commons.lang3.Range;
 
 import ad_astra_giselle_addon.common.AdAstraGiselleAddon;
 import ad_astra_giselle_addon.common.content.oxygen.IChargeMode;
-import earth.terrarium.ad_astra.client.screens.GuiUtil;
+import ad_astra_giselle_addon.common.fluid.FluidHelper;
 import earth.terrarium.botarium.api.fluid.FluidHolder;
 import earth.terrarium.botarium.api.fluid.FluidHooks;
 import net.minecraft.ChatFormatting;
@@ -62,10 +62,11 @@ public class TranslationUtils
 
 	public static Component fluid(FluidHolder fluid, long capacity)
 	{
+		Component name = FluidHelper.getDisplayName(fluid);
 		long amountMB = FluidHooks.toMillibuckets(fluid.getFluidAmount());
 		long capacityMB = FluidHooks.toMillibuckets(capacity);
 		Style style = Style.EMPTY.withColor(ChatFormatting.GOLD);
-		return Component.translatable("gauge_text.ad_astra.liquid_storage", amountMB, capacityMB).setStyle(style).append(Component.nullToEmpty(", ")).append(GuiUtil.getFluidTranslation(fluid.getFluid()));
+		return Component.translatable("gauge_text.ad_astra.liquid_storage", amountMB, capacityMB).setStyle(style).append(Component.nullToEmpty(", ")).append(name);
 	}
 
 	public static Component formatPercent(double ratio)
