@@ -16,7 +16,6 @@ import ad_astra_giselle_addon.common.config.AddonConfigs;
 import ad_astra_giselle_addon.common.content.proof.AcidRainProofUtils;
 import ad_astra_giselle_addon.common.content.proof.SpaceFireProofUtils;
 import ad_astra_giselle_addon.common.content.proof.SpaceOxygenProofUtils;
-import ad_astra_giselle_addon.common.delegate.PlatformCommonDelegate;
 import ad_astra_giselle_addon.common.network.AddonNetwork;
 import ad_astra_giselle_addon.common.registry.AddonAttributes;
 import ad_astra_giselle_addon.common.registry.AddonBlockEntityTypes;
@@ -34,7 +33,6 @@ public class AdAstraGiselleAddon
 	public static final Logger LOGGER = LogManager.getLogger();
 	private static final Configurator CONFIGURATOR = new Configurator();
 
-	private static PlatformCommonDelegate delegate;
 	private static EventBus eventBus;
 	private static CompatibleManager compats;
 
@@ -43,11 +41,6 @@ public class AdAstraGiselleAddon
 	public static EventBus eventBus()
 	{
 		return eventBus;
-	}
-
-	public static PlatformCommonDelegate delegate()
-	{
-		return delegate;
 	}
 
 	public static CompatibleManager compats()
@@ -67,10 +60,8 @@ public class AdAstraGiselleAddon
 		CONFIGURATOR.registerConfig(configClass);
 	}
 
-	public static void initializeCommon(PlatformCommonDelegate delegate)
+	public static void initializeCommon()
 	{
-		AdAstraGiselleAddon.delegate = delegate;
-
 		AddonTabs.visit();
 		AddonBlocks.BLOCKS.register();
 		AddonItems.ITEMS.register();
