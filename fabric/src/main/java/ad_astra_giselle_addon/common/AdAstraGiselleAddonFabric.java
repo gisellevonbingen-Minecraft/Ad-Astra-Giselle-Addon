@@ -1,11 +1,8 @@
 package ad_astra_giselle_addon.common;
 
-import java.util.Collections;
-
 import ad_astra_giselle_addon.common.compat.FabricCompatibleManager;
 import ad_astra_giselle_addon.common.config.AddonConfigs;
 import ad_astra_giselle_addon.common.delegate.CreativeModeTabBuilder;
-import ad_astra_giselle_addon.common.delegate.DelegateLivingHelper;
 import ad_astra_giselle_addon.common.delegate.DelegateAddonProvider;
 import ad_astra_giselle_addon.common.delegate.DelegateRegistryHelper;
 import ad_astra_giselle_addon.common.delegate.FabricRegisterHelper;
@@ -35,12 +32,6 @@ public class AdAstraGiselleAddonFabric implements ModInitializer, PlatformCommon
 	public CreativeModeTab createCreativeModeTab(CreativeModeTabBuilder builder)
 	{
 		return FabricItemGroupBuilder.create(builder.id()).icon(builder.icon()).appendItems(builder::appendItems).build();
-	}
-
-	@Override
-	public DelegateLivingHelper getLivingHelper()
-	{
-		return living -> Collections.emptyList();
 	}
 
 	@Override

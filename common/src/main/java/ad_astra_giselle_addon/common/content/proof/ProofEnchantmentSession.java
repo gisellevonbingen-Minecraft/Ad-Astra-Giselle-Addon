@@ -6,9 +6,9 @@ import com.mojang.datafixers.util.Pair;
 
 import ad_astra_giselle_addon.common.enchantment.EnchantmentEnergyStorageOrDamageable;
 import ad_astra_giselle_addon.common.enchantment.EnchantmentHelper2;
+import ad_astra_giselle_addon.common.entity.LivingHelper;
 import ad_astra_giselle_addon.common.item.ItemStackReference;
 import ad_astra_giselle_addon.common.item.ItemUsableResource;
-import ad_astra_giselle_addon.common.util.LivingHelper;
 import earth.terrarium.botarium.api.item.ItemStackHolder;
 import net.minecraft.world.entity.LivingEntity;
 

@@ -4,11 +4,11 @@ import ad_astra_giselle_addon.common.config.EnchantmentsConfig;
 import ad_astra_giselle_addon.common.content.oxygen.IOxygenCharger;
 import ad_astra_giselle_addon.common.content.oxygen.OxygenChargerUtils;
 import ad_astra_giselle_addon.common.enchantment.EnchantmentEnergyStorageOrDamageable;
+import ad_astra_giselle_addon.common.entity.LivingHelper;
 import ad_astra_giselle_addon.common.fluid.FluidHooks2;
 import ad_astra_giselle_addon.common.fluid.FluidPredicates;
 import ad_astra_giselle_addon.common.fluid.UniveralFluidHandler;
 import ad_astra_giselle_addon.common.item.ItemUsableResource;
-import ad_astra_giselle_addon.common.util.LivingHelper;
 import net.minecraft.world.entity.LivingEntity;
 
 public class SpaceOxygenProofEnchantmentSession extends ProofEnchantmentSession

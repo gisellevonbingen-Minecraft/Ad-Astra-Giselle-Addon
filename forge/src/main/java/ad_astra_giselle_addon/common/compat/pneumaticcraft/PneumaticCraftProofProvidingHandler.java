@@ -13,10 +13,10 @@ import ad_astra_giselle_addon.common.content.proof.LivingSpaceOxygenProofProvidi
 import ad_astra_giselle_addon.common.content.proof.LivingVenusAcidProofProvidingEvent;
 import ad_astra_giselle_addon.common.content.proof.ProofAbstractUtils;
 import ad_astra_giselle_addon.common.content.proof.ProofSession;
+import ad_astra_giselle_addon.common.entity.LivingHelper;
 import ad_astra_giselle_addon.common.fluid.FluidHooks2;
 import ad_astra_giselle_addon.common.fluid.FluidPredicates;
 import ad_astra_giselle_addon.common.fluid.UniveralFluidHandler;
-import ad_astra_giselle_addon.common.util.LivingHelper;
 import me.desht.pneumaticcraft.api.PNCCapabilities;
 import me.desht.pneumaticcraft.api.pneumatic_armor.IArmorUpgradeHandler;
 import me.desht.pneumaticcraft.api.tileentity.IAirHandler;

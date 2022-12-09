@@ -1,9 +1,9 @@
-package ad_astra_giselle_addon.common.util;
+package ad_astra_giselle_addon.common.entity;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-import ad_astra_giselle_addon.common.AdAstraGiselleAddon;
 import ad_astra_giselle_addon.common.item.ItemStackConsumers;
 import ad_astra_giselle_addon.common.item.ItemStackReference;
 import net.minecraft.world.InteractionHand;
@@ -15,6 +15,8 @@ import net.minecraft.world.item.ItemStack;
 
 public class LivingHelper
 {
+	private static final LivingHelper.Delegate DELEGATE = new LivingHelperDelegate();
+
 	public static boolean isPlayingMode(LivingEntity living)
 	{
 		if (living instanceof Player player)
@@ -79,13 +81,17 @@ public class LivingHelper
 			list.addAll(getSlotItems(living));
 		}
 
-		list.addAll(AdAstraGiselleAddon.delegate().getLivingHelper().getExtraInventoryStacks(living));
+		list.addAll(DELEGATE.getExtraInventoryStacks(living));
 
 		return list;
 	}
 
-	private LivingHelper()
+	public static interface Delegate
 	{
+		default List<ItemStackReference> getExtraInventoryStacks(LivingEntity living)
+		{
+			return Collections.emptyList();
+		}
 
 	}
 

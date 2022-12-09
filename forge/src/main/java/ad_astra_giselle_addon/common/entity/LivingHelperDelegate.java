@@ -1,4 +1,4 @@
-package ad_astra_giselle_addon.common.delegate;
+package ad_astra_giselle_addon.common.entity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,10 +11,8 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.IItemHandlerModifiable;
 
-public class ForgeLivingHelper implements DelegateLivingHelper
+public class LivingHelperDelegate implements LivingHelper.Delegate
 {
-	public static final ForgeLivingHelper INSTANCE = new ForgeLivingHelper();
-
 	@Override
 	public List<ItemStackReference> getExtraInventoryStacks(LivingEntity living)
 	{
@@ -42,11 +40,6 @@ public class ForgeLivingHelper implements DelegateLivingHelper
 		}
 
 		return list;
-	}
-
-	private ForgeLivingHelper()
-	{
-
 	}
 
 }

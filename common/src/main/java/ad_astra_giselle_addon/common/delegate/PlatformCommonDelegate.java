@@ -9,6 +9,4 @@ public interface PlatformCommonDelegate
 	DelegateRegistryHelper getRegistryHelper();
 
 	CreativeModeTab createCreativeModeTab(CreativeModeTabBuilder builder);
-
-	DelegateLivingHelper getLivingHelper();
 }

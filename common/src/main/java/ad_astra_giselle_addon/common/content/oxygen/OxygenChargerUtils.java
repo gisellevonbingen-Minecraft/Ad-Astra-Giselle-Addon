@@ -6,11 +6,11 @@ import java.util.stream.Stream;
 
 import org.jetbrains.annotations.Nullable;
 
+import ad_astra_giselle_addon.common.entity.LivingHelper;
 import ad_astra_giselle_addon.common.fluid.FluidHooks2;
 import ad_astra_giselle_addon.common.fluid.FluidPredicates;
 import ad_astra_giselle_addon.common.fluid.UniveralFluidHandler;
 import ad_astra_giselle_addon.common.item.ItemStackReference;
-import ad_astra_giselle_addon.common.util.LivingHelper;
 import earth.terrarium.ad_astra.items.OxygenTankItem;
 import earth.terrarium.ad_astra.items.armour.SpaceSuit;
 import earth.terrarium.ad_astra.util.ModUtils;

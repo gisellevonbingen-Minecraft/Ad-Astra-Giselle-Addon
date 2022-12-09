@@ -5,9 +5,7 @@ import ad_astra_giselle_addon.common.compat.ForgeCompatibleManager;
 import ad_astra_giselle_addon.common.config.AddonForgeConfigs;
 import ad_astra_giselle_addon.common.delegate.CreativeModeTabBuilder;
 import ad_astra_giselle_addon.common.delegate.DelegateAddonProvider;
-import ad_astra_giselle_addon.common.delegate.DelegateLivingHelper;
 import ad_astra_giselle_addon.common.delegate.DelegateRegistryHelper;
-import ad_astra_giselle_addon.common.delegate.ForgeLivingHelper;
 import ad_astra_giselle_addon.common.delegate.ForgeRegisterHelper;
 import ad_astra_giselle_addon.common.delegate.PlatformCommonDelegate;
 import net.minecraft.core.NonNullList;
@@ -62,12 +60,6 @@ public class AdAstraGiselleAddonForge implements PlatformCommonDelegate
 
 		};
 
-	}
-
-	@Override
-	public DelegateLivingHelper getLivingHelper()
-	{
-		return ForgeLivingHelper.INSTANCE;
 	}
 
 	@Override
