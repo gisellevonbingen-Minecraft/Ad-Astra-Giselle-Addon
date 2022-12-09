@@ -2,7 +2,6 @@ package ad_astra_giselle_addon.common.registry;
 
 import java.util.function.Supplier;
 
-import ad_astra_giselle_addon.common.delegate.DelegateRegistry;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;

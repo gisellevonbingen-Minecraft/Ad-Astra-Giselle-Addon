@@ -1,8 +1,8 @@
 package ad_astra_giselle_addon.client.compat;
 
 import ad_astra_giselle_addon.common.AdAstraGiselleAddon;
-import ad_astra_giselle_addon.common.delegate.DelegateRegistry;
 import ad_astra_giselle_addon.common.fluid.FluidPredicates;
+import ad_astra_giselle_addon.common.registry.DelegateRegistry;
 import net.minecraft.core.Registry;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;

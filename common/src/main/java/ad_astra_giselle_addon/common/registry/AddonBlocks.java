@@ -10,7 +10,7 @@ import net.minecraft.world.level.material.Material;
 public class AddonBlocks
 {
 	public static final DelegateBlockCollection BLOCKS = new DelegateBlockCollection(AdAstraGiselleAddon.MOD_ID);
-	public static final DelegateBlockHolder<FuelLoaderBlock, BlockItem> FUEL_LOADER = BLOCKS.register("fuel_loader", () -> new FuelLoaderBlock(createDefaultBlockProperties()), AddonBlocks::createBlockItem);
+	public static final DelegateBlockHolder<FuelLoaderBlock, BlockItem> FUEL_LOADER = BLOCKS.add("fuel_loader", () -> new FuelLoaderBlock(createDefaultBlockProperties()), AddonBlocks::createBlockItem);
 
 	public static BlockBehaviour.Properties createDefaultBlockProperties()
 	{

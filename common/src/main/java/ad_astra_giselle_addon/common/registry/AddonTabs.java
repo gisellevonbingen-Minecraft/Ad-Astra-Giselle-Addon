@@ -2,7 +2,6 @@ package ad_astra_giselle_addon.common.registry;
 
 import ad_astra_giselle_addon.common.AdAstraGiselleAddon;
 import ad_astra_giselle_addon.common.delegate.CreativeModeTabBuilder;
-import ad_astra_giselle_addon.common.delegate.DelegateRegistry;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.Registry;
 import net.minecraft.world.item.CreativeModeTab;

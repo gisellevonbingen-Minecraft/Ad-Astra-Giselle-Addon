@@ -1,4 +1,4 @@
-package ad_astra_giselle_addon.common.delegate;
+package ad_astra_giselle_addon.common.registry;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,19 +13,12 @@ import net.minecraftforge.registries.ForgeRegistry;
 import net.minecraftforge.registries.RegistryManager;
 
 @SuppressWarnings("unchecked")
-public class ForgeRegisterHelper implements DelegateRegistryHelper
+public class DelegateRegistryHelperDelegate implements DelegateRegistryHelper.Delegate
 {
-	public static final ForgeRegisterHelper INSTANCE = new ForgeRegisterHelper();
-
 	private final Map<ResourceKey<?>, InternalRegistry<?>> internals = new HashMap<>();
 
-	private ForgeRegisterHelper()
-	{
-
-	}
-
 	@Override
-	public <T> DelegateRegistry<T> getRegistry(ResourceKey<? extends Registry<T>> key)
+	public <T> DelegateRegistry<T> get(ResourceKey<? extends Registry<T>> key)
 	{
 		return (DelegateRegistry<T>) this.internals.computeIfAbsent(key, k -> new InternalRegistry<>((ResourceKey<? extends Registry<T>>) k));
 	}

@@ -10,9 +10,9 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 
 import ad_astra_giselle_addon.common.AdAstraGiselleAddon;
 import ad_astra_giselle_addon.common.compat.CompatibleMod;
-import ad_astra_giselle_addon.common.delegate.DelegateRegistry;
 import ad_astra_giselle_addon.common.fluid.UniveralFluidHandler;
 import ad_astra_giselle_addon.common.registry.AddonEnchantments;
+import ad_astra_giselle_addon.common.registry.DelegateRegistry;
 import earth.terrarium.ad_astra.registry.ModFluids;
 import earth.terrarium.ad_astra.registry.ModItems;
 import earth.terrarium.botarium.api.energy.EnergyHooks;

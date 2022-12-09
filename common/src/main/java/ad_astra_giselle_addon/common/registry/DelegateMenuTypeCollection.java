@@ -17,14 +17,14 @@ public class DelegateMenuTypeCollection extends DelegateObjectCollection<MenuTyp
 		super(modid, Registry.MENU_REGISTRY);
 	}
 
-	public <C extends AbstractContainerMenu> DelegateObjectHolder<MenuType<C>> register(String name, MenuFactory<C> factory)
+	public <C extends AbstractContainerMenu> DelegateObjectHolder<MenuType<C>> add(String name, MenuFactory<C> factory)
 	{
-		return this.register(name, () -> RegistryHelpers.createMenuType(factory));
+		return this.add(name, () -> RegistryHelpers.createMenuType(factory));
 	}
 
-	public <T extends BlockEntity, C extends AbstractContainerMenu> DelegateObjectHolder<MenuType<C>> register(String name, TriFunction<Integer, Inventory, T, C> function)
+	public <T extends BlockEntity, C extends AbstractContainerMenu> DelegateObjectHolder<MenuType<C>> add(String name, TriFunction<Integer, Inventory, T, C> function)
 	{
-		return this.register(name, new MenuFactory<C>()
+		return this.add(name, new MenuFactory<C>()
 		{
 			@Override
 			public C create(int windowId, Inventory inv, FriendlyByteBuf data)

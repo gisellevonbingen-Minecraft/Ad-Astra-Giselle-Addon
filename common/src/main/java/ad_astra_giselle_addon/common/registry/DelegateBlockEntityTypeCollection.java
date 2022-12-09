@@ -11,9 +11,9 @@ public class DelegateBlockEntityTypeCollection extends DelegateObjectCollection<
 		super(modid, Registry.BLOCK_ENTITY_TYPE_REGISTRY);
 	}
 
-	public <T extends BlockEntity> DelegateObjectHolder<BlockEntityType<T>> register(String name, DelegateBlockHolder<?, ?> block, BlockEntityType.BlockEntitySupplier<T> blockEntitySupplier)
+	public <T extends BlockEntity> DelegateObjectHolder<BlockEntityType<T>> add(String name, DelegateBlockHolder<?, ?> block, BlockEntityType.BlockEntitySupplier<T> blockEntitySupplier)
 	{
-		return this.register(name, () -> BlockEntityType.Builder.of(blockEntitySupplier, block.get()).build(null));
+		return this.add(name, () -> BlockEntityType.Builder.of(blockEntitySupplier, block.get()).build(null));
 	}
 
 }

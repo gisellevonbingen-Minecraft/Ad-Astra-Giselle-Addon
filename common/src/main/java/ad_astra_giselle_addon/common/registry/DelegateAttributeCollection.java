@@ -12,9 +12,9 @@ public class DelegateAttributeCollection extends DelegateObjectCollection<Attrib
 		super(modid, Registry.ATTRIBUTE_REGISTRY);
 	}
 
-	public <I extends Attribute> DelegateObjectHolder<I> register(String name, Function<String, ? extends I> initializer)
+	public <I extends Attribute> DelegateObjectHolder<I> add(String name, Function<String, ? extends I> initializer)
 	{
-		return super.register(name, () -> initializer.apply(name));
+		return super.add(name, () -> initializer.apply(name));
 	}
 
 }

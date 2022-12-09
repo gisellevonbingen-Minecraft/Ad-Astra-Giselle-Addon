@@ -5,7 +5,6 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-import ad_astra_giselle_addon.common.delegate.DelegateRegistryHelper;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 
@@ -22,16 +21,16 @@ public class DelegateDoubleCollection<P, S>
 		this.secondaryRegister = new DelegateObjectCollection<>(modid, secondaryRegistry);
 	}
 
-	public void register(DelegateRegistryHelper factory)
+	public void register()
 	{
-		this.primaryRegister.register(factory);
-		this.secondaryRegister.register(factory);
+		this.primaryRegister.register();
+		this.secondaryRegister.register();
 	}
 
-	protected <P2 extends P, S2 extends S, R extends DelegateDoubleHolder<P2, S2>> R register(String name, Supplier<? extends P2> primarySupplier, Function<P2, ? extends S2> secondaryFunction, BiFunction<DelegateObjectHolder<P2>, DelegateObjectHolder<S2>, R> registryFuction)
+	protected <P2 extends P, S2 extends S, R extends DelegateDoubleHolder<P2, S2>> R add(String name, Supplier<? extends P2> primarySupplier, Function<P2, ? extends S2> secondaryFunction, BiFunction<DelegateObjectHolder<P2>, DelegateObjectHolder<S2>, R> registryFuction)
 	{
-		DelegateObjectHolder<P2> primary = this.primaryRegister.register(name, primarySupplier);
-		DelegateObjectHolder<S2> secondary = this.secondaryRegister.register(name, () -> secondaryFunction.apply(primary.get()));
+		DelegateObjectHolder<P2> primary = this.primaryRegister.add(name, primarySupplier);
+		DelegateObjectHolder<S2> secondary = this.secondaryRegister.add(name, () -> secondaryFunction.apply(primary.get()));
 		return registryFuction.apply(primary, secondary);
 	}
 

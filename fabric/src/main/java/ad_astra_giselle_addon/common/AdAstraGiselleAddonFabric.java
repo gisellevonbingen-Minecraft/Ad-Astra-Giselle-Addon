@@ -4,8 +4,6 @@ import ad_astra_giselle_addon.common.compat.FabricCompatibleManager;
 import ad_astra_giselle_addon.common.config.AddonConfigs;
 import ad_astra_giselle_addon.common.delegate.CreativeModeTabBuilder;
 import ad_astra_giselle_addon.common.delegate.DelegateAddonProvider;
-import ad_astra_giselle_addon.common.delegate.DelegateRegistryHelper;
-import ad_astra_giselle_addon.common.delegate.FabricRegisterHelper;
 import ad_astra_giselle_addon.common.delegate.PlatformCommonDelegate;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
@@ -20,12 +18,6 @@ public class AdAstraGiselleAddonFabric implements ModInitializer, PlatformCommon
 		AdAstraGiselleAddon.initializeCommon(this);
 		AdAstraGiselleAddon.registerConfig(AddonConfigs.class);
 		CommandRegistrationCallback.EVENT.register((dispatcher, registry, selection) -> AdAstraGiselleAddon.registerCommand(dispatcher::register));
-	}
-
-	@Override
-	public DelegateRegistryHelper getRegistryHelper()
-	{
-		return FabricRegisterHelper.INSTANCE;
 	}
 
 	@Override

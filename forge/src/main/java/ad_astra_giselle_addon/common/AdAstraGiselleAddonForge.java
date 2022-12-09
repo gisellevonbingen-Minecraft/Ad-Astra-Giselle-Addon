@@ -5,8 +5,6 @@ import ad_astra_giselle_addon.common.compat.ForgeCompatibleManager;
 import ad_astra_giselle_addon.common.config.AddonForgeConfigs;
 import ad_astra_giselle_addon.common.delegate.CreativeModeTabBuilder;
 import ad_astra_giselle_addon.common.delegate.DelegateAddonProvider;
-import ad_astra_giselle_addon.common.delegate.DelegateRegistryHelper;
-import ad_astra_giselle_addon.common.delegate.ForgeRegisterHelper;
 import ad_astra_giselle_addon.common.delegate.PlatformCommonDelegate;
 import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
@@ -32,12 +30,6 @@ public class AdAstraGiselleAddonForge implements PlatformCommonDelegate
 		forge_bus.addListener((RegisterCommandsEvent e) -> AdAstraGiselleAddon.registerCommand(e.getDispatcher()::register));
 
 		DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> AdAstraGiselleAddonClientForge::new);
-	}
-
-	@Override
-	public DelegateRegistryHelper getRegistryHelper()
-	{
-		return ForgeRegisterHelper.INSTANCE;
 	}
 
 	@Override

@@ -6,7 +6,5 @@ public interface PlatformCommonDelegate
 {
 	DelegateAddonProvider getAddonHelper();
 
-	DelegateRegistryHelper getRegistryHelper();
-
 	CreativeModeTab createCreativeModeTab(CreativeModeTabBuilder builder);
 }
