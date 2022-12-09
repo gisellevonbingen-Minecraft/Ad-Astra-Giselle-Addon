@@ -7,7 +7,7 @@ import net.minecraft.world.inventory.MenuType;
 public class AddonMenuTypes
 {
 	public static final DelegateMenuTypeCollection MENU_TYPES = new DelegateMenuTypeCollection(AdAstraGiselleAddon.MOD_ID);
-	public static final DelegateObjectHolder<MenuType<FuelLoaderMenu>> FUEL_LOADER = MENU_TYPES.add("fuel_loader", FuelLoaderMenu::new);
+	public static final ObjectRegistryHolder<MenuType<FuelLoaderMenu>> FUEL_LOADER = MENU_TYPES.add("fuel_loader", FuelLoaderMenu::new);
 
 	private AddonMenuTypes()
 	{

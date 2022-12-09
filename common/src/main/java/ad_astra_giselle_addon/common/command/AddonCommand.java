@@ -12,7 +12,7 @@ import ad_astra_giselle_addon.common.AdAstraGiselleAddon;
 import ad_astra_giselle_addon.common.compat.CompatibleMod;
 import ad_astra_giselle_addon.common.fluid.UniveralFluidHandler;
 import ad_astra_giselle_addon.common.registry.AddonEnchantments;
-import ad_astra_giselle_addon.common.registry.DelegateRegistry;
+import ad_astra_giselle_addon.common.registry.ObjectRegistry;
 import earth.terrarium.ad_astra.registry.ModFluids;
 import earth.terrarium.ad_astra.registry.ModItems;
 import earth.terrarium.botarium.api.energy.EnergyHooks;
@@ -142,7 +142,7 @@ public class AddonCommand
 
 		public static ItemStack makeFullWithEnchantments(ResourceLocation name)
 		{
-			Item item = DelegateRegistry.get(Registry.ITEM_REGISTRY).getValue(name);
+			Item item = ObjectRegistry.get(Registry.ITEM_REGISTRY).getValue(name);
 			return makeFullWithEnchantments(item);
 		}
 

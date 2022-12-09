@@ -9,17 +9,17 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 
 @SuppressWarnings("unchecked")
-public class DelegateRegistryHelperDelegate implements DelegateRegistryHelper.Delegate
+public class ObjectRegistryDelegate implements ObjectRegistry.Delegate
 {
 	private final Map<ResourceKey<?>, InternalRegistry<?>> internals = new HashMap<>();
 
 	@Override
-	public <T> DelegateRegistry<T> get(ResourceKey<? extends Registry<T>> key)
+	public <T> ObjectRegistry<T> get(ResourceKey<? extends Registry<T>> key)
 	{
-		return (DelegateRegistry<T>) this.internals.computeIfAbsent(key, k -> new InternalRegistry<>((ResourceKey<? extends Registry<T>>) k));
+		return (ObjectRegistry<T>) this.internals.computeIfAbsent(key, k -> new InternalRegistry<>((ResourceKey<? extends Registry<T>>) k));
 	}
 
-	private class InternalRegistry<T> implements DelegateRegistry<T>
+	private class InternalRegistry<T> extends ObjectRegistry<T>
 	{
 		private final ResourceKey<? extends Registry<T>> key;
 

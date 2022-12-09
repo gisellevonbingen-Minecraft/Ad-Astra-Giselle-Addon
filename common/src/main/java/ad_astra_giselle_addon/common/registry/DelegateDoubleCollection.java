@@ -11,14 +11,14 @@ import net.minecraft.resources.ResourceKey;
 public class DelegateDoubleCollection<P, S>
 {
 	private final String modid;
-	protected final DelegateObjectCollection<P> primaryRegister;
-	protected final DelegateObjectCollection<S> secondaryRegister;
+	protected final ObjectRegistryCollection<P> primaryRegister;
+	protected final ObjectRegistryCollection<S> secondaryRegister;
 
 	public DelegateDoubleCollection(String modid, ResourceKey<? extends Registry<P>> primaryRegistry, ResourceKey<? extends Registry<S>> secondaryRegistry)
 	{
 		this.modid = modid;
-		this.primaryRegister = new DelegateObjectCollection<>(modid, primaryRegistry);
-		this.secondaryRegister = new DelegateObjectCollection<>(modid, secondaryRegistry);
+		this.primaryRegister = new ObjectRegistryCollection<>(modid, primaryRegistry);
+		this.secondaryRegister = new ObjectRegistryCollection<>(modid, secondaryRegistry);
 	}
 
 	public void register()
@@ -27,10 +27,10 @@ public class DelegateDoubleCollection<P, S>
 		this.secondaryRegister.register();
 	}
 
-	protected <P2 extends P, S2 extends S, R extends DelegateDoubleHolder<P2, S2>> R add(String name, Supplier<? extends P2> primarySupplier, Function<P2, ? extends S2> secondaryFunction, BiFunction<DelegateObjectHolder<P2>, DelegateObjectHolder<S2>, R> registryFuction)
+	protected <P2 extends P, S2 extends S, R extends DelegateDoubleHolder<P2, S2>> R add(String name, Supplier<? extends P2> primarySupplier, Function<P2, ? extends S2> secondaryFunction, BiFunction<ObjectRegistryHolder<P2>, ObjectRegistryHolder<S2>, R> registryFuction)
 	{
-		DelegateObjectHolder<P2> primary = this.primaryRegister.add(name, primarySupplier);
-		DelegateObjectHolder<S2> secondary = this.secondaryRegister.add(name, () -> secondaryFunction.apply(primary.get()));
+		ObjectRegistryHolder<P2> primary = this.primaryRegister.add(name, primarySupplier);
+		ObjectRegistryHolder<S2> secondary = this.secondaryRegister.add(name, () -> secondaryFunction.apply(primary.get()));
 		return registryFuction.apply(primary, secondary);
 	}
 
@@ -39,7 +39,7 @@ public class DelegateDoubleCollection<P, S>
 		return this.modid;
 	}
 
-	public Collection<DelegateObjectHolder<P>> getPrimaryObjects()
+	public Collection<ObjectRegistryHolder<P>> getPrimaryObjects()
 	{
 		return this.primaryRegister.getObjects();
 	}
@@ -49,7 +49,7 @@ public class DelegateDoubleCollection<P, S>
 		return this.primaryRegister.getValues();
 	}
 
-	public Collection<DelegateObjectHolder<S>> getSecondaryObjects()
+	public Collection<ObjectRegistryHolder<S>> getSecondaryObjects()
 	{
 		return this.secondaryRegister.getObjects();
 	}

@@ -6,7 +6,7 @@ import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 
-public class DelegateObjectHolder<T> implements Supplier<T>
+public class ObjectRegistryHolder<T> implements Supplier<T>
 {
 	private final ResourceLocation id;
 	private final Supplier<T> initializer;
@@ -14,7 +14,7 @@ public class DelegateObjectHolder<T> implements Supplier<T>
 
 	private Supplier<T> objectSupplier;
 
-	public DelegateObjectHolder(ResourceLocation id, Supplier<T> initializer, ResourceKey<? extends Registry<?>> key)
+	public ObjectRegistryHolder(ResourceLocation id, Supplier<T> initializer, ResourceKey<? extends Registry<?>> key)
 	{
 		this.id = id;
 		this.initializer = initializer;
@@ -29,7 +29,7 @@ public class DelegateObjectHolder<T> implements Supplier<T>
 		return "[key=" + this.key.location() + "][id=" + this.id.toString() + "]";
 	}
 
-	public void register(DelegateRegistry<T> registry)
+	public void register(ObjectRegistry<T> registry)
 	{
 		if (this.objectSupplier == null)
 		{

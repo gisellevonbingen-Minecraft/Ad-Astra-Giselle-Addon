@@ -3,17 +3,17 @@ package ad_astra_giselle_addon.common.compat.pneumaticcraft;
 import java.util.List;
 import java.util.function.Supplier;
 
-import ad_astra_giselle_addon.common.registry.DelegateObjectHolder;
+import ad_astra_giselle_addon.common.registry.ObjectRegistryHolder;
 import me.desht.pneumaticcraft.api.item.PNCUpgrade;
 import me.desht.pneumaticcraft.common.item.UpgradeItem;
 import net.minecraft.resources.ResourceLocation;
 
-public class UpgradeRegistryObject<U extends PNCUpgrade, I extends UpgradeItem> implements Supplier<U>
+public class UpgradeRegistryHolder<U extends PNCUpgrade, I extends UpgradeItem> implements Supplier<U>
 {
-	private final DelegateObjectHolder<? extends U> upgrade;
-	private final List<? extends DelegateObjectHolder<? extends I>> items;
+	private final ObjectRegistryHolder<? extends U> upgrade;
+	private final List<? extends ObjectRegistryHolder<? extends I>> items;
 
-	public UpgradeRegistryObject(DelegateObjectHolder<? extends U> upgrade, List<? extends DelegateObjectHolder<? extends I>> items)
+	public UpgradeRegistryHolder(ObjectRegistryHolder<? extends U> upgrade, List<? extends ObjectRegistryHolder<? extends I>> items)
 	{
 		this.upgrade = upgrade;
 		this.items = items;
@@ -42,12 +42,12 @@ public class UpgradeRegistryObject<U extends PNCUpgrade, I extends UpgradeItem> 
 
 	public List<ResourceLocation> getItemIds()
 	{
-		return this.items.stream().map(DelegateObjectHolder::getId).toList();
+		return this.items.stream().map(ObjectRegistryHolder::getId).toList();
 	}
 
 	public List<? extends I> getItems()
 	{
-		return this.items.stream().map(DelegateObjectHolder::get).toList();
+		return this.items.stream().map(ObjectRegistryHolder::get).toList();
 	}
 
 }

@@ -5,10 +5,10 @@ import net.minecraft.resources.ResourceLocation;
 public class DelegateDoubleHolder<P, S>
 {
 	private final ResourceLocation id;
-	private final DelegateObjectHolder<? extends P> primary;
-	private final DelegateObjectHolder<? extends S> secondary;
+	private final ObjectRegistryHolder<? extends P> primary;
+	private final ObjectRegistryHolder<? extends S> secondary;
 
-	public DelegateDoubleHolder(DelegateObjectHolder<? extends P> primary, DelegateObjectHolder<? extends S> secondary)
+	public DelegateDoubleHolder(ObjectRegistryHolder<? extends P> primary, ObjectRegistryHolder<? extends S> secondary)
 	{
 		this.id = primary.getId();
 		this.primary = primary;

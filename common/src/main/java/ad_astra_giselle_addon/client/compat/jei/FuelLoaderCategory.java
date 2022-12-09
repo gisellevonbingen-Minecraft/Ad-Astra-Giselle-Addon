@@ -6,7 +6,7 @@ import ad_astra_giselle_addon.client.compat.RecipeHelper;
 import ad_astra_giselle_addon.client.screen.FuelLoaderScreen;
 import ad_astra_giselle_addon.common.config.MachinesConfig;
 import ad_astra_giselle_addon.common.registry.AddonBlocks;
-import ad_astra_giselle_addon.common.registry.DelegateRegistry;
+import ad_astra_giselle_addon.common.registry.ObjectRegistry;
 import earth.terrarium.ad_astra.client.screens.GuiUtil;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -68,7 +68,7 @@ public class FuelLoaderCategory extends AddonRecipeCategory<Fluid>
 	{
 		super.registerRecipes(registry);
 
-		registry.addRecipes(this.getRecipeType(), DelegateRegistry.get(Registry.FLUID_REGISTRY).stream().filter(RecipeHelper.FuelLoader::testFluid).toList());
+		registry.addRecipes(this.getRecipeType(), ObjectRegistry.get(Registry.FLUID_REGISTRY).stream().filter(RecipeHelper.FuelLoader::testFluid).toList());
 	}
 
 	@Override

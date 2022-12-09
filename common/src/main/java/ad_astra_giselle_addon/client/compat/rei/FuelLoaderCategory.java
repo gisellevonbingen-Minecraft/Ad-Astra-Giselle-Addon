@@ -6,7 +6,7 @@ import java.util.List;
 import ad_astra_giselle_addon.client.compat.RecipeHelper;
 import ad_astra_giselle_addon.client.screen.FuelLoaderScreen;
 import ad_astra_giselle_addon.common.registry.AddonBlocks;
-import ad_astra_giselle_addon.common.registry.DelegateRegistry;
+import ad_astra_giselle_addon.common.registry.ObjectRegistry;
 import earth.terrarium.botarium.api.fluid.FluidHooks;
 import me.shedaniel.math.Point;
 import me.shedaniel.math.Rectangle;
@@ -70,7 +70,7 @@ public class FuelLoaderCategory extends AddonDisplayCategory<FuelLoaderDisplay>
 	{
 		super.registerRecipes(registry);
 
-		DelegateRegistry.get(Registry.FLUID_REGISTRY).stream().filter(RecipeHelper.FuelLoader::testFluid).map(FuelLoaderDisplay::new).forEach(registry::add);
+		ObjectRegistry.get(Registry.FLUID_REGISTRY).stream().filter(RecipeHelper.FuelLoader::testFluid).map(FuelLoaderDisplay::new).forEach(registry::add);
 	}
 
 	@Override

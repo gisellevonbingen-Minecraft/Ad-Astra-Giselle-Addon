@@ -5,14 +5,14 @@ import java.util.function.Function;
 import net.minecraft.core.Registry;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 
-public class DelegateAttributeCollection extends DelegateObjectCollection<Attribute>
+public class DelegateAttributeCollection extends ObjectRegistryCollection<Attribute>
 {
 	public DelegateAttributeCollection(String modid)
 	{
 		super(modid, Registry.ATTRIBUTE_REGISTRY);
 	}
 
-	public <I extends Attribute> DelegateObjectHolder<I> add(String name, Function<String, ? extends I> initializer)
+	public <I extends Attribute> ObjectRegistryHolder<I> add(String name, Function<String, ? extends I> initializer)
 	{
 		return super.add(name, () -> initializer.apply(name));
 	}

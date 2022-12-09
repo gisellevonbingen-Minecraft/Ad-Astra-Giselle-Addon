@@ -18,7 +18,7 @@ public class AddonTabs
 			{
 				NonNullList<ItemStack> list = NonNullList.create();
 
-				for (Item item : DelegateRegistry.get(Registry.ITEM_REGISTRY).getValues())
+				for (Item item : ObjectRegistry.get(Registry.ITEM_REGISTRY).getValues())
 				{
 					item.fillItemCategory(AddonTabs.tab_main, list);
 				}

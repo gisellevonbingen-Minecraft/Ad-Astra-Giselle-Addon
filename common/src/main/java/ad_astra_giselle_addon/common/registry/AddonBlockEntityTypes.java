@@ -7,7 +7,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 public class AddonBlockEntityTypes
 {
 	public static final DelegateBlockEntityTypeCollection BLOCK_ENTITY_TYPES = new DelegateBlockEntityTypeCollection(AdAstraGiselleAddon.MOD_ID);
-	public static final DelegateObjectHolder<BlockEntityType<FuelLoaderBlockEntity>> FUEL_LOADER = BLOCK_ENTITY_TYPES.add("fuel_loader", AddonBlocks.FUEL_LOADER, FuelLoaderBlockEntity::new);
+	public static final ObjectRegistryHolder<BlockEntityType<FuelLoaderBlockEntity>> FUEL_LOADER = BLOCK_ENTITY_TYPES.add("fuel_loader", AddonBlocks.FUEL_LOADER, FuelLoaderBlockEntity::new);
 
 	private AddonBlockEntityTypes()
 	{

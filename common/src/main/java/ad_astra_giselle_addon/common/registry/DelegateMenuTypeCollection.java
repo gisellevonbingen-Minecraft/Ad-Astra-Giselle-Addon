@@ -10,19 +10,19 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
-public class DelegateMenuTypeCollection extends DelegateObjectCollection<MenuType<?>>
+public class DelegateMenuTypeCollection extends ObjectRegistryCollection<MenuType<?>>
 {
 	public DelegateMenuTypeCollection(String modid)
 	{
 		super(modid, Registry.MENU_REGISTRY);
 	}
 
-	public <C extends AbstractContainerMenu> DelegateObjectHolder<MenuType<C>> add(String name, MenuFactory<C> factory)
+	public <C extends AbstractContainerMenu> ObjectRegistryHolder<MenuType<C>> add(String name, MenuFactory<C> factory)
 	{
 		return this.add(name, () -> RegistryHelpers.createMenuType(factory));
 	}
 
-	public <T extends BlockEntity, C extends AbstractContainerMenu> DelegateObjectHolder<MenuType<C>> add(String name, TriFunction<Integer, Inventory, T, C> function)
+	public <T extends BlockEntity, C extends AbstractContainerMenu> ObjectRegistryHolder<MenuType<C>> add(String name, TriFunction<Integer, Inventory, T, C> function)
 	{
 		return this.add(name, new MenuFactory<C>()
 		{

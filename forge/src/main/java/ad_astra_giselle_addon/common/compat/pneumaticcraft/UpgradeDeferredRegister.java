@@ -9,8 +9,8 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-import ad_astra_giselle_addon.common.registry.DelegateObjectCollection;
-import ad_astra_giselle_addon.common.registry.DelegateObjectHolder;
+import ad_astra_giselle_addon.common.registry.ObjectRegistryCollection;
+import ad_astra_giselle_addon.common.registry.ObjectRegistryHolder;
 import me.desht.pneumaticcraft.api.item.PNCUpgrade;
 import me.desht.pneumaticcraft.common.core.ModUpgrades;
 import me.desht.pneumaticcraft.common.item.UpgradeItem;
@@ -23,11 +23,11 @@ public class UpgradeDeferredRegister
 	public static final ResourceKey<? extends Registry<PNCUpgrade>> REGISTRY_KEY = ModUpgrades.UPGRADES_DEFERRED.getRegistryKey();
 
 	private final String modid;
-	private final Set<UpgradeRegistryObject<?, ?>> objects;
-	private final Set<UpgradeRegistryObject<?, ?>> readonlyObjects;
+	private final Set<UpgradeRegistryHolder<?, ?>> objects;
+	private final Set<UpgradeRegistryHolder<?, ?>> readonlyObjects;
 
-	protected final DelegateObjectCollection<PNCUpgrade> primaryRegister;
-	protected final DelegateObjectCollection<Item> secondaryRegister;
+	protected final ObjectRegistryCollection<PNCUpgrade> primaryRegister;
+	protected final ObjectRegistryCollection<Item> secondaryRegister;
 
 	public UpgradeDeferredRegister(String modid)
 	{
@@ -35,35 +35,35 @@ public class UpgradeDeferredRegister
 		this.objects = new HashSet<>();
 		this.readonlyObjects = Collections.unmodifiableSet(this.objects);
 
-		this.primaryRegister = new DelegateObjectCollection<>(modid, REGISTRY_KEY);
-		this.secondaryRegister = new DelegateObjectCollection<>(modid, Registry.ITEM_REGISTRY);
+		this.primaryRegister = new ObjectRegistryCollection<>(modid, REGISTRY_KEY);
+		this.secondaryRegister = new ObjectRegistryCollection<>(modid, Registry.ITEM_REGISTRY);
 	}
 
-	public UpgradeRegistryObject<AddonPNCUpgrade, UpgradeItem> add(String name, Supplier<Item.Properties> propertiesSup)
+	public UpgradeRegistryHolder<AddonPNCUpgrade, UpgradeItem> add(String name, Supplier<Item.Properties> propertiesSup)
 	{
 		return this.add(name, propertiesSup, 1);
 	}
 
-	public UpgradeRegistryObject<AddonPNCUpgrade, UpgradeItem> add(String name, Supplier<Item.Properties> propertiesSup, int maxTier, String... depModIds)
+	public UpgradeRegistryHolder<AddonPNCUpgrade, UpgradeItem> add(String name, Supplier<Item.Properties> propertiesSup, int maxTier, String... depModIds)
 	{
 		return this.add(name, () -> new AddonPNCUpgrade(maxTier, depModIds), u -> new UpgradeItem(u, maxTier, propertiesSup.get()));
 	}
 
 	@SuppressWarnings("unchecked")
-	public <U extends AddonPNCUpgrade, I extends UpgradeItem> UpgradeRegistryObject<U, I> add(String name, Supplier<? extends U> upgradeSup, Function<DelegateObjectHolder<PNCUpgrade>, ? extends I> itemFunc)
+	public <U extends AddonPNCUpgrade, I extends UpgradeItem> UpgradeRegistryHolder<U, I> add(String name, Supplier<? extends U> upgradeSup, Function<ObjectRegistryHolder<PNCUpgrade>, ? extends I> itemFunc)
 	{
 		U upgrade = upgradeSup.get();
 		int maxTier = upgrade.getMaxTier();
-		DelegateObjectHolder<? extends PNCUpgrade> upgradeRegistry = this.primaryRegister.add(name, () -> upgrade);
+		ObjectRegistryHolder<? extends PNCUpgrade> upgradeRegistry = this.primaryRegister.add(name, () -> upgrade);
 
-		List<DelegateObjectHolder<I>> items = new ArrayList<>();
+		List<ObjectRegistryHolder<I>> items = new ArrayList<>();
 
 		for (int i = 0; i < upgrade.getMaxTier(); i++)
 		{
-			items.add(this.secondaryRegister.add(AddonPNCUpgrade.getItemName(name, maxTier, i + 1), () -> itemFunc.apply((DelegateObjectHolder<PNCUpgrade>) upgradeRegistry)));
+			items.add(this.secondaryRegister.add(AddonPNCUpgrade.getItemName(name, maxTier, i + 1), () -> itemFunc.apply((ObjectRegistryHolder<PNCUpgrade>) upgradeRegistry)));
 		}
 
-		UpgradeRegistryObject<U, I> registryObject = new UpgradeRegistryObject<>((DelegateObjectHolder<U>) upgradeRegistry, items);
+		UpgradeRegistryHolder<U, I> registryObject = new UpgradeRegistryHolder<>((ObjectRegistryHolder<U>) upgradeRegistry, items);
 		this.objects.add(registryObject);
 		return registryObject;
 	}
@@ -79,7 +79,7 @@ public class UpgradeDeferredRegister
 		return this.modid;
 	}
 
-	public Collection<UpgradeRegistryObject<?, ?>> getObjects()
+	public Collection<UpgradeRegistryHolder<?, ?>> getObjects()
 	{
 		return this.readonlyObjects;
 	}
