@@ -1,30 +1,44 @@
 package ad_astra_giselle_addon.common.compat;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import ad_astra_giselle_addon.common.delegate.PlatformCommonDelegate;
-
 public class CompatibleManager
 {
-	public final List<CompatibleMod> mods;
-	public final JeiCompat JEI;
-	public final ReiCompat REI;
+	private static final Delegate DELEGATE = new CompatibleManagerDelegate();
 
-	public CompatibleManager(Collection<CompatibleMod> addons)
+	public static final List<CompatibleMod> COMMON_MODS;
+	public static final JeiCompat JEI;
+	public static final ReiCompat REI;
+
+	static
 	{
 		List<CompatibleMod> mods = new ArrayList<>();
-		mods.add(this.JEI = new JeiCompat());
-		mods.add(this.REI = new ReiCompat());
-		mods.addAll(addons);
-		this.mods = Collections.unmodifiableList(mods);
+		mods.add(JEI = new JeiCompat());
+		mods.add(REI = new ReiCompat());
+
+		COMMON_MODS = Collections.unmodifiableList(mods);
 	}
 
-	public void tryLoad(PlatformCommonDelegate delegate)
+	public final List<CompatibleMod> all_mods;
+
+	public CompatibleManager()
 	{
-		this.mods.forEach(c -> c.tryLoad(delegate));
+		List<CompatibleMod> mods = new ArrayList<>();
+		mods.addAll(COMMON_MODS);
+		mods.addAll(DELEGATE.getMods());
+		this.all_mods = Collections.unmodifiableList(mods);
+	}
+
+	public void tryLoad()
+	{
+		this.all_mods.forEach(CompatibleMod::tryLoad);
+	}
+
+	public static interface Delegate
+	{
+		List<CompatibleMod> getMods();
 	}
 
 }

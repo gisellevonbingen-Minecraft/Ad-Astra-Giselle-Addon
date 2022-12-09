@@ -3,7 +3,7 @@ package ad_astra_giselle_addon.common.entity;
 import java.util.ArrayList;
 import java.util.List;
 
-import ad_astra_giselle_addon.common.compat.ForgeCompatibleManager;
+import ad_astra_giselle_addon.common.compat.CompatibleManagerDelegate;
 import ad_astra_giselle_addon.common.compat.curios.CuriosHelper;
 import ad_astra_giselle_addon.common.item.ItemStackConsumers;
 import ad_astra_giselle_addon.common.item.ItemStackReference;
@@ -18,7 +18,7 @@ public class LivingHelperDelegate implements LivingHelper.Delegate
 	{
 		List<ItemStackReference> list = new ArrayList<>();
 
-		if (ForgeCompatibleManager.CURIOS.isLoaded())
+		if (CompatibleManagerDelegate.CURIOS.isLoaded())
 		{
 			IItemHandlerModifiable itemHandler = CuriosHelper.getEquippedCurios(living);
 

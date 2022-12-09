@@ -85,8 +85,8 @@ public class AdAstraGiselleAddon
 		eventBus.register(SpaceFireProofUtils.INSTANCE);
 		eventBus.register(AcidRainProofUtils.INSTANCE);
 
-		compats = new CompatibleManager(delegate.getAddonHelper().getAddons());
-		compats.tryLoad(delegate);
+		compats = new CompatibleManager();
+		compats.tryLoad();
 	}
 
 	public static void registerCommand(Consumer<LiteralArgumentBuilder<CommandSourceStack>> register)

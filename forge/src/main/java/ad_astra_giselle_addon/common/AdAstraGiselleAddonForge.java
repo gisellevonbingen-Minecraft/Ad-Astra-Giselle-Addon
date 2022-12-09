@@ -1,10 +1,8 @@
 package ad_astra_giselle_addon.common;
 
 import ad_astra_giselle_addon.client.AdAstraGiselleAddonClientForge;
-import ad_astra_giselle_addon.common.compat.ForgeCompatibleManager;
 import ad_astra_giselle_addon.common.config.AddonForgeConfigs;
 import ad_astra_giselle_addon.common.delegate.CreativeModeTabBuilder;
-import ad_astra_giselle_addon.common.delegate.DelegateAddonProvider;
 import ad_astra_giselle_addon.common.delegate.PlatformCommonDelegate;
 import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
@@ -52,12 +50,6 @@ public class AdAstraGiselleAddonForge implements PlatformCommonDelegate
 
 		};
 
-	}
-
-	@Override
-	public DelegateAddonProvider getAddonHelper()
-	{
-		return () -> ForgeCompatibleManager.MODS;
 	}
 
 }

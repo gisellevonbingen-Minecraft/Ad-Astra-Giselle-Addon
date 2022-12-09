@@ -79,7 +79,7 @@ public class FuelLoaderScreen extends AddonMachineScreen<FuelLoaderBlockEntity, 
 
 		if (this.isFluidTankHovering())
 		{
-			if (!AdAstraGiselleAddon.compats().JEI.isLoaded() && !AdAstraGiselleAddon.compats().REI.isLoaded())
+			if (!CompatibleManager.JEI.isLoaded() && !CompatibleManager.REI.isLoaded())
 			{
 				FluidHolder fluid = this.getFluid();
 				long capacity = this.getCapacity();
