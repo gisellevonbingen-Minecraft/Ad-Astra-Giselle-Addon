@@ -62,7 +62,6 @@ public class AdAstraGiselleAddon
 
 	public static void initializeCommon()
 	{
-		AddonTabs.visit();
 		AddonBlocks.BLOCKS.register();
 		AddonItems.ITEMS.register();
 		AddonEnchantments.ENCHANTMENTS.register();

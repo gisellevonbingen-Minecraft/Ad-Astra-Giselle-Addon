@@ -1,7 +1,9 @@
 package ad_astra_giselle_addon.common.util;
 
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.Range;
@@ -9,9 +11,11 @@ import org.apache.commons.lang3.Range;
 import ad_astra_giselle_addon.common.AdAstraGiselleAddon;
 import ad_astra_giselle_addon.common.content.oxygen.IChargeMode;
 import ad_astra_giselle_addon.common.fluid.FluidHelper;
+import ad_astra_giselle_addon.common.registry.ObjectRegistry;
 import earth.terrarium.botarium.api.fluid.FluidHolder;
 import earth.terrarium.botarium.api.fluid.FluidHooks;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.Registry;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
@@ -60,13 +64,18 @@ public class TranslationUtils
 		return Component.translatable("tooltip.ad_astra.space_suit", amountMB, capacityMB).setStyle(style);
 	}
 
-	public static Component fluid(FluidHolder fluid, long capacity)
+	public static List<Component> fluid(FluidHolder fluid, long capacity)
 	{
+		String modid = ObjectRegistry.get(Registry.FLUID_REGISTRY).getId(fluid.getFluid()).getNamespace();
 		Component name = FluidHelper.getDisplayName(fluid);
 		long amountMB = FluidHooks.toMillibuckets(fluid.getFluidAmount());
 		long capacityMB = FluidHooks.toMillibuckets(capacity);
-		Style style = Style.EMPTY.withColor(ChatFormatting.GOLD);
-		return Component.translatable("gauge_text.ad_astra.liquid_storage", amountMB, capacityMB).setStyle(style).append(Component.nullToEmpty(", ")).append(name);
+		MutableComponent storage = Component.translatable("gauge_text.ad_astra.liquid_storage", amountMB, capacityMB);
+
+		List<Component> list = new ArrayList<>();
+		list.add(storage.setStyle(Style.EMPTY.withColor(ChatFormatting.GOLD)).append(Component.nullToEmpty(", ")).append(name));
+		list.add(Component.literal(ModHooks.getName(modid)).setStyle(Style.EMPTY.withItalic(true).withColor(ChatFormatting.BLUE)));
+		return list;
 	}
 
 	public static Component formatPercent(double ratio)

@@ -39,7 +39,7 @@ public class FuelLoaderGuiContainerHandler implements IGuiContainerHandler<FuelL
 			public List<Component> getTooltipStrings()
 			{
 				List<Component> list = new ArrayList<>();
-				list.add(screen.getFluidTankTooltip());
+				list.addAll(screen.getFluidTankTooltip());
 				list.add(Component.translatable("jei.tooltip.show.recipes"));
 				return list;
 			}

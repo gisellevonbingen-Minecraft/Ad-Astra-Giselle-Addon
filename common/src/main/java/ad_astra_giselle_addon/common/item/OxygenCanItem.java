@@ -44,7 +44,7 @@ public class OxygenCanItem extends Item implements FluidContainingItem, IOxygenC
 	{
 		super(properties.stacksTo(1));
 	}
-
+	
 	@Override
 	public long getTankSize()
 	{

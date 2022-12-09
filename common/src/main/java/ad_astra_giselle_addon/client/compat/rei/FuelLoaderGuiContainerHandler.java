@@ -26,7 +26,7 @@ public class FuelLoaderGuiContainerHandler implements ClickArea<FuelLoaderScreen
 		{
 			Result result = Result.success().category(AddonReiPlugin.FUEL_LOADER_CATEGORY);
 			List<Component> list = new ArrayList<>();
-			list.add(screen.getFluidTankTooltip());
+			list.addAll(screen.getFluidTankTooltip());
 			list.addAll(Arrays.stream(result.getTooltips()).toList());
 			Component[] array = list.toArray(new Component[0]);
 			return result.tooltip(() -> array);

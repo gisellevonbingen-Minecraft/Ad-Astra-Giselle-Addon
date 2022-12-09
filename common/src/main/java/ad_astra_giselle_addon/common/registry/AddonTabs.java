@@ -35,8 +35,4 @@ public class AddonTabs
 		return list;
 	}).build();
 
-	public static void visit()
-	{
-
-	}
 }

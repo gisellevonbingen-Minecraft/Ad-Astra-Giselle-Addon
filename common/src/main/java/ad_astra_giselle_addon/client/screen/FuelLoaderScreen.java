@@ -1,11 +1,13 @@
 package ad_astra_giselle_addon.client.screen;
 
 import java.awt.Rectangle;
+import java.util.List;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import ad_astra_giselle_addon.common.AdAstraGiselleAddon;
 import ad_astra_giselle_addon.common.block.entity.FuelLoaderBlockEntity;
+import ad_astra_giselle_addon.common.compat.CompatibleManager;
 import ad_astra_giselle_addon.common.menu.FuelLoaderMenu;
 import ad_astra_giselle_addon.common.network.AddonNetwork;
 import ad_astra_giselle_addon.common.network.FuelLoaderMessageWorkingAreaVisible;
@@ -81,9 +83,7 @@ public class FuelLoaderScreen extends AddonMachineScreen<FuelLoaderBlockEntity, 
 		{
 			if (!CompatibleManager.JEI.isLoaded() && !CompatibleManager.REI.isLoaded())
 			{
-				FluidHolder fluid = this.getFluid();
-				long capacity = this.getCapacity();
-				this.renderTooltip(stack, TranslationUtils.fluid(fluid, capacity), mouseX, mouseY);
+				this.renderComponentTooltip(stack, this.getFluidTankTooltip(), mouseX, mouseY);
 			}
 
 		}
@@ -100,7 +100,7 @@ public class FuelLoaderScreen extends AddonMachineScreen<FuelLoaderBlockEntity, 
 		return this.isFluidTankhovering;
 	}
 
-	public Component getFluidTankTooltip()
+	public List<Component> getFluidTankTooltip()
 	{
 		FluidHolder fluid = this.getFluid();
 		long capacity = this.getCapacity();
