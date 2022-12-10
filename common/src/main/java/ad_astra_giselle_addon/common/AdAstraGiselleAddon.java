@@ -23,7 +23,6 @@ import ad_astra_giselle_addon.common.registry.AddonBlocks;
 import ad_astra_giselle_addon.common.registry.AddonEnchantments;
 import ad_astra_giselle_addon.common.registry.AddonItems;
 import ad_astra_giselle_addon.common.registry.AddonMenuTypes;
-import ad_astra_giselle_addon.common.registry.AddonTabs;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.resources.ResourceLocation;
 
