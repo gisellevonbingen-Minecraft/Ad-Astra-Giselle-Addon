@@ -26,8 +26,6 @@ public class FuelLoaderScreen extends AddonMachineScreen<FuelLoaderBlockEntity, 
 	public static final int TANK_LEFT = 67;
 	public static final int TANK_TOP = 28;
 
-	private boolean isFluidTankhovering;
-
 	public FuelLoaderScreen(FuelLoaderMenu menu, Inventory inventory, Component title)
 	{
 		super(menu, inventory, title, TEXTURE);
@@ -69,7 +67,7 @@ public class FuelLoaderScreen extends AddonMachineScreen<FuelLoaderBlockEntity, 
 		FluidHolder fluid = this.getFluid();
 		long capacity = this.getCapacity();
 		Rectangle bounds = this.getFluidTankBounds();
-		GuiUtil.drawFluidTank(stack, this.leftPos + bounds.x, this.topPos + bounds.y, capacity, fluid);
+		GuiUtil.drawFluidTank(stack, bounds.x, bounds.y, capacity, fluid);
 	}
 
 	@Override
@@ -77,9 +75,7 @@ public class FuelLoaderScreen extends AddonMachineScreen<FuelLoaderBlockEntity, 
 	{
 		super.render(stack, mouseX, mouseY, delta);
 
-		this.isFluidTankhovering = GuiUtil.isHovering(this.getFluidTankBounds(), mouseX - this.leftPos, mouseY - this.topPos);
-
-		if (this.isFluidTankHovering())
+		if (GuiUtil.isHovering(this.getFluidTankBounds(), mouseX, mouseY))
 		{
 			if (!CompatibleManager.JEI.isLoaded() && !CompatibleManager.REI.isLoaded())
 			{
@@ -92,12 +88,7 @@ public class FuelLoaderScreen extends AddonMachineScreen<FuelLoaderBlockEntity, 
 
 	public Rectangle getFluidTankBounds()
 	{
-		return GuiUtil.getFluidTankBounds(TANK_LEFT, TANK_TOP);
-	}
-
-	public boolean isFluidTankHovering()
-	{
-		return this.isFluidTankhovering;
+		return GuiUtil.getFluidTankBounds(this.leftPos + TANK_LEFT, this.topPos + TANK_TOP);
 	}
 
 	public List<Component> getFluidTankTooltip()

@@ -1,9 +1,5 @@
 package ad_astra_giselle_addon.client.compat.rei;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import ad_astra_giselle_addon.client.screen.FuelLoaderScreen;
 import dev.architectury.event.CompoundEventResult;
 import earth.terrarium.botarium.api.fluid.FluidHolder;
@@ -13,7 +9,6 @@ import me.shedaniel.rei.api.client.registry.screen.FocusedStackProvider;
 import me.shedaniel.rei.api.common.entry.EntryStack;
 import me.shedaniel.rei.api.common.util.EntryStacks;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.network.chat.Component;
 
 public class FuelLoaderGuiContainerHandler implements ClickArea<FuelLoaderScreen>, FocusedStackProvider
 {
@@ -22,14 +17,9 @@ public class FuelLoaderGuiContainerHandler implements ClickArea<FuelLoaderScreen
 	{
 		FuelLoaderScreen screen = context.getScreen();
 
-		if (screen.isFluidTankHovering())
+		if (ClickAreaHelper.contains(screen.getFluidTankBounds(), context.getMousePosition()))
 		{
-			Result result = Result.success().category(AddonReiPlugin.FUEL_LOADER_CATEGORY);
-			List<Component> list = new ArrayList<>();
-			list.addAll(screen.getFluidTankTooltip());
-			list.addAll(Arrays.stream(result.getTooltips()).toList());
-			Component[] array = list.toArray(new Component[0]);
-			return result.tooltip(() -> array);
+			return ClickAreaHelper.categoryWithTooltip(AddonReiPlugin.FUEL_LOADER_CATEGORY, screen.getFluidTankTooltip());
 		}
 		else
 		{
@@ -43,7 +33,7 @@ public class FuelLoaderGuiContainerHandler implements ClickArea<FuelLoaderScreen
 	{
 		if (_screen instanceof FuelLoaderScreen screen)
 		{
-			if (screen.isFluidTankHovering())
+			if (ClickAreaHelper.contains(screen.getFluidTankBounds(), mouse))
 			{
 				FluidHolder fluid = screen.getFluid();
 				return CompoundEventResult.interruptTrue(EntryStacks.of(fluid.getFluid(), fluid.getFluidAmount()));

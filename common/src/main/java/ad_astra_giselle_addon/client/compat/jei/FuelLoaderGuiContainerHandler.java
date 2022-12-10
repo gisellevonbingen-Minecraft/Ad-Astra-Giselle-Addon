@@ -1,13 +1,10 @@
 package ad_astra_giselle_addon.client.compat.jei;
 
-import java.awt.Rectangle;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
 import ad_astra_giselle_addon.client.screen.FuelLoaderScreen;
-import earth.terrarium.botarium.api.fluid.FluidHolder;
 import mezz.jei.api.gui.handlers.IGuiClickableArea;
 import mezz.jei.api.gui.handlers.IGuiContainerHandler;
 import mezz.jei.api.recipe.IFocusFactory;
@@ -25,8 +22,7 @@ public class FuelLoaderGuiContainerHandler implements IGuiContainerHandler<FuelL
 			@Override
 			public Rect2i getArea()
 			{
-				Rectangle rect = screen.getFluidTankBounds();
-				return new Rect2i(rect.x, rect.y, rect.width, rect.height);
+				return GuiClickableAreaHelper.getInGuiBounds(screen, screen.getFluidTankBounds(), mouseX, mouseY);
 			}
 
 			@Override
@@ -38,10 +34,7 @@ public class FuelLoaderGuiContainerHandler implements IGuiContainerHandler<FuelL
 			@Override
 			public List<Component> getTooltipStrings()
 			{
-				List<Component> list = new ArrayList<>();
-				list.addAll(screen.getFluidTankTooltip());
-				list.add(Component.translatable("jei.tooltip.show.recipes"));
-				return list;
+				return GuiClickableAreaHelper.getShowRecipesTooltip(screen.getFluidTankTooltip());
 			}
 		});
 
@@ -50,10 +43,9 @@ public class FuelLoaderGuiContainerHandler implements IGuiContainerHandler<FuelL
 	@Override
 	public Object getIngredientUnderMouse(FuelLoaderScreen screen, double mouseX, double mouseY)
 	{
-		if (screen.isFluidTankHovering())
+		if (screen.getFluidTankBounds().contains(mouseX, mouseY))
 		{
-			FluidHolder fluid = screen.getFluid();
-			return IJeiFluidStackHelper.INSTANCE.get(fluid.getFluid(), fluid.getFluidAmount());
+			return IJeiFluidStackHelper.INSTANCE.get(screen.getFluid().getFluid(), screen.getFluid().getFluidAmount());
 		}
 
 		return IGuiContainerHandler.super.getIngredientUnderMouse(screen, mouseX, mouseY);
