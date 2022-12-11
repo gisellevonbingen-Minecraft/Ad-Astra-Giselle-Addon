@@ -1,6 +1,6 @@
 package ad_astra_giselle_addon.common.enchantment;
 
-import earth.terrarium.ad_astra.items.armour.SpaceSuit;
+import earth.terrarium.ad_astra.common.item.armor.SpaceSuit;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;

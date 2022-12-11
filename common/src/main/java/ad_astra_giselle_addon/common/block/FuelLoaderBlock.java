@@ -1,7 +1,7 @@
 package ad_astra_giselle_addon.common.block;
 
 import ad_astra_giselle_addon.common.block.entity.FuelLoaderBlockEntity;
-import earth.terrarium.ad_astra.blocks.machines.AbstractMachineBlock;
+import earth.terrarium.ad_astra.common.block.machine.AbstractMachineBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;

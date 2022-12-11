@@ -5,9 +5,9 @@ import java.util.List;
 
 import ad_astra_giselle_addon.common.block.entity.FuelLoaderBlockEntity;
 import ad_astra_giselle_addon.common.registry.AddonMenuTypes;
-import earth.terrarium.ad_astra.networking.NetworkHandling;
-import earth.terrarium.ad_astra.networking.packets.server.MachineInfoPacket;
-import earth.terrarium.ad_astra.screen.menu.AbstractMachineMenu;
+import earth.terrarium.ad_astra.common.networking.NetworkHandling;
+import earth.terrarium.ad_astra.common.networking.packet.server.MachineInfoPacket;
+import earth.terrarium.ad_astra.common.screen.menu.AbstractMachineMenu;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.Slot;

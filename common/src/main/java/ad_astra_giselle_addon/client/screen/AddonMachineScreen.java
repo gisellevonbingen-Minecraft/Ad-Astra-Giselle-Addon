@@ -8,9 +8,9 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import ad_astra_giselle_addon.common.AdAstraGiselleAddon;
-import earth.terrarium.ad_astra.blocks.machines.entity.AbstractMachineBlockEntity;
-import earth.terrarium.ad_astra.client.screens.AbstractMachineScreen;
-import earth.terrarium.ad_astra.screen.menu.AbstractMachineMenu;
+import earth.terrarium.ad_astra.client.screen.AbstractMachineScreen;
+import earth.terrarium.ad_astra.common.block.machine.entity.AbstractMachineBlockEntity;
+import earth.terrarium.ad_astra.common.screen.menu.AbstractMachineMenu;
 import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;

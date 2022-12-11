@@ -1,6 +1,6 @@
 package ad_astra_giselle_addon.common.fluid;
 
-import earth.terrarium.ad_astra.client.screens.GuiUtil;
+import earth.terrarium.ad_astra.client.screen.GuiUtil;
 import earth.terrarium.botarium.api.fluid.FluidHolder;
 import net.minecraft.network.chat.Component;
 

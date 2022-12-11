@@ -3,7 +3,7 @@ package ad_astra_giselle_addon.client.compat.rei;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
-import earth.terrarium.ad_astra.client.screens.GuiUtil;
+import earth.terrarium.ad_astra.client.screen.GuiUtil;
 import me.shedaniel.math.Point;
 import me.shedaniel.math.Rectangle;
 import me.shedaniel.rei.impl.client.gui.widget.EntryWidget;

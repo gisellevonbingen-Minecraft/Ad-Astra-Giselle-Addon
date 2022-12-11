@@ -7,7 +7,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import ad_astra_giselle_addon.common.content.proof.SpaceFireProofUtils;
 import ad_astra_giselle_addon.common.content.proof.SpaceOxygenProofUtils;
-import earth.terrarium.ad_astra.entities.systems.EntityTemperatureSystem;
+import earth.terrarium.ad_astra.common.entity.system.EntityTemperatureSystem;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
 

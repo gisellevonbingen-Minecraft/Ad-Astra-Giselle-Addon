@@ -12,7 +12,7 @@ import ad_astra_giselle_addon.common.menu.FuelLoaderMenu;
 import ad_astra_giselle_addon.common.network.AddonNetwork;
 import ad_astra_giselle_addon.common.network.FuelLoaderMessageWorkingAreaVisible;
 import ad_astra_giselle_addon.common.util.TranslationUtils;
-import earth.terrarium.ad_astra.client.screens.GuiUtil;
+import earth.terrarium.ad_astra.client.screen.GuiUtil;
 import earth.terrarium.botarium.api.fluid.FluidHolder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;

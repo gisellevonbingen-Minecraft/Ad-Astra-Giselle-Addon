@@ -1,6 +1,6 @@
 package ad_astra_giselle_addon.common.fluid;
 
-import earth.terrarium.ad_astra.registry.ModTags;
+import earth.terrarium.ad_astra.common.registry.ModTags;
 import earth.terrarium.botarium.api.fluid.FluidHolder;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.material.Fluid;

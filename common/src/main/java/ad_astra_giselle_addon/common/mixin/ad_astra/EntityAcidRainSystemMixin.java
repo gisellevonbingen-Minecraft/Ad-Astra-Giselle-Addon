@@ -6,7 +6,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import ad_astra_giselle_addon.common.content.proof.AcidRainProofUtils;
-import earth.terrarium.ad_astra.entities.systems.EntityAcidRainSystem;
+import earth.terrarium.ad_astra.common.entity.system.EntityAcidRainSystem;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
 

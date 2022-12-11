@@ -7,7 +7,7 @@ import ad_astra_giselle_addon.client.screen.FuelLoaderScreen;
 import ad_astra_giselle_addon.common.config.MachinesConfig;
 import ad_astra_giselle_addon.common.registry.AddonBlocks;
 import ad_astra_giselle_addon.common.registry.ObjectRegistry;
-import earth.terrarium.ad_astra.client.screens.GuiUtil;
+import earth.terrarium.ad_astra.client.screen.GuiUtil;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.helpers.IGuiHelper;

@@ -7,7 +7,7 @@ import java.util.List;
 import ad_astra_giselle_addon.client.compat.RecipeHelper;
 import ad_astra_giselle_addon.common.config.MachinesConfig;
 import ad_astra_giselle_addon.common.registry.AddonBlocks;
-import earth.terrarium.ad_astra.registry.ModTags;
+import earth.terrarium.ad_astra.common.registry.ModTags;
 import me.shedaniel.rei.api.client.plugins.REIClientPlugin;
 import me.shedaniel.rei.api.client.registry.category.CategoryRegistry;
 import me.shedaniel.rei.api.client.registry.display.DisplayRegistry;
