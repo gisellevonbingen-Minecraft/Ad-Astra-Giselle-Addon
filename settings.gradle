@@ -8,7 +8,4 @@ pluginManagement {
     }
 }
 
-include("fabric")
-include("forge")
-
-rootProject.name = "ad-astra-giselle-addon"
+include("fabric", "forge")

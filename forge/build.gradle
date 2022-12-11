@@ -106,10 +106,7 @@ minecraft {
 dependencies {
     // Mod
     minecraft "net.minecraftforge:forge:${mc_version}-${forge_api_version}"
-
-    if (System.getProperty("idea.sync.active") != "true") {
-        annotationProcessor "org.spongepowered:mixin:${mixin_version}:processor"
-    }
+    if (System.getProperty("idea.sync.active") != "true") { annotationProcessor "org.spongepowered:mixin:${mixin_version}:processor" }
 
     // Ad Astra - Required
     implementation fg.deobf("curse.maven:ad-astra-635042:${ad_astra_forge_file}")
