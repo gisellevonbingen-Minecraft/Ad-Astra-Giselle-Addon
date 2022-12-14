@@ -14,16 +14,16 @@
 			"id": "#forge:biofuel"
 		},
 		{
-			"id": "thermal:refined_fuel",
-			"required": false
+			"required": false,
+			"id": "thermal:refined_fuel"
 		},
 		{
-			"id": "vehicle:fuelium",
-			"required": false
+			"required": false,
+			"id": "vehicle:fuelium"
 		},
 		{
-			"id": "car:bio_diesel",
-			"required": false
+			"required": false,
+			"id": "car:bio_diesel"
 		}
 	]
 }
