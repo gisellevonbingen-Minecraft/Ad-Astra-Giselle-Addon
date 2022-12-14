@@ -4,20 +4,14 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import earth.terrarium.ad_astra.client.screen.GuiUtil;
-import me.shedaniel.math.Point;
 import me.shedaniel.math.Rectangle;
 import me.shedaniel.rei.impl.client.gui.widget.EntryWidget;
 
 public class FluidTankWidget extends EntryWidget
 {
-	public FluidTankWidget(Point point)
+	public FluidTankWidget(Rectangle bounds)
 	{
-		super(toBounds(point));
-	}
-
-	private static Rectangle toBounds(Point point)
-	{
-		return new Rectangle(point.x, point.y, GuiUtil.FLUID_TANK_WIDTH, GuiUtil.FLUID_TANK_HEIGHT);
+		super(bounds);
 	}
 
 	@Override

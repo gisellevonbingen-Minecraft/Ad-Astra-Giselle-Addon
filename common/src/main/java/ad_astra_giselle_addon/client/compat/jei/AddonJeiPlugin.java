@@ -8,12 +8,10 @@ import ad_astra_giselle_addon.client.compat.RecipeHelper;
 import ad_astra_giselle_addon.common.AdAstraGiselleAddon;
 import ad_astra_giselle_addon.common.config.MachinesConfig;
 import ad_astra_giselle_addon.common.registry.AddonBlocks;
-import earth.terrarium.ad_astra.client.screen.GuiUtil;
 import earth.terrarium.ad_astra.common.registry.ModTags;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.VanillaTypes;
-import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.registration.IGuiHandlerRegistration;
@@ -41,8 +39,6 @@ public class AddonJeiPlugin implements IModPlugin
 	private final List<AddonRecipeCategory<?>> categories;
 	private FuelLoaderCategory fuelLoaderCategory;
 
-	private IDrawable fluidOverlay;
-
 	public AddonJeiPlugin()
 	{
 		instance = this;
@@ -60,7 +56,6 @@ public class AddonJeiPlugin implements IModPlugin
 	public void registerCategories(IRecipeCategoryRegistration registry)
 	{
 		IGuiHelper guiHelper = registry.getJeiHelpers().getGuiHelper();
-		this.fluidOverlay = guiHelper.drawableBuilder(GuiUtil.FLUID_TANK_TEXTURE, 0, 0, GuiUtil.FLUID_TANK_WIDTH, GuiUtil.FLUID_TANK_HEIGHT).setTextureSize(GuiUtil.FLUID_TANK_WIDTH, GuiUtil.FLUID_TANK_HEIGHT).build();
 
 		for (AddonRecipeCategory<?> category : this.getCategories())
 		{
@@ -124,11 +119,6 @@ public class AddonJeiPlugin implements IModPlugin
 	public FuelLoaderCategory getFuelLoaderCategory()
 	{
 		return this.fuelLoaderCategory;
-	}
-
-	public IDrawable getFluidOverlay()
-	{
-		return this.fluidOverlay;
 	}
 
 }

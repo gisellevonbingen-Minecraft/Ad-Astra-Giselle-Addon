@@ -8,7 +8,6 @@ import ad_astra_giselle_addon.client.screen.FuelLoaderScreen;
 import ad_astra_giselle_addon.common.registry.AddonBlocks;
 import ad_astra_giselle_addon.common.registry.ObjectRegistry;
 import earth.terrarium.botarium.api.fluid.FluidHooks;
-import me.shedaniel.math.Point;
 import me.shedaniel.math.Rectangle;
 import me.shedaniel.rei.api.client.gui.Renderer;
 import me.shedaniel.rei.api.client.gui.widgets.Widget;
@@ -49,11 +48,11 @@ public class FuelLoaderCategory extends AddonDisplayCategory<FuelLoaderDisplay>
 	public List<Widget> setupDisplay(FuelLoaderDisplay display, Rectangle bounds)
 	{
 		long capacity = FluidHooks.buckets(1);
-		Point tankPoint = new Point(bounds.x + RecipeHelper.FuelLoader.TANK_LEFT, bounds.y + RecipeHelper.FuelLoader.TANK_TOP);
+		Rectangle tankBounds = new Rectangle(bounds.x + RecipeHelper.FuelLoader.TANK_LEFT, bounds.y + RecipeHelper.FuelLoader.TANK_TOP, RecipeHelper.FuelLoader.TANK_WIDTH, RecipeHelper.FuelLoader.TANK_HEIGHT);
 
 		List<Widget> list = new ArrayList<>();
 		list.add(Widgets.createTexturedWidget(RecipeHelper.FuelLoader.BACKGROUND_LOCATION, bounds.x, bounds.y, RecipeHelper.FuelLoader.BACKGROUND_WIDTH, RecipeHelper.FuelLoader.BACKGROUND_HEIGHT));
-		list.add(new FluidTankWidget(tankPoint).entry(EntryStacks.of(display.fluid(), capacity)));
+		list.add(new FluidTankWidget(tankBounds).entry(EntryStacks.of(display.fluid(), capacity)));
 		return list;
 	}
 

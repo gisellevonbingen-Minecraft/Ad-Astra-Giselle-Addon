@@ -23,6 +23,7 @@ import net.minecraft.world.level.material.Fluid;
 public class FuelLoaderCategory extends AddonRecipeCategory<Fluid>
 {
 	private IDrawable background;
+	private IDrawable fluidOverlay;
 
 	public FuelLoaderCategory(RecipeType<Fluid> recipeType)
 	{
@@ -34,12 +35,18 @@ public class FuelLoaderCategory extends AddonRecipeCategory<Fluid>
 	{
 		super.createGui(guiHelper);
 		this.background = guiHelper.createDrawable(RecipeHelper.FuelLoader.BACKGROUND_LOCATION, 0, 0, RecipeHelper.FuelLoader.BACKGROUND_WIDTH, RecipeHelper.FuelLoader.BACKGROUND_HEIGHT);
+		this.fluidOverlay = guiHelper.drawableBuilder(GuiUtil.FLUID_TANK_TEXTURE, 0, 0, RecipeHelper.FuelLoader.TANK_WIDTH, RecipeHelper.FuelLoader.TANK_HEIGHT).setTextureSize(GuiUtil.FLUID_TANK_WIDTH, GuiUtil.FLUID_TANK_HEIGHT).build();
 	}
 
 	@Override
 	public IDrawable getBackground()
 	{
 		return this.background;
+	}
+
+	public IDrawable getFluidOverlay()
+	{
+		return this.fluidOverlay;
 	}
 
 	@Override
@@ -51,8 +58,8 @@ public class FuelLoaderCategory extends AddonRecipeCategory<Fluid>
 
 		builder.addSlot(RecipeIngredientRole.INPUT, RecipeHelper.FuelLoader.TANK_LEFT, RecipeHelper.FuelLoader.TANK_TOP) //
 				.addFluidStack(recipe, capacity) //
-				.setFluidRenderer(capacity, false, GuiUtil.FLUID_TANK_WIDTH, GuiUtil.FLUID_TANK_HEIGHT) //
-				.setOverlay(AddonJeiPlugin.instance().getFluidOverlay(), 0, 0);
+				.setFluidRenderer(capacity, false, RecipeHelper.FuelLoader.TANK_WIDTH, RecipeHelper.FuelLoader.TANK_HEIGHT) //
+				.setOverlay(this.fluidOverlay, 0, 0);
 	}
 
 	@Override
