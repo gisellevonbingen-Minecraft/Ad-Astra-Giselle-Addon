@@ -9,12 +9,12 @@ import net.minecraft.resources.ResourceLocation;
 public class ObjectRegistryHolder<T> implements Supplier<T>
 {
 	private final ResourceLocation id;
-	private final Supplier<T> initializer;
+	private final Supplier<? extends T> initializer;
 	private final ResourceKey<? extends Registry<?>> key;
 
 	private Supplier<T> objectSupplier;
 
-	public ObjectRegistryHolder(ResourceLocation id, Supplier<T> initializer, ResourceKey<? extends Registry<?>> key)
+	public ObjectRegistryHolder(ResourceLocation id, Supplier<? extends T> initializer, ResourceKey<? extends Registry<?>> key)
 	{
 		this.id = id;
 		this.initializer = initializer;

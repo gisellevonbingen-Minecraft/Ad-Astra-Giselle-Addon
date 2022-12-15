@@ -1,5 +1,7 @@
 package ad_astra_giselle_addon.common.registry;
 
+import java.util.function.Supplier;
+
 import ad_astra_giselle_addon.common.util.TriFunction;
 import earth.terrarium.botarium.api.registry.RegistryHelpers;
 import earth.terrarium.botarium.api.registry.RegistryHelpers.MenuFactory;
@@ -17,12 +19,17 @@ public class MenuTypeRegistryCollection extends ObjectRegistryCollection<MenuTyp
 		super(modid, Registry.MENU_REGISTRY);
 	}
 
-	public <C extends AbstractContainerMenu> ObjectRegistryHolder<MenuType<C>> add(String name, MenuFactory<C> factory)
+	private <MENU extends AbstractContainerMenu> Supplier<? extends MenuType<MENU>> getBuilder(MenuFactory<MENU> factory)
 	{
-		return this.add(name, () -> RegistryHelpers.createMenuType(factory));
+		return () -> RegistryHelpers.createMenuType(factory);
 	}
 
-	public <T extends BlockEntity, C extends AbstractContainerMenu> ObjectRegistryHolder<MenuType<C>> add(String name, TriFunction<Integer, Inventory, T, C> function)
+	public <MENU extends AbstractContainerMenu> MenuTypeRegistryHolder<MENU> add(String name, MenuFactory<MENU> factory)
+	{
+		return this.add(name, this.getBuilder(factory), MenuTypeRegistryHolder<MENU>::new);
+	}
+
+	public <T extends BlockEntity, C extends AbstractContainerMenu> MenuTypeRegistryHolder<C> add(String name, TriFunction<Integer, Inventory, T, C> function)
 	{
 		return this.add(name, new MenuFactory<C>()
 		{
@@ -35,10 +42,10 @@ public class MenuTypeRegistryCollection extends ObjectRegistryCollection<MenuTyp
 	}
 
 	@SuppressWarnings("unchecked")
-	public <T extends BlockEntity, C extends AbstractContainerMenu> C packetParser(int windowId, Inventory inv, FriendlyByteBuf data, TriFunction<Integer, Inventory, T, C> function)
+	public <BE extends BlockEntity, MENU extends AbstractContainerMenu> MENU packetParser(int windowId, Inventory inv, FriendlyByteBuf data, TriFunction<Integer, Inventory, BE, MENU> function)
 	{
 		BlockEntity blockEntity = inv.player.getLevel().getBlockEntity(data.readBlockPos());
-		return function.apply(windowId, inv, (T) blockEntity);
+		return function.apply(windowId, inv, (BE) blockEntity);
 	}
 
 }

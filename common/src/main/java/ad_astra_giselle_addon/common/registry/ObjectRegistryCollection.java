@@ -7,6 +7,7 @@ import java.util.Set;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
+import ad_astra_giselle_addon.common.util.TriFunction;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -43,11 +44,16 @@ public class ObjectRegistryCollection<T>
 	}
 
 	@SuppressWarnings("unchecked")
+	protected <I extends T, HOLDER extends ObjectRegistryHolder<? extends I>> HOLDER add(String name, Supplier<? extends I> initializer, TriFunction<ResourceLocation, Supplier<? extends I>, ResourceKey<? extends Registry<?>>, HOLDER> func)
+	{
+		HOLDER holder = func.apply(new ResourceLocation(this.getModid(), name), initializer, this.getKey());
+		this.objects.add((ObjectRegistryHolder<T>) holder);
+		return holder;
+	}
+
 	public <I extends T> ObjectRegistryHolder<I> add(String name, Supplier<? extends I> initializer)
 	{
-		ObjectRegistryHolder<? extends I> object = new ObjectRegistryHolder<>(new ResourceLocation(this.getModid(), name), initializer, this.getKey());
-		this.objects.add((ObjectRegistryHolder<T>) object);
-		return (ObjectRegistryHolder<I>) object;
+		return this.add(name, initializer, ObjectRegistryHolder<I>::new);
 	}
 
 	public String getModid()
