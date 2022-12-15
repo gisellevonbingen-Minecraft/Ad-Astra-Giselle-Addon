@@ -27,7 +27,7 @@ public class DoubleRegistryCollection<P, S>
 		this.secondaryRegister.register();
 	}
 
-	protected <P2 extends P, S2 extends S, R extends DoubleRegistryHolder<P2, S2>> R add(String name, Supplier<? extends P2> primarySupplier, Function<P2, ? extends S2> secondaryFunction, BiFunction<ObjectRegistryHolder<P2>, ObjectRegistryHolder<S2>, R> registryFuction)
+	protected <P2 extends P, S2 extends S, R extends DoubleRegistryHolder<P2, S2>> R add(String name, Supplier<P2> primarySupplier, Function<P2, S2> secondaryFunction, BiFunction<ObjectRegistryHolder<P2>, ObjectRegistryHolder<S2>, R> registryFuction)
 	{
 		ObjectRegistryHolder<P2> primary = this.primaryRegister.add(name, primarySupplier);
 		ObjectRegistryHolder<S2> secondary = this.secondaryRegister.add(name, () -> secondaryFunction.apply(primary.get()));

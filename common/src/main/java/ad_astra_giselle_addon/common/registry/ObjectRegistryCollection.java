@@ -44,14 +44,14 @@ public class ObjectRegistryCollection<T>
 	}
 
 	@SuppressWarnings("unchecked")
-	protected <I extends T, HOLDER extends ObjectRegistryHolder<? extends I>> HOLDER add(String name, Supplier<? extends I> initializer, TriFunction<ResourceLocation, Supplier<? extends I>, ResourceKey<? extends Registry<?>>, HOLDER> func)
+	protected <I extends T, HOLDER extends ObjectRegistryHolder<I>> HOLDER add(String name, Supplier<I> initializer, TriFunction<ResourceLocation, Supplier<I>, ResourceKey<? extends Registry<?>>, HOLDER> func)
 	{
 		HOLDER holder = func.apply(new ResourceLocation(this.getModid(), name), initializer, this.getKey());
 		this.objects.add((ObjectRegistryHolder<T>) holder);
 		return holder;
 	}
 
-	public <I extends T> ObjectRegistryHolder<I> add(String name, Supplier<? extends I> initializer)
+	public <I extends T> ObjectRegistryHolder<I> add(String name, Supplier<I> initializer)
 	{
 		return this.add(name, initializer, ObjectRegistryHolder<I>::new);
 	}

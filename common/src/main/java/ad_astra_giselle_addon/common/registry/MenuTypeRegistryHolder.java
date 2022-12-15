@@ -10,7 +10,7 @@ import net.minecraft.world.inventory.MenuType;
 
 public class MenuTypeRegistryHolder<MENU extends AbstractContainerMenu> extends ObjectRegistryHolder<MenuType<MENU>>
 {
-	public MenuTypeRegistryHolder(ResourceLocation id, Supplier<? extends MenuType<MENU>> initializer, ResourceKey<? extends Registry<?>> key)
+	public MenuTypeRegistryHolder(ResourceLocation id, Supplier<MenuType<MENU>> initializer, ResourceKey<? extends Registry<?>> key)
 	{
 		super(id, initializer, key);
 	}

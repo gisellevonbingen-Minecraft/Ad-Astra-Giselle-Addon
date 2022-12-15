@@ -10,7 +10,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 
 public class BlockEntityTypeRegistryHolder<BE extends BlockEntity> extends ObjectRegistryHolder<BlockEntityType<BE>>
 {
-	public BlockEntityTypeRegistryHolder(ResourceLocation id, Supplier<? extends BlockEntityType<BE>> initializer, ResourceKey<? extends Registry<?>> key)
+	public BlockEntityTypeRegistryHolder(ResourceLocation id, Supplier<BlockEntityType<BE>> initializer, ResourceKey<? extends Registry<?>> key)
 	{
 		super(id, initializer, key);
 	}

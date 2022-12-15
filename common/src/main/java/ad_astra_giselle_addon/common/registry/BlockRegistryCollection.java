@@ -16,12 +16,12 @@ public class BlockRegistryCollection extends DoubleRegistryCollection<Block, Ite
 		super(modid, Registry.BLOCK_REGISTRY, Registry.ITEM_REGISTRY);
 	}
 
-	public <B extends Block> BlockRegistryHolder<B, BlockItem> addDefaultProperties(String name, Supplier<? extends B> blockSup)
+	public <B extends Block> BlockRegistryHolder<B, BlockItem> addDefaultProperties(String name, Supplier<B> blockSup)
 	{
 		return this.add(name, blockSup, b -> new BlockItem(b, new Item.Properties()));
 	}
 
-	public <B extends Block> BlockRegistryHolder<B, BlockItem> addDefaultProperties(String name, Supplier<? extends B> blockSup, UnaryOperator<Item.Properties> propertiesOperator)
+	public <B extends Block> BlockRegistryHolder<B, BlockItem> addDefaultProperties(String name, Supplier<B> blockSup, UnaryOperator<Item.Properties> propertiesOperator)
 	{
 		return this.add(name, blockSup, b ->
 		{
@@ -29,7 +29,7 @@ public class BlockRegistryCollection extends DoubleRegistryCollection<Block, Ite
 		});
 	}
 
-	public <B extends Block, I extends BlockItem> BlockRegistryHolder<B, I> add(String name, Supplier<? extends B> blockSup, Function<B, ? extends I> itemFunc)
+	public <B extends Block, I extends BlockItem> BlockRegistryHolder<B, I> add(String name, Supplier<B> blockSup, Function<B, I> itemFunc)
 	{
 		return this.add(name, blockSup, itemFunc, BlockRegistryHolder::new);
 	}
