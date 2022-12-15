@@ -8,13 +8,13 @@ import java.util.function.Supplier;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 
-public class DelegateDoubleCollection<P, S>
+public class DoubleRegistryCollection<P, S>
 {
 	private final String modid;
 	protected final ObjectRegistryCollection<P> primaryRegister;
 	protected final ObjectRegistryCollection<S> secondaryRegister;
 
-	public DelegateDoubleCollection(String modid, ResourceKey<? extends Registry<P>> primaryRegistry, ResourceKey<? extends Registry<S>> secondaryRegistry)
+	public DoubleRegistryCollection(String modid, ResourceKey<? extends Registry<P>> primaryRegistry, ResourceKey<? extends Registry<S>> secondaryRegistry)
 	{
 		this.modid = modid;
 		this.primaryRegister = new ObjectRegistryCollection<>(modid, primaryRegistry);
@@ -27,7 +27,7 @@ public class DelegateDoubleCollection<P, S>
 		this.secondaryRegister.register();
 	}
 
-	protected <P2 extends P, S2 extends S, R extends DelegateDoubleHolder<P2, S2>> R add(String name, Supplier<? extends P2> primarySupplier, Function<P2, ? extends S2> secondaryFunction, BiFunction<ObjectRegistryHolder<P2>, ObjectRegistryHolder<S2>, R> registryFuction)
+	protected <P2 extends P, S2 extends S, R extends DoubleRegistryHolder<P2, S2>> R add(String name, Supplier<? extends P2> primarySupplier, Function<P2, ? extends S2> secondaryFunction, BiFunction<ObjectRegistryHolder<P2>, ObjectRegistryHolder<S2>, R> registryFuction)
 	{
 		ObjectRegistryHolder<P2> primary = this.primaryRegister.add(name, primarySupplier);
 		ObjectRegistryHolder<S2> secondary = this.secondaryRegister.add(name, () -> secondaryFunction.apply(primary.get()));

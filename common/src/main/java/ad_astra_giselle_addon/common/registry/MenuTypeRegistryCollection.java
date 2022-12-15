@@ -10,9 +10,9 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
-public class DelegateMenuTypeCollection extends ObjectRegistryCollection<MenuType<?>>
+public class MenuTypeRegistryCollection extends ObjectRegistryCollection<MenuType<?>>
 {
-	public DelegateMenuTypeCollection(String modid)
+	public MenuTypeRegistryCollection(String modid)
 	{
 		super(modid, Registry.MENU_REGISTRY);
 	}

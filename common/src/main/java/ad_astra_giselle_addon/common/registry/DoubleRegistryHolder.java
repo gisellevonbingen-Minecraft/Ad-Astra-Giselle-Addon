@@ -2,13 +2,13 @@ package ad_astra_giselle_addon.common.registry;
 
 import net.minecraft.resources.ResourceLocation;
 
-public class DelegateDoubleHolder<P, S>
+public class DoubleRegistryHolder<P, S>
 {
 	private final ResourceLocation id;
 	private final ObjectRegistryHolder<? extends P> primary;
 	private final ObjectRegistryHolder<? extends S> secondary;
 
-	public DelegateDoubleHolder(ObjectRegistryHolder<? extends P> primary, ObjectRegistryHolder<? extends S> secondary)
+	public DoubleRegistryHolder(ObjectRegistryHolder<? extends P> primary, ObjectRegistryHolder<? extends S> secondary)
 	{
 		this.id = primary.getId();
 		this.primary = primary;

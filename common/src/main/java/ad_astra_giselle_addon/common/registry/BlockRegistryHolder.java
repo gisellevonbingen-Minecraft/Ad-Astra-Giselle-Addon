@@ -6,9 +6,9 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 
-public class DelegateBlockHolder<B extends Block, I extends BlockItem> extends DelegateDoubleHolder<B, I> implements Supplier<B>, ItemLike
+public class BlockRegistryHolder<B extends Block, I extends BlockItem> extends DoubleRegistryHolder<B, I> implements Supplier<B>, ItemLike
 {
-	public DelegateBlockHolder(ObjectRegistryHolder<? extends B> b, ObjectRegistryHolder<? extends I> i)
+	public BlockRegistryHolder(ObjectRegistryHolder<? extends B> b, ObjectRegistryHolder<? extends I> i)
 	{
 		super(b, i);
 	}

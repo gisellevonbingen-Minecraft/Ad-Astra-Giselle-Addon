@@ -5,9 +5,9 @@ import java.util.function.Function;
 import net.minecraft.core.Registry;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 
-public class DelegateAttributeCollection extends ObjectRegistryCollection<Attribute>
+public class AttributeRegistryCollection extends ObjectRegistryCollection<Attribute>
 {
-	public DelegateAttributeCollection(String modid)
+	public AttributeRegistryCollection(String modid)
 	{
 		super(modid, Registry.ATTRIBUTE_REGISTRY);
 	}
