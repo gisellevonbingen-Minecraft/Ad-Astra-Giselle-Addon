@@ -34,6 +34,10 @@ loom {
             runDir("run")
         }
     }
+
+	mixin {
+		defaultRefmapName = "ad_astra_giselle_addon.mixin.refmap.json"
+	}
 }
 
 dependencies {

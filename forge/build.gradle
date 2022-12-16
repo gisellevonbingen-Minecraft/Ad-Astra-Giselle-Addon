@@ -5,7 +5,7 @@ buildscript {
     }
     dependencies {
         classpath group: "net.minecraftforge.gradle", name: "ForgeGradle", version: "5.1.+", changing: true
-        classpath "org.spongepowered:mixingradle:0.7-SNAPSHOT"
+        classpath "org.spongepowered:mixingradle:0.7.+"
     }
 }
 
@@ -106,7 +106,7 @@ minecraft {
 dependencies {
     // Mod
     minecraft "net.minecraftforge:forge:${mc_version}-${forge_api_version}"
-    if (System.getProperty("idea.sync.active") != "true") { annotationProcessor "org.spongepowered:mixin:${mixin_version}:processor" }
+    annotationProcessor "org.spongepowered:mixin:${mixin_version}:processor"
 
     // Ad Astra - Required
     implementation fg.deobf("curse.maven:ad-astra-635042:${ad_astra_forge_file}")
@@ -131,6 +131,10 @@ dependencies {
     runtimeOnly fg.deobf("curse.maven:jade-324717:${jade_file}")
     runtimeOnly fg.deobf("curse.maven:refined-storage-243076:${refined_storage_file}")
     runtimeOnly fg.deobf("blusunrize.immersiveengineering:ImmersiveEngineering:${mc_version}-${immersive_engineering_version}")
+}
+
+mixin {
+    add sourceSets.main, "ad_astra_giselle_addon.mixin.refmap.json"
 }
 
 jar {
