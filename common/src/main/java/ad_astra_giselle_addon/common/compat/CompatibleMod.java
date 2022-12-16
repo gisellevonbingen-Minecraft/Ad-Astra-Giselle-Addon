@@ -19,16 +19,7 @@ public abstract class CompatibleMod
 		if (CommonHooks.isModLoaded(this.getModId()))
 		{
 			this.isLoaded = true;
-
-			try
-			{
-				this.onLoad();
-			}
-			catch (Exception e)
-			{
-				e.printStackTrace();
-			}
-
+			this.onLoad();
 		}
 
 	}
