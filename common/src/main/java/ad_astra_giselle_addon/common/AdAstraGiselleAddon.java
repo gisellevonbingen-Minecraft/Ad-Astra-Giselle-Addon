@@ -75,7 +75,6 @@ public class AdAstraGiselleAddon
 		eventBus.register(AcidRainProofUtils.INSTANCE);
 
 		compats = new CompatibleManager();
-		compats.tryLoad();
 	}
 
 	public static void registerCommand(Consumer<LiteralArgumentBuilder<CommandSourceStack>> register)

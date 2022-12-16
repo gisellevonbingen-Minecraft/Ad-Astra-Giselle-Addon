@@ -22,6 +22,7 @@ public class CompatibleManager
 	}
 
 	public final List<CompatibleMod> all_mods;
+	public final List<CompatibleMod> loaded_mods;
 
 	public CompatibleManager()
 	{
@@ -29,11 +30,9 @@ public class CompatibleManager
 		mods.addAll(COMMON_MODS);
 		mods.addAll(DELEGATE.getMods());
 		this.all_mods = Collections.unmodifiableList(mods);
-	}
-
-	public void tryLoad()
-	{
 		this.all_mods.forEach(CompatibleMod::tryLoad);
+		this.loaded_mods = this.all_mods.stream().filter(CompatibleMod::isLoaded).toList();
+		
 	}
 
 	public static interface Delegate

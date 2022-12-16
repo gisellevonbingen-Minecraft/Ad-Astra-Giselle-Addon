@@ -73,7 +73,7 @@ public class AddonCommand
 					.then(Commands.literal("diamond").executes(Equip::diamond)) //
 			;
 
-			for (CompatibleMod mod : AdAstraGiselleAddon.compats().all_mods)
+			for (CompatibleMod mod : AdAstraGiselleAddon.compats().loaded_mods)
 			{
 				List<ArgumentBuilder<CommandSourceStack, ?>> list = new ArrayList<>();
 				mod.collectEquipCommands(list);
