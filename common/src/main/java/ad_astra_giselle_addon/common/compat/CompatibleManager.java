@@ -32,7 +32,7 @@ public class CompatibleManager
 		this.all_mods = Collections.unmodifiableList(mods);
 		this.all_mods.forEach(CompatibleMod::tryLoad);
 		this.loaded_mods = this.all_mods.stream().filter(CompatibleMod::isLoaded).toList();
-		
+
 	}
 
 	public static interface Delegate
