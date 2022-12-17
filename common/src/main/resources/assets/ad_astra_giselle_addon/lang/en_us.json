@@ -66,7 +66,7 @@
   "config.ad_astra_giselle_addon.machines": "Machines",
   "config.ad_astra_giselle_addon.machines.fuel_loader": "Fuel Loader",
   "config.ad_astra_giselle_addon.machines.fuel_loader_fluid_capacity": "Fluid Capacity",
-  "config.ad_astra_giselle_addon.machines.fuel_loader_fluid_transfer": "Fluid Transfer",
+  "config.ad_astra_giselle_addon.machines.fuel_loader_fluid_transfer": "Fluid Transfer Per Tick",
   "config.ad_astra_giselle_addon.machines.fuel_loader_working_range": "Working Range",
   "config.ad_astra_giselle_addon.machines.fuel_loader_working_range.comment": "Blocks from Fuel Loader to each direction",
   "config.ad_astra_giselle_addon.machines.automation_nasa_workbench": "Automation NASA Workbench",
