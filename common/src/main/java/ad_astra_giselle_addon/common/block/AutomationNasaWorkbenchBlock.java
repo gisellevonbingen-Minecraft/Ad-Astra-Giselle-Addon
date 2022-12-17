@@ -18,7 +18,9 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class AutomationNasaWorkbenchBlock extends AbstractMachineBlock
 {
-	public static final String TOOLTIP_KEY = AdAstraGiselleAddon.tl("block", AddonBlocks.AUTOMATION_NASA_WORKBENCH.getId(), "tooltip");
+	public static final String TOOLTIP2_KEY = AdAstraGiselleAddon.tl("block", AddonBlocks.AUTOMATION_NASA_WORKBENCH.getId(), "tooltip");
+	public static final Component TOOLTIP1 = Component.translatable("item.ad_astra.nasa_workbench.tooltip").setStyle(Style.EMPTY.withColor(ChatFormatting.GREEN));
+	public static final Component TOOLTIP2 = Component.translatable(TOOLTIP2_KEY).setStyle(Style.EMPTY.withColor(ChatFormatting.GREEN));
 
 	public AutomationNasaWorkbenchBlock(Properties settings)
 	{
@@ -30,8 +32,8 @@ public class AutomationNasaWorkbenchBlock extends AbstractMachineBlock
 	{
 		super.appendHoverText(item, level, tooltip, flag);
 
-		tooltip.add(Component.translatable("item.ad_astra.nasa_workbench.tooltip").setStyle(Style.EMPTY.withColor(ChatFormatting.GREEN)));
-		tooltip.add(Component.translatable(TOOLTIP_KEY).setStyle(Style.EMPTY.withColor(ChatFormatting.GREEN)));
+		tooltip.add(TOOLTIP1);
+		tooltip.add(TOOLTIP2);
 	}
 
 	@Override
