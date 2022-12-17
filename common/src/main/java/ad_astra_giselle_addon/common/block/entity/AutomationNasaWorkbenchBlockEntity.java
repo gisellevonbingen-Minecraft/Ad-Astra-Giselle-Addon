@@ -41,7 +41,7 @@ public class AutomationNasaWorkbenchBlockEntity extends AbstractMachineBlockEnti
 	private SimpleUpdatingEnergyContainer energyStorage;
 
 	private boolean firstTick;
-	private List<RecipeCache> availableRecipes;
+	private List<RecipeCache> recipaCaches;
 	private NasaWorkbenchRecipe selectedRecipe;
 
 	private int cookTime;
@@ -51,7 +51,7 @@ public class AutomationNasaWorkbenchBlockEntity extends AbstractMachineBlockEnti
 	{
 		super(AddonBlockEntityTypes.AUTOMATION_NASA_WORKBENCH.get(), pos, state);
 		this.firstTick = true;
-		this.availableRecipes = new ArrayList<>();
+		this.recipaCaches = new ArrayList<>();
 		this.selectedRecipe = null;
 	}
 
@@ -98,7 +98,7 @@ public class AutomationNasaWorkbenchBlockEntity extends AbstractMachineBlockEnti
 		}
 		else
 		{
-			return this.availableRecipes.stream().filter(cache -> cache.testRemain(slot, stack)).findAny().isPresent();
+			return this.recipaCaches.stream().filter(cache -> cache.testRemain(slot, stack)).findAny().isPresent();
 		}
 
 	}
@@ -131,7 +131,7 @@ public class AutomationNasaWorkbenchBlockEntity extends AbstractMachineBlockEnti
 				this.cacheRecipes();
 			}
 
-			if (this.availableRecipes.stream().anyMatch(RecipeCache::anyAdded))
+			if (this.recipaCaches.stream().anyMatch(RecipeCache::anyAdded))
 			{
 				this.spawnWorkingParticles();
 			}
@@ -210,33 +210,12 @@ public class AutomationNasaWorkbenchBlockEntity extends AbstractMachineBlockEnti
 
 	private void cacheRecipes()
 	{
-		this.availableRecipes.clear();
-		this.selectedRecipe = null;
-
 		List<ItemStack> items = this.getItems();
 		List<NasaWorkbenchRecipe> recipes = NasaWorkbenchRecipe.getRecipes(this.getLevel());
 
-		for (NasaWorkbenchRecipe recipe : recipes)
-		{
-			RecipeCache cache = this.cache(recipe, items);
-
-			if (cache != null)
-			{
-				this.availableRecipes.add(cache);
-			}
-
-		}
-
-		if (this.availableRecipes.size() == 1)
-		{
-			NasaWorkbenchRecipe recipe = this.availableRecipes.get(0).recipe();
-
-			if (this.testIngredientCounts(recipe.getHolders(), items))
-			{
-				this.selectedRecipe = recipe;
-			}
-
-		}
+		this.recipaCaches.clear();
+		this.recipaCaches.addAll(recipes.stream().map(recipe -> this.cache(recipe, items)).filter(cache -> cache != null).toList());
+		this.selectedRecipe = this.recipaCaches.stream().filter(cache -> this.test(cache, items)).map(RecipeCache::recipe).findFirst().orElse(null);
 
 		if (this.selectedRecipe == null)
 		{
@@ -244,9 +223,14 @@ public class AutomationNasaWorkbenchBlockEntity extends AbstractMachineBlockEnti
 		}
 		else
 		{
-			this.setCookTimeTotal(200);
+			this.setCookTimeTotal(MachinesConfig.AUTOMATION_NASA_WORKBENCH_COOK_TIME);
 		}
 
+	}
+
+	private boolean test(RecipeCache cache, List<ItemStack> items)
+	{
+		return cache.isComplete() && this.testIngredientCounts(cache.recipe().getHolders(), items);
 	}
 
 	private boolean testIngredientCounts(List<IngredientHolder> ingredients, List<ItemStack> items)
@@ -362,6 +346,11 @@ public class AutomationNasaWorkbenchBlockEntity extends AbstractMachineBlockEnti
 		{
 			List<SlotWithIngredient> remainIngredients = this.remainIngredients();
 			return remainIngredients.stream().filter(i -> i.test(putSlot, item)).findAny().isPresent();
+		}
+
+		public boolean isComplete()
+		{
+			return this.remainIngredients().size() == 0;
 		}
 
 	}
