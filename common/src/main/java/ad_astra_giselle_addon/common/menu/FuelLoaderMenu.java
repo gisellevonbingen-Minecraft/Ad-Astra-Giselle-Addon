@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ad_astra_giselle_addon.common.block.entity.FuelLoaderBlockEntity;
+import ad_astra_giselle_addon.common.item.ItemStackUtils;
 import ad_astra_giselle_addon.common.registry.AddonMenuTypes;
 import earth.terrarium.ad_astra.common.networking.NetworkHandling;
 import earth.terrarium.ad_astra.common.networking.packet.server.MachineInfoPacket;
@@ -31,9 +32,7 @@ public class FuelLoaderMenu extends AbstractMachineMenu<FuelLoaderBlockEntity>
 				@Override
 				public boolean mayPlace(ItemStack pStack)
 				{
-					ItemStack copy = pStack.copy();
-					copy.setCount(1);
-					return blockEntity.canPlaceItem(this.index, copy);
+					return blockEntity.canPlaceItem(this.index, ItemStackUtils.deriveCount(pStack, 1));
 				}
 			});
 		}

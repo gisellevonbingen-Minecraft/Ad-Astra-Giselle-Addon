@@ -7,7 +7,6 @@ import com.mojang.blaze3d.vertex.PoseStack;
 
 import ad_astra_giselle_addon.common.AdAstraGiselleAddon;
 import ad_astra_giselle_addon.common.block.entity.FuelLoaderBlockEntity;
-import ad_astra_giselle_addon.common.compat.CompatibleManager;
 import ad_astra_giselle_addon.common.menu.FuelLoaderMenu;
 import ad_astra_giselle_addon.common.network.AddonNetwork;
 import ad_astra_giselle_addon.common.network.FuelLoaderMessageWorkingAreaVisible;
@@ -77,7 +76,7 @@ public class FuelLoaderScreen extends AddonMachineScreen<FuelLoaderBlockEntity, 
 
 		if (GuiUtil.isHovering(this.getFluidTankBounds(), mouseX, mouseY))
 		{
-			if (!CompatibleManager.JEI.isLoaded() && !CompatibleManager.REI.isLoaded())
+			if (shouldShowRecipeTooltip())
 			{
 				this.renderComponentTooltip(stack, this.getFluidTankTooltip(), mouseX, mouseY);
 			}
