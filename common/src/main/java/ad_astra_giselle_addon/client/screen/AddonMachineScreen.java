@@ -8,6 +8,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import ad_astra_giselle_addon.common.AdAstraGiselleAddon;
+import ad_astra_giselle_addon.common.compat.CompatibleManager;
 import earth.terrarium.ad_astra.client.screen.AbstractMachineScreen;
 import earth.terrarium.ad_astra.common.block.machine.entity.AbstractMachineBlockEntity;
 import earth.terrarium.ad_astra.common.screen.menu.AbstractMachineMenu;
@@ -29,6 +30,11 @@ public abstract class AddonMachineScreen<BLOCK_ENTITY extends AbstractMachineBlo
 	public static String ctl(String path)
 	{
 		return AdAstraGiselleAddon.tl("gui", path);
+	}
+
+	public static boolean shouldShowRecipeTooltip()
+	{
+		return !CompatibleManager.JEI.isLoaded() && !CompatibleManager.REI.isLoaded();
 	}
 
 	private boolean cachedWorkingAreaVisible;

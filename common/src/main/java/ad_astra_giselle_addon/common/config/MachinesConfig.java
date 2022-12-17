@@ -24,4 +24,14 @@ public final class MachinesConfig
 	@ConfigEntry(id = FUEL_LOADER_ID + "_working_range", type = EntryType.INTEGER, translation = FUEL_LOADER_PREFIX + "_working_range")
 	@Comment(value = "Blocks from Fuel Loader to each direction", translation = FUEL_LOADER_PREFIX + "_working_range.comment")
 	public static int FUEL_LOADER_WORKING_RANGE = 2;
+
+	public static final String AUTOMATION_NASA_WORKBENCH_ID = "automation_nasa_workbench";
+	public static final String AUTOMATION_NASA_WORKBENCH_PREFIX = PREFIX + "." + AUTOMATION_NASA_WORKBENCH_ID;
+	@ConfigSeparator(translation = AUTOMATION_NASA_WORKBENCH_PREFIX)
+	@ConfigEntry(id = AUTOMATION_NASA_WORKBENCH_ID + "_energy_capacity", type = EntryType.LONG, translation = AUTOMATION_NASA_WORKBENCH_PREFIX + "_energy_capacity")
+	public static long AUTOMATION_NASA_WORKBENCH_ENERGY_CAPACITY = 9600L;
+	@ConfigEntry(id = AUTOMATION_NASA_WORKBENCH_ID + "_energy_usage", type = EntryType.LONG, translation = AUTOMATION_NASA_WORKBENCH_PREFIX + "_energy_usage")
+	public static long AUTOMATION_NASA_WORKBENCH_ENERGY_USAGE = 24L;
+	@ConfigEntry(id = AUTOMATION_NASA_WORKBENCH_ID + "_cook_time", type = EntryType.INTEGER, translation = AUTOMATION_NASA_WORKBENCH_PREFIX + "_cook_time")
+	public static int AUTOMATION_NASA_WORKBENCH_COOK_TIME = 200;
 }

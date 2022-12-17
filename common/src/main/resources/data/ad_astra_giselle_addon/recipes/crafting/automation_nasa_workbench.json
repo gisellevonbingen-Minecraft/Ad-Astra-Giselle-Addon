@@ -1,0 +1,25 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"result": {
+		"item": "ad_astra_giselle_addon:automation_nasa_workbench"
+	},
+	"pattern": [
+		"SHS",
+		"RNR",
+		"SHS"
+	],
+	"key": {
+		"S": {
+			"tag": "ad_astra_platform:steel_plates"
+		},
+		"H": {
+			"item": "minecraft:hopper"
+		},
+		"R": {
+			"item": "minecraft:redstone"
+		},
+		"N": {
+			"item": "ad_astra:nasa_workbench"
+		}
+	}
+}

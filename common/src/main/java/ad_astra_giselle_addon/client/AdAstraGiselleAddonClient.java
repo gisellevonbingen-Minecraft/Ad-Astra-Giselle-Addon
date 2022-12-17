@@ -11,6 +11,7 @@ import com.teamresourceful.resourcefulconfig.common.config.ResourcefulConfig;
 
 import ad_astra_giselle_addon.client.overlay.OxygenCanOverlay;
 import ad_astra_giselle_addon.client.renderer.blockentity.FuelLoaderRenderer;
+import ad_astra_giselle_addon.client.screen.AutomationNasaWorkbenchScreen;
 import ad_astra_giselle_addon.client.screen.FuelLoaderScreen;
 import ad_astra_giselle_addon.client.util.RenderHelper;
 import ad_astra_giselle_addon.common.AdAstraGiselleAddon;
@@ -48,6 +49,7 @@ public class AdAstraGiselleAddonClient
 	public static void initializeClient()
 	{
 		ClientUtils.registerScreen(AddonMenuTypes.FUEL_LOADER.get(), FuelLoaderScreen::new);
+		ClientUtils.registerScreen(AddonMenuTypes.AUTOMATION_NASA_WORKBENCH.get(), AutomationNasaWorkbenchScreen::new);
 	}
 
 	public static void registerBlockAtlas(Consumer<ResourceLocation> register)
