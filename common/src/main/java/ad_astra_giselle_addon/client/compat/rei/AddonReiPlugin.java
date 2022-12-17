@@ -5,8 +5,10 @@ import java.util.Collections;
 import java.util.List;
 
 import ad_astra_giselle_addon.client.compat.RecipeHelper;
+import ad_astra_giselle_addon.client.screen.AutomationNasaWorkbenchScreen;
 import ad_astra_giselle_addon.common.config.MachinesConfig;
 import ad_astra_giselle_addon.common.registry.AddonBlocks;
+import earth.terrarium.ad_astra.common.compat.rei.REICategories;
 import earth.terrarium.ad_astra.common.registry.ModTags;
 import me.shedaniel.rei.api.client.plugins.REIClientPlugin;
 import me.shedaniel.rei.api.client.registry.category.CategoryRegistry;
@@ -41,6 +43,7 @@ public class AddonReiPlugin implements REIClientPlugin
 			registry.addWorkstations(category.getCategoryIdentifier(), category.getWorkStationItemStacks().stream().map(EntryStacks::of).toList().toArray(new EntryStack[0]));
 		}
 
+		registry.addWorkstations(REICategories.NASA_WORKBENCH_CATEGORY, EntryStacks.of(AddonBlocks.AUTOMATION_NASA_WORKBENCH));
 	}
 
 	@Override
@@ -61,6 +64,7 @@ public class AddonReiPlugin implements REIClientPlugin
 			category.registerGuiHandlers(registry);
 		}
 
+		registry.registerClickArea(AutomationNasaWorkbenchScreen.class, new AutomationNasaWorkbenchGuiContainerHandler());
 	}
 
 	@Override

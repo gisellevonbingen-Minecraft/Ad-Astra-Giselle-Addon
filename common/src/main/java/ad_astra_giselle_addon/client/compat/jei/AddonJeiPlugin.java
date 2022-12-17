@@ -5,9 +5,11 @@ import java.util.Collections;
 import java.util.List;
 
 import ad_astra_giselle_addon.client.compat.RecipeHelper;
+import ad_astra_giselle_addon.client.screen.AutomationNasaWorkbenchScreen;
 import ad_astra_giselle_addon.common.AdAstraGiselleAddon;
 import ad_astra_giselle_addon.common.config.MachinesConfig;
 import ad_astra_giselle_addon.common.registry.AddonBlocks;
+import earth.terrarium.ad_astra.common.compat.jei.category.NasaWorkbenchCategory;
 import earth.terrarium.ad_astra.common.registry.ModTags;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
@@ -83,6 +85,7 @@ public class AddonJeiPlugin implements IModPlugin
 			category.registerRecipeCatalysts(registry);
 		}
 
+		registry.addRecipeCatalyst(new ItemStack(AddonBlocks.AUTOMATION_NASA_WORKBENCH), NasaWorkbenchCategory.RECIPE);
 	}
 
 	@Override
@@ -93,6 +96,7 @@ public class AddonJeiPlugin implements IModPlugin
 			category.registerGuiHandlers(registry);
 		}
 
+		registry.addGuiContainerHandler(AutomationNasaWorkbenchScreen.class, new AutomationNasaWorkbenchGuiContainerHandler());
 	}
 
 	@Override

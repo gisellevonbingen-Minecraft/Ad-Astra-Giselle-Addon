@@ -3,11 +3,15 @@
   "itemGroup.ad_astra_giselle_addon.tab_main": "Ad Astra: Giselle Addon",
   
   "block.ad_astra_giselle_addon.fuel_loader": "Fuel Loader",
+  "block.ad_astra_giselle_addon.automation_nasa_workbench": "Automation NASA Workbench",
+  
+  "block.ad_astra_giselle_addon.automation_nasa_workbench.tooltip": "Only hopper can insert/extract items",
   
   "item.ad_astra_giselle_addon.oxygen_can": "Oxygen Can",
   "item.ad_astra_giselle_addon.netherite_oxygen_can": "Netherite Oxygen Can",
   
   "container.ad_astra_giselle_addon.fuel_loader": "Fuel Loader",
+  "container.ad_astra_giselle_addon.automation_nasa_workbench": "Automation NASA Workbench",
   
   "enchantment.ad_astra_giselle_addon.space_breathing": "Space Breathing",
   "enchantment.ad_astra_giselle_addon.space_breathing.desc": "Can breath in Ad Astra dimensions\nUse energy or durability\nRequire 'Oxygen Can' in inventory",
@@ -65,6 +69,10 @@
   "config.ad_astra_giselle_addon.machines.fuel_loader_fluid_transfer": "Fluid Transfer",
   "config.ad_astra_giselle_addon.machines.fuel_loader_working_range": "Working Range",
   "config.ad_astra_giselle_addon.machines.fuel_loader_working_range.comment": "Blocks from Fuel Loader to each direction",
+  "config.ad_astra_giselle_addon.machines.automation_nasa_workbench": "Automation NASA Workbench",
+  "config.ad_astra_giselle_addon.machines.automation_nasa_workbench_energy_capacity": "Energy Capacity",
+  "config.ad_astra_giselle_addon.machines.automation_nasa_workbench_energy_usage": "Energy Usage Per Tick",
+  "config.ad_astra_giselle_addon.machines.automation_nasa_workbench_cook_time": "Processing Time [ticks]",
   "config.ad_astra_giselle_addon.enchantments": "Enchantments",
   "config.ad_astra_giselle_addon.enchantments.tooltip_enabled": "Show Tooltip in Enchanted Book",
   "config.ad_astra_giselle_addon.enchantments.tooltip_enabled.comment": "Show tooltip on this mod's enchanted book",

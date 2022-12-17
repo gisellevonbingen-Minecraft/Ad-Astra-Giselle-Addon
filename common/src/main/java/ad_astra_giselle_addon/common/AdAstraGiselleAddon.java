@@ -97,6 +97,11 @@ public class AdAstraGiselleAddon
 		return category + "." + rl.getNamespace() + "." + rl.getPath();
 	}
 
+	public static String tl(String category, ResourceLocation rl, String path)
+	{
+		return tl(category, rl) + "." + path;
+	}
+
 	private AdAstraGiselleAddon()
 	{
 

@@ -3,11 +3,15 @@
   "itemGroup.ad_astra_giselle_addon.tab_main": "Ad Astra: Giselle Addon",
   
   "block.ad_astra_giselle_addon.fuel_loader": "연료 적재기",
+  "block.ad_astra_giselle_addon.automation_nasa_workbench": "자동화 NASA 제작대",
+  
+  "block.ad_astra_giselle_addon.automation_nasa_workbench.tooltip": "호퍼만 아이템을 삽입/추출할 수 있습니다.",
   
   "item.ad_astra_giselle_addon.oxygen_can": "산소 캔",
   "item.ad_astra_giselle_addon.netherite_oxygen_can": "네더라이트 산소 캔",
   
   "container.ad_astra_giselle_addon.fuel_loader": "연료 적재기",
+  "container.ad_astra_giselle_addon.automation_nasa_workbench": "자동화 NASA 제작대",
   
   "enchantment.ad_astra_giselle_addon.space_breathing": "우주 호흡성",
   "enchantment.ad_astra_giselle_addon.space_breathing.desc": "Ad Astra 차원에서 호흡할 수 있습니다\n갑옷의 에너지 혹은 내구도를 소모합니다\n인벤토리에 '산소 캔'이 필요합니다",
@@ -56,6 +60,10 @@
   "config.ad_astra_giselle_addon.items.oxygen_can": "산소 캔",
   "config.ad_astra_giselle_addon.items.oxygen_can_fluid_capacity": "유체 용량",
   "config.ad_astra_giselle_addon.items.oxygen_can_fluid_transfer": "유체 전송량",
+  "config.ad_astra_giselle_addon.machines.automation_nasa_workbench": "자동화 NASA 제작대",
+  "config.ad_astra_giselle_addon.machines.automation_nasa_workbench_energy_capacity": "에너지 용량",
+  "config.ad_astra_giselle_addon.machines.automation_nasa_workbench_energy_usage": "틱당 에너지 사용량",
+  "config.ad_astra_giselle_addon.machines.automation_nasa_workbench_cook_time": "가공 시간 [틱]",
   "config.ad_astra_giselle_addon.items.netherite_oxygen_can": "네더라이트 산소 캔",
   "config.ad_astra_giselle_addon.items.netherite_oxygen_can_fluid_capacity": "유체 용량",
   "config.ad_astra_giselle_addon.items.netherite_oxygen_can_fluid_transfer": "유체 전송량",
