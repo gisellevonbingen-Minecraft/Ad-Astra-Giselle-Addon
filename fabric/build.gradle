@@ -72,4 +72,5 @@ dependencies {
     modRuntimeOnly "TechReborn:TechReborn-1.19:${techreborn_version}"
     modRuntimeOnly "curse.maven:badpackets-615134:${badpackets_file}"
     modRuntimeOnly "curse.maven:wthit-440979:${wthit_file}"
+    modRuntimeOnly "curse.maven:modern-dynamics-552758:${modern_dynamics_file}"
 }
