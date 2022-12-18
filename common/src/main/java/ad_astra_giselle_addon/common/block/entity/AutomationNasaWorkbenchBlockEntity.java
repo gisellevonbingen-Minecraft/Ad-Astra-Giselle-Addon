@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import ad_astra_giselle_addon.common.config.MachinesConfig;
 import ad_astra_giselle_addon.common.menu.AutomationNasaWorkbenchMenu;
@@ -86,6 +87,12 @@ public class AutomationNasaWorkbenchBlockEntity extends AddonMachineBlockEntity 
 	public int getInventorySize()
 	{
 		return 15;
+	}
+
+	@Override
+	public int getSideSlotLimit(int slot, @Nullable Direction directon)
+	{
+		return 1;
 	}
 
 	@Override
