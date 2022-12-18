@@ -12,7 +12,6 @@ import ad_astra_giselle_addon.common.item.ItemStackConsumers;
 import ad_astra_giselle_addon.common.item.ItemStackReference;
 import ad_astra_giselle_addon.common.menu.FuelLoaderMenu;
 import ad_astra_giselle_addon.common.registry.AddonBlockEntityTypes;
-import earth.terrarium.ad_astra.common.block.machine.entity.AbstractMachineBlockEntity;
 import earth.terrarium.ad_astra.common.entity.vehicle.Vehicle;
 import earth.terrarium.botarium.api.fluid.FluidHolder;
 import earth.terrarium.botarium.api.fluid.FluidHoldingBlock;
@@ -31,7 +30,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 
-public class FuelLoaderBlockEntity extends AbstractMachineBlockEntity implements FluidHoldingBlock
+public class FuelLoaderBlockEntity extends AddonMachineBlockEntity implements FluidHoldingBlock
 {
 	public static final String DATA_WORKINGAREA_VISIBLE_KEY = "workingAreaVisible";
 

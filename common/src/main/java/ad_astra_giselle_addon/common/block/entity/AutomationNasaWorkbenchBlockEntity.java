@@ -9,7 +9,6 @@ import ad_astra_giselle_addon.common.config.MachinesConfig;
 import ad_astra_giselle_addon.common.menu.AutomationNasaWorkbenchMenu;
 import ad_astra_giselle_addon.common.registry.AddonBlockEntityTypes;
 import ad_astra_giselle_addon.common.world.ContainerUtils;
-import earth.terrarium.ad_astra.common.block.machine.entity.AbstractMachineBlockEntity;
 import earth.terrarium.ad_astra.common.recipe.IngredientHolder;
 import earth.terrarium.ad_astra.common.recipe.NasaWorkbenchRecipe;
 import earth.terrarium.ad_astra.common.util.ModUtils;
@@ -32,7 +31,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class AutomationNasaWorkbenchBlockEntity extends AbstractMachineBlockEntity implements EnergyBlock
+public class AutomationNasaWorkbenchBlockEntity extends AddonMachineBlockEntity implements EnergyBlock
 {
 	public static final int RESULT_SLOT = 14;
 	public static final String DATA_COOK_TIME_KEY = "cookTime";
@@ -189,7 +188,6 @@ public class AutomationNasaWorkbenchBlockEntity extends AbstractMachineBlockEnti
 
 				this.setCookTime(0);
 				ContainerUtils.insert(this, RESULT_SLOT, resultItem, false);
-				this.cacheRecipes();
 				this.spawnResultParticles();
 			}
 
@@ -296,11 +294,11 @@ public class AutomationNasaWorkbenchBlockEntity extends AbstractMachineBlockEnti
 	}
 
 	@Override
-	public void setChanged()
+	protected void onInventoryChanged()
 	{
-		super.setChanged();
+		super.onInventoryChanged();
 
-		if (!this.getLevel().isClientSide())
+		if (this.getLevel() instanceof ServerLevel)
 		{
 			this.cacheRecipes();
 		}
