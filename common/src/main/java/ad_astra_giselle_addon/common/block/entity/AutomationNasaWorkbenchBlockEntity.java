@@ -301,9 +301,9 @@ public class AutomationNasaWorkbenchBlockEntity extends AddonMachineBlockEntity 
 	}
 
 	@Override
-	public void setChanged()
+	protected void onInventoryChanged()
 	{
-		super.setChanged();
+		super.onInventoryChanged();
 
 		if (this.getLevel() instanceof ServerLevel)
 		{
