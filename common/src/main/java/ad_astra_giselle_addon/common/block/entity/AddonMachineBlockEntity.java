@@ -28,20 +28,13 @@ public abstract class AddonMachineBlockEntity extends AbstractMachineBlockEntity
 	@Override
 	public void setItem(int pSlot, ItemStack pStack)
 	{
-		ItemStack prev = this.getItem(pSlot);
-
-		if (!ItemStack.matches(prev, pStack) || prev.getCount() != pStack.getCount())
+		if (pStack.getCount() > this.getMaxStackSize())
 		{
-			this.getItems().set(pSlot, pStack);
-
-			if (pStack.getCount() > this.getMaxStackSize())
-			{
-				pStack.setCount(this.getMaxStackSize());
-			}
-
-			this.setChanged();
+			pStack.setCount(this.getMaxStackSize());
 		}
 
+		this.getItems().set(pSlot, pStack);
+		this.setChanged();
 	}
 
 	@Override
