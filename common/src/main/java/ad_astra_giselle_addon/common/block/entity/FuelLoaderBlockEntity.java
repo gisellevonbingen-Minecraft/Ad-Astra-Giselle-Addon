@@ -10,6 +10,7 @@ import ad_astra_giselle_addon.common.fluid.FluidPredicates;
 import ad_astra_giselle_addon.common.fluid.UniveralFluidHandler;
 import ad_astra_giselle_addon.common.item.ItemStackConsumers;
 import ad_astra_giselle_addon.common.item.ItemStackReference;
+import ad_astra_giselle_addon.common.item.ItemStackUtils;
 import ad_astra_giselle_addon.common.menu.FuelLoaderMenu;
 import ad_astra_giselle_addon.common.registry.AddonBlockEntityTypes;
 import earth.terrarium.ad_astra.common.entity.vehicle.Vehicle;
@@ -94,14 +95,10 @@ public class FuelLoaderBlockEntity extends AddonMachineBlockEntity implements Fl
 	}
 
 	@Override
-	public boolean canPlaceItem(int slot, ItemStack stack)
-	{
-		return this.canPlaceItemThroughFace(slot, stack, null);
-	}
-
-	@Override
 	public boolean canPlaceItemThroughFace(int slot, ItemStack stack, @Nullable Direction dir)
 	{
+		stack = ItemStackUtils.deriveCount(stack, 1);
+
 		if (slot == this.getSlotFluidSource())
 		{
 			if (FluidHooks.isFluidContainingItem(stack))
