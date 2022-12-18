@@ -5,8 +5,6 @@
   "block.ad_astra_giselle_addon.fuel_loader": "연료 적재기",
   "block.ad_astra_giselle_addon.automation_nasa_workbench": "자동화 NASA 제작대",
   
-  "block.ad_astra_giselle_addon.automation_nasa_workbench.tooltip": "호퍼만 아이템을 삽입/추출할 수 있습니다.",
-  
   "item.ad_astra_giselle_addon.oxygen_can": "산소 캔",
   "item.ad_astra_giselle_addon.netherite_oxygen_can": "네더라이트 산소 캔",
   
