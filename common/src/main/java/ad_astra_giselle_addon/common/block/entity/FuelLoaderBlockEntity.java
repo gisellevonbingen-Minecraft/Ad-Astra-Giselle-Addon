@@ -104,20 +104,14 @@ public class FuelLoaderBlockEntity extends AddonMachineBlockEntity implements Fl
 			if (FluidHooks.isFluidContainingItem(stack))
 			{
 				UniveralFluidHandler itemFluidHandler = UniveralFluidHandler.from(new ItemStackHolder(stack));
-				return !FluidHooks2.extractFluid(itemFluidHandler, FluidPredicates::isFuel, true).isEmpty();
+				return itemFluidHandler.getFluidTanks().stream().anyMatch(FluidPredicates::isFuel);
 			}
 
 			return false;
 		}
 		else if (slot == this.getSlotFluidSink())
 		{
-			if (FluidHooks.isFluidContainingItem(stack))
-			{
-				UniveralFluidHandler itemFluidHandler = UniveralFluidHandler.from(new ItemStackHolder(stack));
-				return !FluidHooks2.insertFluidAny(itemFluidHandler, this.getFluidContainer().getFluids(), true).isEmpty();
-			}
-
-			return false;
+			return dir == null;
 		}
 
 		return super.canPlaceItemThroughFace(slot, stack, dir);
@@ -131,18 +125,13 @@ public class FuelLoaderBlockEntity extends AddonMachineBlockEntity implements Fl
 			if (FluidHooks.isFluidContainingItem(stack))
 			{
 				UniveralFluidHandler itemFluidHandler = UniveralFluidHandler.from(new ItemStackHolder(stack));
-				return FluidHooks2.extractFluid(itemFluidHandler, FluidPredicates::isFuel, true).isEmpty();
+				return !itemFluidHandler.getFluidTanks().stream().anyMatch(FluidPredicates::isFuel);
 			}
 
 		}
 		else if (slot == this.getSlotFluidSink())
 		{
-			if (FluidHooks.isFluidContainingItem(stack))
-			{
-				UniveralFluidHandler itemFluidHandler = UniveralFluidHandler.from(new ItemStackHolder(stack));
-				return FluidHooks2.insertFluidAny(itemFluidHandler, this.getFluidContainer().getFluids(), true).isEmpty();
-			}
-
+			return dir == null;
 		}
 
 		return super.canTakeItemThroughFace(slot, stack, dir);
