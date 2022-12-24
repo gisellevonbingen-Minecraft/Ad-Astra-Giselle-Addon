@@ -34,7 +34,7 @@ public abstract class LivingEntityMixin extends Entity
 
 		if (!living.getLevel().isClientSide())
 		{
-			OxygenChargerUtils.streamExtractable(living, FluidHooks2.MB_1).forEach(c ->
+			OxygenChargerUtils.streamExtractable(living, FluidHooks2.MILLI_BUCKET).forEach(c ->
 			{
 				OxygenChargerUtils.distributeToItems(living, c);
 			});

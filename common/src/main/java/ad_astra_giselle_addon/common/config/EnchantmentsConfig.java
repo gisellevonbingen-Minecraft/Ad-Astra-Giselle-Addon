@@ -34,7 +34,7 @@ public final class EnchantmentsConfig
 	public static int SPACE_BREATHING_ENERGY_USING = 30;
 	@ConfigEntry(id = SPACE_BREATHING_ID + "_durability_oxygen", type = EntryType.LONG, translation = SPACE_BREATHING_PREFIX + "_durability_oxygen")
 	@Comment(value = "Oxygen usage on using durability", translation = SPACE_BREATHING_PREFIX + "_durability_oxygen.comment")
-	public static long SPACE_BREATHING_DURABILITY_OXYGEN = 2 * FluidHooks2.MB_1;
+	public static long SPACE_BREATHING_DURABILITY_OXYGEN = 2 * FluidHooks2.MILLI_BUCKET;
 	@ConfigEntry(id = SPACE_BREATHING_ID + "_durability_using", type = EntryType.INTEGER, translation = SPACE_BREATHING_PREFIX + "_durability_using")
 	@Comment(value = "Durability usage for breath", translation = SPACE_BREATHING_PREFIX + "_durability_using.comment")
 	public static int SPACE_BREATHING_DURABILITY_USING = 1;

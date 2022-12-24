@@ -10,7 +10,8 @@ import earth.terrarium.botarium.api.fluid.FluidHooks;
 
 public class FluidHooks2
 {
-	public static final long MB_1 = FluidHooks.buckets(1) / 1000;
+	public static final long BUCKET = FluidHooks.buckets(1.0D);
+	public static final long MILLI_BUCKET = BUCKET / 1000;
 
 	public static FluidHolder deriveAmount(FluidHolder fluid, long newAmount)
 	{

@@ -16,7 +16,7 @@ public abstract class ProofAbstractUtils
 {
 	public static final int GENERAL_PROOF_INTERVAL = 10;
 	public static final int OXYGEN_PROOF_INTERVAL = 30;
-	public static final long OXYGEN_PROOF_USING = FluidHooks2.MB_1;
+	public static final long OXYGEN_PROOF_USING = FluidHooks2.MILLI_BUCKET;
 
 	private final ResourceLocation id;
 	private final Supplier<Attribute> attribute;
