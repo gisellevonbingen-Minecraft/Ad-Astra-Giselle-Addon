@@ -13,13 +13,6 @@ public class FluidHooks2
 	public static final long BUCKET = FluidHooks.buckets(1.0D);
 	public static final long MILLI_BUCKET = BUCKET / 1000;
 
-	public static FluidHolder deriveAmount(FluidHolder fluid, long newAmount)
-	{
-		FluidHolder derive = fluid.copyHolder();
-		derive.setAmount(newAmount);
-		return derive;
-	}
-
 	public static boolean notEmptyAndTest(FluidHolder fluid, @Nullable Predicate<FluidHolder> predicate)
 	{
 		if (fluid.isEmpty())
@@ -55,7 +48,7 @@ public class FluidHooks2
 				continue;
 			}
 
-			FluidHolder extracting = fluidHandler.extractFluid(deriveAmount(fluid, amount), simulate);
+			FluidHolder extracting = fluidHandler.extractFluid(fluid.copyWithAmount(amount), simulate);
 
 			if (!extracting.isEmpty())
 			{
@@ -105,7 +98,7 @@ public class FluidHooks2
 
 			if (insertAmount > 0L)
 			{
-				return deriveAmount(fluid, insertAmount);
+				return fluid.copyWithAmount(insertAmount);
 			}
 
 		}
@@ -122,7 +115,7 @@ public class FluidHooks2
 			return FluidHooks.emptyFluid();
 		}
 
-		FluidHolder inserting = deriveAmount(extracting, to.insertFluid(extracting, true));
+		FluidHolder inserting = extracting.copyWithAmount(to.insertFluid(extracting, true));
 
 		if (!simulate && !inserting.isEmpty())
 		{
@@ -142,7 +135,7 @@ public class FluidHooks2
 			return FluidHooks.emptyFluid();
 		}
 
-		FluidHolder inserting = deriveAmount(extracting, to.insertFluid(extracting, true));
+		FluidHolder inserting = extracting.copyWithAmount(to.insertFluid(extracting, true));
 
 		if (!simulate && !inserting.isEmpty())
 		{
