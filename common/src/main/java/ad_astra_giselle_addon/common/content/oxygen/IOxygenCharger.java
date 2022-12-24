@@ -24,8 +24,6 @@ public interface IOxygenCharger
 
 	public long getTransferAmount();
 
-	public long getFluidCapacity(int tank);
-
 	public UniveralFluidHandler getFluidHandler();
 
 	public Range<Integer> getTemperatureThreshold();
@@ -52,7 +50,7 @@ public interface IOxygenCharger
 
 		for (int i = 0; i < size; i++)
 		{
-			capacity += this.getFluidCapacity(i);
+			capacity += fluidHandler.getTankCapacity(i);
 		}
 
 		return capacity;

@@ -33,7 +33,7 @@ public class SidedInWrapperProvider implements ICapabilityProvider
 			public int getSlotLimit(int slot)
 			{
 				return SidedInWrapperProvider.this.getSlotLimit(slot, null);
-			};
+			}
 		});
 		this.sideds = new LazyOptional[directions.length];
 
@@ -46,7 +46,7 @@ public class SidedInWrapperProvider implements ICapabilityProvider
 				public int getSlotLimit(int slot)
 				{
 					return SidedInWrapperProvider.this.getSlotLimit(slot, this.side);
-				};
+				}
 			});
 
 		}

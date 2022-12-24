@@ -50,12 +50,6 @@ public class NetheriteOxygenCanItem extends OxygenCanItem
 			}
 
 			@Override
-			public long getFluidCapacity(int tank)
-			{
-				return getTankSize();
-			}
-
-			@Override
 			public UniveralFluidHandler getFluidHandler()
 			{
 				return UniveralFluidHandler.from(item);

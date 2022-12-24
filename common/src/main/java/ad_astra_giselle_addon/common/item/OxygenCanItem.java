@@ -140,7 +140,7 @@ public class OxygenCanItem extends Item implements FluidContainingItem, IOxygenC
 			for (int i = 0; i < fluidHandler.getTankAmount(); i++)
 			{
 				FluidHolder fluid = fluidHandler.getFluidInTank(i);
-				long capacity = oxygenCharger.getFluidCapacity(i);
+				long capacity = fluidHandler.getTankCapacity(i);
 				tooltip.add(TranslationUtils.oxygenStorage(fluid.getFluidAmount(), capacity));
 			}
 
@@ -191,12 +191,6 @@ public class OxygenCanItem extends Item implements FluidContainingItem, IOxygenC
 			public long getTransferAmount()
 			{
 				return ItemsConfig.OXYGEN_CAN_FLUID_TRANSFER;
-			}
-
-			@Override
-			public long getFluidCapacity(int tank)
-			{
-				return getTankSize();
 			}
 
 			@Override
