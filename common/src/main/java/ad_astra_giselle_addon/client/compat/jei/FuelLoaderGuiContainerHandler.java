@@ -22,7 +22,7 @@ public class FuelLoaderGuiContainerHandler implements IGuiContainerHandler<FuelL
 			@Override
 			public Rect2i getArea()
 			{
-				return GuiClickableAreaHelper.getInGuiBounds(screen, screen.getFluidTankBounds(), mouseX, mouseY);
+				return GuiClickableAreaHelper.getInGuiBounds(screen, screen.getFluidTankBounds());
 			}
 
 			@Override

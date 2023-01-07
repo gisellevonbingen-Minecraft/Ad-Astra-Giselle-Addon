@@ -7,6 +7,7 @@ import ad_astra_giselle_addon.common.content.oxygen.IChargeMode;
 import ad_astra_giselle_addon.common.content.oxygen.IOxygenCharger;
 import ad_astra_giselle_addon.common.fluid.UniveralFluidHandler;
 import ad_astra_giselle_addon.common.util.NBTUtils;
+import earth.terrarium.ad_astra.common.item.armor.SpaceSuit;
 import earth.terrarium.ad_astra.common.registry.ModItems;
 import earth.terrarium.botarium.api.item.ItemStackHolder;
 import net.minecraft.nbt.CompoundTag;
@@ -58,7 +59,7 @@ public class NetheriteOxygenCanItem extends OxygenCanItem
 			@Override
 			public Range<Integer> getTemperatureThreshold()
 			{
-				return ModItems.NETHERITE_SPACE_SUIT.get().getTemperatureThreshold();
+				return ((SpaceSuit) ModItems.NETHERITE_SPACE_SUIT.get()).getTemperatureThreshold();
 			}
 		};
 

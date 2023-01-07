@@ -23,7 +23,7 @@ public class AutomationNasaWorkbenchGuiContainerHandler implements IGuiContainer
 			@Override
 			public Rect2i getArea()
 			{
-				return GuiClickableAreaHelper.getInGuiBounds(screen, screen.getArrowBounds(), mouseX, mouseY);
+				return GuiClickableAreaHelper.getInGuiBounds(screen, screen.getArrowBounds());
 			}
 
 			@Override

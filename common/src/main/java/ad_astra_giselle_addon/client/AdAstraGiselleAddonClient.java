@@ -20,7 +20,7 @@ import ad_astra_giselle_addon.common.registry.AddonBlockEntityTypes;
 import ad_astra_giselle_addon.common.registry.AddonMenuTypes;
 import ad_astra_giselle_addon.common.util.TriConsumer;
 import earth.terrarium.ad_astra.client.AdAstraClient.RenderHud;
-import earth.terrarium.ad_astra.client.ClientUtils;
+import earth.terrarium.ad_astra.client.ClientPlatformUtils;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -48,8 +48,8 @@ public class AdAstraGiselleAddonClient
 
 	public static void initializeClient()
 	{
-		ClientUtils.registerScreen(AddonMenuTypes.FUEL_LOADER.get(), FuelLoaderScreen::new);
-		ClientUtils.registerScreen(AddonMenuTypes.AUTOMATION_NASA_WORKBENCH.get(), AutomationNasaWorkbenchScreen::new);
+		ClientPlatformUtils.registerScreen(AddonMenuTypes.FUEL_LOADER.get(), FuelLoaderScreen::new);
+		ClientPlatformUtils.registerScreen(AddonMenuTypes.AUTOMATION_NASA_WORKBENCH.get(), AutomationNasaWorkbenchScreen::new);
 	}
 
 	public static void registerBlockAtlas(Consumer<ResourceLocation> register)

@@ -16,6 +16,7 @@ import ad_astra_giselle_addon.common.fluid.UniveralFluidHandler;
 import ad_astra_giselle_addon.common.util.NBTUtils;
 import ad_astra_giselle_addon.common.util.TranslationUtils;
 import earth.terrarium.ad_astra.common.item.FluidContainingItem;
+import earth.terrarium.ad_astra.common.item.armor.SpaceSuit;
 import earth.terrarium.ad_astra.common.registry.ModFluids;
 import earth.terrarium.ad_astra.common.registry.ModItems;
 import earth.terrarium.botarium.api.fluid.FluidHolder;
@@ -202,7 +203,7 @@ public class OxygenCanItem extends Item implements FluidContainingItem, IOxygenC
 			@Override
 			public Range<Integer> getTemperatureThreshold()
 			{
-				return ModItems.SPACE_SUIT.get().getTemperatureThreshold();
+				return ((SpaceSuit) ModItems.SPACE_SUIT.get()).getTemperatureThreshold();
 			}
 		};
 
