@@ -7,6 +7,7 @@ import java.util.function.Supplier;
 
 import ad_astra_giselle_addon.common.AdAstraGiselleAddon;
 import ad_astra_giselle_addon.common.fluid.FluidHooks2;
+import ad_astra_giselle_addon.common.registry.AddonAttributes;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -17,6 +18,28 @@ public abstract class ProofAbstractUtils
 	public static final int GENERAL_PROOF_INTERVAL = 10;
 	public static final int OXYGEN_PROOF_INTERVAL = 30;
 	public static final long OXYGEN_PROOF_USING = FluidHooks2.MILLI_BUCKET;
+
+	public static void reduceProofDuration(LivingEntity living)
+	{
+		for (Attribute attribute : AddonAttributes.ATTRIBUTES.getValues())
+		{
+			AttributeInstance instance = living.getAttribute(attribute);
+
+			if (instance == null)
+			{
+				continue;
+			}
+			
+			double baseValue = instance.getBaseValue();
+
+			if (baseValue > 0.0D)
+			{
+				instance.setBaseValue(attribute.sanitizeValue(baseValue - 1.0D));
+			}
+
+		}
+
+	}
 
 	private final ResourceLocation id;
 	private final Supplier<Attribute> attribute;

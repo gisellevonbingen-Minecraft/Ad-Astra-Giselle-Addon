@@ -7,16 +7,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import ad_astra_giselle_addon.common.content.oxygen.OxygenChargerUtils;
+import ad_astra_giselle_addon.common.content.proof.ProofAbstractUtils;
 import ad_astra_giselle_addon.common.content.proof.SpaceOxygenProofUtils;
-import ad_astra_giselle_addon.common.fluid.FluidHooks2;
-import ad_astra_giselle_addon.common.registry.AddonAttributes;
 import earth.terrarium.ad_astra.common.registry.ModDamageSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.attributes.Attribute;
-import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.level.Level;
 
 @Mixin(LivingEntity.class)
@@ -34,25 +31,10 @@ public abstract class LivingEntityMixin extends Entity
 
 		if (!living.getLevel().isClientSide())
 		{
-			OxygenChargerUtils.streamExtractable(living, FluidHooks2.MILLI_BUCKET).forEach(c ->
-			{
-				OxygenChargerUtils.distributeToItems(living, c);
-			});
-
+			OxygenChargerUtils.distributeToItems(living);
 		}
 
-		for (Attribute attribute : AddonAttributes.ATTRIBUTES.getValues())
-		{
-			AttributeInstance instance = living.getAttribute(attribute);
-			double baseValue = instance.getBaseValue();
-
-			if (baseValue > 0.0D)
-			{
-				instance.setBaseValue(attribute.sanitizeValue(baseValue - 1.0D));
-			}
-
-		}
-
+		ProofAbstractUtils.reduceProofDuration(living);
 	}
 
 	@Inject(method = "hurt", at = @At("HEAD"), cancellable = true)

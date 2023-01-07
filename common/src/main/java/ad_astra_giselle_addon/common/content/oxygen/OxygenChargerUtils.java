@@ -21,6 +21,15 @@ import net.minecraft.world.item.Item;
 
 public class OxygenChargerUtils
 {
+	public static void distributeToItems(LivingEntity living)
+	{
+		streamExtractable(living, FluidHooks2.MILLI_BUCKET).forEach(c ->
+		{
+			distributeToItems(living, c);
+		});
+
+	}
+
 	public static void distributeToItems(LivingEntity living, IOxygenCharger oxygenCharger)
 	{
 		UniveralFluidHandler fluidHandler = oxygenCharger.getFluidHandler();
