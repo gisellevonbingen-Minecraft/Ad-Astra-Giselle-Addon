@@ -3,7 +3,6 @@
 	"package": "ad_astra_giselle_addon.common.mixin",
 	"compatibilityLevel": "JAVA_17",
 	"mixins": [
-		"minecraft.AttributeMapMixin",
 		"minecraft.EntityMixin",
 		"minecraft.LivingEntityMixin",
 		"ad_astra.EntityAcidRainSystemMixin",

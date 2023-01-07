@@ -17,7 +17,6 @@ import ad_astra_giselle_addon.common.content.proof.AcidRainProofUtils;
 import ad_astra_giselle_addon.common.content.proof.SpaceFireProofUtils;
 import ad_astra_giselle_addon.common.content.proof.SpaceOxygenProofUtils;
 import ad_astra_giselle_addon.common.network.AddonNetwork;
-import ad_astra_giselle_addon.common.registry.AddonAttributes;
 import ad_astra_giselle_addon.common.registry.AddonBlockEntityTypes;
 import ad_astra_giselle_addon.common.registry.AddonBlocks;
 import ad_astra_giselle_addon.common.registry.AddonEnchantments;
@@ -66,7 +65,6 @@ public class AdAstraGiselleAddon
 		AddonEnchantments.ENCHANTMENTS.register();
 		AddonBlockEntityTypes.BLOCK_ENTITY_TYPES.register();
 		AddonMenuTypes.MENU_TYPES.register();
-		AddonAttributes.ATTRIBUTES.register();
 		AddonNetwork.registerAll();
 
 		eventBus = new EventBus();

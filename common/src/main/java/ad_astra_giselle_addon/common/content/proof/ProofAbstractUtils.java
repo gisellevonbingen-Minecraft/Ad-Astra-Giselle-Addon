@@ -1,40 +1,44 @@
 package ad_astra_giselle_addon.common.content.proof;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
-import java.util.function.Supplier;
 
 import ad_astra_giselle_addon.common.AdAstraGiselleAddon;
+import ad_astra_giselle_addon.common.entity.EntityCustomDataHelper;
 import ad_astra_giselle_addon.common.fluid.FluidHooks2;
-import ad_astra_giselle_addon.common.registry.AddonAttributes;
+import ad_astra_giselle_addon.common.util.NBTUtils;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.attributes.Attribute;
-import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 
 public abstract class ProofAbstractUtils
 {
+	private static final List<ProofAbstractUtils> _PROOFS = new ArrayList<>();
+	public static final List<ProofAbstractUtils> PROOFS = Collections.unmodifiableList(_PROOFS);
+
+	public static final String KEY_PROOF_MAP = AdAstraGiselleAddon.rl("proof").toString();
+	public static final String KEY_PROOF_DURATION = "proof_duration";
+
 	public static final int GENERAL_PROOF_INTERVAL = 10;
 	public static final int OXYGEN_PROOF_INTERVAL = 30;
 	public static final long OXYGEN_PROOF_USING = FluidHooks2.MILLI_BUCKET;
 
+	public static CompoundTag getAllCustomData(LivingEntity living)
+	{
+		return NBTUtils.getOrCreateTag(EntityCustomDataHelper.getCustomData(living), KEY_PROOF_MAP);
+	}
+
 	public static void reduceProofDuration(LivingEntity living)
 	{
-		for (Attribute attribute : AddonAttributes.ATTRIBUTES.getValues())
+		for (ProofAbstractUtils proof : PROOFS)
 		{
-			AttributeInstance instance = living.getAttribute(attribute);
+			int currentDuration = proof.getProofDuration(living);
 
-			if (instance == null)
+			if (currentDuration > 0)
 			{
-				continue;
-			}
-			
-			double baseValue = instance.getBaseValue();
-
-			if (baseValue > 0.0D)
-			{
-				instance.setBaseValue(attribute.sanitizeValue(baseValue - 1.0D));
+				proof.setProofDuration(living, currentDuration - 1);
 			}
 
 		}
@@ -42,12 +46,13 @@ public abstract class ProofAbstractUtils
 	}
 
 	private final ResourceLocation id;
-	private final Supplier<Attribute> attribute;
+	private final String customDataKey;
 
-	public ProofAbstractUtils(ResourceLocation id, Supplier<Attribute> attribute)
+	public ProofAbstractUtils(ResourceLocation id)
 	{
 		this.id = id;
-		this.attribute = attribute;
+		this.customDataKey = id.toString();
+		_PROOFS.add(this);
 	}
 
 	public ResourceLocation getId()
@@ -55,21 +60,29 @@ public abstract class ProofAbstractUtils
 		return this.id;
 	}
 
-	public Attribute getAttribute()
+	public String getCustomDataKey()
 	{
-		return this.attribute.get();
+		return this.customDataKey;
+	}
+
+	public CompoundTag getCustomData(LivingEntity living)
+	{
+		return NBTUtils.getTag(getAllCustomData(living), this.getCustomDataKey());
+	}
+
+	public CompoundTag getOrCreateData(LivingEntity living)
+	{
+		return NBTUtils.getOrCreateTag(getAllCustomData(living), this.getCustomDataKey());
 	}
 
 	public int getProofDuration(LivingEntity living)
 	{
-		return (int) living.getAttribute(this.getAttribute()).getBaseValue();
+		return this.getCustomData(living).getInt(KEY_PROOF_DURATION);
 	}
 
 	public void setProofDuration(LivingEntity living, int proofDuration)
 	{
-		Attribute attribute = this.getAttribute();
-		AttributeInstance instance = living.getAttribute(attribute);
-		instance.setBaseValue(attribute.sanitizeValue(proofDuration));
+		this.getOrCreateData(living).putInt(KEY_PROOF_DURATION, proofDuration);
 	}
 
 	public boolean tryProvideProof(LivingEntity living)
