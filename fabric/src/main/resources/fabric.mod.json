@@ -29,7 +29,10 @@
 			"ad_astra_giselle_addon.client.compat.jei.AddonJeiPlugin"
 		],
 		"rei_client": [
-			"ad_astra_giselle_addon.client.compat.rei.AddonReiPlugin"
+			"ad_astra_giselle_addon.client.compat.rei.AddonReiClientPlugin"
+		],
+		"rei_common": [
+			"ad_astra_giselle_addon.common.compat.rei.AddonReiCommonPlugin"
 		]
 	},
 	"mixins": [

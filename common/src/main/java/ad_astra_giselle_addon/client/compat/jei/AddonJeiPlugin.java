@@ -8,8 +8,11 @@ import ad_astra_giselle_addon.client.compat.RecipeHelper;
 import ad_astra_giselle_addon.client.screen.AutomationNasaWorkbenchScreen;
 import ad_astra_giselle_addon.common.AdAstraGiselleAddon;
 import ad_astra_giselle_addon.common.config.MachinesConfig;
+import ad_astra_giselle_addon.common.menu.AutomationNasaWorkbenchMenu;
 import ad_astra_giselle_addon.common.registry.AddonBlocks;
+import ad_astra_giselle_addon.common.registry.AddonMenuTypes;
 import earth.terrarium.ad_astra.common.compat.jei.category.NasaWorkbenchCategory;
+import earth.terrarium.ad_astra.common.compat.jei.transfer.MachineTransferInfo;
 import earth.terrarium.ad_astra.common.registry.ModTags;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
@@ -75,6 +78,14 @@ public class AddonJeiPlugin implements IModPlugin
 			category.addTransferHandler(registry);
 		}
 
+		registry.addRecipeTransferHandler(new MachineTransferInfo<>(AutomationNasaWorkbenchMenu.class, AddonMenuTypes.AUTOMATION_NASA_WORKBENCH.get(), NasaWorkbenchCategory.RECIPE)
+		{
+			@Override
+			protected int getInputSlotCount(AutomationNasaWorkbenchMenu menu)
+			{
+				return 14;
+			}
+		});
 	}
 
 	@Override

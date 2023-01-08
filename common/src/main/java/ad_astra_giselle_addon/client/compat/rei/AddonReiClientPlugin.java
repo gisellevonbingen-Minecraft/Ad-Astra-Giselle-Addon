@@ -6,6 +6,7 @@ import java.util.List;
 
 import ad_astra_giselle_addon.client.compat.RecipeHelper;
 import ad_astra_giselle_addon.client.screen.AutomationNasaWorkbenchScreen;
+import ad_astra_giselle_addon.common.compat.rei.AddonReiCommonPlugin;
 import ad_astra_giselle_addon.common.config.MachinesConfig;
 import ad_astra_giselle_addon.common.registry.AddonBlocks;
 import earth.terrarium.ad_astra.common.compat.rei.REICategories;
@@ -15,23 +16,20 @@ import me.shedaniel.rei.api.client.registry.category.CategoryRegistry;
 import me.shedaniel.rei.api.client.registry.display.DisplayRegistry;
 import me.shedaniel.rei.api.client.registry.screen.ScreenRegistry;
 import me.shedaniel.rei.api.client.registry.transfer.TransferHandlerRegistry;
-import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.entry.EntryStack;
 import me.shedaniel.rei.api.common.util.EntryStacks;
 import me.shedaniel.rei.plugin.common.displays.DefaultInformationDisplay;
 import net.minecraft.world.level.ItemLike;
 
-public class AddonReiPlugin implements REIClientPlugin
+public class AddonReiClientPlugin implements REIClientPlugin
 {
-	public static final CategoryIdentifier<FuelLoaderDisplay> FUEL_LOADER_CATEGORY = CategoryIdentifier.of(AddonBlocks.FUEL_LOADER.getId());
-
 	private final List<AddonDisplayCategory<?>> categories;
 	private FuelLoaderCategory fuelLoaderCategory;
 
-	public AddonReiPlugin()
+	public AddonReiClientPlugin()
 	{
 		this.categories = new ArrayList<>();
-		this.categories.add(this.fuelLoaderCategory = new FuelLoaderCategory(FUEL_LOADER_CATEGORY));
+		this.categories.add(this.fuelLoaderCategory = new FuelLoaderCategory(AddonReiCommonPlugin.FUEL_LOADER_CATEGORY));
 	}
 
 	@Override

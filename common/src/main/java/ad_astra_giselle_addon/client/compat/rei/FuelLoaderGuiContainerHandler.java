@@ -3,6 +3,7 @@ package ad_astra_giselle_addon.client.compat.rei;
 import java.awt.Rectangle;
 
 import ad_astra_giselle_addon.client.screen.FuelLoaderScreen;
+import ad_astra_giselle_addon.common.compat.rei.AddonReiCommonPlugin;
 import dev.architectury.event.CompoundEventResult;
 import earth.terrarium.ad_astra.common.compat.rei.BaseClickArea;
 import earth.terrarium.botarium.api.fluid.FluidHolder;
@@ -23,7 +24,7 @@ public class FuelLoaderGuiContainerHandler extends BaseClickArea<FuelLoaderScree
 	@Override
 	public Result getSuccess(FuelLoaderScreen screen)
 	{
-		return categoryWithTooltip(AddonReiPlugin.FUEL_LOADER_CATEGORY, screen.getFluidTankTooltip());
+		return categoryWithTooltip(AddonReiCommonPlugin.FUEL_LOADER_CATEGORY, screen.getFluidTankTooltip());
 	}
 
 	@Override

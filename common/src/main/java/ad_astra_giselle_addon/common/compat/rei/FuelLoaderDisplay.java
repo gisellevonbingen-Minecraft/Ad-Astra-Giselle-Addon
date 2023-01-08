@@ -1,4 +1,4 @@
-package ad_astra_giselle_addon.client.compat.rei;
+package ad_astra_giselle_addon.common.compat.rei;
 
 import java.util.Collections;
 import java.util.List;
@@ -26,7 +26,7 @@ public record FuelLoaderDisplay(Fluid fluid) implements Display
 	@Override
 	public CategoryIdentifier<?> getCategoryIdentifier()
 	{
-		return AddonReiPlugin.FUEL_LOADER_CATEGORY;
+		return AddonReiCommonPlugin.FUEL_LOADER_CATEGORY;
 	}
 
 }

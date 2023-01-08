@@ -5,6 +5,7 @@ import java.util.List;
 
 import ad_astra_giselle_addon.client.compat.RecipeHelper;
 import ad_astra_giselle_addon.client.screen.FuelLoaderScreen;
+import ad_astra_giselle_addon.common.compat.rei.FuelLoaderDisplay;
 import ad_astra_giselle_addon.common.fluid.FluidHooks2;
 import ad_astra_giselle_addon.common.registry.AddonBlocks;
 import ad_astra_giselle_addon.common.registry.ObjectRegistry;
