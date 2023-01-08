@@ -1,25 +1,23 @@
 package ad_astra_giselle_addon.client.compat.rei;
 
-import ad_astra_giselle_addon.client.screen.AutomationNasaWorkbenchScreen;
-import earth.terrarium.ad_astra.common.compat.rei.REICategories;
-import me.shedaniel.rei.api.client.registry.screen.ClickArea;
+import java.awt.Rectangle;
 
-public class AutomationNasaWorkbenchGuiContainerHandler implements ClickArea<AutomationNasaWorkbenchScreen>
+import ad_astra_giselle_addon.client.screen.AutomationNasaWorkbenchScreen;
+import earth.terrarium.ad_astra.common.compat.rei.BaseClickArea;
+import earth.terrarium.ad_astra.common.compat.rei.REICategories;
+
+public class AutomationNasaWorkbenchGuiContainerHandler extends BaseClickArea<AutomationNasaWorkbenchScreen>
 {
 	@Override
-	public Result handle(ClickAreaContext<AutomationNasaWorkbenchScreen> context)
+	public Rectangle getBounds(AutomationNasaWorkbenchScreen screen)
 	{
-		AutomationNasaWorkbenchScreen screen = context.getScreen();
+		return screen.getArrowBounds();
+	}
 
-		if (ClickAreaHelper.contains(screen.getArrowBounds(), context.getMousePosition()))
-		{
-			return ClickAreaHelper.categoryWithTooltip(REICategories.NASA_WORKBENCH_CATEGORY, screen.getCookTimeTooltip());
-		}
-		else
-		{
-			return Result.fail();
-		}
-
+	@Override
+	public Result getSuccess(AutomationNasaWorkbenchScreen screen)
+	{
+		return categoryWithTooltip(REICategories.NASA_WORKBENCH_CATEGORY, screen.getCookTimeTooltip());
 	}
 
 }

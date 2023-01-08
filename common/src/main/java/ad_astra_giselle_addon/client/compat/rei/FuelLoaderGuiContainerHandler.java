@@ -1,31 +1,29 @@
 package ad_astra_giselle_addon.client.compat.rei;
 
+import java.awt.Rectangle;
+
 import ad_astra_giselle_addon.client.screen.FuelLoaderScreen;
 import dev.architectury.event.CompoundEventResult;
+import earth.terrarium.ad_astra.common.compat.rei.BaseClickArea;
 import earth.terrarium.botarium.api.fluid.FluidHolder;
 import me.shedaniel.math.Point;
-import me.shedaniel.rei.api.client.registry.screen.ClickArea;
 import me.shedaniel.rei.api.client.registry.screen.FocusedStackProvider;
 import me.shedaniel.rei.api.common.entry.EntryStack;
 import me.shedaniel.rei.api.common.util.EntryStacks;
 import net.minecraft.client.gui.screens.Screen;
 
-public class FuelLoaderGuiContainerHandler implements ClickArea<FuelLoaderScreen>, FocusedStackProvider
+public class FuelLoaderGuiContainerHandler extends BaseClickArea<FuelLoaderScreen> implements FocusedStackProvider
 {
 	@Override
-	public Result handle(ClickAreaContext<FuelLoaderScreen> context)
+	public Rectangle getBounds(FuelLoaderScreen screen)
 	{
-		FuelLoaderScreen screen = context.getScreen();
+		return screen.getFluidTankBounds();
+	}
 
-		if (ClickAreaHelper.contains(screen.getFluidTankBounds(), context.getMousePosition()))
-		{
-			return ClickAreaHelper.categoryWithTooltip(AddonReiPlugin.FUEL_LOADER_CATEGORY, screen.getFluidTankTooltip());
-		}
-		else
-		{
-			return Result.fail();
-		}
-
+	@Override
+	public Result getSuccess(FuelLoaderScreen screen)
+	{
+		return categoryWithTooltip(AddonReiPlugin.FUEL_LOADER_CATEGORY, screen.getFluidTankTooltip());
 	}
 
 	@Override
@@ -33,7 +31,7 @@ public class FuelLoaderGuiContainerHandler implements ClickArea<FuelLoaderScreen
 	{
 		if (_screen instanceof FuelLoaderScreen screen)
 		{
-			if (ClickAreaHelper.contains(screen.getFluidTankBounds(), mouse))
+			if (screen.getFluidTankBounds().contains(mouse.getX(), mouse.getY()))
 			{
 				FluidHolder fluid = screen.getFluid();
 				return CompoundEventResult.interruptTrue(EntryStacks.of(fluid.getFluid(), fluid.getFluidAmount()));

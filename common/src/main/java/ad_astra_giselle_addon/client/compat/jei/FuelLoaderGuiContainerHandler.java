@@ -1,43 +1,31 @@
 package ad_astra_giselle_addon.client.compat.jei;
 
-import java.util.Collection;
-import java.util.Collections;
+import java.awt.Rectangle;
 import java.util.List;
 
 import ad_astra_giselle_addon.client.screen.FuelLoaderScreen;
-import mezz.jei.api.gui.handlers.IGuiClickableArea;
-import mezz.jei.api.gui.handlers.IGuiContainerHandler;
-import mezz.jei.api.recipe.IFocusFactory;
-import mezz.jei.api.runtime.IRecipesGui;
-import net.minecraft.client.renderer.Rect2i;
+import earth.terrarium.ad_astra.common.compat.jei.guihandler.BaseGuiContainerHandler;
+import mezz.jei.api.recipe.RecipeType;
 import net.minecraft.network.chat.Component;
 
-public class FuelLoaderGuiContainerHandler implements IGuiContainerHandler<FuelLoaderScreen>
+public class FuelLoaderGuiContainerHandler extends BaseGuiContainerHandler<FuelLoaderScreen>
 {
 	@Override
-	public Collection<IGuiClickableArea> getGuiClickableAreas(FuelLoaderScreen screen, double mouseX, double mouseY)
+	public Rectangle getRecipeClickableAreaBounds(FuelLoaderScreen screen)
 	{
-		return Collections.singleton(new IGuiClickableArea()
-		{
-			@Override
-			public Rect2i getArea()
-			{
-				return GuiClickableAreaHelper.getInGuiBounds(screen, screen.getFluidTankBounds());
-			}
+		return screen.getFluidTankBounds();
+	}
 
-			@Override
-			public void onClick(IFocusFactory focusFactory, IRecipesGui recipesGui)
-			{
-				recipesGui.showTypes(Collections.singletonList(AddonJeiPlugin.instance().getFuelLoaderCategory().getRecipeType()));
-			}
+	@Override
+	protected RecipeType<?> getRecipeType(FuelLoaderScreen screen)
+	{
+		return AddonJeiPlugin.instance().getFuelLoaderCategory().getRecipeType();
+	}
 
-			@Override
-			public List<Component> getTooltipStrings()
-			{
-				return GuiClickableAreaHelper.getShowRecipesTooltip(screen.getFluidTankTooltip());
-			}
-		});
-
+	@Override
+	public List<Component> getRecipeTooltip(FuelLoaderScreen screen)
+	{
+		return screen.getFluidTankTooltip();
 	}
 
 	@Override
@@ -48,7 +36,7 @@ public class FuelLoaderGuiContainerHandler implements IGuiContainerHandler<FuelL
 			return IJeiFluidStackHelper.INSTANCE.get(screen.getFluid().getFluid(), screen.getFluid().getFluidAmount());
 		}
 
-		return IGuiContainerHandler.super.getIngredientUnderMouse(screen, mouseX, mouseY);
+		return super.getIngredientUnderMouse(screen, mouseX, mouseY);
 	}
 
 }

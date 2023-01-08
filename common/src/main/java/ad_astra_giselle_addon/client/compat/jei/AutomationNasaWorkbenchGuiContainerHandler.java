@@ -1,44 +1,33 @@
 package ad_astra_giselle_addon.client.compat.jei;
 
-import java.util.Collection;
+import java.awt.Rectangle;
 import java.util.Collections;
 import java.util.List;
 
 import ad_astra_giselle_addon.client.screen.AutomationNasaWorkbenchScreen;
 import earth.terrarium.ad_astra.common.compat.jei.category.NasaWorkbenchCategory;
-import mezz.jei.api.gui.handlers.IGuiClickableArea;
-import mezz.jei.api.gui.handlers.IGuiContainerHandler;
-import mezz.jei.api.recipe.IFocusFactory;
-import mezz.jei.api.runtime.IRecipesGui;
-import net.minecraft.client.renderer.Rect2i;
+import earth.terrarium.ad_astra.common.compat.jei.guihandler.BaseGuiContainerHandler;
+import mezz.jei.api.recipe.RecipeType;
 import net.minecraft.network.chat.Component;
 
-public class AutomationNasaWorkbenchGuiContainerHandler implements IGuiContainerHandler<AutomationNasaWorkbenchScreen>
+public class AutomationNasaWorkbenchGuiContainerHandler extends BaseGuiContainerHandler<AutomationNasaWorkbenchScreen>
 {
 	@Override
-	public Collection<IGuiClickableArea> getGuiClickableAreas(AutomationNasaWorkbenchScreen screen, double mouseX, double mouseY)
+	public Rectangle getRecipeClickableAreaBounds(AutomationNasaWorkbenchScreen screen)
 	{
-		return Collections.singleton(new IGuiClickableArea()
-		{
-			@Override
-			public Rect2i getArea()
-			{
-				return GuiClickableAreaHelper.getInGuiBounds(screen, screen.getArrowBounds());
-			}
+		return screen.getArrowBounds();
+	}
 
-			@Override
-			public void onClick(IFocusFactory focusFactory, IRecipesGui recipesGui)
-			{
-				recipesGui.showTypes(Collections.singletonList(NasaWorkbenchCategory.RECIPE));
-			}
+	@Override
+	protected RecipeType<?> getRecipeType(AutomationNasaWorkbenchScreen screen)
+	{
+		return NasaWorkbenchCategory.RECIPE;
+	}
 
-			@Override
-			public List<Component> getTooltipStrings()
-			{
-				return GuiClickableAreaHelper.getShowRecipesTooltip(screen.getCookTimeTooltip());
-			}
-		});
-
+	@Override
+	public List<Component> getRecipeTooltip(AutomationNasaWorkbenchScreen screen)
+	{
+		return Collections.singletonList(screen.getCookTimeTooltip());
 	}
 
 }
