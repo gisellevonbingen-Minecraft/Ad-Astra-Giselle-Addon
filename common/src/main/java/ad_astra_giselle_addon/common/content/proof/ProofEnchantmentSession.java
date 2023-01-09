@@ -20,13 +20,13 @@ public abstract class ProofEnchantmentSession extends ProofSession
 
 	private ItemUsableResource testedUsableResource;
 
-	public ProofEnchantmentSession(LivingEntity entity, EnchantmentEnergyStorageOrDamageable enchantment)
+	public ProofEnchantmentSession(LivingEntity living, EnchantmentEnergyStorageOrDamageable enchantment)
 	{
-		super(entity);
+		super(living);
 		this.enchantment = enchantment;
 
 		@NotNull
-		Pair<ItemStackReference, Integer> pair = EnchantmentHelper2.getEnchantmentItemAndLevel(enchantment, entity);
+		Pair<ItemStackReference, Integer> pair = EnchantmentHelper2.getEnchantmentItemAndLevel(enchantment, living);
 		this.enchantedItem = pair.getFirst();
 		this.enchantLevel = pair.getSecond();
 

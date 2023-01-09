@@ -15,9 +15,9 @@ public class SpaceOxygenProofEnchantmentSession extends ProofEnchantmentSession
 {
 	private IOxygenCharger testedOxygenCharger;
 
-	public SpaceOxygenProofEnchantmentSession(LivingEntity entity, EnchantmentEnergyStorageOrDamageable enchantment)
+	public SpaceOxygenProofEnchantmentSession(LivingEntity living, EnchantmentEnergyStorageOrDamageable enchantment)
 	{
-		super(entity, enchantment);
+		super(living, enchantment);
 	}
 
 	@Override

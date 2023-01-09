@@ -7,9 +7,9 @@ import net.minecraft.world.entity.LivingEntity;
 
 public class SpaceFireProofEnchantmentSession extends ProofEnchantmentSession
 {
-	public SpaceFireProofEnchantmentSession(LivingEntity entity, EnchantmentEnergyStorageOrDamageable enchantment)
+	public SpaceFireProofEnchantmentSession(LivingEntity living, EnchantmentEnergyStorageOrDamageable enchantment)
 	{
-		super(entity, enchantment);
+		super(living, enchantment);
 	}
 
 	@Override
