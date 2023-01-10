@@ -17,6 +17,8 @@
   "enchantment.ad_astra_giselle_addon.space_fire_proof.desc": "Ad Astra 차원에서 불이 붙지 않습니다\n갑옷의 에너지 혹은 내구도를 소모합니다",
   "enchantment.ad_astra_giselle_addon.acid_rain_proof": "우주 내산성",
   "enchantment.ad_astra_giselle_addon.acid_rain_proof.desc": "Ad Astra 차원에서 산성비 피해를 입지 않습니다\n갑옷의 에너지 혹은 내구도를 소모합니다",
+  "enchantment.ad_astra_giselle_addon.gravity_normalizing": "중력 정규화",
+  "enchantment.ad_astra_giselle_addon.gravity_normalizing.desc": "Ad Astra 차원에서 중력을 오버월드처럼 정규화합니다\n갑옷의 에너지 혹은 내구도를 소모합니다",
   
   "gui.ad_astra_giselle_addon.workingarea.show": "동작 범위 표시",
   "gui.ad_astra_giselle_addon.workingarea.hide": "동작 범위 숨김",
