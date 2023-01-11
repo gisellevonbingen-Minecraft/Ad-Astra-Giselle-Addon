@@ -50,7 +50,7 @@ public class PneumaticCraftProofProvidingHandler
 			IAirHandlerItem airHandler = stack.getCapability(PNCCapabilities.AIR_HANDLER_ITEM_CAPABILITY).orElse(null);
 			int airUsing = AddonPneumaticCraftConfig.SPACE_BREATHING_AIR_USING;
 
-			if (airHandler != null && (!LivingHelper.isPlayingMode(player) || PneumaticCraftProofProvidingHandler.useAir(airHandler, airUsing, true)))
+			if (airHandler != null && useAir(player, airHandler, airUsing, true))
 			{
 				long oxygenUsing = ProofAbstractUtils.OXYGEN_PROOF_USING;
 				IOxygenCharger oxygenCharger = OxygenChargerUtils.firstExtractable(player, oxygenUsing);
@@ -68,7 +68,7 @@ public class PneumaticCraftProofProvidingHandler
 							{
 								UniveralFluidHandler fluidHandler = oxygenCharger.getFluidHandler();
 								FluidHooks2.extractFluid(fluidHandler, FluidPredicates::isOxygen, oxygenUsing, false);
-								useAir(airHandler, airUsing, false);
+								useAir(player, airHandler, airUsing, false);
 							}
 
 						}
@@ -181,11 +181,11 @@ public class PneumaticCraftProofProvidingHandler
 
 		IAirHandlerItem airHandler = stack.getCapability(PNCCapabilities.AIR_HANDLER_ITEM_CAPABILITY).orElse(null);
 
-		if (airHandler != null && useAir(airHandler, airUsing, true))
+		if (airHandler != null && useAir(player, airHandler, airUsing, true))
 		{
 			if (!player.getLevel().isClientSide())
 			{
-				useAir(airHandler, airUsing, false);
+				useAir(player, airHandler, airUsing, false);
 			}
 
 			return true;
@@ -213,6 +213,11 @@ public class PneumaticCraftProofProvidingHandler
 		}
 
 		return ItemStack.EMPTY;
+	}
+
+	public boolean useAir(Player player, IAirHandlerItem airHandler, int airUsing, boolean simulate)
+	{
+		return !LivingHelper.isPlayingMode(player) || useAir(airHandler, airUsing, simulate);
 	}
 
 	public static boolean useAir(IAirHandler airHandler, int airUsing, boolean simulate)
