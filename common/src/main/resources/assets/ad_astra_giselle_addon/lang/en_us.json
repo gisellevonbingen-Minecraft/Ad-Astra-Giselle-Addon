@@ -129,7 +129,7 @@
   "config.ad_astra_giselle_addon.compats.mekanism.modules_acid_rain_proof_energy_using.comment": "Energy usage for proof in every ticks [in every 10 ticks]",
   "config.ad_astra_giselle_addon.compats.mekanism.modules_gravity_normalizing": "Gravity Normalizing Unit",
   "config.ad_astra_giselle_addon.compats.mekanism.modules_gravity_normalizing_energy_using": "Energy usage",
-  "config.ad_astra_giselle_addon.compats.mekanism.modules_gravity_normalizing_energy_using.comment": "Energy usage for proof in every ticks [in every 10 ticks]",
+  "config.ad_astra_giselle_addon.compats.mekanism.modules_gravity_normalizing_energy_using.comment": "Energy usage for normalizing in every ticks [in every 10 ticks]",
   "config.ad_astra_giselle_addon.compats.pneumaticcraft": "PneumaticCraft",
   "config.ad_astra_giselle_addon.compats.pneumaticcraft.upgades": "Pneumatic Armor Upgrades",
   "config.ad_astra_giselle_addon.compats.pneumaticcraft.upgades_space_breathing": "Space Breathing Upgrade",
@@ -141,6 +141,7 @@
   "config.ad_astra_giselle_addon.compats.pneumaticcraft.upgades_acid_rain_proof": "Acid Rain Proof Upgrade",
   "config.ad_astra_giselle_addon.compats.pneumaticcraft.upgades_acid_rain_proof_air_using": "Air Usage",
   "config.ad_astra_giselle_addon.compats.pneumaticcraft.upgades_acid_rain_proof_air_using.comment": "Air usage for proof [in every 10 ticks]",
+  "config.ad_astra_giselle_addon.compats.pneumaticcraft.upgades_gravity_normalizing": "Gravity Normalizing Upgrade",
   "config.ad_astra_giselle_addon.compats.pneumaticcraft.upgades_gravity_normalizing_air_using": "Air Usage",
   "config.ad_astra_giselle_addon.compats.pneumaticcraft.upgades_gravity_normalizing_air_using.comment": "Air usage for proof [in every 10 ticks]",
   
