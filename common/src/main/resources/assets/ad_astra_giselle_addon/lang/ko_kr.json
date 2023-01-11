@@ -48,14 +48,17 @@
   "item.ad_astra_giselle_addon.pneumatic_space_breathing_upgrade": "우주 호흡성 업그레이드",
   "item.ad_astra_giselle_addon.pneumatic_space_fire_proof_upgrade": "우주 내화성 업그레이드",
   "item.ad_astra_giselle_addon.pneumatic_acid_rain_proof_upgrade": "우주 내산성 업그레이드",
+  "item.ad_astra_giselle_addon.pneumatic_gravity_normalizing_upgrade": "중력 정규화 업그레이드",
   
   "pneumaticcraft.armor.upgrade.ad_astra_giselle_addon.space_breathing" : "우주 호흡성",
   "pneumaticcraft.armor.upgrade.ad_astra_giselle_addon.space_fire_proof" : "우주 내화성",
   "pneumaticcraft.armor.upgrade.ad_astra_giselle_addon.acid_rain_proof" : "우주 내산성",
+  "pneumaticcraft.armor.upgrade.ad_astra_giselle_addon.gravity_normalizing" : "중력 정규화",
   
   "pneumaticcraft.gui.tab.info.item.armor.generic.ad_astra_giselle_addon.space_breathingUpgrade": "Ad Astra 차원에서 호흡할 수 있습니다\n인벤토리에 '산소 캔'이 필요합니다",
   "pneumaticcraft.gui.tab.info.item.armor.generic.ad_astra_giselle_addon.space_fire_proofUpgrade": "Ad Astra 차원에서 불이 붙지 않습니다",
   "pneumaticcraft.gui.tab.info.item.armor.generic.ad_astra_giselle_addon.acid_rain_proofUpgrade": "Ad Astra 차원에서 산성비 피해를 입지 않습니다",
+  "pneumaticcraft.gui.tab.info.item.armor.generic.ad_astra_giselle_addon.gravity_normalizingUpgrade": "Ad Astra 차원에서 중력을 오버월드처럼 정규화합니다",
   
   
   "config.ad_astra_giselle_addon.items": "아이템",
@@ -103,6 +106,13 @@
   "config.ad_astra_giselle_addon.enchantments.acid_rain_proof_durability_using.comment": "내산성 동작에 필요한 내구도",
   "config.ad_astra_giselle_addon.enchantments.acid_rain_proof_durability_duration": "내구도 사용시 동작 시간",
   "config.ad_astra_giselle_addon.enchantments.acid_rain_proof_durability_duration.comment": "내구도 사용시 동작 시간 [틱, 10의 배수가 되어야 함]",
+  "config.ad_astra_giselle_addon.enchantments.gravity_normalizing": "중력 정규화",
+  "config.ad_astra_giselle_addon.enchantments.gravity_normalizing_energy_using": "에너지 사용량",
+  "config.ad_astra_giselle_addon.enchantments.gravity_normalizing_energy_using.comment": "정규화 동작에 필요한 에너지",
+  "config.ad_astra_giselle_addon.enchantments.gravity_normalizing_durability_using": "내구도 사용량",
+  "config.ad_astra_giselle_addon.enchantments.gravity_normalizing_durability_using.comment": "정규화 동작에 필요한 내구도",
+  "config.ad_astra_giselle_addon.enchantments.gravity_normalizing_durability_duration": "내구도 사용시 동작 시간",
+  "config.ad_astra_giselle_addon.enchantments.gravity_normalizing_durability_duration.comment": "내구도 사용시 동작 시간 [틱, 10의 배수가 되어야 함]",
   "config.ad_astra_giselle_addon.compats": "모드 호환성",
   "config.ad_astra_giselle_addon.compats.mekanism": "Mekanism",
   "config.ad_astra_giselle_addon.compats.mekanism.modules": "메카슈트 모듈",
@@ -131,6 +141,9 @@
   "config.ad_astra_giselle_addon.compats.pneumaticcraft.upgades_acid_rain_proof": "우주 내산성 업그레이드",
   "config.ad_astra_giselle_addon.compats.pneumaticcraft.upgades_acid_rain_proof_air_using": "공기 사용량",
   "config.ad_astra_giselle_addon.compats.pneumaticcraft.upgades_acid_rain_proof_air_using.comment": "동작시 공기 사용량 [매 10 틱 마다]",
+  "config.ad_astra_giselle_addon.compats.pneumaticcraft.upgades_gravity_normalizing": "중력 정규화 업그레이드",
+  "config.ad_astra_giselle_addon.compats.pneumaticcraft.upgades_gravity_normalizing_air_using": "공기 사용량",
+  "config.ad_astra_giselle_addon.compats.pneumaticcraft.upgades_gravity_normalizing_air_using.comment": "동작시 공기 사용량 [매 10 틱 마다]",
   
   "_eof": "eof"
 }
