@@ -11,6 +11,7 @@ public class AddonPNCUpgrades
 	public static final UpgradeRegistryHolder<AddonPNCUpgrade, UpgradeItem> SPACE_BREATHING = UPGRADES.add("space_breathing", AddonItems::getMainItemProperties);
 	public static final UpgradeRegistryHolder<AddonPNCUpgrade, UpgradeItem> SPACE_FIRE_PROOF = UPGRADES.add("space_fire_proof", AddonItems::getMainItemProperties);
 	public static final UpgradeRegistryHolder<AddonPNCUpgrade, UpgradeItem> ACID_RAIN_PROOF = UPGRADES.add("acid_rain_proof", AddonItems::getMainItemProperties);
+	public static final UpgradeRegistryHolder<AddonPNCUpgrade, UpgradeItem> GRAVITY_NORMALIZING = UPGRADES.add("gravity_normalizing", AddonItems::getMainItemProperties);
 
 	private AddonPNCUpgrades()
 	{

@@ -41,6 +41,8 @@
   "description.ad_astra_giselle_addon.space_fire_proof_unit": "Ad Astra 차원에서 불이 붙지 않습니다",
   "module.ad_astra_giselle_addon.acid_rain_proof_unit": "우주 내산성 기구",
   "description.ad_astra_giselle_addon.acid_rain_proof_unit": "Ad Astra 차원에서 산성비 피해를 입지 않습니다",
+  "module.ad_astra_giselle_addon.gravity_normalizing_unit": "중력 정규화 기구",
+  "description.ad_astra_giselle_addon.gravity_normalizing_unit": "Ad Astra 차원에서 중력을 오버월드처럼 정규화합니다",
   
   
   "item.ad_astra_giselle_addon.pneumatic_space_breathing_upgrade": "우주 호흡성 업그레이드",
@@ -115,6 +117,9 @@
   "config.ad_astra_giselle_addon.compats.mekanism.modules_acid_rain_proof": "우주 내산성 기구",
   "config.ad_astra_giselle_addon.compats.mekanism.modules_acid_rain_proof_energy_using": "에너지 사용량",
   "config.ad_astra_giselle_addon.compats.mekanism.modules_acid_rain_proof_energy_using.comment": "동작시 에너지 사용량 [매 10 틱 마다]",
+  "config.ad_astra_giselle_addon.compats.mekanism.modules_gravity_normalizing": "중력 정규화 기구",
+  "config.ad_astra_giselle_addon.compats.mekanism.modules_gravity_normalizing_energy_using": "에너지 사용량",
+  "config.ad_astra_giselle_addon.compats.mekanism.modules_gravity_normalizing_energy_using.comment": "동작시 에너지 사용량 [매 10 틱 마다]",
   "config.ad_astra_giselle_addon.compats.pneumaticcraft": "PneumaticCraft",
   "config.ad_astra_giselle_addon.compats.pneumaticcraft.upgades": "Pneumatic Armor Upgrades",
   "config.ad_astra_giselle_addon.compats.pneumaticcraft.upgades_space_breathing": "우주 호흡성 업그레이드",

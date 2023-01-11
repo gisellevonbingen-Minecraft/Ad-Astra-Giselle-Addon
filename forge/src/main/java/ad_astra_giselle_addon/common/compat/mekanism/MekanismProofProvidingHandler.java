@@ -2,9 +2,11 @@ package ad_astra_giselle_addon.common.compat.mekanism;
 
 import com.google.common.eventbus.Subscribe;
 
+import ad_astra_giselle_addon.common.compat.mekanism.gear.ModuleGravityNormalizingUnit;
 import ad_astra_giselle_addon.common.compat.mekanism.gear.ModuleSpaceBreathingUnit;
 import ad_astra_giselle_addon.common.compat.mekanism.gear.ModuleSpaceFireProofUnit;
 import ad_astra_giselle_addon.common.compat.mekanism.gear.ModuleVenusAcidProofUnit;
+import ad_astra_giselle_addon.common.content.proof.LivingGravityNormalizingProvidingEvent;
 import ad_astra_giselle_addon.common.content.proof.LivingSpaceFireProofProvidingEvent;
 import ad_astra_giselle_addon.common.content.proof.LivingSpaceOxygenProofProvidingEvent;
 import ad_astra_giselle_addon.common.content.proof.LivingVenusAcidProofProvidingEvent;
@@ -69,6 +71,26 @@ public class MekanismProofProvidingHandler
 			public boolean canProvide()
 			{
 				return AddonModuleHelper.useEnergy(this.getLiving(), AddonMekanismModules.ACID_RAIN_PROOF_UNIT, ModuleVenusAcidProofUnit::getEnergyUsing);
+			}
+
+			@Override
+			public int getProofDuration()
+			{
+				return ProofAbstractUtils.GENERAL_PROOF_INTERVAL;
+			}
+		});
+
+	}
+
+	@Subscribe
+	public void onLivingGravityNormalizing(LivingGravityNormalizingProvidingEvent e)
+	{
+		e.add(living -> new ProofSession(living)
+		{
+			@Override
+			public boolean canProvide()
+			{
+				return AddonModuleHelper.useEnergy(this.getLiving(), AddonMekanismModules.GRAVITY_NORMALIZING_UNIT, ModuleGravityNormalizingUnit::getEnergyUsing);
 			}
 
 			@Override

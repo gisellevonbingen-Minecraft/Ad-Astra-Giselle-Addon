@@ -8,6 +8,7 @@ import com.google.common.eventbus.Subscribe;
 
 import ad_astra_giselle_addon.common.content.oxygen.IOxygenCharger;
 import ad_astra_giselle_addon.common.content.oxygen.OxygenChargerUtils;
+import ad_astra_giselle_addon.common.content.proof.LivingGravityNormalizingProvidingEvent;
 import ad_astra_giselle_addon.common.content.proof.LivingSpaceFireProofProvidingEvent;
 import ad_astra_giselle_addon.common.content.proof.LivingSpaceOxygenProofProvidingEvent;
 import ad_astra_giselle_addon.common.content.proof.LivingVenusAcidProofProvidingEvent;
@@ -126,6 +127,32 @@ public class PneumaticCraftProofProvidingHandler
 					public boolean canProvide()
 					{
 						return useAir(this.getLiving(), AddonCommonUpgradeHandlers.ACID_RAIN_PROOF, AddonPneumaticCraftConfig.ACID_RAIN_PROOF_AIR_USING);
+					}
+
+					@Override
+					public int getProofDuration()
+					{
+						return ProofAbstractUtils.GENERAL_PROOF_INTERVAL;
+					}
+				};
+			}
+		});
+	}
+
+	@Subscribe
+	public void onLivingGravityNormalizing(LivingGravityNormalizingProvidingEvent e)
+	{
+		e.add(new Function<LivingEntity, ProofSession>()
+		{
+			@Override
+			public ProofSession apply(LivingEntity living)
+			{
+				return new ProofSession(living)
+				{
+					@Override
+					public boolean canProvide()
+					{
+						return useAir(this.getLiving(), AddonCommonUpgradeHandlers.GRAVITY_NORMALIZING, AddonPneumaticCraftConfig.GRAVITY_NORMALIZING_AIR_USING);
 					}
 
 					@Override

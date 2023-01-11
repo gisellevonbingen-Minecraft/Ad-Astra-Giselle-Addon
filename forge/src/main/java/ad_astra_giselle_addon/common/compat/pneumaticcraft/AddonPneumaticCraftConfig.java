@@ -37,4 +37,11 @@ public final class AddonPneumaticCraftConfig
 	@ConfigEntry(id = ACID_RAIN_PROOFID + "_air_using", type = EntryType.INTEGER, translation = ACID_RAIN_PROOF_PREFIX + "_air_using")
 	@Comment(value = "Air usage for proof " + EnchantmentsConfig.GENERAL_ENERGY_INTERVAL_TOOLTIP, translation = ACID_RAIN_PROOF_PREFIX + "_air_using.comment")
 	public static int ACID_RAIN_PROOF_AIR_USING = 5 * ProofAbstractUtils.GENERAL_PROOF_INTERVAL;
+
+	public static final String GRAVITY_NORMALIZINGID = UPGRADE_ID + "_gravity_normalizing";
+	public static final String GRAVITY_NORMALIZING_PREFIX = PREFIX + "." + GRAVITY_NORMALIZINGID;
+	@ConfigSeparator(translation = GRAVITY_NORMALIZING_PREFIX)
+	@ConfigEntry(id = GRAVITY_NORMALIZINGID + "_air_using", type = EntryType.INTEGER, translation = GRAVITY_NORMALIZING_PREFIX + "_air_using")
+	@Comment(value = "Air usage for proof " + EnchantmentsConfig.GENERAL_ENERGY_INTERVAL_TOOLTIP, translation = GRAVITY_NORMALIZING_PREFIX + "_air_using.comment")
+	public static int GRAVITY_NORMALIZING_AIR_USING = 5 * ProofAbstractUtils.GENERAL_PROOF_INTERVAL;
 }
