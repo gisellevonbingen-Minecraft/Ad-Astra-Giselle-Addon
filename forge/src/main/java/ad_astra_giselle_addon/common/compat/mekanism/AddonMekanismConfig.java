@@ -40,4 +40,11 @@ public final class AddonMekanismConfig
 	@ConfigEntry(id = MODULES_ACID_RAIN_PROOF_ID + "_energy_using", type = EntryType.INTEGER, translation = MODULES_ACID_RAIN_PROOF_PREFIX + "_energy_using")
 	@Comment(value = "Energy usage for proof in every ticks " + EnchantmentsConfig.GENERAL_ENERGY_INTERVAL_TOOLTIP, translation = MODULES_ACID_RAIN_PROOF_PREFIX + "_energy_using.comment")
 	public static int MODULES_ACID_RAIN_PROOF_ENERGY_USING = 10 * ProofAbstractUtils.GENERAL_PROOF_INTERVAL;
+
+	public static final String MODULES_GRAVITY_NORMALIZING_ID = MODULES_ID + "_gravity_normalizing";
+	public static final String MODULES_GRAVITY_NORMALIZING_PREFIX = PREFIX + "." + MODULES_GRAVITY_NORMALIZING_ID;
+	@ConfigSeparator(translation = MODULES_GRAVITY_NORMALIZING_PREFIX)
+	@ConfigEntry(id = MODULES_GRAVITY_NORMALIZING_ID + "_energy_using", type = EntryType.INTEGER, translation = MODULES_GRAVITY_NORMALIZING_PREFIX + "_energy_using")
+	@Comment(value = "Energy usage for proof in every ticks " + EnchantmentsConfig.GENERAL_ENERGY_INTERVAL_TOOLTIP, translation = MODULES_GRAVITY_NORMALIZING_PREFIX + "_energy_using.comment")
+	public static int MODULES_GRAVITY_NORMALIZING_ENERGY_USING = 10 * ProofAbstractUtils.GENERAL_PROOF_INTERVAL;
 }

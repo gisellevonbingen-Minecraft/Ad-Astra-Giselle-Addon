@@ -6,7 +6,8 @@
 		"minecraft.EntityMixin",
 		"minecraft.LivingEntityMixin",
 		"ad_astra.EntityAcidRainSystemMixin",
-		"ad_astra.EntityTemperatureSystemMixin"
+		"ad_astra.EntityTemperatureSystemMixin",
+		"ad_astra.ModUtilsMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

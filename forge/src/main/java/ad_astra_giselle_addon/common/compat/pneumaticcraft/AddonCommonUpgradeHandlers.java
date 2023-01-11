@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.function.Function;
 
 import ad_astra_giselle_addon.common.AdAstraGiselleAddon;
+import ad_astra_giselle_addon.common.compat.pneumaticcraft.pneumatic_armor.handlers.GravityNormalizingCommonHandler;
 import ad_astra_giselle_addon.common.compat.pneumaticcraft.pneumatic_armor.handlers.SpaceBreathingCommonHandler;
 import ad_astra_giselle_addon.common.compat.pneumaticcraft.pneumatic_armor.handlers.SpaceFireProofCommonHandler;
 import ad_astra_giselle_addon.common.compat.pneumaticcraft.pneumatic_armor.handlers.VenusAcidProofCommonHandler;
@@ -21,6 +22,7 @@ public class AddonCommonUpgradeHandlers
 	public static final SpaceBreathingCommonHandler SPACE_BREATHING = register("space_breathing", SpaceBreathingCommonHandler::new);
 	public static final SpaceFireProofCommonHandler SPACE_FIRE_PROOF = register("space_fire_proof", SpaceFireProofCommonHandler::new);
 	public static final VenusAcidProofCommonHandler ACID_RAIN_PROOF = register("acid_rain_proof", VenusAcidProofCommonHandler::new);
+	public static final GravityNormalizingCommonHandler GRAVITY_NORMALIZING = register("gravity_normalizing", GravityNormalizingCommonHandler::new);
 
 	private static <T extends IArmorUpgradeHandler<?>> T register(String name, Function<ResourceLocation, T> func)
 	{

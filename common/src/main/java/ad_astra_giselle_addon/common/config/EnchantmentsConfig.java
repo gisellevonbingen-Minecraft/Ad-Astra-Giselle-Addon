@@ -67,4 +67,17 @@ public final class EnchantmentsConfig
 	@ConfigEntry(id = ACID_RAIN_PROOF_ID + "_durability_duration", type = EntryType.INTEGER, translation = ACID_RAIN_PROOF_PREFIX + "_durability_duration")
 	@Comment(value = "Proof duration on using durability " + GENERAL_DURABILITY_TICKS_TOOLTIP, translation = ACID_RAIN_PROOF_PREFIX + "_durability_duration.comment")
 	public static int ACID_RAIN_PROOF_DURABILITY_DURATION = 6 * ProofAbstractUtils.GENERAL_PROOF_INTERVAL;
+
+	public static final String GRAVITY_NORMALIZING_ID = "gravity_normalizing";
+	public static final String GRAVITY_NORMALIZING_PREFIX = PREFIX + "." + GRAVITY_NORMALIZING_ID;
+	@ConfigSeparator(translation = GRAVITY_NORMALIZING_PREFIX)
+	@ConfigEntry(id = GRAVITY_NORMALIZING_ID + "_energy_using", type = EntryType.INTEGER, translation = GRAVITY_NORMALIZING_PREFIX + "_energy_using")
+	@Comment(value = "Energy usage for proof " + GENERAL_ENERGY_INTERVAL_TOOLTIP, translation = GRAVITY_NORMALIZING_PREFIX + "_energy_using.comment")
+	public static int GRAVITY_NORMALIZING_ENERGY_USING = 10;
+	@ConfigEntry(id = GRAVITY_NORMALIZING_ID + "_durability_using", type = EntryType.INTEGER, translation = GRAVITY_NORMALIZING_PREFIX + "_durability_using")
+	@Comment(value = "Durability usage for proof", translation = GRAVITY_NORMALIZING_PREFIX + "_durability_using.comment")
+	public static int GRAVITY_NORMALIZING_DURABILITY_USING = 1;
+	@ConfigEntry(id = GRAVITY_NORMALIZING_ID + "_durability_duration", type = EntryType.INTEGER, translation = GRAVITY_NORMALIZING_PREFIX + "_durability_duration")
+	@Comment(value = "Proof duration on using durability " + GENERAL_DURABILITY_TICKS_TOOLTIP, translation = GRAVITY_NORMALIZING_PREFIX + "_durability_duration.comment")
+	public static int GRAVITY_NORMALIZING_DURABILITY_DURATION = 6 * ProofAbstractUtils.GENERAL_PROOF_INTERVAL;
 }

@@ -105,7 +105,16 @@ public abstract class ProofEnchantmentSession extends ProofSession
 	public int getProofDuration()
 	{
 		ItemUsableResource resource = this.getTestedUsableResource();
-		return this.getProofDuration(resource);
+
+		if (resource == ItemUsableResource.None)
+		{
+			return ProofAbstractUtils.GENERAL_PROOF_INTERVAL;
+		}
+		else
+		{
+			return this.getProofDuration(resource);
+		}
+
 	}
 
 	public EnchantmentEnergyStorageOrDamageable getEnchantment()

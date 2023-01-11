@@ -26,7 +26,7 @@ public class PneumaticCraftCommand
 		player.setItemSlot(EquipmentSlot.HEAD, makeFull(ModItems.PNEUMATIC_HELMET.get(), AddonPNCUpgrades.SPACE_BREATHING.get()));
 		player.setItemSlot(EquipmentSlot.CHEST, makeFull(ModItems.PNEUMATIC_CHESTPLATE.get(), AddonPNCUpgrades.SPACE_FIRE_PROOF.get(), AddonPNCUpgrades.ACID_RAIN_PROOF.get()));
 		player.setItemSlot(EquipmentSlot.LEGS, makeFull(ModItems.PNEUMATIC_LEGGINGS.get()));
-		player.setItemSlot(EquipmentSlot.FEET, makeFull(ModItems.PNEUMATIC_BOOTS.get()));
+		player.setItemSlot(EquipmentSlot.FEET, makeFull(ModItems.PNEUMATIC_BOOTS.get(), AddonPNCUpgrades.GRAVITY_NORMALIZING.get()));
 
 		return AddonCommand.sendEquipedMessage(source);
 	}

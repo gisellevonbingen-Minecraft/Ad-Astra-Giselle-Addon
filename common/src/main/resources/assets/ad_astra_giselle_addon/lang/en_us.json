@@ -17,6 +17,8 @@
   "enchantment.ad_astra_giselle_addon.space_fire_proof.desc": "Don't set fire to player in Ad Astra dimensions\nUse energy or durability",
   "enchantment.ad_astra_giselle_addon.acid_rain_proof": "Acid Rain Proof",
   "enchantment.ad_astra_giselle_addon.acid_rain_proof.desc": "Don't damage from acid rain in Ad Astra dimensions\nUse energy or durability",
+  "enchantment.ad_astra_giselle_addon.gravity_normalizing": "Gravity Normalizing",
+  "enchantment.ad_astra_giselle_addon.gravity_normalizing.desc": "Normalize gravity like overworld in Ad Astra dimensions\nUse energy or durability",
   
   "gui.ad_astra_giselle_addon.workingarea.show": "Show",
   "gui.ad_astra_giselle_addon.workingarea.hide": "Hide",
@@ -39,19 +41,24 @@
   "description.ad_astra_giselle_addon.space_fire_proof_unit": "Don't set fire to player in Ad Astra dimensions",
   "module.ad_astra_giselle_addon.acid_rain_proof_unit": "Acid Rain Proof Unit",
   "description.ad_astra_giselle_addon.acid_rain_proof_unit": "Don't damage from acid rain in Ad Astra dimensions",
+  "module.ad_astra_giselle_addon.gravity_normalizing_unit": "Gravity Normalizing Unit",
+  "description.ad_astra_giselle_addon.gravity_normalizing_unit": "Normalize gravity like overworld in Ad Astra dimensions",
   
   
   "item.ad_astra_giselle_addon.pneumatic_space_breathing_upgrade": "Space Breathing Upgrade",
   "item.ad_astra_giselle_addon.pneumatic_space_fire_proof_upgrade": "Space Fire Proof Upgrade",
   "item.ad_astra_giselle_addon.pneumatic_acid_rain_proof_upgrade": "Acid Rain Proof Upgrade",
+  "item.ad_astra_giselle_addon.pneumatic_gravity_normalizing_upgrade": "Gravity Normalizing Upgrade",
   
   "pneumaticcraft.armor.upgrade.ad_astra_giselle_addon.space_breathing" : "Space Breathing",
   "pneumaticcraft.armor.upgrade.ad_astra_giselle_addon.space_fire_proof" : "Space Fire Proof",
   "pneumaticcraft.armor.upgrade.ad_astra_giselle_addon.acid_rain_proof" : "Acid Rain Proof",
+  "pneumaticcraft.armor.upgrade.ad_astra_giselle_addon.gravity_normalizing" : "Gravity Normalizing",
   
   "pneumaticcraft.gui.tab.info.item.armor.generic.ad_astra_giselle_addon.space_breathingUpgrade": "Can breath in Ad Astra dimensions\nRequire 'Oxygen Can' in inventory",
   "pneumaticcraft.gui.tab.info.item.armor.generic.ad_astra_giselle_addon.space_fire_proofUpgrade": "Don't set fire to player in Ad Astra dimensions",
   "pneumaticcraft.gui.tab.info.item.armor.generic.ad_astra_giselle_addon.acid_rain_proofUpgrade": "Don't damage from acid rain in Ad Astra dimensions",
+  "pneumaticcraft.gui.tab.info.item.armor.generic.ad_astra_giselle_addon.gravity_normalizingUpgrade": "Normalize gravity like overworld in Ad Astra dimensions",
   
   
   "config.ad_astra_giselle_addon.items": "Items",
@@ -99,6 +106,13 @@
   "config.ad_astra_giselle_addon.enchantments.acid_rain_proof_durability_using.comment": "Durability usage for proof",
   "config.ad_astra_giselle_addon.enchantments.acid_rain_proof_durability_duration": "Durability Proof Duration",
   "config.ad_astra_giselle_addon.enchantments.acid_rain_proof_durability_duration.comment": "Proof duration on using durability [ticks, be multiple of 10]",
+  "config.ad_astra_giselle_addon.enchantments.gravity_normalizing": "Gravity Normalizing",
+  "config.ad_astra_giselle_addon.enchantments.gravity_normalizing_energy_using": "Energy Usage",
+  "config.ad_astra_giselle_addon.enchantments.gravity_normalizing_energy_using.comment": "Energy usage for proof [in every 10 ticks]",
+  "config.ad_astra_giselle_addon.enchantments.gravity_normalizing_durability_using": "Durability Usage",
+  "config.ad_astra_giselle_addon.enchantments.gravity_normalizing_durability_using.comment": "Durability usage for proof",
+  "config.ad_astra_giselle_addon.enchantments.gravity_normalizing_durability_duration": "Durability Proof Duration",
+  "config.ad_astra_giselle_addon.enchantments.gravity_normalizing_durability_duration.comment": "Proof duration on using durability [ticks, be multiple of 10]",
   "config.ad_astra_giselle_addon.compats": "Mod Compatibilities",
   "config.ad_astra_giselle_addon.compats.mekanism": "Mekanism",
   "config.ad_astra_giselle_addon.compats.mekanism.modules": "MekaSuit Modules",
@@ -113,6 +127,9 @@
   "config.ad_astra_giselle_addon.compats.mekanism.modules_acid_rain_proof": "Acid Rain Proof Unit",
   "config.ad_astra_giselle_addon.compats.mekanism.modules_acid_rain_proof_energy_using": "Energy usage",
   "config.ad_astra_giselle_addon.compats.mekanism.modules_acid_rain_proof_energy_using.comment": "Energy usage for proof in every ticks [in every 10 ticks]",
+  "config.ad_astra_giselle_addon.compats.mekanism.modules_gravity_normalizing": "Gravity Normalizing Unit",
+  "config.ad_astra_giselle_addon.compats.mekanism.modules_gravity_normalizing_energy_using": "Energy usage",
+  "config.ad_astra_giselle_addon.compats.mekanism.modules_gravity_normalizing_energy_using.comment": "Energy usage for proof in every ticks [in every 10 ticks]",
   "config.ad_astra_giselle_addon.compats.pneumaticcraft": "PneumaticCraft",
   "config.ad_astra_giselle_addon.compats.pneumaticcraft.upgades": "Pneumatic Armor Upgrades",
   "config.ad_astra_giselle_addon.compats.pneumaticcraft.upgades_space_breathing": "Space Breathing Upgrade",
@@ -124,6 +141,8 @@
   "config.ad_astra_giselle_addon.compats.pneumaticcraft.upgades_acid_rain_proof": "Acid Rain Proof Upgrade",
   "config.ad_astra_giselle_addon.compats.pneumaticcraft.upgades_acid_rain_proof_air_using": "Air Usage",
   "config.ad_astra_giselle_addon.compats.pneumaticcraft.upgades_acid_rain_proof_air_using.comment": "Air usage for proof [in every 10 ticks]",
+  "config.ad_astra_giselle_addon.compats.pneumaticcraft.upgades_gravity_normalizing_air_using": "Air Usage",
+  "config.ad_astra_giselle_addon.compats.pneumaticcraft.upgades_gravity_normalizing_air_using.comment": "Air usage for proof [in every 10 ticks]",
   
   "_eof": "eof"
 }
