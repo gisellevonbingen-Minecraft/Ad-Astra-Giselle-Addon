@@ -18,9 +18,9 @@ public class AutomationNasaWorkbenchBlock extends AbstractMachineBlock
 {
 	public static final Component TOOLTIP = Component.translatable("item.ad_astra.nasa_workbench.tooltip").setStyle(Style.EMPTY.withColor(ChatFormatting.GREEN));
 
-	public AutomationNasaWorkbenchBlock(Properties settings)
+	public AutomationNasaWorkbenchBlock(Properties properties)
 	{
-		super(settings);
+		super(properties);
 	}
 
 	@Override

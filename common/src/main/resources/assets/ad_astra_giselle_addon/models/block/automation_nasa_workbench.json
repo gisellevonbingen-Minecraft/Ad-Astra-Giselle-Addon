@@ -7,6 +7,6 @@
     "east": "ad_astra_giselle_addon:block/automation_nasa_workbench",
     "south": "ad_astra_giselle_addon:block/automation_nasa_workbench",
     "west": "ad_astra_giselle_addon:block/automation_nasa_workbench",
-    "particle": "ad_astra_giselle_addon:block/fuel_loader"
+    "particle": "ad_astra_giselle_addon:block/automation_nasa_workbench"
   }
 }
