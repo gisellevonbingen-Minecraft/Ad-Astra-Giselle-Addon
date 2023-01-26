@@ -10,11 +10,12 @@ import com.teamresourceful.resourcefulconfig.client.ConfigScreen;
 import com.teamresourceful.resourcefulconfig.common.config.ResourcefulConfig;
 
 import ad_astra_giselle_addon.client.overlay.OxygenCanOverlay;
-import ad_astra_giselle_addon.client.renderer.blockentity.FuelLoaderRenderer;
+import ad_astra_giselle_addon.client.renderer.blockentity.WorkingAreaBlockEntityRenderer;
 import ad_astra_giselle_addon.client.screen.AutomationNasaWorkbenchScreen;
 import ad_astra_giselle_addon.client.screen.FuelLoaderScreen;
 import ad_astra_giselle_addon.client.util.RenderHelper;
 import ad_astra_giselle_addon.common.AdAstraGiselleAddon;
+import ad_astra_giselle_addon.common.block.entity.FuelLoaderBlockEntity;
 import ad_astra_giselle_addon.common.enchantment.EnchantmentHelper2;
 import ad_astra_giselle_addon.common.registry.AddonBlockEntityTypes;
 import ad_astra_giselle_addon.common.registry.AddonMenuTypes;
@@ -64,7 +65,7 @@ public class AdAstraGiselleAddonClient
 
 	public static void registerBlockEntityRenderer(BlockEntityRendererRegister register)
 	{
-		register.regsiter(AddonBlockEntityTypes.FUEL_LOADER.get(), context -> new FuelLoaderRenderer(context));
+		register.regsiter(AddonBlockEntityTypes.FUEL_LOADER.get(), context -> new WorkingAreaBlockEntityRenderer<FuelLoaderBlockEntity>(context));
 	}
 
 	public static void registerItemTooltip(Consumer<TriConsumer<ItemStack, TooltipFlag, List<Component>>> register)

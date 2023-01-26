@@ -8,7 +8,10 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import ad_astra_giselle_addon.common.AdAstraGiselleAddon;
+import ad_astra_giselle_addon.common.block.entity.IWorkingAreaBlockEntity;
 import ad_astra_giselle_addon.common.compat.CompatibleManager;
+import ad_astra_giselle_addon.common.network.AddonNetwork;
+import ad_astra_giselle_addon.common.network.WorkingAreaVisibleMessage;
 import earth.terrarium.ad_astra.client.screen.AbstractMachineScreen;
 import earth.terrarium.ad_astra.common.block.machine.entity.AbstractMachineBlockEntity;
 import earth.terrarium.ad_astra.common.screen.menu.AbstractMachineMenu;
@@ -80,22 +83,35 @@ public abstract class AddonMachineScreen<BLOCK_ENTITY extends AbstractMachineBlo
 
 	public boolean hasWorkingArea()
 	{
-		return false;
+		return this.getMenu().getMachine() instanceof IWorkingAreaBlockEntity;
 	}
 
 	public boolean isWorkingAreaVisible()
 	{
-		return false;
+		return this.getMenu().getMachine() instanceof IWorkingAreaBlockEntity blockEntity && blockEntity.isWorkingAreaVisible();
 	}
 
 	@Nullable
 	public AABB getWorkingArea()
 	{
-		return null;
+		if (this.getMenu().getMachine() instanceof IWorkingAreaBlockEntity blockEntity)
+		{
+			return blockEntity.getWorkingArea();
+		}
+		else
+		{
+			return null;
+		}
+
 	}
 
 	public void setWorkingAreaVisible(boolean visible)
 	{
+		if (this.getMenu().getMachine() instanceof IWorkingAreaBlockEntity blockEntity)
+		{
+			blockEntity.setWorkingAreaVisible(visible);
+			AddonNetwork.CHANNEL.sendToServer(new WorkingAreaVisibleMessage(blockEntity.getBlockPos(), visible));
+		}
 
 	}
 

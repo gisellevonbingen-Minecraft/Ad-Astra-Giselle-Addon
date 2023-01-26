@@ -11,7 +11,7 @@ public class AddonNetwork
 
 	public static void registerAll()
 	{
-		CHANNEL.registerPacket(NetworkDirection.CLIENT_TO_SERVER, FuelLoaderMessageWorkingAreaVisible.ID, FuelLoaderMessageWorkingAreaVisible.HANDLER, FuelLoaderMessageWorkingAreaVisible.class);
+		CHANNEL.registerPacket(NetworkDirection.CLIENT_TO_SERVER, WorkingAreaVisibleMessage.ID, WorkingAreaVisibleMessage.HANDLER, WorkingAreaVisibleMessage.class);
 	}
 
 }

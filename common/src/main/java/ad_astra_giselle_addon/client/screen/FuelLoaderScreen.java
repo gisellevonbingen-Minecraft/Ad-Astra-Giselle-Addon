@@ -8,15 +8,12 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import ad_astra_giselle_addon.common.AdAstraGiselleAddon;
 import ad_astra_giselle_addon.common.block.entity.FuelLoaderBlockEntity;
 import ad_astra_giselle_addon.common.menu.FuelLoaderMenu;
-import ad_astra_giselle_addon.common.network.AddonNetwork;
-import ad_astra_giselle_addon.common.network.FuelLoaderMessageWorkingAreaVisible;
 import ad_astra_giselle_addon.common.util.TranslationUtils;
 import earth.terrarium.ad_astra.client.screen.GuiUtil;
 import earth.terrarium.botarium.api.fluid.FluidHolder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.phys.AABB;
 
 public class FuelLoaderScreen extends AddonMachineScreen<FuelLoaderBlockEntity, FuelLoaderMenu>
 {
@@ -31,31 +28,6 @@ public class FuelLoaderScreen extends AddonMachineScreen<FuelLoaderBlockEntity, 
 		this.imageWidth = 176;
 		this.imageHeight = 182;
 		this.inventoryLabelY = this.imageHeight - 94;
-	}
-
-	@Override
-	public boolean hasWorkingArea()
-	{
-		return true;
-	}
-
-	@Override
-	public boolean isWorkingAreaVisible()
-	{
-		return this.getMenu().getMachine().isWorkingAreaVisible();
-	}
-
-	@Override
-	public AABB getWorkingArea()
-	{
-		return this.getMenu().getMachine().getWorkingArea();
-	}
-
-	@Override
-	public void setWorkingAreaVisible(boolean visible)
-	{
-		super.setWorkingAreaVisible(visible);
-		AddonNetwork.CHANNEL.sendToServer(new FuelLoaderMessageWorkingAreaVisible(this.getMenu().getMachine(), visible));
 	}
 
 	@Override

@@ -31,7 +31,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 
-public class FuelLoaderBlockEntity extends AddonMachineBlockEntity implements FluidHoldingBlock
+public class FuelLoaderBlockEntity extends AddonMachineBlockEntity implements FluidHoldingBlock, IWorkingAreaBlockEntity
 {
 	public static final String DATA_WORKINGAREA_VISIBLE_KEY = "workingAreaVisible";
 
@@ -188,11 +188,13 @@ public class FuelLoaderBlockEntity extends AddonMachineBlockEntity implements Fl
 
 	}
 
+	@Override
 	public boolean isWorkingAreaVisible()
 	{
 		return this.workingAreaVisible;
 	}
 
+	@Override
 	public void setWorkingAreaVisible(boolean visible)
 	{
 		if (this.isWorkingAreaVisible() != visible)
@@ -208,14 +210,21 @@ public class FuelLoaderBlockEntity extends AddonMachineBlockEntity implements Fl
 		return MachinesConfig.FUEL_LOADER_WORKING_RANGE;
 	}
 
+	@Override
 	public AABB getWorkingArea()
 	{
-		return this.getWorkingArea(this.getWorkingRange());
+		return this.getWorkingArea(this.getBlockPos(), this.getWorkingRange());
 	}
 
 	public AABB getWorkingArea(double range)
 	{
 		return this.getWorkingArea(this.getBlockPos(), range);
+	}
+
+	@Override
+	public AABB getWorkingArea(BlockPos pos)
+	{
+		return this.getWorkingArea(pos, this.getWorkingRange());
 	}
 
 	public AABB getWorkingArea(BlockPos pos, double range)
