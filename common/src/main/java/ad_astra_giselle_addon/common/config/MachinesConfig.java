@@ -34,4 +34,16 @@ public final class MachinesConfig
 	public static long AUTOMATION_NASA_WORKBENCH_ENERGY_USAGE = 24L;
 	@ConfigEntry(id = AUTOMATION_NASA_WORKBENCH_ID + "_cook_time", type = EntryType.INTEGER, translation = AUTOMATION_NASA_WORKBENCH_PREFIX + "_cook_time")
 	public static int AUTOMATION_NASA_WORKBENCH_COOK_TIME = 200;
+
+	public static final String GRAVITY_NORMALIZER_ID = "gravity_normalizer";
+	public static final String GRAVITY_NORMALIZER_PREFIX = PREFIX + "." + GRAVITY_NORMALIZER_ID;
+	@ConfigSeparator(translation = GRAVITY_NORMALIZER_PREFIX)
+	@ConfigEntry(id = GRAVITY_NORMALIZER_ID + "_energy_capacity", type = EntryType.LONG, translation = GRAVITY_NORMALIZER_PREFIX + "_energy_capacity")
+	public static long GRAVITY_NORMALIZER_ENERGY_CAPACITY = 9600L;
+	@ConfigEntry(id = GRAVITY_NORMALIZER_ID + "_energy_per_blocks", type = EntryType.LONG, translation = GRAVITY_NORMALIZER_PREFIX + "_energy_per_blocks")
+	public static long GRAVITY_NORMALIZER_ENERGY_PER_BLOCKS = 1L;
+	@ConfigEntry(id = GRAVITY_NORMALIZER_ID + "_max_length", type = EntryType.INTEGER, translation = GRAVITY_NORMALIZER_PREFIX + "_max_length")
+	public static int GRAVITY_NORMALIZER_MAX_LENGTH = 64;
+	@ConfigEntry(id = GRAVITY_NORMALIZER_ID + "_proof_duration", type = EntryType.INTEGER, translation = GRAVITY_NORMALIZER_PREFIX + "_proof_duration")
+	public static int GRAVITY_NORMALIZER_PROOF_DURATION = 10;
 }

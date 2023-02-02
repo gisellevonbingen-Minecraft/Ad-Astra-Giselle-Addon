@@ -4,12 +4,14 @@
   
   "block.ad_astra_giselle_addon.fuel_loader": "Fuel Loader",
   "block.ad_astra_giselle_addon.automation_nasa_workbench": "Automation NASA Workbench",
+  "block.ad_astra_giselle_addon.gravity_normalizer": "Gravity Normalizer",
   
   "item.ad_astra_giselle_addon.oxygen_can": "Oxygen Can",
   "item.ad_astra_giselle_addon.netherite_oxygen_can": "Netherite Oxygen Can",
   
   "container.ad_astra_giselle_addon.fuel_loader": "Fuel Loader",
   "container.ad_astra_giselle_addon.automation_nasa_workbench": "Automation NASA Workbench",
+  "container.ad_astra_giselle_addon.gravity_normalizer": "Gravity Normalizer",
   
   "enchantment.ad_astra_giselle_addon.space_breathing": "Space Breathing",
   "enchantment.ad_astra_giselle_addon.space_breathing.desc": "Can breath in Ad Astra dimensions\nUse energy or durability\nRequire 'Oxygen Can' in inventory",
@@ -33,6 +35,7 @@
   
   "jei.category.ad_astra_giselle_addon.fuel_loader": "Fuel Loader",
   "jei.info.ad_astra_giselle_addon.fuel_loader": "Internal fluid tank can receive '%2$s' tagged fluid.\nThen give fuel to 'Rover' or 'Rockets' within %1$s blocks.",
+  "jei.info.ad_astra_giselle_addon.gravity_normalizer": "Normalize entity's gravity like to overworld in working area",
   
   
   "module.ad_astra_giselle_addon.space_breathing_unit": "Space Breathing Unit",

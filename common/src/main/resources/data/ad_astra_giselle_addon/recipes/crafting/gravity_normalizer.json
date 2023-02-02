@@ -1,0 +1,22 @@
+{
+   "type":"minecraft:crafting_shaped",
+   "result":{
+      "item":"ad_astra_giselle_addon:gravity_normalizer"
+   },
+   "pattern":[
+      "SSS",
+      "PBP",
+      "SSS"
+   ],
+   "key":{
+      "S":{
+         "tag":"ad_astra_platform:steel_ingots"
+      },
+      "P":{
+         "tag":"ad_astra_platform:iron_plates"
+      },
+      "B":{
+         "item":"ad_astra:space_boots"
+      }
+   }
+}

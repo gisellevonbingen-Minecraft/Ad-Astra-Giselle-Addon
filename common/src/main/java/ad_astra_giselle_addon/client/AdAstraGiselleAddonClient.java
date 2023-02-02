@@ -13,9 +13,11 @@ import ad_astra_giselle_addon.client.overlay.OxygenCanOverlay;
 import ad_astra_giselle_addon.client.renderer.blockentity.WorkingAreaBlockEntityRenderer;
 import ad_astra_giselle_addon.client.screen.AutomationNasaWorkbenchScreen;
 import ad_astra_giselle_addon.client.screen.FuelLoaderScreen;
+import ad_astra_giselle_addon.client.screen.GravityNormalizerScreen;
 import ad_astra_giselle_addon.client.util.RenderHelper;
 import ad_astra_giselle_addon.common.AdAstraGiselleAddon;
 import ad_astra_giselle_addon.common.block.entity.FuelLoaderBlockEntity;
+import ad_astra_giselle_addon.common.block.entity.GravityNormalizerBlockEntity;
 import ad_astra_giselle_addon.common.enchantment.EnchantmentHelper2;
 import ad_astra_giselle_addon.common.registry.AddonBlockEntityTypes;
 import ad_astra_giselle_addon.common.registry.AddonMenuTypes;
@@ -51,6 +53,7 @@ public class AdAstraGiselleAddonClient
 	{
 		ClientPlatformUtils.registerScreen(AddonMenuTypes.FUEL_LOADER.get(), FuelLoaderScreen::new);
 		ClientPlatformUtils.registerScreen(AddonMenuTypes.AUTOMATION_NASA_WORKBENCH.get(), AutomationNasaWorkbenchScreen::new);
+		ClientPlatformUtils.registerScreen(AddonMenuTypes.GRAVITY_NORMALIZER.get(), GravityNormalizerScreen::new);
 	}
 
 	public static void registerBlockAtlas(Consumer<ResourceLocation> register)
@@ -66,6 +69,7 @@ public class AdAstraGiselleAddonClient
 	public static void registerBlockEntityRenderer(BlockEntityRendererRegister register)
 	{
 		register.regsiter(AddonBlockEntityTypes.FUEL_LOADER.get(), context -> new WorkingAreaBlockEntityRenderer<FuelLoaderBlockEntity>(context));
+		register.regsiter(AddonBlockEntityTypes.GRAVITY_NORMALIZER.get(), context -> new WorkingAreaBlockEntityRenderer<GravityNormalizerBlockEntity>(context));
 	}
 
 	public static void registerItemTooltip(Consumer<TriConsumer<ItemStack, TooltipFlag, List<Component>>> register)
