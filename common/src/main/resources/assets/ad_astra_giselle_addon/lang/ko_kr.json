@@ -4,14 +4,14 @@
   
   "block.ad_astra_giselle_addon.fuel_loader": "연료 적재기",
   "block.ad_astra_giselle_addon.automation_nasa_workbench": "자동화 NASA 제작대",
-  "block.ad_astra_giselle_addon.gravity_normalizer": "중력 졍규화기",
+  "block.ad_astra_giselle_addon.gravity_normalizer": "중력 정규화기",
   
   "item.ad_astra_giselle_addon.oxygen_can": "산소 캔",
   "item.ad_astra_giselle_addon.netherite_oxygen_can": "네더라이트 산소 캔",
   
   "container.ad_astra_giselle_addon.fuel_loader": "연료 적재기",
   "container.ad_astra_giselle_addon.automation_nasa_workbench": "자동화 NASA 제작대",
-  "container.ad_astra_giselle_addon.gravity_normalizer": "중력 졍규화기",
+  "container.ad_astra_giselle_addon.gravity_normalizer": "중력 정규화기",
   
   "enchantment.ad_astra_giselle_addon.space_breathing": "우주 호흡성",
   "enchantment.ad_astra_giselle_addon.space_breathing.desc": "Ad Astra 차원에서 호흡할 수 있습니다\n갑옷의 에너지 혹은 내구도를 소모합니다\n인벤토리에 '산소 캔'이 필요합니다",
@@ -44,8 +44,8 @@
   
   
   "jei.category.ad_astra_giselle_addon.fuel_loader": "연료 적재기",
-  "jei.info.ad_astra_giselle_addon.fuel_loader": "%2$s 태그가 지정된 유체를 받을 수 있습니다\n%1$s 블럭 이내에 존재하는 '로버' 혹은 '로켓'에게 연료를 채웁니다",
-  "jei.info.ad_astra_giselle_addon.gravity_normalizer": "범위내 생명체의 중력을 오버월드처럼 정규화합니다",
+  "jei.info.ad_astra_giselle_addon.fuel_loader": "%2$s 태그가 지정된 유체를 받을 수 있습니다\n%1$s 블럭 이내에 존재하는 '로버' 혹은 '로켓'의 연료를 채웁니다",
+  "jei.info.ad_astra_giselle_addon.gravity_normalizer": "범위내 생명체의 중력을 오버월드처럼 정규화합니다\n최대 길이는 %1$s 입니다",
   
   
   "module.ad_astra_giselle_addon.space_breathing_unit": "우주 호흡성 기구",
@@ -93,8 +93,8 @@
   "config.ad_astra_giselle_addon.machines.automation_nasa_workbench_cook_time": "가공 시간 [틱]",
   "config.ad_astra_giselle_addon.machines.gravity_normalizer": "중력 정규화기",
   "config.ad_astra_giselle_addon.machines.gravity_normalizer_energy_capacity": "에너지 용량",
-  "config.ad_astra_giselle_addon.machines.gravity_normalizer_energy_per_diagonal": "대각선 거리당 에너지 사용량",
-  "config.ad_astra_giselle_addon.machines.gravity_normalizer_energy_per_diagonal.comment": "에너지 사용량 = '거리당 사용량' * SQRT(x^2 + y^2 + z^2)",
+  "config.ad_astra_giselle_addon.machines.gravity_normalizer_energy_per_blocks": "블록당 에너지 사용량",
+  "config.ad_astra_giselle_addon.machines.gravity_normalizer_energy_per_blocks.comment": "블록 수 = x * y * z",
   "config.ad_astra_giselle_addon.machines.gravity_normalizer_max_length": "최대 길이",
   "config.ad_astra_giselle_addon.machines.gravity_normalizer_proof_duration": "정규화 유지 시간 [틱]",
   "config.ad_astra_giselle_addon.enchantments": "인챈트",

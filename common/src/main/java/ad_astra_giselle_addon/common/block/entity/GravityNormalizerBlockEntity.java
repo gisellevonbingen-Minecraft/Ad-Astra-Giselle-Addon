@@ -162,8 +162,8 @@ public class GravityNormalizerBlockEntity extends AddonMachineBlockEntity implem
 
 	public long getEnergyUsing(AABB workingArea)
 	{
-		double diagonal = Math.sqrt(Math.pow(workingArea.getXsize(), 2) + Math.pow(workingArea.getYsize(), 2) + Math.pow(workingArea.getZsize(), 2));
-		return (long) (MachinesConfig.GRAVITY_NORMALIZER_ENERGY_PER_DIAGONAL * diagonal);
+		double blocks = workingArea.getXsize() * workingArea.getYsize() * workingArea.getZsize();
+		return (long) (MachinesConfig.GRAVITY_NORMALIZER_ENERGY_PER_BLOCKS * blocks);
 	}
 
 	public static int getMinLength()

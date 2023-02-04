@@ -74,6 +74,7 @@ public class AddonReiClientPlugin implements REIClientPlugin
 		}
 
 		registry.add(this.createDisplayInfo(AddonBlocks.FUEL_LOADER.get(), MachinesConfig.FUEL_LOADER_WORKING_RANGE, ModTags.FUELS.location()));
+		registry.add(this.createDisplayInfo(AddonBlocks.GRAVITY_NORMALIZER.get(), MachinesConfig.GRAVITY_NORMALIZER_MAX_LENGTH));
 	}
 
 	public DefaultInformationDisplay createDisplayInfo(ItemLike itemLike, Object... objects)

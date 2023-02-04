@@ -45,7 +45,7 @@
   
   "jei.category.ad_astra_giselle_addon.fuel_loader": "Fuel Loader",
   "jei.info.ad_astra_giselle_addon.fuel_loader": "Internal fluid tank can receive '%2$s' tagged fluid.\nThen give fuel to 'Rover' or 'Rockets' within %1$s blocks.",
-  "jei.info.ad_astra_giselle_addon.gravity_normalizer": "Normalize living's gravity like to overworld in working area",
+  "jei.info.ad_astra_giselle_addon.gravity_normalizer": "Normalize living's gravity like to overworld in working area\nMaximum length is %1$s",
   
   
   "module.ad_astra_giselle_addon.space_breathing_unit": "Space Breathing Unit",
@@ -93,8 +93,8 @@
   "config.ad_astra_giselle_addon.machines.automation_nasa_workbench_cook_time": "Processing Time [ticks]",
   "config.ad_astra_giselle_addon.machines.gravity_normalizer": "Gravity Normalizer",
   "config.ad_astra_giselle_addon.machines.gravity_normalizer_energy_capacity": "Energy Capacity",
-  "config.ad_astra_giselle_addon.machines.gravity_normalizer_energy_per_diagonal": "Energy Per Diagonal Distance",
-  "config.ad_astra_giselle_addon.machines.gravity_normalizer_energy_per_diagonal.comment": "Energy Using = 'Energy Per Diagonal' * SQRT(x^2 + y^2 + z^2)",
+  "config.ad_astra_giselle_addon.machines.gravity_normalizer_energy_per_blocks": "Energy Per Blocks",
+  "config.ad_astra_giselle_addon.machines.gravity_normalizer_energy_per_blocks.comment": "Blocks = x * y * z",
   "config.ad_astra_giselle_addon.machines.gravity_normalizer_max_length": "Max Length",
   "config.ad_astra_giselle_addon.machines.gravity_normalizer_proof_duration": "Proof Duration [ticks]",
   "config.ad_astra_giselle_addon.enchantments": "Enchantments",
