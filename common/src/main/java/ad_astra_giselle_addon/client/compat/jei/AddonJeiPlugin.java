@@ -119,6 +119,7 @@ public class AddonJeiPlugin implements IModPlugin
 		}
 
 		this.addIngredientInfo(registry, AddonBlocks.FUEL_LOADER.get(), MachinesConfig.FUEL_LOADER_WORKING_RANGE, ModTags.FUELS.location());
+		this.addIngredientInfo(registry, AddonBlocks.GRAVITY_NORMALIZER.get());
 	}
 
 	public void addIngredientInfo(IRecipeRegistration registration, ItemLike itemLike, Object... objects)

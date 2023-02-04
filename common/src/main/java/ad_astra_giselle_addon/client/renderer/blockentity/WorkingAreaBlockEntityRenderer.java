@@ -7,6 +7,7 @@ import ad_astra_giselle_addon.common.block.entity.IWorkingAreaBlockEntity;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.phys.AABB;
 
@@ -41,7 +42,7 @@ public class WorkingAreaBlockEntityRenderer<BE extends BlockEntity & IWorkingAre
 			int g = 148;
 			int b = 204;
 
-			AABB workingArea = blockEntity.getWorkingArea();
+			AABB workingArea = blockEntity.getWorkingArea(BlockPos.ZERO);
 			RenderHelper.renderBox(stack, renderer, workingArea, rl, gl, bl, r, g, b);
 		}
 
