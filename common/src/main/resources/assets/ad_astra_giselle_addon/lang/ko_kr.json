@@ -9,6 +9,9 @@
   "item.ad_astra_giselle_addon.oxygen_can": "산소 캔",
   "item.ad_astra_giselle_addon.netherite_oxygen_can": "네더라이트 산소 캔",
   
+  "item.ad_astra_giselle_addon.fuel_loader.tooltip": "주변 '로버' 혹은 '로켓'의 연료를 채웁니다",
+  "item.ad_astra_giselle_addon.gravity_normalizer.tooltip": "범위내 생명체의 중력을 정규화합니다",
+  
   "container.ad_astra_giselle_addon.fuel_loader": "연료 적재기",
   "container.ad_astra_giselle_addon.automation_nasa_workbench": "자동화 NASA 제작대",
   "container.ad_astra_giselle_addon.gravity_normalizer": "중력 정규화기",
@@ -44,8 +47,8 @@
   
   
   "jei.category.ad_astra_giselle_addon.fuel_loader": "연료 적재기",
-  "jei.info.ad_astra_giselle_addon.fuel_loader": "%2$s 태그가 지정된 유체를 받을 수 있습니다\n%1$s 블럭 이내에 존재하는 '로버' 혹은 '로켓'의 연료를 채웁니다",
-  "jei.info.ad_astra_giselle_addon.gravity_normalizer": "범위내 생명체의 중력을 오버월드처럼 정규화합니다\n최대 길이는 %1$s 입니다",
+  "jei.info.ad_astra_giselle_addon.fuel_loader": "'%2$s' 태그가 지정된 유체를 받을 수 있습니다.\n%1$s 블럭 이내에 존재하는 '로버' 혹은 '로켓'의 연료를 채웁니다.",
+  "jei.info.ad_astra_giselle_addon.gravity_normalizer": "범위내 생명체의 중력을 오버월드처럼 정규화합니다.\n최대 길이는 %1$s 입니다.",
   
   
   "module.ad_astra_giselle_addon.space_breathing_unit": "우주 호흡성 기구",

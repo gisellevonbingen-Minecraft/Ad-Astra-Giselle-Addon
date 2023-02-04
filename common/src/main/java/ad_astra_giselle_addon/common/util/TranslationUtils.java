@@ -19,6 +19,7 @@ import net.minecraft.core.Registry;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
+import net.minecraft.resources.ResourceLocation;
 
 public class TranslationUtils
 {
@@ -33,6 +34,11 @@ public class TranslationUtils
 	{
 		NUMBER_FORMAT.setMinimumFractionDigits(DEFAULT_DIGITS);
 		NUMBER_FORMAT.setMaximumFractionDigits(DEFAULT_DIGITS);
+	}
+
+	public static Component getItemTooltip(ResourceLocation id)
+	{
+		return Component.translatable("item." + id.getNamespace() + "." + id.getPath() + ".tooltip").setStyle(Style.EMPTY.withColor(ChatFormatting.GREEN));
 	}
 
 	public static Component description(String key, Component component)

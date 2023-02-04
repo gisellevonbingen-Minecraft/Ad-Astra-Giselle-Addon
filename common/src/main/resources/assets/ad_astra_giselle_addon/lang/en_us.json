@@ -9,6 +9,9 @@
   "item.ad_astra_giselle_addon.oxygen_can": "Oxygen Can",
   "item.ad_astra_giselle_addon.netherite_oxygen_can": "Netherite Oxygen Can",
   
+  "item.ad_astra_giselle_addon.fuel_loader.tooltip": "Give fuel to near 'Rover' or 'Rockets'",
+  "item.ad_astra_giselle_addon.gravity_normalizer.tooltip": "Normalize living's gravity within range",
+  
   "container.ad_astra_giselle_addon.fuel_loader": "Fuel Loader",
   "container.ad_astra_giselle_addon.automation_nasa_workbench": "Automation NASA Workbench",
   "container.ad_astra_giselle_addon.gravity_normalizer": "Gravity Normalizer",
@@ -44,8 +47,8 @@
   
   
   "jei.category.ad_astra_giselle_addon.fuel_loader": "Fuel Loader",
-  "jei.info.ad_astra_giselle_addon.fuel_loader": "Internal fluid tank can receive '%2$s' tagged fluid.\nThen give fuel to 'Rover' or 'Rockets' within %1$s blocks.",
-  "jei.info.ad_astra_giselle_addon.gravity_normalizer": "Normalize living's gravity like to overworld in working area\nMaximum length is %1$s",
+  "jei.info.ad_astra_giselle_addon.fuel_loader": "Can receive '%2$s' tagged fluid.\nThen give fuel to 'Rover' or 'Rockets' within %1$s blocks.",
+  "jei.info.ad_astra_giselle_addon.gravity_normalizer": "Normalize living's gravity like to overworld in working area.\nMaximum length is %1$s.",
   
   
   "module.ad_astra_giselle_addon.space_breathing_unit": "Space Breathing Unit",
