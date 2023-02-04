@@ -2,6 +2,7 @@
   "replace": false,
   "values": [
     "ad_astra_giselle_addon:fuel_loader",
-    "ad_astra_giselle_addon:automation_nasa_workbench"
+    "ad_astra_giselle_addon:automation_nasa_workbench",
+    "ad_astra_giselle_addon:gravity_normalizer"
   ]
 }
