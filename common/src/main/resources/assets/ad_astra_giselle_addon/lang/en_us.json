@@ -25,6 +25,16 @@
   "gui.ad_astra_giselle_addon.workingarea.show": "Show",
   "gui.ad_astra_giselle_addon.workingarea.hide": "Hide",
   
+  "gui.ad_astra_giselle_addon.gravity_normalizer.vector_element_tooltip": "Click: %1$s\nShift+Click: %2$s",
+  "gui.ad_astra_giselle_addon.gravity_normalizer.length.x": "X Length: %s",
+  "gui.ad_astra_giselle_addon.gravity_normalizer.length.y": "Y Length: %s",
+  "gui.ad_astra_giselle_addon.gravity_normalizer.length.z": "Z Length: %s",
+  "gui.ad_astra_giselle_addon.gravity_normalizer.offset.x": "X Offset: %s",
+  "gui.ad_astra_giselle_addon.gravity_normalizer.offset.y": "Y Offset: %s",
+  "gui.ad_astra_giselle_addon.gravity_normalizer.offset.z": "Z Offset: %s",
+  "gui.ad_astra_giselle_addon.gravity_normalizer.move_to_pos": "Move to BottomCenter",
+  "gui.ad_astra_giselle_addon.gravity_normalizer.energy_using": "%1$s ⚡ / %2$stick",
+  
   "description.ad_astra_giselle_addon.temperature_range": "Temperature Range",
   "description.ad_astra_giselle_addon.charge_mode": "Charge Mode",
   
@@ -35,7 +45,7 @@
   
   "jei.category.ad_astra_giselle_addon.fuel_loader": "Fuel Loader",
   "jei.info.ad_astra_giselle_addon.fuel_loader": "Internal fluid tank can receive '%2$s' tagged fluid.\nThen give fuel to 'Rover' or 'Rockets' within %1$s blocks.",
-  "jei.info.ad_astra_giselle_addon.gravity_normalizer": "Normalize entity's gravity like to overworld in working area",
+  "jei.info.ad_astra_giselle_addon.gravity_normalizer": "Normalize living's gravity like to overworld in working area",
   
   
   "module.ad_astra_giselle_addon.space_breathing_unit": "Space Breathing Unit",
@@ -79,8 +89,14 @@
   "config.ad_astra_giselle_addon.machines.fuel_loader_working_range.comment": "Blocks from Fuel Loader to each direction",
   "config.ad_astra_giselle_addon.machines.automation_nasa_workbench": "Automation NASA Workbench",
   "config.ad_astra_giselle_addon.machines.automation_nasa_workbench_energy_capacity": "Energy Capacity",
-  "config.ad_astra_giselle_addon.machines.automation_nasa_workbench_energy_usage": "Energy Usage Per Tick",
+  "config.ad_astra_giselle_addon.machines.automation_nasa_workbench_energy_usage": "Energy Usage Per Ticks",
   "config.ad_astra_giselle_addon.machines.automation_nasa_workbench_cook_time": "Processing Time [ticks]",
+  "config.ad_astra_giselle_addon.machines.gravity_normalizer": "Gravity Normalizer",
+  "config.ad_astra_giselle_addon.machines.gravity_normalizer_energy_capacity": "Energy Capacity",
+  "config.ad_astra_giselle_addon.machines.gravity_normalizer_energy_per_diagonal": "Energy Per Diagonal Distance",
+  "config.ad_astra_giselle_addon.machines.gravity_normalizer_energy_per_diagonal.comment": "Energy Using = 'Energy Per Diagonal' * SQRT(x^2 + y^2 + z^2)",
+  "config.ad_astra_giselle_addon.machines.gravity_normalizer_max_length": "Max Length",
+  "config.ad_astra_giselle_addon.machines.gravity_normalizer_proof_duration": "Proof Duration [ticks]",
   "config.ad_astra_giselle_addon.enchantments": "Enchantments",
   "config.ad_astra_giselle_addon.enchantments.tooltip_enabled": "Show Tooltip in Enchanted Book",
   "config.ad_astra_giselle_addon.enchantments.tooltip_enabled.comment": "Show tooltip on this mod's enchanted book",

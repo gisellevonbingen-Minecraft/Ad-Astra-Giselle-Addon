@@ -20,7 +20,7 @@ public class GravityNormalizerMenu extends AbstractMachineMenu<GravityNormalizer
 	@Override
 	public int getPlayerInventoryOffset()
 	{
-		return 16;
+		return 30;
 	}
 
 	@Override

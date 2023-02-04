@@ -12,6 +12,9 @@ public class AddonNetwork
 	public static void registerAll()
 	{
 		CHANNEL.registerPacket(NetworkDirection.CLIENT_TO_SERVER, WorkingAreaVisibleMessage.ID, WorkingAreaVisibleMessage.HANDLER, WorkingAreaVisibleMessage.class);
+
+		CHANNEL.registerPacket(NetworkDirection.CLIENT_TO_SERVER, GravityNormalizerMessage.Length.ID, GravityNormalizerMessage.Length.HANDLER, GravityNormalizerMessage.Length.class);
+		CHANNEL.registerPacket(NetworkDirection.CLIENT_TO_SERVER, GravityNormalizerMessage.Offset.ID, GravityNormalizerMessage.Offset.HANDLER, GravityNormalizerMessage.Offset.class);
 	}
 
 }

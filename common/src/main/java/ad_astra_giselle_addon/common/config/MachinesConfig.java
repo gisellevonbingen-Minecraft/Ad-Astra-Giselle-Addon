@@ -40,10 +40,11 @@ public final class MachinesConfig
 	@ConfigSeparator(translation = GRAVITY_NORMALIZER_PREFIX)
 	@ConfigEntry(id = GRAVITY_NORMALIZER_ID + "_energy_capacity", type = EntryType.LONG, translation = GRAVITY_NORMALIZER_PREFIX + "_energy_capacity")
 	public static long GRAVITY_NORMALIZER_ENERGY_CAPACITY = 9600L;
-	@ConfigEntry(id = GRAVITY_NORMALIZER_ID + "_energy_per_blocks", type = EntryType.LONG, translation = GRAVITY_NORMALIZER_PREFIX + "_energy_per_blocks")
-	public static long GRAVITY_NORMALIZER_ENERGY_PER_BLOCKS = 1L;
+	@ConfigEntry(id = GRAVITY_NORMALIZER_ID + "_energy_per_diagonal", type = EntryType.LONG, translation = GRAVITY_NORMALIZER_PREFIX + "_energy_per_diagonal")
+	@Comment(value = "Energy Using = 'Diagonal Distance' * SQRT(x^2 + y^2 + z^2)", translation = GRAVITY_NORMALIZER_PREFIX + "_energy_per_diagonal.comment")
+	public static long GRAVITY_NORMALIZER_ENERGY_PER_DIAGONAL = 10L;
 	@ConfigEntry(id = GRAVITY_NORMALIZER_ID + "_max_length", type = EntryType.INTEGER, translation = GRAVITY_NORMALIZER_PREFIX + "_max_length")
-	public static int GRAVITY_NORMALIZER_MAX_LENGTH = 64;
+	public static int GRAVITY_NORMALIZER_MAX_LENGTH = 31;
 	@ConfigEntry(id = GRAVITY_NORMALIZER_ID + "_proof_duration", type = EntryType.INTEGER, translation = GRAVITY_NORMALIZER_PREFIX + "_proof_duration")
 	public static int GRAVITY_NORMALIZER_PROOF_DURATION = 10;
 }

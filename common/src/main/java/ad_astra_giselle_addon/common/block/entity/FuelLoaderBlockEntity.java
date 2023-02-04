@@ -58,7 +58,7 @@ public class FuelLoaderBlockEntity extends AddonMachineBlockEntity implements Fl
 	public void saveAdditional(CompoundTag nbt)
 	{
 		super.saveAdditional(nbt);
-		nbt.putBoolean(DATA_WORKINGAREA_VISIBLE_KEY, this.isWorkingAreaVisible());
+		nbt.putBoolean(DATA_WORKINGAREA_VISIBLE_KEY, this.workingAreaVisible);
 	}
 
 	@Override

@@ -1,20 +1,29 @@
 package ad_astra_giselle_addon.client.screen;
 
-import java.util.function.BiConsumer;
+import java.awt.Rectangle;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.function.BiFunction;
-import java.util.function.Function;
+import java.util.function.Consumer;
 import java.util.function.IntConsumer;
 import java.util.function.IntSupplier;
+import java.util.function.Supplier;
 import java.util.function.ToIntFunction;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.teamresourceful.resourcefulconfig.client.options.LongSlider;
 
 import ad_astra_giselle_addon.common.AdAstraGiselleAddon;
 import ad_astra_giselle_addon.common.block.entity.GravityNormalizerBlockEntity;
 import ad_astra_giselle_addon.common.menu.GravityNormalizerMenu;
+import ad_astra_giselle_addon.common.network.AddonNetwork;
+import ad_astra_giselle_addon.common.network.GravityNormalizerMessage;
 import ad_astra_giselle_addon.common.util.Vec3iUtils;
+import earth.terrarium.ad_astra.client.screen.GuiUtil;
+import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.Vec3i;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -24,21 +33,40 @@ import net.minecraft.world.entity.player.Inventory;
 public class GravityNormalizerScreen extends AddonMachineScreen<GravityNormalizerBlockEntity, GravityNormalizerMenu>
 {
 	public static final ResourceLocation TEXTURE = AdAstraGiselleAddon.rl("textures/gui/container/gravity_normalizer.png");
-	public static final Component VECTOR_ELEMENT_MINUS_COMPONENT = Component.literal("-");
-	public static final Component VECTOR_ELEMENT_PLUS_COMPONENT = Component.literal("+");
-	public static final Component VECTOR_ELEMENT_LENGTH_X_COMPONENT = Component.literal("Length.X");
-	public static final Component VECTOR_ELEMENT_LENGTH_Y_COMPONENT = Component.literal("Length.Y");
-	public static final Component VECTOR_ELEMENT_LENGTH_Z_COMPONENT = Component.literal("Length.Z");
-	public static final Component VECTOR_ELEMENT_OFFSET_X_COMPONENT = Component.literal("Offset.X");
-	public static final Component VECTOR_ELEMENT_OFFSET_Y_COMPONENT = Component.literal("Offset.Y");
-	public static final Component VECTOR_ELEMENT_OFFSET_Z_COMPONENT = Component.literal("Offset.Z");
+	public static final Component VECTOR_ELEMENT_MINUS_TEXT = Component.literal("-");
+	public static final Component VECTOR_ELEMENT_PLUS_TEXT = Component.literal("+");
+	public static final String VECTOR_ELEMENT_TOOLTIP = ctl("gravity_normalizer.vector_element_tooltip");
+	public static final Component MOVE_TO_POS_COMPONENT = Component.translatable(ctl("gravity_normalizer.move_to_pos"));
+	public static final String ENERGY_USING_KEY = ctl("gravity_normalizer.energy_using");
+
+	public static final int DELTA_NORMAL = 1;
+	public static final int DELTA_SHIFT = 5;
+
+	public static final int ENERGY_LEFT = 146;
+	public static final int ENERGY_TOP = 22;
+
+	protected final List<AbstractWidget> element_length_x_widgets;
+	protected final List<AbstractWidget> element_length_y_widgets;
+	protected final List<AbstractWidget> element_length_z_widgets;
+	protected final List<AbstractWidget> element_offset_x_widgets;
+	protected final List<AbstractWidget> element_offset_y_widgets;
+	protected final List<AbstractWidget> element_offset_z_widgets;
+
+	protected Button moveToPosButton;
 
 	public GravityNormalizerScreen(GravityNormalizerMenu menu, Inventory inventory, Component title)
 	{
 		super(menu, inventory, title, TEXTURE);
 		this.imageWidth = 176;
-		this.imageHeight = 182;
+		this.imageHeight = 196;
 		this.inventoryLabelY = this.imageHeight - 94;
+
+		this.element_length_x_widgets = new ArrayList<>();
+		this.element_length_y_widgets = new ArrayList<>();
+		this.element_length_z_widgets = new ArrayList<>();
+		this.element_offset_x_widgets = new ArrayList<>();
+		this.element_offset_y_widgets = new ArrayList<>();
+		this.element_offset_z_widgets = new ArrayList<>();
 	}
 
 	@Override
@@ -46,56 +74,96 @@ public class GravityNormalizerScreen extends AddonMachineScreen<GravityNormalize
 	{
 		super.init();
 
+		int x = this.leftPos + 6;
+		int y = this.topPos + 18;
+		int lengthMin = GravityNormalizerBlockEntity.getMinLength();
+		int lengthMax = GravityNormalizerBlockEntity.getMaxLength();
+		int offsetMin = GravityNormalizerBlockEntity.getMinOffset();
+		int offsetMax = GravityNormalizerBlockEntity.getMaxOffset();
+		GravityNormalizerBlockEntity machine = this.getMenu().getMachine();
+		Supplier<Vec3i> getLength = machine::getLength;
+		Consumer<Vec3i> setLength = vec -> this.setMachineLength(machine, vec);
+		Supplier<Vec3i> getOffset = machine::getOffset;
+		Consumer<Vec3i> setOffset = vec -> this.setMachineOffset(machine, vec);
+
+		int layoutY = y;
+		int offset = 12;
+		this.element_length_x_widgets.clear();
+		this.element_length_x_widgets.addAll(this.addVectorElementComponents(x, layoutY, ctl("gravity_normalizer.length.x"), lengthMin, lengthMax, getLength, setLength, Vec3i::getX, Vec3iUtils::deriveX));
+
+		this.element_length_y_widgets.clear();
+		this.element_length_y_widgets.addAll(this.addVectorElementComponents(x, layoutY += offset, ctl("gravity_normalizer.length.y"), lengthMin, lengthMax, getLength, setLength, Vec3i::getY, Vec3iUtils::deriveY));
+
+		this.element_length_z_widgets.clear();
+		this.element_length_z_widgets.addAll(this.addVectorElementComponents(x, layoutY += offset, ctl("gravity_normalizer.length.z"), lengthMin, lengthMax, getLength, setLength, Vec3i::getZ, Vec3iUtils::deriveZ));
+
+		this.moveToPosButton = new Button(x, layoutY += offset, 132, 10, MOVE_TO_POS_COMPONENT, b ->
+		{
+			this.setMachineOffset(machine, GravityNormalizerBlockEntity.offsetFromLength(getLength.get()));
+		});
+		this.addRenderableWidget(this.moveToPosButton);
+
+		this.element_offset_x_widgets.clear();
+		this.element_offset_x_widgets.addAll(this.addVectorElementComponents(x, layoutY += offset, ctl("gravity_normalizer.offset.x"), offsetMin, offsetMax, getOffset, setOffset, Vec3i::getX, Vec3iUtils::deriveX));
+
+		this.element_offset_y_widgets.clear();
+		this.element_offset_y_widgets.addAll(this.addVectorElementComponents(x, layoutY += offset, ctl("gravity_normalizer.offset.y"), offsetMin, offsetMax, getOffset, setOffset, Vec3i::getY, Vec3iUtils::deriveY));
+
+		this.element_offset_z_widgets.clear();
+		this.element_offset_z_widgets.addAll(this.addVectorElementComponents(x, layoutY += offset, ctl("gravity_normalizer.offset.z"), offsetMin, offsetMax, getOffset, setOffset, Vec3i::getZ, Vec3iUtils::deriveZ));
 	}
 
-	protected void addVectorElementComponents(int x, int y, Component sliderComponent, Function<GravityNormalizerBlockEntity, Vec3i> vectorGetter, BiConsumer<GravityNormalizerBlockEntity, Vec3i> vectorSetter, ToIntFunction<Vec3i> elementGetter, BiFunction<Vec3i, Integer, Vec3i> elementSetter)
+	protected List<AbstractWidget> addVectorElementComponents(int x, int y, String translationKey, int elementMin, int elementMax, Supplier<Vec3i> vectorGetter, Consumer<Vec3i> vectorSetter, ToIntFunction<Vec3i> elementGetter, BiFunction<Vec3i, Integer, Vec3i> elementSetter)
 	{
-		int elementMin = 0;
-		int elementMax = 32;
-		IntSupplier mergedGetter = this.getElementGetter(vectorGetter, elementGetter);
-		IntConsumer mergedSetter = this.getElementSetter(vectorGetter, vectorSetter, elementSetter, elementMin, elementMax);
+		IntSupplier mergedGetter = this.getMergedElementGetter(vectorGetter, elementGetter);
+		IntConsumer mergedSetter = this.getMergedElementSetter(vectorGetter, vectorSetter, elementSetter, elementMin, elementMax);
+		List<AbstractWidget> widgets = new ArrayList<>();
 
-		int minusButtonX = x;
-		int buttonWidth = 10;
-		int buttonHeight = buttonWidth;
-		this.addWidget(new Button(minusButtonX, y, buttonWidth, buttonHeight, VECTOR_ELEMENT_MINUS_COMPONENT, b ->
-		{
-			mergedSetter.accept(mergedGetter.getAsInt() - 1);
-		}));
+		int buttonWidth = 16;
+		int buttonHeight = 10;
 
-		int sliderX = minusButtonX + buttonWidth;
+		int sliderX = x;
 		int sliderWidth = 100;
 		int sliderHeight = buttonHeight;
-		this.addWidget(new LongSlider(sliderX, y, sliderWidth, sliderHeight, sliderComponent, mergedGetter.getAsInt(), elementMin, elementMax, i ->
-		{
-			mergedSetter.accept((int) i);
-		}));
+		widgets.add(this.addRenderableWidget(new ElementSliderButton(sliderX, y, sliderWidth, sliderHeight, translationKey, mergedGetter.getAsInt(), elementMin, elementMax, mergedSetter::accept)));
 
-		int plusButtonX = sliderX + sliderWidth;
-		this.addWidget(new Button(plusButtonX, y, buttonWidth, buttonHeight, VECTOR_ELEMENT_PLUS_COMPONENT, b ->
+		int minusButtonX = sliderX + sliderWidth;
+		widgets.add(this.addRenderableWidget(new Button(minusButtonX, y, buttonWidth, buttonHeight, VECTOR_ELEMENT_MINUS_TEXT, b ->
 		{
-			mergedSetter.accept(mergedGetter.getAsInt() + 1);
-		}));
+			this.onVectorElementButtonClick(-1, mergedGetter, mergedSetter);
+		}, new VectorElementButtonTooltip(this, -1))));
+
+		int plusButtonX = minusButtonX + buttonWidth;
+		widgets.add(this.addRenderableWidget(new Button(plusButtonX, y, buttonWidth, buttonHeight, VECTOR_ELEMENT_PLUS_TEXT, b ->
+		{
+			this.onVectorElementButtonClick(+1, mergedGetter, mergedSetter);
+		}, new VectorElementButtonTooltip(this, +1))));
+
+		return widgets;
 	}
 
-	protected IntSupplier getElementGetter(Function<GravityNormalizerBlockEntity, Vec3i> vectorGetter, ToIntFunction<Vec3i> elementGetter)
+	protected void onVectorElementButtonClick(int direction, IntSupplier mergedGetter, IntConsumer mergedSetter)
+	{
+		int delta = direction * (Screen.hasShiftDown() ? DELTA_SHIFT : DELTA_NORMAL);
+		mergedSetter.accept(mergedGetter.getAsInt() + delta);
+	}
+
+	protected IntSupplier getMergedElementGetter(Supplier<Vec3i> vectorGetter, ToIntFunction<Vec3i> elementGetter)
 	{
 		return () ->
 		{
-			GravityNormalizerBlockEntity machine = this.getMenu().getMachine();
-			Vec3i vec = vectorGetter.apply(machine);
+			Vec3i vec = vectorGetter.get();
 			return elementGetter.applyAsInt(vec);
 		};
 	}
 
-	protected IntConsumer getElementSetter(Function<GravityNormalizerBlockEntity, Vec3i> vectorGetter, BiConsumer<GravityNormalizerBlockEntity, Vec3i> vectorSetter, BiFunction<Vec3i, Integer, Vec3i> elementSetter, int min, int max)
+	protected IntConsumer getMergedElementSetter(Supplier<Vec3i> vectorGetter, Consumer<Vec3i> vectorSetter, BiFunction<Vec3i, Integer, Vec3i> elementSetter, int min, int max)
 	{
 		return i ->
 		{
-			GravityNormalizerBlockEntity machine = this.getMenu().getMachine();
-			Vec3i vec = vectorGetter.apply(machine);
+			Vec3i vec = vectorGetter.get();
 			Vec3i newVec = elementSetter.apply(vec, Mth.clamp(i, min, max));
-			vectorSetter.accept(machine, newVec);
+			vectorSetter.accept(newVec);
 		};
 	}
 
@@ -109,6 +177,117 @@ public class GravityNormalizerScreen extends AddonMachineScreen<GravityNormalize
 	public void render(PoseStack stack, int mouseX, int mouseY, float delta)
 	{
 		super.render(stack, mouseX, mouseY, delta);
+
+		GravityNormalizerMenu menu = this.getMenu();
+		GravityNormalizerBlockEntity machine = menu.getMachine();
+
+		Vec3i length = machine.getLength();
+		this.setElement(this.element_length_x_widgets, length.getX());
+		this.setElement(this.element_length_y_widgets, length.getY());
+		this.setElement(this.element_length_z_widgets, length.getZ());
+
+		Vec3i offset = machine.getOffset();
+		this.setElement(this.element_offset_x_widgets, offset.getX());
+		this.setElement(this.element_offset_y_widgets, offset.getY());
+		this.setElement(this.element_offset_z_widgets, offset.getZ());
+
+		long maxCapacity = machine.getEnergyStorage().getMaxCapacity();
+		GuiUtil2.drawEnergy(stack, this.getEnergyBounds(), menu.getEnergyAmount(), maxCapacity);
+
+		if (GuiUtil.isHovering(this.getEnergyBounds(), mouseX, mouseY))
+		{
+			GuiUtil.drawEnergyTooltip(this, stack, menu.getEnergyAmount(), maxCapacity, mouseX, mouseY);
+		}
+
+	}
+
+	@Override
+	protected void renderLabels(PoseStack poseStack, int mouseX, int mouseY)
+	{
+		super.renderLabels(poseStack, mouseX, mouseY);
+
+		GravityNormalizerBlockEntity machine = this.getMenu().getMachine();
+		long energyUsing = machine.getEnergyUsing();
+		int maxTimer = machine.getMaxTimer();
+		Component component = Component.translatable(ENERGY_USING_KEY, String.valueOf(energyUsing), String.valueOf(maxTimer));
+		int componentWidth = this.font.width(component);
+		this.font.draw(poseStack, component, this.imageWidth - 6 - componentWidth, (float) this.inventoryLabelY, this.getTextColour());
+	}
+
+	protected void setMachineLength(GravityNormalizerBlockEntity blockEntity, Vec3i length)
+	{
+		if (!blockEntity.getLength().equals(length))
+		{
+			blockEntity.setLength(length);
+			AddonNetwork.CHANNEL.sendToServer(new GravityNormalizerMessage.Length(blockEntity, length));
+		}
+
+	}
+
+	protected void setMachineOffset(GravityNormalizerBlockEntity blockEntity, Vec3i offset)
+	{
+		if (!blockEntity.getOffset().equals(offset))
+		{
+			blockEntity.setOffset(offset);
+			AddonNetwork.CHANNEL.sendToServer(new GravityNormalizerMessage.Offset(blockEntity, offset));
+		}
+
+	}
+
+	protected void setElement(List<AbstractWidget> widgets, int value)
+	{
+		for (AbstractWidget widget : widgets)
+		{
+			if (widget instanceof ElementSliderButton slider)
+			{
+				slider.setIntValue(value);
+			}
+
+		}
+
+	}
+
+	public Rectangle getEnergyBounds()
+	{
+		return GuiUtil.getEnergyBounds(this.leftPos + ENERGY_LEFT, this.topPos + ENERGY_TOP);
+	}
+
+	public class VectorElementButtonTooltip implements Button.OnTooltip
+	{
+		public static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("+#;-#");
+		private Screen screen;
+		private int direction;
+		private List<Component> components;
+
+		public VectorElementButtonTooltip(Screen screen, int direction)
+		{
+			this.screen = screen;
+			this.direction = direction;
+			Component component = Component.translatable(VECTOR_ELEMENT_TOOLTIP, DECIMAL_FORMAT.format(direction * DELTA_NORMAL), DECIMAL_FORMAT.format(direction * DELTA_SHIFT));
+			this.components = new ArrayList<>(Arrays.stream(component.getString().split("\n")).map(Component::literal).toList());
+		}
+
+		@Override
+		public void onTooltip(Button button, PoseStack stack, int mouseX, int mouseY)
+		{
+			this.getScreen().renderComponentTooltip(stack, this.getComponents(), mouseX, mouseY);
+		}
+
+		public Screen getScreen()
+		{
+			return this.screen;
+		}
+
+		public int getDirection()
+		{
+			return this.direction;
+		}
+
+		public List<Component> getComponents()
+		{
+			return this.components;
+		}
+
 	}
 
 }
