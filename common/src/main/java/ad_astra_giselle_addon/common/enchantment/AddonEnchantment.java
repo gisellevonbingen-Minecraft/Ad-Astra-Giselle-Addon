@@ -1,14 +1,12 @@
 package ad_astra_giselle_addon.common.enchantment;
 
-import ad_astra_giselle_addon.common.item.ItemUsableResource;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 
-public class EnchantmentEnergyStorageOrDamageable extends Enchantment
+public class AddonEnchantment extends Enchantment
 {
-	public EnchantmentEnergyStorageOrDamageable(Rarity rarity, EnchantmentCategory category, EquipmentSlot... slots)
+	public AddonEnchantment(Rarity rarity, EnchantmentCategory category, EquipmentSlot... slots)
 	{
 		super(rarity, category, slots);
 	}
@@ -23,12 +21,6 @@ public class EnchantmentEnergyStorageOrDamageable extends Enchantment
 	public boolean isDiscoverable()
 	{
 		return false;
-	}
-
-	@Override
-	public boolean canEnchant(ItemStack stack)
-	{
-		return ItemUsableResource.first(stack) != null && super.canEnchant(stack);
 	}
 
 	@Override

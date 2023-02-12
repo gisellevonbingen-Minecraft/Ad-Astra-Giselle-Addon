@@ -1,13 +1,13 @@
 package ad_astra_giselle_addon.common.content.proof;
 
 import ad_astra_giselle_addon.common.config.EnchantmentsConfig;
-import ad_astra_giselle_addon.common.enchantment.EnchantmentEnergyStorageOrDamageable;
+import ad_astra_giselle_addon.common.enchantment.AddonEnchantment;
 import ad_astra_giselle_addon.common.item.ItemUsableResource;
 import net.minecraft.world.entity.LivingEntity;
 
 public class SpaceFireProofEnchantmentSession extends ProofEnchantmentSession
 {
-	public SpaceFireProofEnchantmentSession(LivingEntity living, EnchantmentEnergyStorageOrDamageable enchantment)
+	public SpaceFireProofEnchantmentSession(LivingEntity living, AddonEnchantment enchantment)
 	{
 		super(living, enchantment);
 	}

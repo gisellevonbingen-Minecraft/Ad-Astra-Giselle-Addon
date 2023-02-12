@@ -3,7 +3,7 @@ package ad_astra_giselle_addon.common.content.proof;
 import ad_astra_giselle_addon.common.config.EnchantmentsConfig;
 import ad_astra_giselle_addon.common.content.oxygen.IOxygenCharger;
 import ad_astra_giselle_addon.common.content.oxygen.OxygenChargerUtils;
-import ad_astra_giselle_addon.common.enchantment.EnchantmentEnergyStorageOrDamageable;
+import ad_astra_giselle_addon.common.enchantment.AddonEnchantment;
 import ad_astra_giselle_addon.common.entity.LivingHelper;
 import ad_astra_giselle_addon.common.fluid.FluidHooks2;
 import ad_astra_giselle_addon.common.fluid.FluidPredicates;
@@ -15,7 +15,7 @@ public class SpaceOxygenProofEnchantmentSession extends ProofEnchantmentSession
 {
 	private IOxygenCharger testedOxygenCharger;
 
-	public SpaceOxygenProofEnchantmentSession(LivingEntity living, EnchantmentEnergyStorageOrDamageable enchantment)
+	public SpaceOxygenProofEnchantmentSession(LivingEntity living, AddonEnchantment enchantment)
 	{
 		super(living, enchantment);
 	}

@@ -4,7 +4,7 @@ import org.jetbrains.annotations.NotNull;
 
 import com.mojang.datafixers.util.Pair;
 
-import ad_astra_giselle_addon.common.enchantment.EnchantmentEnergyStorageOrDamageable;
+import ad_astra_giselle_addon.common.enchantment.AddonEnchantment;
 import ad_astra_giselle_addon.common.enchantment.EnchantmentHelper2;
 import ad_astra_giselle_addon.common.entity.LivingHelper;
 import ad_astra_giselle_addon.common.item.ItemStackReference;
@@ -14,13 +14,13 @@ import net.minecraft.world.entity.LivingEntity;
 
 public abstract class ProofEnchantmentSession extends ProofSession
 {
-	private EnchantmentEnergyStorageOrDamageable enchantment;
+	private AddonEnchantment enchantment;
 	private ItemStackHolder enchantedItem;
 	private int enchantLevel;
 
 	private ItemUsableResource testedUsableResource;
 
-	public ProofEnchantmentSession(LivingEntity living, EnchantmentEnergyStorageOrDamageable enchantment)
+	public ProofEnchantmentSession(LivingEntity living, AddonEnchantment enchantment)
 	{
 		super(living);
 		this.enchantment = enchantment;
@@ -117,7 +117,7 @@ public abstract class ProofEnchantmentSession extends ProofSession
 
 	}
 
-	public EnchantmentEnergyStorageOrDamageable getEnchantment()
+	public AddonEnchantment getEnchantment()
 	{
 		return this.enchantment;
 	}
