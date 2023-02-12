@@ -34,7 +34,7 @@ public class RedstoneArsenalCompat extends CompatibleMod
 	public void collectEquipCommands(List<ArgumentBuilder<CommandSourceStack, ?>> list)
 	{
 		super.collectEquipCommands(list);
-		Commands.literal("flux_armor").executes(RSACommand::flux_armor);
+		list.add(Commands.literal("flux_armor").executes(RSACommand::flux_armor));
 	}
 
 }
