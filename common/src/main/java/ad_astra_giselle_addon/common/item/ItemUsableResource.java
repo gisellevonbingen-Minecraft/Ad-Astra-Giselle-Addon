@@ -41,7 +41,7 @@ public enum ItemUsableResource
 			@Override
 			public boolean test(ItemStack item)
 			{
-				return item.isDamageableItem();
+				return true;
 			}
 
 			@Override
@@ -69,7 +69,7 @@ public enum ItemUsableResource
 
 				}
 
-				return 0L;
+				return amount;
 			}
 		},
 	// EOL
