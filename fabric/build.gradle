@@ -35,15 +35,15 @@ loom {
         }
     }
 
-	mixin {
-		defaultRefmapName = "ad_astra_giselle_addon.mixin.refmap.json"
-	}
+    mixin {
+        defaultRefmapName = "ad_astra_giselle_addon.mixin.refmap.json"
+    }
 }
 
 dependencies {
     // Mod
     minecraft "com.mojang:minecraft:${mc_version}"
-	mappings loom.layered() {
+    mappings loom.layered() {
         officialMojangMappings()
         parchment("org.parchmentmc.data:parchment-${mc_version}:${parchment_version}@zip")
     }
