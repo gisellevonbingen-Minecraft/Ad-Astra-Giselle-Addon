@@ -57,7 +57,7 @@ allprojects {
         forge_api_version: forge_api_version, forge_loader_version: forge_loader_version,
         botarium_version: botarium_version, ad_astra_version: ad_astra_version, resourcefulconfig_version: resourcefulconfig_version
     ]
-        
+
     processResources {
         inputs.properties replaceProperties
         replaceProperties.put "project", project
