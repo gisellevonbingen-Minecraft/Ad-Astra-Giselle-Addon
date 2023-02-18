@@ -36,7 +36,7 @@ public class ElementSliderButton extends AbstractSliderButton
 		RenderSystem.setShaderTexture(0, WIDGETS_LOCATION);
 		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 		int i = (this.isActive() && this.isHoveredOrFocused() ? 2 : 1) * 20;
-		int cursorX = this.x + (int) (this.value * (double) (this.width - 8));
+		int cursorX = this.x + (int) (this.value * (this.width - 8));
 		int cursorY = this.y;
 		int cursorWidth = 4;
 		int cursorHeight = this.height;
@@ -66,7 +66,7 @@ public class ElementSliderButton extends AbstractSliderButton
 	{
 		this.intValue = Mth.floor(Mth.clampedLerp(this.getMinValue(), this.getMaxValue(), ratio));
 	}
-	
+
 	public String getTranslationKey()
 	{
 		return this.translationKey;

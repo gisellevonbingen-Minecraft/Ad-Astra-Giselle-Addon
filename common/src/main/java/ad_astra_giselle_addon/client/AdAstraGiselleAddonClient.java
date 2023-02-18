@@ -68,8 +68,8 @@ public class AdAstraGiselleAddonClient
 
 	public static void registerBlockEntityRenderer(BlockEntityRendererRegister register)
 	{
-		register.regsiter(AddonBlockEntityTypes.FUEL_LOADER.get(), context -> new WorkingAreaBlockEntityRenderer<FuelLoaderBlockEntity>(context));
-		register.regsiter(AddonBlockEntityTypes.GRAVITY_NORMALIZER.get(), context -> new WorkingAreaBlockEntityRenderer<GravityNormalizerBlockEntity>(context));
+		register.regsiter(AddonBlockEntityTypes.FUEL_LOADER.get(), context -> new WorkingAreaBlockEntityRenderer<>(context));
+		register.regsiter(AddonBlockEntityTypes.GRAVITY_NORMALIZER.get(), context -> new WorkingAreaBlockEntityRenderer<>(context));
 	}
 
 	public static void registerItemTooltip(Consumer<TriConsumer<ItemStack, TooltipFlag, List<Component>>> register)

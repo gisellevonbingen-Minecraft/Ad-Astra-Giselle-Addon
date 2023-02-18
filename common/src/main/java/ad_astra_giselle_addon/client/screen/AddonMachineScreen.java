@@ -108,7 +108,7 @@ public abstract class AddonMachineScreen<BLOCK_ENTITY extends AbstractMachineBlo
 	public void setWorkingAreaVisible(boolean visible)
 	{
 		BLOCK_ENTITY machine = this.getMenu().getMachine();
-		
+
 		if (machine instanceof IWorkingAreaBlockEntity blockEntity)
 		{
 			blockEntity.setWorkingAreaVisible(visible);

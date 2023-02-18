@@ -211,7 +211,7 @@ public class GravityNormalizerScreen extends AddonMachineScreen<GravityNormalize
 		int maxTimer = machine.getMaxTimer();
 		Component component = Component.translatable(ENERGY_USING_KEY, String.valueOf(energyUsing), String.valueOf(maxTimer));
 		int componentWidth = this.font.width(component);
-		this.font.draw(poseStack, component, this.imageWidth - 6 - componentWidth, (float) this.inventoryLabelY, this.getTextColour());
+		this.font.draw(poseStack, component, this.imageWidth - 6 - componentWidth, this.inventoryLabelY, this.getTextColour());
 	}
 
 	protected void setMachineLength(GravityNormalizerBlockEntity blockEntity, Vec3i length)
