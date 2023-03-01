@@ -16,8 +16,6 @@ import ad_astra_giselle_addon.client.screen.FuelLoaderScreen;
 import ad_astra_giselle_addon.client.screen.GravityNormalizerScreen;
 import ad_astra_giselle_addon.client.util.RenderHelper;
 import ad_astra_giselle_addon.common.AdAstraGiselleAddon;
-import ad_astra_giselle_addon.common.block.entity.FuelLoaderBlockEntity;
-import ad_astra_giselle_addon.common.block.entity.GravityNormalizerBlockEntity;
 import ad_astra_giselle_addon.common.enchantment.EnchantmentHelper2;
 import ad_astra_giselle_addon.common.registry.AddonBlockEntityTypes;
 import ad_astra_giselle_addon.common.registry.AddonMenuTypes;
