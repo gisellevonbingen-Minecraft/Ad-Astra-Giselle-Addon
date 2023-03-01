@@ -1,7 +1,7 @@
 package ad_astra_giselle_addon.common.registry;
 
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
