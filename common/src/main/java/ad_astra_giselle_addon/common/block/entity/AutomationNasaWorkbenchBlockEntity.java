@@ -13,10 +13,11 @@ import ad_astra_giselle_addon.common.world.ContainerUtils;
 import earth.terrarium.ad_astra.common.recipe.IngredientHolder;
 import earth.terrarium.ad_astra.common.recipe.NasaWorkbenchRecipe;
 import earth.terrarium.ad_astra.common.util.ModUtils;
-import earth.terrarium.botarium.api.energy.EnergyBlock;
-import earth.terrarium.botarium.api.energy.EnergyHooks;
-import earth.terrarium.botarium.api.energy.PlatformEnergyManager;
-import earth.terrarium.botarium.api.energy.SimpleUpdatingEnergyContainer;
+import earth.terrarium.botarium.common.energy.base.EnergyAttachment;
+import earth.terrarium.botarium.common.energy.base.PlatformEnergyManager;
+import earth.terrarium.botarium.common.energy.impl.SimpleEnergyContainer;
+import earth.terrarium.botarium.common.energy.impl.WrappedBlockEnergyContainer;
+import earth.terrarium.botarium.common.energy.util.EnergyHooks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -30,15 +31,16 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class AutomationNasaWorkbenchBlockEntity extends AddonMachineBlockEntity implements EnergyBlock
+public class AutomationNasaWorkbenchBlockEntity extends AddonMachineBlockEntity implements EnergyAttachment.Block
 {
 	public static final int RESULT_SLOT = 14;
 	public static final String DATA_COOK_TIME_KEY = "cookTime";
 	public static final String DATA_COOK_TIME_TOTAL_KEY = "cookTimeTotal";
 
-	private SimpleUpdatingEnergyContainer energyStorage;
+	private WrappedBlockEnergyContainer energyStorage;
 
 	private boolean firstTick;
 	private List<RecipeCache> recipaCaches;
@@ -78,12 +80,6 @@ public class AutomationNasaWorkbenchBlockEntity extends AddonMachineBlockEntity 
 	}
 
 	@Override
-	public void update()
-	{
-
-	}
-
-	@Override
 	public int getInventorySize()
 	{
 		return 15;
@@ -116,11 +112,11 @@ public class AutomationNasaWorkbenchBlockEntity extends AddonMachineBlockEntity 
 	}
 
 	@Override
-	public SimpleUpdatingEnergyContainer getEnergyStorage()
+	public WrappedBlockEnergyContainer getEnergyStorage(BlockEntity blockEntity)
 	{
 		if (this.energyStorage == null)
 		{
-			this.energyStorage = new SimpleUpdatingEnergyContainer(this, MachinesConfig.AUTOMATION_NASA_WORKBENCH_ENERGY_CAPACITY);
+			this.energyStorage = new WrappedBlockEnergyContainer(this, new SimpleEnergyContainer(MachinesConfig.AUTOMATION_NASA_WORKBENCH_ENERGY_CAPACITY));
 		}
 
 		return this.energyStorage;

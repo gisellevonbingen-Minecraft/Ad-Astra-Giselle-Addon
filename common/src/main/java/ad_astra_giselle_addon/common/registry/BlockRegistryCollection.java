@@ -4,7 +4,7 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
 
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -13,7 +13,7 @@ public class BlockRegistryCollection extends DoubleRegistryCollection<Block, Ite
 {
 	public BlockRegistryCollection(String modid)
 	{
-		super(modid, Registry.BLOCK_REGISTRY, Registry.ITEM_REGISTRY);
+		super(modid, Registries.BLOCK, Registries.ITEM);
 	}
 
 	public <B extends Block> BlockRegistryHolder<B, BlockItem> addDefaultProperties(String name, Supplier<B> blockSup)

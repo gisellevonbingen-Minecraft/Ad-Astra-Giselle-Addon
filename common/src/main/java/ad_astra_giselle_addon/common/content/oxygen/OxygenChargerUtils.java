@@ -14,8 +14,8 @@ import ad_astra_giselle_addon.common.item.ItemStackReference;
 import earth.terrarium.ad_astra.common.item.OxygenTankItem;
 import earth.terrarium.ad_astra.common.item.armor.SpaceSuit;
 import earth.terrarium.ad_astra.common.util.ModUtils;
-import earth.terrarium.botarium.api.fluid.FluidHolder;
-import earth.terrarium.botarium.api.item.ItemStackHolder;
+import earth.terrarium.botarium.common.fluid.base.FluidHolder;
+import earth.terrarium.botarium.common.item.ItemStackHolder;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 

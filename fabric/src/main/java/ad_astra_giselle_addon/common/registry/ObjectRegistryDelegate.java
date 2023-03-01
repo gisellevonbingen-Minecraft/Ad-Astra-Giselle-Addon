@@ -2,9 +2,12 @@ package ad_astra_giselle_addon.common.registry;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
+import java.util.Map.Entry;
 import java.util.function.Supplier;
 
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 
@@ -38,7 +41,13 @@ public class ObjectRegistryDelegate implements ObjectRegistry.Delegate
 
 		private Registry<T> getRegistry()
 		{
-			return (Registry<T>) Registry.REGISTRY.get(this.key.location());
+			return (Registry<T>) BuiltInRegistries.REGISTRY.get(this.key.location());
+		}
+
+		@Override
+		public Set<Entry<ResourceKey<T>, T>> getEntries()
+		{
+			return this.getRegistry().entrySet();
 		}
 
 		@Override

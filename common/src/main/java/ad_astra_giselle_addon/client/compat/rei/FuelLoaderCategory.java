@@ -17,7 +17,7 @@ import me.shedaniel.rei.api.client.registry.display.DisplayRegistry;
 import me.shedaniel.rei.api.client.registry.screen.ScreenRegistry;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.util.EntryStacks;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.ItemStack;
 
 public class FuelLoaderCategory extends AddonDisplayCategory<FuelLoaderDisplay>
@@ -70,7 +70,7 @@ public class FuelLoaderCategory extends AddonDisplayCategory<FuelLoaderDisplay>
 	{
 		super.registerRecipes(registry);
 
-		ObjectRegistry.get(Registry.FLUID_REGISTRY).stream().filter(RecipeHelper.FuelLoader::testFluid).map(FuelLoaderDisplay::new).forEach(registry::add);
+		ObjectRegistry.get(Registries.FLUID).stream().filter(RecipeHelper.FuelLoader::testFluid).map(FuelLoaderDisplay::new).forEach(registry::add);
 	}
 
 	@Override

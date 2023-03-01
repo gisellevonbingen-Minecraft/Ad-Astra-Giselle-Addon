@@ -1,7 +1,4 @@
 {
-
-  "itemGroup.ad_astra_giselle_addon.tab_main": "Ad Astra: Giselle Addon",
-  
   "block.ad_astra_giselle_addon.fuel_loader": "연료 적재기",
   "block.ad_astra_giselle_addon.automation_nasa_workbench": "자동화 NASA 제작대",
   "block.ad_astra_giselle_addon.gravity_normalizer": "중력 정규화기",

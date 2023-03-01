@@ -9,7 +9,7 @@ import ad_astra_giselle_addon.common.fluid.UniveralFluidHandler;
 import ad_astra_giselle_addon.common.util.NBTUtils;
 import earth.terrarium.ad_astra.common.item.armor.SpaceSuit;
 import earth.terrarium.ad_astra.common.registry.ModItems;
-import earth.terrarium.botarium.api.item.ItemStackHolder;
+import earth.terrarium.botarium.common.item.ItemStackHolder;
 import net.minecraft.nbt.CompoundTag;
 
 public class NetheriteOxygenCanItem extends OxygenCanItem

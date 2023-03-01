@@ -35,7 +35,7 @@ public class AutomationNasaWorkbenchScreen extends AddonMachineScreen<Automation
 		AutomationNasaWorkbenchMenu menu = this.getMenu();
 		int cookTime = menu.getCookTime().get();
 		int cookTimeTotal = menu.getCookTimeTotal().get();
-		long maxCapacity = menu.getMachine().getEnergyStorage().getMaxCapacity();
+		long maxCapacity = menu.getMachine().getEnergyStorage(null).getMaxCapacity();
 		GuiUtil2.drawArrow(poseStack, this.getArrowBounds(), cookTime, cookTimeTotal);
 		GuiUtil2.drawEnergy(poseStack, this.getEnergyBounds(), menu.getEnergyAmount(), maxCapacity);
 	}
@@ -56,7 +56,7 @@ public class AutomationNasaWorkbenchScreen extends AddonMachineScreen<Automation
 		else if (GuiUtil.isHovering(this.getEnergyBounds(), mouseX, mouseY))
 		{
 			AutomationNasaWorkbenchMenu menu = this.getMenu();
-			long maxCapacity = menu.getMachine().getEnergyStorage().getMaxCapacity();
+			long maxCapacity = menu.getMachine().getEnergyStorage(null).getMaxCapacity();
 			GuiUtil.drawEnergyTooltip(this, poseStack, menu.getEnergyAmount(), maxCapacity, mouseX, mouseY);
 		}
 

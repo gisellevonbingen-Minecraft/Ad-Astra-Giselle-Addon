@@ -10,7 +10,7 @@ import ad_astra_giselle_addon.common.block.entity.FuelLoaderBlockEntity;
 import ad_astra_giselle_addon.common.menu.FuelLoaderMenu;
 import ad_astra_giselle_addon.common.util.TranslationUtils;
 import earth.terrarium.ad_astra.client.screen.GuiUtil;
-import earth.terrarium.botarium.api.fluid.FluidHolder;
+import earth.terrarium.botarium.common.fluid.base.FluidHolder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
@@ -76,7 +76,7 @@ public class FuelLoaderScreen extends AddonMachineScreen<FuelLoaderBlockEntity, 
 
 	public long getCapacity()
 	{
-		return this.getMenu().getMachine().getFluidContainer().getTankCapacity(0);
+		return this.getMenu().getMachine().getFluidContainer(null).getTankCapacity(0);
 	}
 
 }

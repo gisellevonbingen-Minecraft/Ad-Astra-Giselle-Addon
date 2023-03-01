@@ -36,8 +36,8 @@ public class ElementSliderButton extends AbstractSliderButton
 		RenderSystem.setShaderTexture(0, WIDGETS_LOCATION);
 		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 		int i = (this.isActive() && this.isHoveredOrFocused() ? 2 : 1) * 20;
-		int cursorX = this.x + (int) (this.value * (this.width - 8));
-		int cursorY = this.y;
+		int cursorX = this.getX() + (int) (this.value * (this.width - 8));
+		int cursorY = this.getY();
 		int cursorWidth = 4;
 		int cursorHeight = this.height;
 		GuiComponent.blit(pPoseStack, cursorX + 0, cursorY, cursorWidth, cursorHeight, 0, 46 + i, 4, 20, 256, 256);

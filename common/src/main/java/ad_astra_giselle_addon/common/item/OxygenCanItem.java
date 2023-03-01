@@ -19,24 +19,23 @@ import earth.terrarium.ad_astra.common.item.FluidContainingItem;
 import earth.terrarium.ad_astra.common.item.armor.SpaceSuit;
 import earth.terrarium.ad_astra.common.registry.ModFluids;
 import earth.terrarium.ad_astra.common.registry.ModItems;
-import earth.terrarium.botarium.api.fluid.FluidHolder;
-import earth.terrarium.botarium.api.fluid.FluidHooks;
-import earth.terrarium.botarium.api.item.ItemStackHolder;
-import net.minecraft.core.NonNullList;
+import earth.terrarium.botarium.common.fluid.base.FluidHolder;
+import earth.terrarium.botarium.common.fluid.utils.FluidHooks;
+import earth.terrarium.botarium.common.item.ItemStackHolder;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.CreativeModeTab.Output;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 
-public class OxygenCanItem extends Item implements FluidContainingItem, IOxygenChargerItem
+public class OxygenCanItem extends Item implements FluidContainingItem, IOxygenChargerItem, ICreativeTabOutputProvider
 {
 	public static final String KEY_OXYGEN_CHARGER = "oxygencharger";
 	public static final String KEY_CHARGE_MODE = "chargemode";
@@ -59,18 +58,12 @@ public class OxygenCanItem extends Item implements FluidContainingItem, IOxygenC
 	}
 
 	@Override
-	public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> list)
+	public void provideCreativeTabOutput(Output output)
 	{
-		super.fillItemCategory(group, list);
-
-		if (this.allowedIn(group))
-		{
-			ItemStackHolder full = new ItemStackHolder(new ItemStack(this));
-			IOxygenCharger oxygenCharger = OxygenChargerUtils.get(full);
-			oxygenCharger.getFluidHandler().insertFluid(FluidHooks.newFluidHolder(ModFluids.OXYGEN.get(), oxygenCharger.getTotalCapacity(), null), false);
-			list.add(full.getStack());
-		}
-
+		ItemStackHolder full = new ItemStackHolder(new ItemStack(this));
+		IOxygenCharger oxygenCharger = OxygenChargerUtils.get(full);
+		oxygenCharger.getFluidHandler().insertFluid(FluidHooks.newFluidHolder(ModFluids.OXYGEN.get(), oxygenCharger.getTotalCapacity(), null), false);
+		output.accept(full.getStack());
 	}
 
 	@Override

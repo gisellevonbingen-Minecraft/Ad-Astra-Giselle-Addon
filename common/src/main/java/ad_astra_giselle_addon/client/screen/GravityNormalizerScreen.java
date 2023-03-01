@@ -3,7 +3,6 @@ package ad_astra_giselle_addon.client.screen;
 import java.awt.Rectangle;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
@@ -23,6 +22,7 @@ import ad_astra_giselle_addon.common.util.Vec3iUtils;
 import earth.terrarium.ad_astra.client.screen.GuiUtil;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.Vec3i;
 import net.minecraft.network.chat.Component;
@@ -39,8 +39,11 @@ public class GravityNormalizerScreen extends AddonMachineScreen<GravityNormalize
 	public static final Component MOVE_TO_POS_COMPONENT = Component.translatable(ctl("gravity_normalizer.move_to_pos"));
 	public static final String ENERGY_USING_KEY = ctl("gravity_normalizer.energy_using");
 
+	public static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("+#;-#");
 	public static final int DELTA_NORMAL = 1;
 	public static final int DELTA_SHIFT = 5;
+	public static final Component MINUS_TOOLTIP = createVectorElementButtonTooltipComponent(-1);
+	public static final Component PLUS_TOOLTIP = createVectorElementButtonTooltipComponent(+1);
 
 	public static final int ENERGY_LEFT = 146;
 	public static final int ENERGY_TOP = 22;
@@ -97,10 +100,10 @@ public class GravityNormalizerScreen extends AddonMachineScreen<GravityNormalize
 		this.element_length_z_widgets.clear();
 		this.element_length_z_widgets.addAll(this.addVectorElementComponents(x, layoutY += offset, ctl("gravity_normalizer.length.z"), lengthMin, lengthMax, getLength, setLength, Vec3i::getZ, Vec3iUtils::deriveZ));
 
-		this.moveToPosButton = new Button(x, layoutY += offset, 132, 10, MOVE_TO_POS_COMPONENT, b ->
+		this.moveToPosButton = new Button.Builder(MOVE_TO_POS_COMPONENT, b ->
 		{
 			this.setMachineOffset(machine, GravityNormalizerBlockEntity.offsetFromLength(getLength.get()));
-		});
+		}).bounds(x, layoutY += offset, 132, 10).build();
 		this.addRenderableWidget(this.moveToPosButton);
 
 		this.element_offset_x_widgets.clear();
@@ -128,16 +131,16 @@ public class GravityNormalizerScreen extends AddonMachineScreen<GravityNormalize
 		widgets.add(this.addRenderableWidget(new ElementSliderButton(sliderX, y, sliderWidth, sliderHeight, translationKey, mergedGetter.getAsInt(), elementMin, elementMax, mergedSetter::accept)));
 
 		int minusButtonX = sliderX + sliderWidth;
-		widgets.add(this.addRenderableWidget(new Button(minusButtonX, y, buttonWidth, buttonHeight, VECTOR_ELEMENT_MINUS_TEXT, b ->
+		widgets.add(this.addRenderableWidget(new Button.Builder(VECTOR_ELEMENT_MINUS_TEXT, b ->
 		{
 			this.onVectorElementButtonClick(-1, mergedGetter, mergedSetter);
-		}, new VectorElementButtonTooltip(this, -1))));
+		}).bounds(minusButtonX, y, buttonWidth, buttonHeight).tooltip(Tooltip.create(MINUS_TOOLTIP)).build()));
 
 		int plusButtonX = minusButtonX + buttonWidth;
-		widgets.add(this.addRenderableWidget(new Button(plusButtonX, y, buttonWidth, buttonHeight, VECTOR_ELEMENT_PLUS_TEXT, b ->
+		widgets.add(this.addRenderableWidget(new Button.Builder(VECTOR_ELEMENT_PLUS_TEXT, b ->
 		{
 			this.onVectorElementButtonClick(+1, mergedGetter, mergedSetter);
-		}, new VectorElementButtonTooltip(this, +1))));
+		}).bounds(plusButtonX, y, buttonWidth, buttonHeight).tooltip(Tooltip.create(PLUS_TOOLTIP)).build()));
 
 		return widgets;
 	}
@@ -191,7 +194,7 @@ public class GravityNormalizerScreen extends AddonMachineScreen<GravityNormalize
 		this.setElement(this.element_offset_y_widgets, offset.getY());
 		this.setElement(this.element_offset_z_widgets, offset.getZ());
 
-		long maxCapacity = machine.getEnergyStorage().getMaxCapacity();
+		long maxCapacity = machine.getEnergyStorage(null).getMaxCapacity();
 		GuiUtil2.drawEnergy(stack, this.getEnergyBounds(), menu.getEnergyAmount(), maxCapacity);
 
 		if (GuiUtil.isHovering(this.getEnergyBounds(), mouseX, mouseY))
@@ -252,42 +255,9 @@ public class GravityNormalizerScreen extends AddonMachineScreen<GravityNormalize
 		return GuiUtil.getEnergyBounds(this.leftPos + ENERGY_LEFT, this.topPos + ENERGY_TOP);
 	}
 
-	public class VectorElementButtonTooltip implements Button.OnTooltip
+	public static Component createVectorElementButtonTooltipComponent(int direction)
 	{
-		public static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("+#;-#");
-		private Screen screen;
-		private int direction;
-		private List<Component> components;
-
-		public VectorElementButtonTooltip(Screen screen, int direction)
-		{
-			this.screen = screen;
-			this.direction = direction;
-			Component component = Component.translatable(VECTOR_ELEMENT_TOOLTIP, DECIMAL_FORMAT.format(direction * DELTA_NORMAL), DECIMAL_FORMAT.format(direction * DELTA_SHIFT));
-			this.components = new ArrayList<>(Arrays.stream(component.getString().split("\n")).map(Component::literal).toList());
-		}
-
-		@Override
-		public void onTooltip(Button button, PoseStack stack, int mouseX, int mouseY)
-		{
-			this.getScreen().renderComponentTooltip(stack, this.getComponents(), mouseX, mouseY);
-		}
-
-		public Screen getScreen()
-		{
-			return this.screen;
-		}
-
-		public int getDirection()
-		{
-			return this.direction;
-		}
-
-		public List<Component> getComponents()
-		{
-			return this.components;
-		}
-
+		return Component.translatable(VECTOR_ELEMENT_TOOLTIP, DECIMAL_FORMAT.format(direction * DELTA_NORMAL), DECIMAL_FORMAT.format(direction * DELTA_SHIFT));
 	}
 
 }

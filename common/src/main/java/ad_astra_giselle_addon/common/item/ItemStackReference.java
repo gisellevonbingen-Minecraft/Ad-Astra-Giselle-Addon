@@ -2,7 +2,7 @@ package ad_astra_giselle_addon.common.item;
 
 import java.util.function.Consumer;
 
-import earth.terrarium.botarium.api.item.ItemStackHolder;
+import earth.terrarium.botarium.common.item.ItemStackHolder;
 import net.minecraft.world.item.ItemStack;
 
 public class ItemStackReference extends ItemStackHolder

@@ -2,7 +2,7 @@ package ad_astra_giselle_addon.common.registry;
 
 import java.util.function.Supplier;
 
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 
@@ -10,7 +10,7 @@ public class BlockEntityTypeRegistryCollection extends ObjectRegistryCollection<
 {
 	public BlockEntityTypeRegistryCollection(String modid)
 	{
-		super(modid, Registry.BLOCK_ENTITY_TYPE_REGISTRY);
+		super(modid, Registries.BLOCK_ENTITY_TYPE);
 	}
 
 	private <BE extends BlockEntity> Supplier<? extends BlockEntityType<BE>> getBuilder(BlockRegistryHolder<?, ?> block, BlockEntityType.BlockEntitySupplier<BE> blockEntitySupplier)

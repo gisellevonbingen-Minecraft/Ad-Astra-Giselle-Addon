@@ -6,7 +6,7 @@ import ad_astra_giselle_addon.client.screen.FuelLoaderScreen;
 import ad_astra_giselle_addon.common.compat.rei.AddonReiCommonPlugin;
 import dev.architectury.event.CompoundEventResult;
 import earth.terrarium.ad_astra.common.compat.rei.BaseClickArea;
-import earth.terrarium.botarium.api.fluid.FluidHolder;
+import earth.terrarium.botarium.common.fluid.base.FluidHolder;
 import me.shedaniel.math.Point;
 import me.shedaniel.rei.api.client.registry.screen.FocusedStackProvider;
 import me.shedaniel.rei.api.common.entry.EntryStack;

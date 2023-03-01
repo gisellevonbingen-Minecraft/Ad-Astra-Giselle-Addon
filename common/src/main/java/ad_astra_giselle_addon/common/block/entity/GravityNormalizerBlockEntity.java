@@ -9,10 +9,11 @@ import ad_astra_giselle_addon.common.content.proof.GravityNormalizingUtils;
 import ad_astra_giselle_addon.common.menu.GravityNormalizerMenu;
 import ad_astra_giselle_addon.common.registry.AddonBlockEntityTypes;
 import ad_astra_giselle_addon.common.util.Vec3iUtils;
-import earth.terrarium.botarium.api.energy.EnergyBlock;
-import earth.terrarium.botarium.api.energy.EnergyHooks;
-import earth.terrarium.botarium.api.energy.PlatformEnergyManager;
-import earth.terrarium.botarium.api.energy.SimpleUpdatingEnergyContainer;
+import earth.terrarium.botarium.common.energy.base.EnergyAttachment;
+import earth.terrarium.botarium.common.energy.base.PlatformEnergyManager;
+import earth.terrarium.botarium.common.energy.impl.SimpleEnergyContainer;
+import earth.terrarium.botarium.common.energy.impl.WrappedBlockEnergyContainer;
+import earth.terrarium.botarium.common.energy.util.EnergyHooks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.CompoundTag;
@@ -22,17 +23,18 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 
-public class GravityNormalizerBlockEntity extends AddonMachineBlockEntity implements EnergyBlock, IWorkingAreaBlockEntity
+public class GravityNormalizerBlockEntity extends AddonMachineBlockEntity implements EnergyAttachment.Block, IWorkingAreaBlockEntity
 {
 	public static final String DATA_LENGTH_KEY = "length";
 	public static final String DATA_OFFSET_KEY = "offset";
 	public static final String DATA_TIMER_KEY = "timer";
 	public static final String DATA_WORKINGAREA_VISIBLE_KEY = "workingAreaVisible";
 
-	private SimpleUpdatingEnergyContainer energyStorage;
+	private WrappedBlockEnergyContainer energyStorage;
 	private Vec3i length;
 	private Vec3i offset;
 	private int timer;
@@ -75,11 +77,11 @@ public class GravityNormalizerBlockEntity extends AddonMachineBlockEntity implem
 	}
 
 	@Override
-	public SimpleUpdatingEnergyContainer getEnergyStorage()
+	public WrappedBlockEnergyContainer getEnergyStorage(BlockEntity holder)
 	{
 		if (this.energyStorage == null)
 		{
-			this.energyStorage = new SimpleUpdatingEnergyContainer(this, MachinesConfig.GRAVITY_NORMALIZER_ENERGY_CAPACITY)
+			this.energyStorage = new WrappedBlockEnergyContainer(this, new SimpleEnergyContainer(MachinesConfig.GRAVITY_NORMALIZER_ENERGY_CAPACITY)
 			{
 				@Override
 				public long maxExtract()
@@ -92,16 +94,10 @@ public class GravityNormalizerBlockEntity extends AddonMachineBlockEntity implem
 				{
 					return this.getMaxCapacity();
 				}
-			};
+			});
 		}
 
 		return this.energyStorage;
-	}
-
-	@Override
-	public void update()
-	{
-
 	}
 
 	@Override

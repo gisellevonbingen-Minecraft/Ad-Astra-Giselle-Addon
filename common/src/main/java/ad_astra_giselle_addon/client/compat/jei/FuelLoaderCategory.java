@@ -16,7 +16,7 @@ import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.registration.IGuiHandlerRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.material.Fluid;
 
@@ -75,7 +75,7 @@ public class FuelLoaderCategory extends AddonRecipeCategory<Fluid>
 	{
 		super.registerRecipes(registry);
 
-		registry.addRecipes(this.getRecipeType(), ObjectRegistry.get(Registry.FLUID_REGISTRY).stream().filter(RecipeHelper.FuelLoader::testFluid).toList());
+		registry.addRecipes(this.getRecipeType(), ObjectRegistry.get(Registries.FLUID).stream().filter(RecipeHelper.FuelLoader::testFluid).toList());
 	}
 
 	@Override

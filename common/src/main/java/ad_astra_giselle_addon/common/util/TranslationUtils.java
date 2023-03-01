@@ -12,10 +12,10 @@ import ad_astra_giselle_addon.common.AdAstraGiselleAddon;
 import ad_astra_giselle_addon.common.content.oxygen.IChargeMode;
 import ad_astra_giselle_addon.common.fluid.FluidHelper;
 import ad_astra_giselle_addon.common.registry.ObjectRegistry;
-import earth.terrarium.botarium.api.fluid.FluidHolder;
-import earth.terrarium.botarium.api.fluid.FluidHooks;
+import earth.terrarium.botarium.common.fluid.base.FluidHolder;
+import earth.terrarium.botarium.common.fluid.utils.FluidHooks;
 import net.minecraft.ChatFormatting;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
@@ -72,7 +72,7 @@ public class TranslationUtils
 
 	public static List<Component> fluid(FluidHolder fluid, long capacity)
 	{
-		String modid = ObjectRegistry.get(Registry.FLUID_REGISTRY).getId(fluid.getFluid()).getNamespace();
+		String modid = ObjectRegistry.get(Registries.FLUID).getId(fluid.getFluid()).getNamespace();
 		Component name = FluidHelper.getDisplayName(fluid);
 		long amountMB = FluidHooks.toMillibuckets(fluid.getFluidAmount());
 		long capacityMB = FluidHooks.toMillibuckets(capacity);

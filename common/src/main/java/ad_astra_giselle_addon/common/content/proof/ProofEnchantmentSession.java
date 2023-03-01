@@ -9,7 +9,7 @@ import ad_astra_giselle_addon.common.enchantment.EnchantmentHelper2;
 import ad_astra_giselle_addon.common.entity.LivingHelper;
 import ad_astra_giselle_addon.common.item.ItemStackReference;
 import ad_astra_giselle_addon.common.item.ItemUsableResource;
-import earth.terrarium.botarium.api.item.ItemStackHolder;
+import earth.terrarium.botarium.common.item.ItemStackHolder;
 import net.minecraft.world.entity.LivingEntity;
 
 public abstract class ProofEnchantmentSession extends ProofSession

@@ -1,7 +1,6 @@
 package ad_astra_giselle_addon.common.compat.mekanism;
 
 import ad_astra_giselle_addon.common.AdAstraGiselleAddon;
-import ad_astra_giselle_addon.common.registry.AddonTabs;
 import mekanism.common.content.gear.ModuleHelper;
 import mekanism.common.item.ItemModule;
 import mekanism.common.registration.impl.ItemDeferredRegister;
@@ -19,7 +18,7 @@ public class AddonMekanismItems
 
 	public static ItemRegistryObject<ItemModule> registerModule(ItemDeferredRegister register, ModuleRegistryObject<?> moduleDataSupplier)
 	{
-		return register.register("module_" + moduleDataSupplier.getInternalRegistryName(), () -> ModuleHelper.INSTANCE.createModuleItem(moduleDataSupplier, ItemDeferredRegister.getMekBaseProperties().tab(AddonTabs.tab_main)));
+		return register.register("module_" + moduleDataSupplier.getInternalRegistryName(), () -> ModuleHelper.INSTANCE.createModuleItem(moduleDataSupplier, ItemDeferredRegister.getMekBaseProperties()));
 	}
 
 	private AddonMekanismItems()

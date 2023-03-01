@@ -3,9 +3,9 @@ package ad_astra_giselle_addon.common.registry;
 import java.util.function.Supplier;
 
 import ad_astra_giselle_addon.common.util.TriFunction;
-import earth.terrarium.botarium.api.registry.RegistryHelpers;
-import earth.terrarium.botarium.api.registry.RegistryHelpers.MenuFactory;
-import net.minecraft.core.Registry;
+import earth.terrarium.botarium.common.registry.RegistryHelpers;
+import earth.terrarium.botarium.common.registry.RegistryHelpers.MenuFactory;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -16,7 +16,7 @@ public class MenuTypeRegistryCollection extends ObjectRegistryCollection<MenuTyp
 {
 	public MenuTypeRegistryCollection(String modid)
 	{
-		super(modid, Registry.MENU_REGISTRY);
+		super(modid, Registries.MENU);
 	}
 
 	private <MENU extends AbstractContainerMenu> Supplier<? extends MenuType<MENU>> getBuilder(MenuFactory<MENU> factory)

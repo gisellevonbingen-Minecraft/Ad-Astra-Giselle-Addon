@@ -2,8 +2,8 @@ package ad_astra_giselle_addon.common.item;
 
 import org.jetbrains.annotations.Nullable;
 
-import earth.terrarium.botarium.api.energy.EnergyHooks;
-import earth.terrarium.botarium.api.item.ItemStackHolder;
+import earth.terrarium.botarium.common.energy.util.EnergyHooks;
+import earth.terrarium.botarium.common.item.ItemStackHolder;
 import net.minecraft.world.item.ItemStack;
 
 public enum ItemUsableResource

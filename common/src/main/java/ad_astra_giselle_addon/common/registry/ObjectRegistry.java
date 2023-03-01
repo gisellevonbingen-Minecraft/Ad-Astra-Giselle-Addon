@@ -1,5 +1,7 @@
 package ad_astra_giselle_addon.common.registry;
 
+import java.util.Set;
+import java.util.Map.Entry;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
@@ -18,6 +20,8 @@ public abstract class ObjectRegistry<T>
 	}
 
 	public abstract Supplier<T> register(ResourceLocation id, Supplier<? extends T> initializer);
+
+	public abstract Set<Entry<ResourceKey<T>, T>> getEntries();
 
 	public abstract ResourceLocation getId(T value);
 

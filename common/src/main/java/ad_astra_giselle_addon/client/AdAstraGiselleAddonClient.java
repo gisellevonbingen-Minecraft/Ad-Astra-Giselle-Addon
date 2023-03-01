@@ -14,10 +14,7 @@ import ad_astra_giselle_addon.client.renderer.blockentity.WorkingAreaBlockEntity
 import ad_astra_giselle_addon.client.screen.AutomationNasaWorkbenchScreen;
 import ad_astra_giselle_addon.client.screen.FuelLoaderScreen;
 import ad_astra_giselle_addon.client.screen.GravityNormalizerScreen;
-import ad_astra_giselle_addon.client.util.RenderHelper;
 import ad_astra_giselle_addon.common.AdAstraGiselleAddon;
-import ad_astra_giselle_addon.common.block.entity.FuelLoaderBlockEntity;
-import ad_astra_giselle_addon.common.block.entity.GravityNormalizerBlockEntity;
 import ad_astra_giselle_addon.common.enchantment.EnchantmentHelper2;
 import ad_astra_giselle_addon.common.registry.AddonBlockEntityTypes;
 import ad_astra_giselle_addon.common.registry.AddonMenuTypes;
@@ -26,7 +23,6 @@ import earth.terrarium.ad_astra.client.AdAstraClient.RenderHud;
 import earth.terrarium.ad_astra.client.ClientPlatformUtils;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.PreparableReloadListener;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.ResourceManagerReloadListener;
@@ -54,11 +50,6 @@ public class AdAstraGiselleAddonClient
 		ClientPlatformUtils.registerScreen(AddonMenuTypes.FUEL_LOADER.get(), FuelLoaderScreen::new);
 		ClientPlatformUtils.registerScreen(AddonMenuTypes.AUTOMATION_NASA_WORKBENCH.get(), AutomationNasaWorkbenchScreen::new);
 		ClientPlatformUtils.registerScreen(AddonMenuTypes.GRAVITY_NORMALIZER.get(), GravityNormalizerScreen::new);
-	}
-
-	public static void registerBlockAtlas(Consumer<ResourceLocation> register)
-	{
-		register.accept(RenderHelper.TILE_SURFACE);
 	}
 
 	public static void registerOverlay(BiConsumer<String, RenderHud> register)

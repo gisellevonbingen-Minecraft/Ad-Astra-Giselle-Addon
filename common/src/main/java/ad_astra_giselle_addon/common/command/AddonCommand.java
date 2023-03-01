@@ -15,14 +15,14 @@ import ad_astra_giselle_addon.common.registry.AddonEnchantments;
 import ad_astra_giselle_addon.common.registry.ObjectRegistry;
 import earth.terrarium.ad_astra.common.registry.ModFluids;
 import earth.terrarium.ad_astra.common.registry.ModItems;
-import earth.terrarium.botarium.api.energy.EnergyHooks;
-import earth.terrarium.botarium.api.energy.EnergyItem;
-import earth.terrarium.botarium.api.energy.StatefulEnergyContainer;
-import earth.terrarium.botarium.api.fluid.FluidHooks;
-import earth.terrarium.botarium.api.item.ItemStackHolder;
+import earth.terrarium.botarium.common.energy.base.EnergyAttachment;
+import earth.terrarium.botarium.common.energy.impl.WrappedItemEnergyContainer;
+import earth.terrarium.botarium.common.energy.util.EnergyHooks;
+import earth.terrarium.botarium.common.fluid.utils.FluidHooks;
+import earth.terrarium.botarium.common.item.ItemStackHolder;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -142,7 +142,7 @@ public class AddonCommand
 
 		public static ItemStack makeFullWithEnchantments(ResourceLocation name)
 		{
-			Item item = ObjectRegistry.get(Registry.ITEM_REGISTRY).getValue(name);
+			Item item = ObjectRegistry.get(Registries.ITEM).getValue(name);
 			return makeFullWithEnchantments(item);
 		}
 
@@ -166,9 +166,9 @@ public class AddonCommand
 		{
 			ItemStackHolder holder = new ItemStackHolder(new ItemStack(item));
 
-			if (holder.getStack().getItem() instanceof EnergyItem energyItem)
+			if (holder.getStack().getItem() instanceof EnergyAttachment.Item energyAttatchment)
 			{
-				StatefulEnergyContainer<ItemStack> energyStorage = energyItem.getEnergyStorage(holder.getStack());
+				WrappedItemEnergyContainer energyStorage = energyAttatchment.getEnergyStorage(holder.getStack());
 				energyStorage.setEnergy(energyStorage.getMaxCapacity());
 				energyStorage.update(holder.getStack());
 			}

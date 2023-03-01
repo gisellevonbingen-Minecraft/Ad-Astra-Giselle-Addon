@@ -5,8 +5,8 @@ import java.util.function.Predicate;
 
 import org.jetbrains.annotations.Nullable;
 
-import earth.terrarium.botarium.api.fluid.FluidHolder;
-import earth.terrarium.botarium.api.fluid.FluidHooks;
+import earth.terrarium.botarium.common.fluid.base.FluidHolder;
+import earth.terrarium.botarium.common.fluid.utils.FluidHooks;
 
 public class FluidHooks2
 {

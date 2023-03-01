@@ -28,7 +28,7 @@ public class GravityNormalizerMenu extends AbstractMachineMenu<GravityNormalizer
 	{
 		GravityNormalizerBlockEntity machine = this.getMachine();
 		Player player = this.player;
-		NetworkHandling.CHANNEL.sendToPlayer(new MachineInfoPacket(machine.getEnergyStorage().getStoredEnergy(), Collections.emptyList()), player);
+		NetworkHandling.CHANNEL.sendToPlayer(new MachineInfoPacket(machine.getEnergyStorage(null).getStoredEnergy(), Collections.emptyList()), player);
 	}
 
 }

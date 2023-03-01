@@ -55,7 +55,7 @@ public abstract class AddonMachineScreen<BLOCK_ENTITY extends AbstractMachineBlo
 
 		if (this.hasWorkingArea())
 		{
-			this.workingAreaVisibleButton = this.addRenderableWidget(new Button(this.leftPos, this.topPos - 20, 20, 20, Component.empty(), this::onChangeModeButtonClick));
+			this.workingAreaVisibleButton = this.addRenderableWidget(new Button.Builder(Component.empty(), this::onChangeModeButtonClick).bounds(this.leftPos, this.topPos - 20, 20, 20).build());
 
 			boolean visible = this.isWorkingAreaVisible();
 			this.cachedWorkingAreaVisible = visible;
@@ -159,7 +159,7 @@ public abstract class AddonMachineScreen<BLOCK_ENTITY extends AbstractMachineBlo
 		int sidePadding = 2;
 		int workingAreaWidth = this.font.width(workingAreaText) + (sidePadding * 2);
 		int workingAreaHeight = 11;
-		int workingAreaLeft = left.x + left.getWidth() - this.leftPos;
+		int workingAreaLeft = left.getX() + left.getWidth() - this.leftPos;
 		int workignAreaTop = -workingAreaHeight;
 		int workingAreaOffsetX = workingAreaLeft;
 		RenderSystem.setShaderTexture(0, WORKINGAREA_SIDE_TEXTURE);

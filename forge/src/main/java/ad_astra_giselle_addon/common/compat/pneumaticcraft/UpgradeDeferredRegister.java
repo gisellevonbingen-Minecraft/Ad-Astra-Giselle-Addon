@@ -15,6 +15,7 @@ import me.desht.pneumaticcraft.api.item.PNCUpgrade;
 import me.desht.pneumaticcraft.common.core.ModUpgrades;
 import me.desht.pneumaticcraft.common.item.UpgradeItem;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Item;
 
@@ -36,7 +37,7 @@ public class UpgradeDeferredRegister
 		this.readonlyObjects = Collections.unmodifiableSet(this.objects);
 
 		this.primaryRegister = new ObjectRegistryCollection<>(modid, REGISTRY_KEY);
-		this.secondaryRegister = new ObjectRegistryCollection<>(modid, Registry.ITEM_REGISTRY);
+		this.secondaryRegister = new ObjectRegistryCollection<>(modid, Registries.ITEM);
 	}
 
 	public UpgradeRegistryHolder<AddonPNCUpgrade, UpgradeItem> add(String name, Supplier<Item.Properties> propertiesSup)

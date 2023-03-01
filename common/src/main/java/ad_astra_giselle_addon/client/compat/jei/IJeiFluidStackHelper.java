@@ -2,7 +2,7 @@ package ad_astra_giselle_addon.client.compat.jei;
 
 import org.jetbrains.annotations.Nullable;
 
-import earth.terrarium.botarium.api.fluid.FluidHolder;
+import earth.terrarium.botarium.common.fluid.base.FluidHolder;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.material.Fluid;
 

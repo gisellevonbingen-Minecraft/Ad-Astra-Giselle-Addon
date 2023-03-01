@@ -12,14 +12,14 @@ import com.teamresourceful.resourcefulconfig.common.config.ResourcefulConfigEntr
 
 import ad_astra_giselle_addon.common.AdAstraGiselleAddon;
 import ad_astra_giselle_addon.common.config.AddonConfigs;
-import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraftforge.common.data.LanguageProvider;
 
 public class ConfigLangProvider extends LanguageProvider
 {
-	public ConfigLangProvider(DataGenerator gen)
+	public ConfigLangProvider(PackOutput output)
 	{
-		super(gen, AdAstraGiselleAddon.MOD_ID, "en_us");
+		super(output, AdAstraGiselleAddon.MOD_ID, "en_us");
 	}
 
 	@Override

@@ -43,12 +43,12 @@ public class CustomCheckbox extends Checkbox
 		int checkerHeight = this.height;
 		float textureU = this.isFocused() ? 20.0F : 0.0F;
 		float textureV = this.selected() ? 20.0F : 0.0F;
-		GuiComponent.blit(pPoseStack, this.x, this.y, checkerWidth, checkerHeight, textureU, textureV, 20, 20, 64, 64);
+		GuiComponent.blit(pPoseStack, this.getX(), this.getY(), checkerWidth, checkerHeight, textureU, textureV, 20, 20, 64, 64);
 		this.renderBg(pPoseStack, minecraft, pMouseX, pMouseY);
 
 		if (this.isShowLabel())
 		{
-			GuiComponent.drawString(pPoseStack, font, this.getMessage(), this.x + this.height + 2, this.y + (this.height - 8) / 2, 14737632 | Mth.ceil(this.alpha * 255.0F) << 24);
+			GuiComponent.drawString(pPoseStack, font, this.getMessage(), this.getX() + this.height + 2, this.getY() + (this.height - 8) / 2, 14737632 | Mth.ceil(this.alpha * 255.0F) << 24);
 		}
 
 	}
