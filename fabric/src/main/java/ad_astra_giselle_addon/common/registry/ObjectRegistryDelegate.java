@@ -2,8 +2,8 @@ package ad_astra_giselle_addon.common.registry;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.function.Supplier;
 
 import net.minecraft.core.Registry;

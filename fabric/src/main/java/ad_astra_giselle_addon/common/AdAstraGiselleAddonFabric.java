@@ -43,9 +43,9 @@ public class AdAstraGiselleAddonFabric implements ModInitializer
 
 		AddonTabs.register((name, builderConsumer) ->
 		{
-			 Builder builder = FabricItemGroup.builder(AdAstraGiselleAddon.rl(name));
-			 builderConsumer.accept(builder);
-			 builder.build();
+			Builder builder = FabricItemGroup.builder(AdAstraGiselleAddon.rl(name));
+			builderConsumer.accept(builder);
+			builder.build();
 		});
 	}
 
