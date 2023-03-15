@@ -3,14 +3,6 @@
 	"values": [
 		{
 			"required": false,
-			"id": "#forge:diesel"
-		},
-		{
-			"required": false,
-			"id": "#forge:biodiesel"
-		},
-		{
-			"required": false,
 			"id": "#forge:biofuel"
 		},
 		{
