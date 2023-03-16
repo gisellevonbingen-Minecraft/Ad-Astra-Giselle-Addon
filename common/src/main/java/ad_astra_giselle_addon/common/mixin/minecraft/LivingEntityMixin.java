@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import ad_astra_giselle_addon.common.content.oxygen.OxygenChargerUtils;
 import ad_astra_giselle_addon.common.content.proof.ProofAbstractUtils;
 import ad_astra_giselle_addon.common.content.proof.SpaceOxygenProofUtils;
-import earth.terrarium.ad_astra.common.registry.ModDamageSource;
+import earth.terrarium.ad_astra.common.registry.ModDamageSources;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -40,7 +40,7 @@ public abstract class LivingEntityMixin extends Entity
 	@Inject(method = "hurt", at = @At("HEAD"), cancellable = true)
 	public void hurt(DamageSource source, float amount, CallbackInfoReturnable<Boolean> callbackInfo)
 	{
-		if (source == ModDamageSource.OXYGEN)
+		if (source.type() == ModDamageSources.of(this.getLevel(), ModDamageSources.OXYGEN).type())
 		{
 			LivingEntity living = (LivingEntity) (Object) this;
 

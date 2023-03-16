@@ -10,7 +10,6 @@ import ad_astra_giselle_addon.common.util.ModHooks;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.EnchantedBookItem;
 import net.minecraft.world.item.Item;
@@ -26,7 +25,7 @@ public class AddonTabs
 		{
 			builder.title(Component.literal(ModHooks.getName(AdAstraGiselleAddon.MOD_ID)));
 			builder.icon(() -> new ItemStack(AddonBlocks.FUEL_LOADER));
-			builder.displayItems((FeatureFlagSet pEnabledFeatures, CreativeModeTab.Output pOutput, boolean pDisplayOperatorCreativeTab) ->
+			builder.displayItems((CreativeModeTab.ItemDisplayParameters pEnabledFeatures, CreativeModeTab.Output pOutput) ->
 			{
 				for (Entry<ResourceKey<Item>, Item> entry : ObjectRegistry.get(Registries.ITEM).getEntries())
 				{

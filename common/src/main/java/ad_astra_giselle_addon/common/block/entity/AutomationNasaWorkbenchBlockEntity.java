@@ -175,7 +175,7 @@ public class AutomationNasaWorkbenchBlockEntity extends AddonMachineBlockEntity 
 
 		List<ItemStack> items = this.getItems();
 		List<IngredientHolder> ingredients = recipe.getHolders();
-		ItemStack resultItem = recipe.getResultItem();
+		ItemStack resultItem = recipe.getResultItem(this.getLevel().registryAccess());
 
 		if (this.testIngredientCounts(recipe.getHolders(), items) && ContainerUtils.insert(this, RESULT_SLOT, resultItem, true).isEmpty() && this.extractEnergy(true))
 		{

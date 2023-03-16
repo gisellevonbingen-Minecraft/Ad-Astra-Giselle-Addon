@@ -78,7 +78,7 @@ public class SpaceBreathingClientHandler<T extends IArmorUpgradeHandler<?>> exte
 
 			int iconWidth = 16;
 			int iconX = xl;
-			instance.getItemRenderer().renderGuiItem(ICON, iconX, yt);
+			instance.getItemRenderer().renderGuiItem(matrixStack, ICON, iconX, yt);
 
 			int componentX = iconX + iconWidth + 2;
 			int componentY = yt + 4;

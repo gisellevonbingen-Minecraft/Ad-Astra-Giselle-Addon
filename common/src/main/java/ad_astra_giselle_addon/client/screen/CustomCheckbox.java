@@ -29,7 +29,7 @@ public class CustomCheckbox extends Checkbox
 	}
 
 	@Override
-	public void renderButton(PoseStack pPoseStack, int pMouseX, int pMouseY, float pPartialTick)
+	public void renderWidget(PoseStack pPoseStack, int pMouseX, int pMouseY, float pPartialTick)
 	{
 		Minecraft minecraft = Minecraft.getInstance();
 		RenderSystem.setShaderTexture(0, TEXTURE);
@@ -44,7 +44,7 @@ public class CustomCheckbox extends Checkbox
 		float textureU = this.isFocused() ? 20.0F : 0.0F;
 		float textureV = this.selected() ? 20.0F : 0.0F;
 		GuiComponent.blit(pPoseStack, this.getX(), this.getY(), checkerWidth, checkerHeight, textureU, textureV, 20, 20, 64, 64);
-		this.renderBg(pPoseStack, minecraft, pMouseX, pMouseY);
+		super.renderWidget(pPoseStack, pMouseX, pMouseY, pPartialTick);
 
 		if (this.isShowLabel())
 		{

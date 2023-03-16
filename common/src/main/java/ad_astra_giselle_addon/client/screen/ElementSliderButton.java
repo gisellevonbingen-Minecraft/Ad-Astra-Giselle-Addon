@@ -9,10 +9,13 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.gui.components.AbstractSliderButton;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
 public class ElementSliderButton extends AbstractSliderButton
 {
+	private static final ResourceLocation SLIDER_LOCATION = new ResourceLocation("textures/gui/slider.png");
+
 	private String translationKey;
 	private IntConsumer setter;
 	private int intValue;
@@ -30,18 +33,31 @@ public class ElementSliderButton extends AbstractSliderButton
 		this.updateMessage();
 	}
 
-	@Override
-	protected void renderBg(PoseStack pPoseStack, Minecraft pMinecraft, int pMouseX, int pMouseY)
+	private int getTextureY()
 	{
-		RenderSystem.setShaderTexture(0, WIDGETS_LOCATION);
+		int i = this.isFocused() ? 1 : 0;
+		return i * 20;
+	}
+
+	private int getHandleTextureY()
+	{
+		int i = this.isHovered() ? 3 : 2;
+		return i * 20;
+	}
+
+	public void renderWidget(PoseStack p_275635_, int p_275335_, int p_275551_, float p_275511_)
+	{
+		Minecraft minecraft = Minecraft.getInstance();
+		RenderSystem.setShaderTexture(0, SLIDER_LOCATION);
+		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, this.alpha);
+		RenderSystem.enableBlend();
+		RenderSystem.defaultBlendFunc();
+		RenderSystem.enableDepthTest();
+		blitNineSliced(p_275635_, this.getX(), this.getY(), this.getWidth(), this.getHeight(), 20, 4, 200, 20, 0, this.getTextureY());
+		blitNineSliced(p_275635_, this.getX() + (int) (this.value * (double) (this.width - 8)), this.getY(), 8, this.getHeight(), 20, 4, 200, 20, 0, this.getHandleTextureY());
 		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-		int i = (this.isActive() && this.isHoveredOrFocused() ? 2 : 1) * 20;
-		int cursorX = this.getX() + (int) (this.value * (this.width - 8));
-		int cursorY = this.getY();
-		int cursorWidth = 4;
-		int cursorHeight = this.height;
-		GuiComponent.blit(pPoseStack, cursorX + 0, cursorY, cursorWidth, cursorHeight, 0, 46 + i, 4, 20, 256, 256);
-		GuiComponent.blit(pPoseStack, cursorX + 4, cursorY, cursorWidth, cursorHeight, 196, 46 + i, 4, 20, 256, 256);
+		int i = this.active ? 16777215 : 10526880;
+		this.renderScrollingString(p_275635_, minecraft.font, 2, i | Mth.ceil(this.alpha * 255.0F) << 24);
 	}
 
 	@Override
