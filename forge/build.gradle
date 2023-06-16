@@ -35,7 +35,7 @@ sourceSets {
 
 minecraft {
     //mappings channel: "parchment", version: "${parchment_version}-${mc_version}"
-	mappings channel: "official", version: "${mc_version}"
+    mappings channel: "official", version: "${mc_version}"
 
     // accessTransformer = file("src/main/resources/META-INF/accesstransformer.cfg")
 
@@ -121,15 +121,20 @@ dependencies {
     implementation fg.deobf("dev.architectury:architectury-forge:${architectury_version}")
     implementation fg.deobf("me.shedaniel.cloth:cloth-config-forge:${cloth_config_version}")
     implementation fg.deobf("me.shedaniel:RoughlyEnoughItems-forge:${rei_version}")
-    implementation fg.deobf("vazkii.patchouli:Patchouli:${mc_previous_version}-${patchouli_version}")
+    //implementation fg.deobf("vazkii.patchouli:Patchouli:${mc_version}-${patchouli_version}")
 
     // Implementation
     implementation fg.deobf("curse.maven:curios-309927:${curios_file}")
-    implementation fg.deobf("mekanism:Mekanism:${mc_previous_version}-${mekanism_version}")
-    implementation fg.deobf("curse.maven:pneumaticcraft-repressurized-281849:${pneumaticcraft_repressurized_file}")
+    //implementation fg.deobf("mekanism:Mekanism:${mc_previous_version}-${mekanism_version}")
+    compileOnly fg.deobf("mekanism:Mekanism:${mc_previous_version}-${mekanism_version}")
+    //implementation fg.deobf("curse.maven:pneumaticcraft-repressurized-281849:${pneumaticcraft_repressurized_file}")
+    compileOnly fg.deobf("curse.maven:pneumaticcraft-repressurized-281849:${pneumaticcraft_repressurized_file}")
 
     // Runtiem Only
+    runtimeOnly fg.deobf("curse.maven:the-one-probe-245211:${top_file}")
     runtimeOnly fg.deobf("curse.maven:jade-324717:${jade_file}")
+    //runtimeOnly fg.deobf("curse.maven:refined-storage-243076:${refined_storage_file}")
+    //runtimeOnly fg.deobf("blusunrize.immersiveengineering:ImmersiveEngineering:${mc_version}-${immersive_engineering_version}")
 }
 
 mixin {
