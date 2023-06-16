@@ -54,7 +54,8 @@ dependencies {
     // Ad Astra - Required
     modImplementation ("teamreborn:energy:2.2.0") { exclude(group: "net.fabricmc.fabric-api") }
     modImplementation ("earth.terrarium:botarium-fabric-${mc_version}:${botarium_version}")  { transitive = false }
-    modImplementation "earth.terrarium:ad_astra-fabric-${mc_version}:${ad_astra_version}"
+    //modImplementation "earth.terrarium:adastra:ad_astra-fabric-${mc_version}:${ad_astra_version}"
+    modImplementation "curse.maven:ad-astra-635042:${ad_astra_fabric_file}"
     modImplementation "com.teamresourceful.resourcefullib:resourcefullib-fabric-${mc_version}:${resourcefullib_version}"
     modImplementation "com.teamresourceful.resourcefulconfig:resourcefulconfig-fabric-${mc_version}:${resourcefulconfig_version}"
 
@@ -72,5 +73,5 @@ dependencies {
     modRuntimeOnly "TechReborn:TechReborn-1.19:${techreborn_version}"
     modRuntimeOnly "curse.maven:badpackets-615134:${badpackets_file}"
     modRuntimeOnly "curse.maven:wthit-440979:${wthit_file}"
-    modRuntimeOnly "curse.maven:modern-dynamics-552758:${modern_dynamics_file}"
+    //modRuntimeOnly "curse.maven:modern-dynamics-552758:${modern_dynamics_file}"
 }
