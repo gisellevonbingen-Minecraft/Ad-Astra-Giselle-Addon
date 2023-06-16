@@ -6,7 +6,6 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.gui.components.AbstractSliderButton;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -45,6 +44,7 @@ public class ElementSliderButton extends AbstractSliderButton
 		return i * 20;
 	}
 
+	@Override
 	public void renderWidget(PoseStack p_275635_, int p_275335_, int p_275551_, float p_275511_)
 	{
 		Minecraft minecraft = Minecraft.getInstance();
@@ -54,7 +54,7 @@ public class ElementSliderButton extends AbstractSliderButton
 		RenderSystem.defaultBlendFunc();
 		RenderSystem.enableDepthTest();
 		blitNineSliced(p_275635_, this.getX(), this.getY(), this.getWidth(), this.getHeight(), 20, 4, 200, 20, 0, this.getTextureY());
-		blitNineSliced(p_275635_, this.getX() + (int) (this.value * (double) (this.width - 8)), this.getY(), 8, this.getHeight(), 20, 4, 200, 20, 0, this.getHandleTextureY());
+		blitNineSliced(p_275635_, this.getX() + (int) (this.value * (this.width - 8)), this.getY(), 8, this.getHeight(), 20, 4, 200, 20, 0, this.getHandleTextureY());
 		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 		int i = this.active ? 16777215 : 10526880;
 		this.renderScrollingString(p_275635_, minecraft.font, 2, i | Mth.ceil(this.alpha * 255.0F) << 24);

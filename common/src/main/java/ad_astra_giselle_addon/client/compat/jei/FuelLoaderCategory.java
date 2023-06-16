@@ -83,7 +83,7 @@ public class FuelLoaderCategory extends AddonRecipeCategory<Fluid>
 	{
 		super.registerGuiHandlers(registry);
 
-		registry.addGuiContainerHandler(FuelLoaderScreen.class, new FuelLoaderGuiContainerHandler());
+		registry.addGuiContainerHandler(FuelLoaderScreen.class, new FuelLoaderGuiContainerHandler(registry.getJeiHelpers()));
 	}
 
 }
