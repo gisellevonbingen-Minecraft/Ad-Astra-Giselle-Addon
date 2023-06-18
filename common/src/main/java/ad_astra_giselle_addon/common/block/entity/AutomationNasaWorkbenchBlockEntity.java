@@ -13,7 +13,7 @@ import ad_astra_giselle_addon.common.world.ContainerUtils;
 import earth.terrarium.ad_astra.common.recipe.IngredientHolder;
 import earth.terrarium.ad_astra.common.recipe.NasaWorkbenchRecipe;
 import earth.terrarium.ad_astra.common.util.ModUtils;
-import earth.terrarium.botarium.common.energy.base.EnergyAttachment;
+import earth.terrarium.botarium.common.energy.base.BotariumEnergyBlock;
 import earth.terrarium.botarium.common.energy.base.PlatformEnergyManager;
 import earth.terrarium.botarium.common.energy.impl.SimpleEnergyContainer;
 import earth.terrarium.botarium.common.energy.impl.WrappedBlockEnergyContainer;
@@ -31,10 +31,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class AutomationNasaWorkbenchBlockEntity extends AddonMachineBlockEntity implements EnergyAttachment.Block
+public class AutomationNasaWorkbenchBlockEntity extends AddonMachineBlockEntity implements BotariumEnergyBlock<WrappedBlockEnergyContainer>
 {
 	public static final int RESULT_SLOT = 14;
 	public static final String DATA_COOK_TIME_KEY = "cookTime";
@@ -112,7 +111,7 @@ public class AutomationNasaWorkbenchBlockEntity extends AddonMachineBlockEntity 
 	}
 
 	@Override
-	public WrappedBlockEnergyContainer getEnergyStorage(BlockEntity blockEntity)
+	public WrappedBlockEnergyContainer getEnergyStorage()
 	{
 		if (this.energyStorage == null)
 		{

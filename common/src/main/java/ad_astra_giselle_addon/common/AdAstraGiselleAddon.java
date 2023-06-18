@@ -23,6 +23,7 @@ import ad_astra_giselle_addon.common.registry.AddonBlocks;
 import ad_astra_giselle_addon.common.registry.AddonEnchantments;
 import ad_astra_giselle_addon.common.registry.AddonItems;
 import ad_astra_giselle_addon.common.registry.AddonMenuTypes;
+import ad_astra_giselle_addon.common.registry.AddonTabs;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.resources.ResourceLocation;
 
@@ -63,6 +64,7 @@ public class AdAstraGiselleAddon
 	{
 		AddonBlocks.BLOCKS.register();
 		AddonItems.ITEMS.register();
+		AddonTabs.TABS.register();
 		AddonEnchantments.ENCHANTMENTS.register();
 		AddonBlockEntityTypes.BLOCK_ENTITY_TYPES.register();
 		AddonMenuTypes.MENU_TYPES.register();

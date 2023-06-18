@@ -4,9 +4,6 @@ import java.text.NumberFormat;
 
 import org.jetbrains.annotations.Nullable;
 
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
-
 import ad_astra_giselle_addon.common.AdAstraGiselleAddon;
 import ad_astra_giselle_addon.common.block.entity.IWorkingAreaBlockEntity;
 import ad_astra_giselle_addon.common.compat.CompatibleManager;
@@ -15,7 +12,7 @@ import ad_astra_giselle_addon.common.network.WorkingAreaVisibleMessage;
 import earth.terrarium.ad_astra.client.screen.AbstractMachineScreen;
 import earth.terrarium.ad_astra.common.block.machine.entity.AbstractMachineBlockEntity;
 import earth.terrarium.ad_astra.common.screen.menu.AbstractMachineMenu;
-import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
@@ -66,9 +63,9 @@ public abstract class AddonMachineScreen<BLOCK_ENTITY extends AbstractMachineBlo
 	}
 
 	@Override
-	public void render(PoseStack poseStack, int mouseX, int mouseY, float delta)
+	public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float delta)
 	{
-		super.render(poseStack, mouseX, mouseY, delta);
+		super.render(guiGraphics, mouseX, mouseY, delta);
 		this.updateWorkingAreaVisibleButton();
 	}
 
@@ -146,7 +143,7 @@ public abstract class AddonMachineScreen<BLOCK_ENTITY extends AbstractMachineBlo
 		return this.workingAreaVisibleButton;
 	}
 
-	protected void drawWorkingAreaText(PoseStack stack, @Nullable AABB workingArea, AbstractWidget left)
+	protected void drawWorkingAreaText(GuiGraphics guiGraphics, @Nullable AABB workingArea, AbstractWidget left)
 	{
 		if (workingArea == null)
 		{
@@ -162,17 +159,14 @@ public abstract class AddonMachineScreen<BLOCK_ENTITY extends AbstractMachineBlo
 		int workingAreaLeft = left.getX() + left.getWidth() - this.leftPos;
 		int workignAreaTop = -workingAreaHeight;
 		int workingAreaOffsetX = workingAreaLeft;
-		RenderSystem.setShaderTexture(0, WORKINGAREA_SIDE_TEXTURE);
-		GuiComponent.blit(stack, workingAreaOffsetX, workignAreaTop, 0, 0, sideWidth, workingAreaHeight, sideWidth, workingAreaHeight);
+		guiGraphics.blit(WORKINGAREA_SIDE_TEXTURE, workingAreaOffsetX, workignAreaTop, 0, 0, sideWidth, workingAreaHeight, sideWidth, workingAreaHeight);
 		workingAreaOffsetX += sideWidth;
-		RenderSystem.setShaderTexture(0, WORKINGAREA_MIDDLE_TEXTURE);
-		GuiComponent.blit(stack, workingAreaOffsetX, workignAreaTop, 0, 0, workingAreaWidth, workingAreaHeight, workingAreaWidth, workingAreaHeight);
+		guiGraphics.blit(WORKINGAREA_MIDDLE_TEXTURE, workingAreaOffsetX, workignAreaTop, 0, 0, workingAreaWidth, workingAreaHeight, workingAreaWidth, workingAreaHeight);
 		workingAreaOffsetX += workingAreaWidth;
-		RenderSystem.setShaderTexture(0, WORKINGAREA_SIDE_TEXTURE);
-		GuiComponent.blit(stack, workingAreaOffsetX, workignAreaTop, 0, 0, sideWidth, workingAreaHeight, sideWidth, workingAreaHeight);
+		guiGraphics.blit(WORKINGAREA_SIDE_TEXTURE, workingAreaOffsetX, workignAreaTop, 0, 0, sideWidth, workingAreaHeight, sideWidth, workingAreaHeight);
 		workingAreaOffsetX += sideWidth;
 
-		this.font.draw(stack, workingAreaText, workingAreaLeft + sideWidth + sidePadding, workignAreaTop + 2, 0x303030);
+		guiGraphics.drawString(this.font, workingAreaText, workingAreaLeft + sideWidth + sidePadding, workignAreaTop + 2, 0x303030);
 	}
 
 	protected Component getWorkingAreaBoundsText(AABB workingArea)

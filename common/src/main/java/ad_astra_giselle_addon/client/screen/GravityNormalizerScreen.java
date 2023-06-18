@@ -11,8 +11,6 @@ import java.util.function.IntSupplier;
 import java.util.function.Supplier;
 import java.util.function.ToIntFunction;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-
 import ad_astra_giselle_addon.common.AdAstraGiselleAddon;
 import ad_astra_giselle_addon.common.block.entity.GravityNormalizerBlockEntity;
 import ad_astra_giselle_addon.common.menu.GravityNormalizerMenu;
@@ -20,6 +18,7 @@ import ad_astra_giselle_addon.common.network.AddonNetwork;
 import ad_astra_giselle_addon.common.network.GravityNormalizerMessage;
 import ad_astra_giselle_addon.common.util.Vec3iUtils;
 import earth.terrarium.ad_astra.client.screen.GuiUtil;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Tooltip;
@@ -171,15 +170,15 @@ public class GravityNormalizerScreen extends AddonMachineScreen<GravityNormalize
 	}
 
 	@Override
-	protected void renderBg(PoseStack stack, float partialTicks, int mouseX, int mouseY)
+	protected void renderBg(GuiGraphics guiGraphics, float partialTicks, int mouseX, int mouseY)
 	{
-		super.renderBg(stack, partialTicks, mouseX, mouseY);
+		super.renderBg(guiGraphics, partialTicks, mouseX, mouseY);
 	}
 
 	@Override
-	public void render(PoseStack stack, int mouseX, int mouseY, float delta)
+	public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float delta)
 	{
-		super.render(stack, mouseX, mouseY, delta);
+		super.render(guiGraphics, mouseX, mouseY, delta);
 
 		GravityNormalizerMenu menu = this.getMenu();
 		GravityNormalizerBlockEntity machine = menu.getMachine();
@@ -194,27 +193,27 @@ public class GravityNormalizerScreen extends AddonMachineScreen<GravityNormalize
 		this.setElement(this.element_offset_y_widgets, offset.getY());
 		this.setElement(this.element_offset_z_widgets, offset.getZ());
 
-		long maxCapacity = machine.getEnergyStorage(null).getMaxCapacity();
-		GuiUtil2.drawEnergy(stack, this.getEnergyBounds(), menu.getEnergyAmount(), maxCapacity);
+		long maxCapacity = machine.getEnergyStorage().getMaxCapacity();
+		GuiUtil2.drawEnergy(guiGraphics, this.getEnergyBounds(), menu.getEnergyAmount(), maxCapacity);
 
 		if (GuiUtil.isHovering(this.getEnergyBounds(), mouseX, mouseY))
 		{
-			GuiUtil.drawEnergyTooltip(this, stack, menu.getEnergyAmount(), maxCapacity, mouseX, mouseY);
+			GuiUtil.drawEnergyTooltip(guiGraphics, menu.getEnergyAmount(), maxCapacity, mouseX, mouseY);
 		}
 
 	}
 
 	@Override
-	protected void renderLabels(PoseStack poseStack, int mouseX, int mouseY)
+	protected void renderLabels(GuiGraphics guiGraphics, int mouseX, int mouseY)
 	{
-		super.renderLabels(poseStack, mouseX, mouseY);
+		super.renderLabels(guiGraphics, mouseX, mouseY);
 
 		GravityNormalizerBlockEntity machine = this.getMenu().getMachine();
 		long energyUsing = machine.getEnergyUsing();
 		int maxTimer = machine.getMaxTimer();
 		Component component = Component.translatable(ENERGY_USING_KEY, String.valueOf(energyUsing), String.valueOf(maxTimer));
 		int componentWidth = this.font.width(component);
-		this.font.draw(poseStack, component, this.imageWidth - 6 - componentWidth, this.inventoryLabelY, this.getTextColour());
+		guiGraphics.drawString(this.font, component, this.imageWidth - 6 - componentWidth, this.inventoryLabelY, this.getTextColour(), false);
 	}
 
 	protected void setMachineLength(GravityNormalizerBlockEntity blockEntity, Vec3i length)

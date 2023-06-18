@@ -50,7 +50,7 @@ public class FuelLoaderMenu extends AbstractMachineMenu<FuelLoaderBlockEntity>
 	{
 		FuelLoaderBlockEntity machine = this.getMachine();
 		Player player = this.player;
-		NetworkHandling.CHANNEL.sendToPlayer(new MachineInfoPacket(0L, machine.getFluidContainer(null).getFluids()), player);
+		NetworkHandling.CHANNEL.sendToPlayer(new MachineInfoPacket(0L, machine.getFluidContainer().getFluids()), player);
 	}
 
 }

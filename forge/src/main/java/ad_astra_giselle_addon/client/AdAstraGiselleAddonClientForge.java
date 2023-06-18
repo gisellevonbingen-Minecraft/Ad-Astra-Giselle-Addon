@@ -2,9 +2,8 @@ package ad_astra_giselle_addon.client;
 
 import java.util.function.BiConsumer;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-
 import earth.terrarium.ad_astra.client.AdAstraClient.RenderHud;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraftforge.client.ConfigScreenHandler;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.RegisterClientReloadListenersEvent;
@@ -45,9 +44,9 @@ public class AdAstraGiselleAddonClientForge
 		return (name, hud) -> consumer.accept(name, new IGuiOverlay()
 		{
 			@Override
-			public void render(ForgeGui gui, PoseStack poseStack, float partialTick, int screenWidth, int screenHeight)
+			public void render(ForgeGui gui, GuiGraphics guiGraphics, float partialTick, int screenWidth, int screenHeight)
 			{
-				hud.renderHud(poseStack, partialTick);
+				hud.renderHud(guiGraphics, partialTick);
 			}
 		});
 	}

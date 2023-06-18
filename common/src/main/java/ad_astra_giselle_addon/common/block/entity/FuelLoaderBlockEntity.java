@@ -14,7 +14,7 @@ import ad_astra_giselle_addon.common.item.ItemStackUtils;
 import ad_astra_giselle_addon.common.menu.FuelLoaderMenu;
 import ad_astra_giselle_addon.common.registry.AddonBlockEntityTypes;
 import earth.terrarium.ad_astra.common.entity.vehicle.Vehicle;
-import earth.terrarium.botarium.common.fluid.base.FluidAttachment;
+import earth.terrarium.botarium.common.fluid.base.BotariumFluidBlock;
 import earth.terrarium.botarium.common.fluid.base.FluidHolder;
 import earth.terrarium.botarium.common.fluid.impl.SimpleFluidContainer;
 import earth.terrarium.botarium.common.fluid.impl.WrappedBlockFluidContainer;
@@ -28,11 +28,10 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 
-public class FuelLoaderBlockEntity extends AddonMachineBlockEntity implements FluidAttachment.Block, IWorkingAreaBlockEntity
+public class FuelLoaderBlockEntity extends AddonMachineBlockEntity implements BotariumFluidBlock<WrappedBlockFluidContainer>, IWorkingAreaBlockEntity
 {
 	public static final String DATA_WORKINGAREA_VISIBLE_KEY = "workingAreaVisible";
 
@@ -69,7 +68,7 @@ public class FuelLoaderBlockEntity extends AddonMachineBlockEntity implements Fl
 	}
 
 	@Override
-	public WrappedBlockFluidContainer getFluidContainer(BlockEntity holder)
+	public WrappedBlockFluidContainer getFluidContainer()
 	{
 		if (this.fluidTank == null)
 		{
@@ -153,7 +152,7 @@ public class FuelLoaderBlockEntity extends AddonMachineBlockEntity implements Fl
 
 	public void processTank()
 	{
-		UniveralFluidHandler tank = UniveralFluidHandler.from(this.getFluidContainer(null));
+		UniveralFluidHandler tank = UniveralFluidHandler.from(this.getFluidContainer());
 		UniveralFluidHandler.fromSafe(this.getItemRef(this.getSlotFluidSource())).ifPresent(source ->
 		{
 			FluidHooks2.moveFluidAny(source, tank, FluidPredicates::isFuel, false);
@@ -234,7 +233,7 @@ public class FuelLoaderBlockEntity extends AddonMachineBlockEntity implements Fl
 
 	private FluidHolder giveFuel(Vehicle vehicle, long transfer)
 	{
-		UniveralFluidHandler from = UniveralFluidHandler.from(this.getFluidContainer(null));
+		UniveralFluidHandler from = UniveralFluidHandler.from(this.getFluidContainer());
 		UniveralFluidHandler to = UniveralFluidHandler.from(vehicle.getTank());
 		return FluidHooks2.moveFluidAny(from, to, FluidPredicates::isFuel, transfer, false);
 	}

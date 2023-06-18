@@ -3,9 +3,9 @@ package ad_astra_giselle_addon.client.screen;
 import java.util.function.IntConsumer;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractSliderButton;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -32,32 +32,31 @@ public class ElementSliderButton extends AbstractSliderButton
 		this.updateMessage();
 	}
 
-	private int getTextureY()
+	private int getTextureY2()
 	{
 		int i = this.isFocused() ? 1 : 0;
 		return i * 20;
 	}
 
-	private int getHandleTextureY()
+	private int getHandleTextureY2()
 	{
 		int i = this.isHovered() ? 3 : 2;
 		return i * 20;
 	}
 
 	@Override
-	public void renderWidget(PoseStack p_275635_, int p_275335_, int p_275551_, float p_275511_)
+	public void renderWidget(GuiGraphics guiGraphics, int p_275335_, int p_275551_, float p_275511_)
 	{
 		Minecraft minecraft = Minecraft.getInstance();
-		RenderSystem.setShaderTexture(0, SLIDER_LOCATION);
 		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, this.alpha);
 		RenderSystem.enableBlend();
 		RenderSystem.defaultBlendFunc();
 		RenderSystem.enableDepthTest();
-		blitNineSliced(p_275635_, this.getX(), this.getY(), this.getWidth(), this.getHeight(), 20, 4, 200, 20, 0, this.getTextureY());
-		blitNineSliced(p_275635_, this.getX() + (int) (this.value * (this.width - 8)), this.getY(), 8, this.getHeight(), 20, 4, 200, 20, 0, this.getHandleTextureY());
+		guiGraphics.blitNineSliced(SLIDER_LOCATION, this.getX(), this.getY(), this.getWidth(), this.getHeight(), 20, 4, 200, 20, 0, this.getTextureY2());
+		guiGraphics.blitNineSliced(SLIDER_LOCATION, this.getX() + (int) (this.value * (this.width - 8)), this.getY(), 8, this.getHeight(), 20, 4, 200, 20, 0, this.getHandleTextureY2());
 		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 		int i = this.active ? 16777215 : 10526880;
-		this.renderScrollingString(p_275635_, minecraft.font, 2, i | Mth.ceil(this.alpha * 255.0F) << 24);
+		this.renderScrollingString(guiGraphics, minecraft.font, 2, i | Mth.ceil(this.alpha * 255.0F) << 24);
 	}
 
 	@Override

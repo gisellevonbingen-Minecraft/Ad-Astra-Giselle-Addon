@@ -44,7 +44,7 @@ public class MenuTypeRegistryCollection extends ObjectRegistryCollection<MenuTyp
 	@SuppressWarnings("unchecked")
 	public <BE extends BlockEntity, MENU extends AbstractContainerMenu> MENU packetParser(int windowId, Inventory inv, FriendlyByteBuf data, TriFunction<Integer, Inventory, BE, MENU> function)
 	{
-		BlockEntity blockEntity = inv.player.getLevel().getBlockEntity(data.readBlockPos());
+		BlockEntity blockEntity = inv.player.level().getBlockEntity(data.readBlockPos());
 		return function.apply(windowId, inv, (BE) blockEntity);
 	}
 

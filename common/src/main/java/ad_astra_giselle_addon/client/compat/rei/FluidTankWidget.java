@@ -1,11 +1,11 @@
 package ad_astra_giselle_addon.client.compat.rei;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 
 import earth.terrarium.ad_astra.client.screen.GuiUtil;
 import me.shedaniel.math.Rectangle;
 import me.shedaniel.rei.impl.client.gui.widget.EntryWidget;
+import net.minecraft.client.gui.GuiGraphics;
 
 public class FluidTankWidget extends EntryWidget
 {
@@ -15,13 +15,13 @@ public class FluidTankWidget extends EntryWidget
 	}
 
 	@Override
-	public void render(PoseStack matrices, int mouseX, int mouseY, float delta)
+	public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float delta)
 	{
-		super.render(matrices, mouseX, mouseY, delta);
+		super.render(guiGraphics, mouseX, mouseY, delta);
 
 		Rectangle bounds = this.getBounds();
 		RenderSystem.disableDepthTest();
-		GuiUtil.drawVertical(matrices, bounds.x, bounds.y, bounds.width, bounds.height, GuiUtil.FLUID_TANK_TEXTURE, 1.0D);
+		GuiUtil.drawVertical(guiGraphics, bounds.x, bounds.y, bounds.width, bounds.height, GuiUtil.FLUID_TANK_TEXTURE, 1.0D);
 		RenderSystem.enableDepthTest();
 	}
 

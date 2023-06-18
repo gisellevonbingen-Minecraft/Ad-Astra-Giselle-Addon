@@ -9,7 +9,7 @@ import ad_astra_giselle_addon.common.content.proof.GravityNormalizingUtils;
 import ad_astra_giselle_addon.common.menu.GravityNormalizerMenu;
 import ad_astra_giselle_addon.common.registry.AddonBlockEntityTypes;
 import ad_astra_giselle_addon.common.util.Vec3iUtils;
-import earth.terrarium.botarium.common.energy.base.EnergyAttachment;
+import earth.terrarium.botarium.common.energy.base.BotariumEnergyBlock;
 import earth.terrarium.botarium.common.energy.base.PlatformEnergyManager;
 import earth.terrarium.botarium.common.energy.impl.SimpleEnergyContainer;
 import earth.terrarium.botarium.common.energy.impl.WrappedBlockEnergyContainer;
@@ -23,11 +23,10 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 
-public class GravityNormalizerBlockEntity extends AddonMachineBlockEntity implements EnergyAttachment.Block, IWorkingAreaBlockEntity
+public class GravityNormalizerBlockEntity extends AddonMachineBlockEntity implements BotariumEnergyBlock<WrappedBlockEnergyContainer>, IWorkingAreaBlockEntity
 {
 	public static final String DATA_LENGTH_KEY = "length";
 	public static final String DATA_OFFSET_KEY = "offset";
@@ -77,7 +76,7 @@ public class GravityNormalizerBlockEntity extends AddonMachineBlockEntity implem
 	}
 
 	@Override
-	public WrappedBlockEnergyContainer getEnergyStorage(BlockEntity holder)
+	public WrappedBlockEnergyContainer getEnergyStorage()
 	{
 		if (this.energyStorage == null)
 		{

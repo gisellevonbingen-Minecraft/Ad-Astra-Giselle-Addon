@@ -15,8 +15,6 @@ import ad_astra_giselle_addon.common.registry.AddonEnchantments;
 import ad_astra_giselle_addon.common.registry.ObjectRegistry;
 import earth.terrarium.ad_astra.common.registry.ModFluids;
 import earth.terrarium.ad_astra.common.registry.ModItems;
-import earth.terrarium.botarium.common.energy.base.EnergyAttachment;
-import earth.terrarium.botarium.common.energy.impl.WrappedItemEnergyContainer;
 import earth.terrarium.botarium.common.energy.util.EnergyHooks;
 import earth.terrarium.botarium.common.fluid.utils.FluidHooks;
 import earth.terrarium.botarium.common.item.ItemStackHolder;
@@ -58,7 +56,7 @@ public class AddonCommand
 
 	public static int sendEquipedMessage(CommandSourceStack source)
 	{
-		source.sendSuccess(Component.literal("Equipped"), false);
+		source.sendSuccess(() -> Component.literal("Equipped"), false);
 		return 0;
 	}
 
@@ -165,29 +163,18 @@ public class AddonCommand
 		private static ItemStack makeFull(Item item)
 		{
 			ItemStackHolder holder = new ItemStackHolder(new ItemStack(item));
-
-			if (holder.getStack().getItem() instanceof EnergyAttachment.Item energyAttatchment)
+			EnergyHooks.safeGetItemEnergyManager(holder.getStack()).ifPresent(energyHandler ->
 			{
-				WrappedItemEnergyContainer energyStorage = energyAttatchment.getEnergyStorage(holder.getStack());
-				energyStorage.setEnergy(energyStorage.getMaxCapacity());
-				energyStorage.update(holder.getStack());
-			}
-			else
-			{
-				EnergyHooks.safeGetItemEnergyManager(holder.getStack()).ifPresent(energyHandler ->
+				for (int i = 0; i < 100000; i++)
 				{
-					for (int i = 0; i < 100000; i++)
+					if (energyHandler.insert(holder, energyHandler.getCapacity(), false) == 0)
 					{
-						if (energyHandler.insert(holder, energyHandler.getCapacity(), false) == 0)
-						{
-							break;
-						}
-
+						break;
 					}
 
-				});
+				}
 
-			}
+			});
 
 			UniveralFluidHandler.fromSafe(holder).ifPresent(fluidHandler ->
 			{

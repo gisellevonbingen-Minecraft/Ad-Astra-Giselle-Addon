@@ -2,11 +2,10 @@ package ad_astra_giselle_addon.client.screen;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Checkbox;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -29,10 +28,9 @@ public class CustomCheckbox extends Checkbox
 	}
 
 	@Override
-	public void renderWidget(PoseStack pPoseStack, int pMouseX, int pMouseY, float pPartialTick)
+	public void renderWidget(GuiGraphics guiGraphics, int pMouseX, int pMouseY, float pPartialTick)
 	{
 		Minecraft minecraft = Minecraft.getInstance();
-		RenderSystem.setShaderTexture(0, TEXTURE);
 		RenderSystem.enableDepthTest();
 		Font font = minecraft.font;
 		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, this.alpha);
@@ -43,12 +41,12 @@ public class CustomCheckbox extends Checkbox
 		int checkerHeight = this.height;
 		float textureU = this.isFocused() ? 20.0F : 0.0F;
 		float textureV = this.selected() ? 20.0F : 0.0F;
-		GuiComponent.blit(pPoseStack, this.getX(), this.getY(), checkerWidth, checkerHeight, textureU, textureV, 20, 20, 64, 64);
-		super.renderWidget(pPoseStack, pMouseX, pMouseY, pPartialTick);
+		guiGraphics.blit(TEXTURE, this.getX(), this.getY(), checkerWidth, checkerHeight, textureU, textureV, 20, 20, 64, 64);
+		super.renderWidget(guiGraphics, pMouseX, pMouseY, pPartialTick);
 
 		if (this.isShowLabel())
 		{
-			GuiComponent.drawString(pPoseStack, font, this.getMessage(), this.getX() + this.height + 2, this.getY() + (this.height - 8) / 2, 14737632 | Mth.ceil(this.alpha * 255.0F) << 24);
+			guiGraphics.drawString(font, this.getMessage(), this.getX() + this.height + 2, this.getY() + (this.height - 8) / 2, 14737632 | Mth.ceil(this.alpha * 255.0F) << 24);
 		}
 
 	}

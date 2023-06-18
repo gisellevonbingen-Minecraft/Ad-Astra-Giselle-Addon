@@ -64,7 +64,7 @@ public class SpaceOxygenProofEnchantmentSession extends ProofEnchantmentSession
 		{
 			IOxygenCharger oxygenCharger = this.testedOxygenCharger;
 
-			if (oxygenCharger != null && !entity.getLevel().isClientSide())
+			if (oxygenCharger != null && !entity.level().isClientSide())
 			{
 				UniveralFluidHandler fluidHandler = oxygenCharger.getFluidHandler();
 				long oxygenUsing = this.getOxygenUsing();

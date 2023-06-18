@@ -73,7 +73,7 @@ public class OxygenChargerUtils
 		List<ItemStackReference> items = LivingHelper.getInventoryStacks(living);
 		long stored = 0L;
 		long capacity = 0L;
-		int temperature = (int) ModUtils.getWorldTemperature(living.getLevel());
+		int temperature = (int) ModUtils.getWorldTemperature(living.level());
 
 		for (ItemStackReference item : items)
 		{
@@ -107,7 +107,7 @@ public class OxygenChargerUtils
 	@Nullable
 	public static Stream<IOxygenCharger> streamExtractable(LivingEntity living, long extracting)
 	{
-		int temperature = (int) ModUtils.getWorldTemperature(living.getLevel());
+		int temperature = (int) ModUtils.getWorldTemperature(living.level());
 		return LivingHelper.getInventoryStacks(living).stream().map(OxygenChargerUtils::get).filter(oxygenCharger ->
 		{
 			if (oxygenCharger != null && oxygenCharger.getTemperatureThreshold().contains(temperature))

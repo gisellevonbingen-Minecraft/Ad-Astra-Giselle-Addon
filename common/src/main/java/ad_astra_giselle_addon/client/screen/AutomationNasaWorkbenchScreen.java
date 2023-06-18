@@ -2,12 +2,11 @@ package ad_astra_giselle_addon.client.screen;
 
 import java.awt.Rectangle;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-
 import ad_astra_giselle_addon.common.AdAstraGiselleAddon;
 import ad_astra_giselle_addon.common.block.entity.AutomationNasaWorkbenchBlockEntity;
 import ad_astra_giselle_addon.common.menu.AutomationNasaWorkbenchMenu;
 import earth.terrarium.ad_astra.client.screen.GuiUtil;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.player.Inventory;
@@ -28,36 +27,36 @@ public class AutomationNasaWorkbenchScreen extends AddonMachineScreen<Automation
 	}
 
 	@Override
-	protected void renderBg(PoseStack poseStack, float delta, int mouseX, int mouseY)
+	protected void renderBg(GuiGraphics guiGraphics, float delta, int mouseX, int mouseY)
 	{
-		super.renderBg(poseStack, delta, mouseX, mouseY);
+		super.renderBg(guiGraphics, delta, mouseX, mouseY);
 
 		AutomationNasaWorkbenchMenu menu = this.getMenu();
 		int cookTime = menu.getCookTime().get();
 		int cookTimeTotal = menu.getCookTimeTotal().get();
-		long maxCapacity = menu.getMachine().getEnergyStorage(null).getMaxCapacity();
-		GuiUtil2.drawArrow(poseStack, this.getArrowBounds(), cookTime, cookTimeTotal);
-		GuiUtil2.drawEnergy(poseStack, this.getEnergyBounds(), menu.getEnergyAmount(), maxCapacity);
+		long maxCapacity = menu.getMachine().getEnergyStorage().getMaxCapacity();
+		GuiUtil2.drawArrow(guiGraphics, this.getArrowBounds(), cookTime, cookTimeTotal);
+		GuiUtil2.drawEnergy(guiGraphics, this.getEnergyBounds(), menu.getEnergyAmount(), maxCapacity);
 	}
 
 	@Override
-	public void render(PoseStack poseStack, int mouseX, int mouseY, float delta)
+	public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float delta)
 	{
-		super.render(poseStack, mouseX, mouseY, delta);
+		super.render(guiGraphics, mouseX, mouseY, delta);
 
 		if (GuiUtil.isHovering(this.getArrowBounds(), mouseX, mouseY))
 		{
 			if (shouldShowRecipeTooltip())
 			{
-				this.renderTooltip(poseStack, this.getCookTimeTooltip(), mouseX, mouseY);
+				guiGraphics.renderTooltip(this.font, this.getCookTimeTooltip(), mouseX, mouseY);
 			}
 
 		}
 		else if (GuiUtil.isHovering(this.getEnergyBounds(), mouseX, mouseY))
 		{
 			AutomationNasaWorkbenchMenu menu = this.getMenu();
-			long maxCapacity = menu.getMachine().getEnergyStorage(null).getMaxCapacity();
-			GuiUtil.drawEnergyTooltip(this, poseStack, menu.getEnergyAmount(), maxCapacity, mouseX, mouseY);
+			long maxCapacity = menu.getMachine().getEnergyStorage().getMaxCapacity();
+			GuiUtil.drawEnergyTooltip(guiGraphics, menu.getEnergyAmount(), maxCapacity, mouseX, mouseY);
 		}
 
 	}

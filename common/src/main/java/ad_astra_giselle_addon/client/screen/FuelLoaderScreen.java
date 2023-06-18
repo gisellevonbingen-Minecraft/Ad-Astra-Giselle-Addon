@@ -3,14 +3,13 @@ package ad_astra_giselle_addon.client.screen;
 import java.awt.Rectangle;
 import java.util.List;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-
 import ad_astra_giselle_addon.common.AdAstraGiselleAddon;
 import ad_astra_giselle_addon.common.block.entity.FuelLoaderBlockEntity;
 import ad_astra_giselle_addon.common.menu.FuelLoaderMenu;
 import ad_astra_giselle_addon.common.util.TranslationUtils;
 import earth.terrarium.ad_astra.client.screen.GuiUtil;
 import earth.terrarium.botarium.common.fluid.base.FluidHolder;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
@@ -31,26 +30,26 @@ public class FuelLoaderScreen extends AddonMachineScreen<FuelLoaderBlockEntity, 
 	}
 
 	@Override
-	protected void renderBg(PoseStack stack, float partialTicks, int mouseX, int mouseY)
+	protected void renderBg(GuiGraphics guiGraphics, float partialTicks, int mouseX, int mouseY)
 	{
-		super.renderBg(stack, partialTicks, mouseX, mouseY);
+		super.renderBg(guiGraphics, partialTicks, mouseX, mouseY);
 
 		FluidHolder fluid = this.getFluid();
 		long capacity = this.getCapacity();
 		Rectangle bounds = this.getFluidTankBounds();
-		GuiUtil.drawFluidTank(stack, bounds.x, bounds.y, capacity, fluid);
+		GuiUtil.drawFluidTank(guiGraphics, bounds.x, bounds.y, capacity, fluid);
 	}
 
 	@Override
-	public void render(PoseStack stack, int mouseX, int mouseY, float delta)
+	public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float delta)
 	{
-		super.render(stack, mouseX, mouseY, delta);
+		super.render(guiGraphics, mouseX, mouseY, delta);
 
 		if (GuiUtil.isHovering(this.getFluidTankBounds(), mouseX, mouseY))
 		{
 			if (shouldShowRecipeTooltip())
 			{
-				this.renderComponentTooltip(stack, this.getFluidTankTooltip(), mouseX, mouseY);
+				guiGraphics.renderComponentTooltip(this.font, this.getFluidTankTooltip(), mouseX, mouseY);
 			}
 
 		}
@@ -76,7 +75,7 @@ public class FuelLoaderScreen extends AddonMachineScreen<FuelLoaderBlockEntity, 
 
 	public long getCapacity()
 	{
-		return this.getMenu().getMachine().getFluidContainer(null).getTankCapacity(0);
+		return this.getMenu().getMachine().getFluidContainer().getTankCapacity(0);
 	}
 
 }

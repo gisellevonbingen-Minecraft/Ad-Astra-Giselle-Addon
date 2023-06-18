@@ -5,8 +5,7 @@
 	"compatibilityLevel": "JAVA_17",
 	"mixins": [
 		"ad_astra_giselle_addon.FuelLoaderBlockEntityMixin",
-		"ad_astra_giselle_addon.GravityNormalizerBlockEntityMixin",
-		"pneumaticcraft.ApplicableUpgradesDBInject"
+		"ad_astra_giselle_addon.GravityNormalizerBlockEntityMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

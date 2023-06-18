@@ -29,7 +29,7 @@ public abstract class LivingEntityMixin extends Entity
 	{
 		LivingEntity living = (LivingEntity) (Object) this;
 
-		if (!living.getLevel().isClientSide())
+		if (!living.level().isClientSide())
 		{
 			OxygenChargerUtils.distributeToItems(living);
 		}
@@ -40,7 +40,7 @@ public abstract class LivingEntityMixin extends Entity
 	@Inject(method = "hurt", at = @At("HEAD"), cancellable = true)
 	public void hurt(DamageSource source, float amount, CallbackInfoReturnable<Boolean> callbackInfo)
 	{
-		if (source.type() == ModDamageSources.of(this.getLevel(), ModDamageSources.OXYGEN).type())
+		if (source.type() == ModDamageSources.of(this.level(), ModDamageSources.OXYGEN).type())
 		{
 			LivingEntity living = (LivingEntity) (Object) this;
 

@@ -85,7 +85,7 @@ public abstract class ProofEnchantmentSession extends ProofSession
 
 		if (LivingHelper.isPlayingMode(entity))
 		{
-			if (!entity.getLevel().isClientSide())
+			if (!entity.level().isClientSide())
 			{
 				ItemStackHolder enchantedItem = this.getEnchantedItem();
 				ItemUsableResource resource = this.getTestedUsableResource();

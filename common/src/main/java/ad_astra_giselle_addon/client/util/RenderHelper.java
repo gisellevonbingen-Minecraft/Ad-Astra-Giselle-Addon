@@ -22,9 +22,9 @@ public class RenderHelper
 	public static final ResourceLocation TILE_SURFACE = AdAstraGiselleAddon.rl("block/tile_surface");
 	private static TextureAtlasSprite atlass = null;
 
-	public static void renderBox(PoseStack stack, MultiBufferSource buffer, AABB bounds, int lineR, int lineG, int lineB, int surfaceR, int surfaceG, int surfaceB)
+	public static void renderBox(PoseStack poseStack, MultiBufferSource buffer, AABB bounds, int lineR, int lineG, int lineB, int surfaceR, int surfaceG, int surfaceB)
 	{
-		PoseStack.Pose last = stack.last();
+		PoseStack.Pose last = poseStack.last();
 		Matrix3f normal = last.normal();
 		Matrix4f matrix4f = last.pose();
 

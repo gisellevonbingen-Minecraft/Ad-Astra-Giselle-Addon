@@ -25,12 +25,12 @@ public class WorkingAreaBlockEntityRenderer<BE extends BlockEntity & IWorkingAre
 	}
 
 	@Override
-	public void render(BE blockEntity, float partialTick, PoseStack stack, MultiBufferSource renderer, int light, int overlayLight)
+	public void render(BE blockEntity, float partialTick, PoseStack poseStack, MultiBufferSource renderer, int light, int overlayLight)
 	{
-		WorkingAreaBlockEntityRenderer.renderWorkingArea(blockEntity, stack, renderer);
+		WorkingAreaBlockEntityRenderer.renderWorkingArea(blockEntity, poseStack, renderer);
 	}
 
-	public static void renderWorkingArea(IWorkingAreaBlockEntity blockEntity, PoseStack stack, MultiBufferSource renderer)
+	public static void renderWorkingArea(IWorkingAreaBlockEntity blockEntity, PoseStack poseStack, MultiBufferSource renderer)
 	{
 		if (blockEntity.isWorkingAreaVisible())
 		{
@@ -43,7 +43,7 @@ public class WorkingAreaBlockEntityRenderer<BE extends BlockEntity & IWorkingAre
 			int b = 204;
 
 			AABB workingArea = blockEntity.getWorkingArea(BlockPos.ZERO);
-			RenderHelper.renderBox(stack, renderer, workingArea, rl, gl, bl, r, g, b);
+			RenderHelper.renderBox(poseStack, renderer, workingArea, rl, gl, bl, r, g, b);
 		}
 
 	}
