@@ -2,10 +2,13 @@
 	"type": "minecraft:crafting_shaped",
 	"conditions": [
 		{
-			"type": "forge:mod_loaded",
-			"modid": "pneumaticcraft"
+			"type": "forge:item_exists",
+			"item": "ad_astra_giselle_addon:pneumatic_gravity_normalizing_upgrade"
 		}
 	],
+	"result": {
+		"item": "ad_astra_giselle_addon:pneumatic_gravity_normalizing_upgrade"
+	},
 	"pattern": [
 		"LXL",
 		"XCX",
@@ -21,8 +24,5 @@
 		"C": {
 			"item": "ad_astra:space_boots"
 		}
-	},
-	"result": {
-		"item": "ad_astra_giselle_addon:pneumatic_gravity_normalizing_upgrade"
 	}
 }

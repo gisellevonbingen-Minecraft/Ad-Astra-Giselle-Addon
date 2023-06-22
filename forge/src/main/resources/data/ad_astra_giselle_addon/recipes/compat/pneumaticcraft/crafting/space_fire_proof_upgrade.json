@@ -2,10 +2,13 @@
 	"type": "minecraft:crafting_shaped",
 	"conditions": [
 		{
-			"type": "forge:mod_loaded",
-			"modid": "pneumaticcraft"
+			"type": "forge:item_exists",
+			"item": "ad_astra_giselle_addon:pneumatic_space_fire_proof_upgrade"
 		}
 	],
+	"result": {
+		"item": "ad_astra_giselle_addon:pneumatic_space_fire_proof_upgrade"
+	},
 	"pattern": [
 		"LXL",
 		"XCX",
@@ -21,8 +24,5 @@
 		"C": {
 			"tag": "forge:plates/ostrum"
 		}
-	},
-	"result": {
-		"item": "ad_astra_giselle_addon:pneumatic_space_fire_proof_upgrade"
 	}
 }
