@@ -110,11 +110,11 @@ dependencies {
     annotationProcessor "org.spongepowered:mixin:${mixin_version}:processor"
 
     // Ad Astra - Required
-    implementation fg.deobf("earth.terrarium:botarium-forge-${mc_version}:${botarium_version}")
+    implementation fg.deobf("earth.terrarium:botarium-forge-${mc_minor_previous_version}:${botarium_version}")
     //implementation fg.deobf("earth.terrarium:ad_astra-forge-${mc_version}:${ad_astra_version}")
     implementation fg.deobf("curse.maven:ad-astra-635042:${ad_astra_forge_file}")
     implementation fg.deobf("com.teamresourceful.resourcefullib:resourcefullib-forge-${mc_version}:${resourcefullib_version}")
-    implementation fg.deobf("com.teamresourceful.resourcefulconfig:resourcefulconfig-forge-${mc_version}:${resourcefulconfig_version}")
+    implementation fg.deobf("com.teamresourceful.resourcefulconfig:resourcefulconfig-forge-${mc_minor_previous_version}:${resourcefulconfig_version}")
 
     // Ad Astra - Optional
     implementation fg.deobf("mezz.jei:jei-${mc_version}-forge:${jei_version}")
@@ -125,8 +125,8 @@ dependencies {
 
     // Implementation
     implementation fg.deobf("curse.maven:curios-309927:${curios_file}")
-    //implementation fg.deobf("mekanism:Mekanism:${mc_previous_version}-${mekanism_version}")
-    compileOnly fg.deobf("mekanism:Mekanism:${mc_previous_version}-${mekanism_version}")
+    //implementation fg.deobf("mekanism:Mekanism:${mc_major_previous_version}-${mekanism_version}")
+    compileOnly fg.deobf("mekanism:Mekanism:${mc_major_previous_version}-${mekanism_version}")
     //implementation fg.deobf("curse.maven:pneumaticcraft-repressurized-281849:${pneumaticcraft_repressurized_file}")
     compileOnly fg.deobf("curse.maven:pneumaticcraft-repressurized-281849:${pneumaticcraft_repressurized_file}")
 
