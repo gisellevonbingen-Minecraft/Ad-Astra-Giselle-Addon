@@ -127,13 +127,12 @@ dependencies {
     implementation fg.deobf("curse.maven:curios-309927:${curios_file}")
     //implementation fg.deobf("mekanism:Mekanism:${mc_major_previous_version}-${mekanism_version}")
     compileOnly fg.deobf("mekanism:Mekanism:${mc_major_previous_version}-${mekanism_version}")
-    //implementation fg.deobf("curse.maven:pneumaticcraft-repressurized-281849:${pneumaticcraft_repressurized_file}")
-    compileOnly fg.deobf("curse.maven:pneumaticcraft-repressurized-281849:${pneumaticcraft_repressurized_file}")
+    implementation fg.deobf("curse.maven:pneumaticcraft-repressurized-281849:${pneumaticcraft_repressurized_file}")
 
     // Runtiem Only
     runtimeOnly fg.deobf("curse.maven:the-one-probe-245211:${top_file}")
     runtimeOnly fg.deobf("curse.maven:jade-324717:${jade_file}")
-    //runtimeOnly fg.deobf("curse.maven:refined-storage-243076:${refined_storage_file}")
+    runtimeOnly fg.deobf("curse.maven:refined-storage-243076:${refined_storage_file}")
     //runtimeOnly fg.deobf("blusunrize.immersiveengineering:ImmersiveEngineering:${mc_version}-${immersive_engineering_version}")
 }
 
