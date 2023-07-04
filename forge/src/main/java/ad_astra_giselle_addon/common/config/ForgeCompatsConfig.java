@@ -8,9 +8,9 @@ public final class ForgeCompatsConfig
 	public static final String ID = "compats";
 	public static final String PREFIX = AddonConfigs.PREFIX + "." + ID;
 
-//	@InlineCategory
-//	public static AddonMekanismConfig MEKANISM;
-//	@InlineCategory
-//	public static AddonPneumaticCraftConfig PNEUMATICCRAFT;
+	// @InlineCategory
+	// public static AddonMekanismConfig MEKANISM;
+	// @InlineCategory
+	// public static AddonPneumaticCraftConfig PNEUMATICCRAFT;
 
 }
