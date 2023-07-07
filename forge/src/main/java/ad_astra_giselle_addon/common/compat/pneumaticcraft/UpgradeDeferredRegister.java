@@ -12,9 +12,9 @@ import java.util.function.Supplier;
 
 import ad_astra_giselle_addon.common.registry.ObjectRegistryCollection;
 import ad_astra_giselle_addon.common.registry.ObjectRegistryHolder;
-import me.desht.pneumaticcraft.api.PneumaticRegistry;
 import me.desht.pneumaticcraft.api.upgrade.PNCUpgrade;
 import me.desht.pneumaticcraft.common.item.UpgradeItem;
+import me.desht.pneumaticcraft.common.upgrades.ApplicableUpgradesDB;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
@@ -78,7 +78,7 @@ public class UpgradeDeferredRegister
 
 	public UpgradeRegistryHolder<PNCUpgrade, UpgradeItem> add(String name, Supplier<Item.Properties> propertiesSup, int maxTier, String... depModIds)
 	{
-		return this.add(name, () -> PneumaticRegistry.getInstance().getUpgradeRegistry().registerUpgrade(new ResourceLocation(this.getModid(), name)), u -> new UpgradeItem(u, maxTier, propertiesSup.get()));
+		return this.add(name, () -> ApplicableUpgradesDB.getInstance().registerUpgrade(new ResourceLocation(this.getModid(), name)), u -> new UpgradeItem(u, maxTier, propertiesSup.get()));
 	}
 
 	public <U extends PNCUpgrade, I extends UpgradeItem> UpgradeRegistryHolder<U, I> add(String name, Supplier<? extends U> upgradeSup, Function<PNCUpgrade, ? extends I> itemFunc)
