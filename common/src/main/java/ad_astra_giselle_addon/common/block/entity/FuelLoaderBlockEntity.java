@@ -31,7 +31,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 
-public class FuelLoaderBlockEntity extends AddonMachineBlockEntity implements BotariumFluidBlock<WrappedBlockFluidContainer>, IWorkingAreaBlockEntity
+public class FuelLoaderBlockEntity extends AddonMachineBlockEntity implements BotariumFluidBlock<WrappedBlockFluidContainer>, IRangedWorkingAreaBlockEntity
 {
 	public static final String DATA_WORKINGAREA_VISIBLE_KEY = "workingAreaVisible";
 
@@ -198,32 +198,16 @@ public class FuelLoaderBlockEntity extends AddonMachineBlockEntity implements Bo
 
 	}
 
+	@Override
 	public int getWorkingRange()
 	{
 		return MachinesConfig.FUEL_LOADER_WORKING_RANGE;
 	}
 
 	@Override
-	public AABB getWorkingArea()
-	{
-		return this.getWorkingArea(this.getBlockPos(), this.getWorkingRange());
-	}
-
 	public AABB getWorkingArea(double range)
 	{
 		return this.getWorkingArea(this.getBlockPos(), range);
-	}
-
-	@Override
-	public AABB getWorkingArea(BlockPos pos)
-	{
-		return this.getWorkingArea(pos, this.getWorkingRange());
-	}
-
-	public AABB getWorkingArea(BlockPos pos, double range)
-	{
-		double half = range / 2.0D;
-		return new AABB(pos).inflate(range, half, range).move(0.0D, half, 0.0D);
 	}
 
 	public FluidHolder giveFuel(Vehicle vehicle)
