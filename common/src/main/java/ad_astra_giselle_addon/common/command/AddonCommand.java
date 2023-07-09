@@ -162,6 +162,7 @@ public class AddonCommand
 			return stack;
 		}
 
+		@SuppressWarnings("deprecation")
 		private static ItemStack makeFull(Item item)
 		{
 			ItemStackHolder holder = new ItemStackHolder(new ItemStack(item));

@@ -15,6 +15,7 @@ public class AdAstraGiselleAddonDataGenerator
 	public static void gatherData(GatherDataEvent event)
 	{
 		DataGenerator gen = event.getGenerator();
+		@SuppressWarnings("unused")
 		ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
 		gen.addProvider(event.includeClient(), new ConfigLangProvider(gen));
 	}
