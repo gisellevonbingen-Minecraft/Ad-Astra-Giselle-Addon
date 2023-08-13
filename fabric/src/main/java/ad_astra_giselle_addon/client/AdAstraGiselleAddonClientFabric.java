@@ -5,7 +5,9 @@ import java.util.concurrent.Executor;
 
 import ad_astra_giselle_addon.common.AdAstraGiselleAddon;
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
+import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.fabricmc.fabric.api.event.client.ClientSpriteRegistryCallback;
 import net.fabricmc.fabric.api.resource.IdentifiableResourceReloadListener;
@@ -42,6 +44,9 @@ public class AdAstraGiselleAddonClientFabric implements ClientModInitializer
 				return listener.reload(synchronizer, manager, prepareProfiler, applyProfiler, prepareExecutor, applyExecutor);
 			}
 		}));
+
+		AddonClientKeyBindings.register(KeyBindingHelper::registerKeyBinding);
+		ClientTickEvents.START_CLIENT_TICK.register($ -> AddonClientKeyBindings.updateKeys());
 	}
 
 }

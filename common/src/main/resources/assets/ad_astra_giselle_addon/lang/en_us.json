@@ -2,6 +2,10 @@
 
   "itemGroup.ad_astra_giselle_addon.tab_main": "Ad Astra: Giselle Addon",
   
+  "key.categories.ad_astra_giselle_addon": "Ad Astra: Giselle Addon",
+  "key.ad_astra_giselle_addon.jet_suit_power": "Toggle Jet Suit Power",
+  "key.ad_astra_giselle_addon.jet_suit_hover": "Toggle Jet Suit Hover",
+  
   "block.ad_astra_giselle_addon.fuel_loader": "Fuel Loader",
   "block.ad_astra_giselle_addon.automation_nasa_workbench": "Automation NASA Workbench",
   "block.ad_astra_giselle_addon.gravity_normalizer": "Gravity Normalizer",
@@ -25,6 +29,8 @@
   "enchantment.ad_astra_giselle_addon.gravity_normalizing": "Gravity Normalizing",
   "enchantment.ad_astra_giselle_addon.gravity_normalizing.desc": "Normalize gravity like overworld in Ad Astra dimensions\nUse energy or durability",
   
+  "gui.ad_astra_giselle_addon.enabled": "Enabled",
+  "gui.ad_astra_giselle_addon.disabled": "Disabled",
   "gui.ad_astra_giselle_addon.workingarea.show": "Show",
   "gui.ad_astra_giselle_addon.workingarea.hide": "Hide",
   
@@ -40,6 +46,11 @@
   
   "description.ad_astra_giselle_addon.temperature_range": "Temperature Range",
   "description.ad_astra_giselle_addon.charge_mode": "Charge Mode",
+  "description.ad_astra_giselle_addon.jet_suit_power": "Power: %s",
+  "description.ad_astra_giselle_addon.jet_suit_hover": "Hover: %s",
+  
+  "text.ad_astra_giselle_addon.jet_suit_power": "Jet Suit Power: %s",
+  "text.ad_astra_giselle_addon.jet_suit_hover": "Jet Suit Hover: %s",
   
   "chargemode.ad_astra_giselle_addon.none": "Disabled",
   "chargemode.ad_astra_giselle_addon.armors": "Enabled: All Armor",

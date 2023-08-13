@@ -16,6 +16,7 @@ import ad_astra_giselle_addon.client.screen.FuelLoaderScreen;
 import ad_astra_giselle_addon.client.screen.GravityNormalizerScreen;
 import ad_astra_giselle_addon.client.util.RenderHelper;
 import ad_astra_giselle_addon.common.AdAstraGiselleAddon;
+import ad_astra_giselle_addon.common.content.jet_suit.JetSuitHandler;
 import ad_astra_giselle_addon.common.enchantment.EnchantmentHelper2;
 import ad_astra_giselle_addon.common.registry.AddonBlockEntityTypes;
 import ad_astra_giselle_addon.common.registry.AddonMenuTypes;
@@ -73,6 +74,7 @@ public class AdAstraGiselleAddonClient
 	public static void registerItemTooltip(Consumer<TriConsumer<ItemStack, TooltipFlag, List<Component>>> register)
 	{
 		register.accept(EnchantedBookTooltipHelper::addTooltip);
+		register.accept(JetSuitHandler::addTooltip);
 	}
 
 	public static void registerReloadListeners(BiConsumer<String, PreparableReloadListener> register)

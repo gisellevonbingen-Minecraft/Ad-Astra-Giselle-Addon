@@ -36,11 +36,16 @@ public class LivingHelper
 
 		for (InteractionHand hand : InteractionHand.values())
 		{
-			list.add(new ItemStackReference(living.getItemInHand(hand), ItemStackConsumers.hand(hand, living::setItemInHand)));
+			list.add(getHandItem(living, hand));
 		}
 
 		list.addAll(getArmorItems(living));
 		return list;
+	}
+
+	public static ItemStackReference getHandItem(LivingEntity living, InteractionHand hand)
+	{
+		return new ItemStackReference(living.getItemInHand(hand), ItemStackConsumers.hand(hand, living::setItemInHand));
 	}
 
 	public static List<ItemStackReference> getArmorItems(LivingEntity living)
@@ -49,10 +54,15 @@ public class LivingHelper
 
 		for (EquipmentSlot slot : EquipmentSlot.values())
 		{
-			list.add(new ItemStackReference(living.getItemBySlot(slot), ItemStackConsumers.equipment(slot, living::setItemSlot)));
+			list.add(getArmorItem(living, slot));
 		}
 
 		return list;
+	}
+
+	public static ItemStackReference getArmorItem(LivingEntity living, EquipmentSlot slot)
+	{
+		return new ItemStackReference(living.getItemBySlot(slot), ItemStackConsumers.equipment(slot, living::setItemSlot));
 	}
 
 	public static List<ItemStackReference> getInventoryStacks(LivingEntity living)
