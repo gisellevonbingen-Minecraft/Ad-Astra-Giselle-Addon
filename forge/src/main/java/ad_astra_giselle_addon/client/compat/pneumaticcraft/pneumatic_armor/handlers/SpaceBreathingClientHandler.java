@@ -17,6 +17,7 @@ import me.desht.pneumaticcraft.api.pneumatic_armor.IArmorUpgradeHandler;
 import me.desht.pneumaticcraft.api.pneumatic_armor.ICommonArmorHandler;
 import me.desht.pneumaticcraft.api.upgrade.PNCUpgrade;
 import me.desht.pneumaticcraft.client.pneumatic_armor.ClientArmorRegistry;
+import me.desht.pneumaticcraft.common.config.subconfig.ArmorHUDLayout;
 import me.desht.pneumaticcraft.common.pneumatic_armor.CommonArmorHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -27,7 +28,7 @@ import net.minecraft.world.item.ItemStack;
 
 public class SpaceBreathingClientHandler<T extends IArmorUpgradeHandler<?>> extends AddonSimpleToggleableHandler<T>
 {
-	private static final StatPanelLayout DEFAULT_STAT_LAYOUT = new StatPanelLayout(0.5F, 0.005F, false);
+	private static final StatPanelLayout DEFAULT_STAT_LAYOUT = StatPanelLayout.expandsRight(0.5F, 0.005F);
 	private static final ItemStack ICON = new ItemStack(AddonItems.OXYGEN_CAN.get());
 
 	private IGuiAnimatedStat stat;
@@ -67,7 +68,7 @@ public class SpaceBreathingClientHandler<T extends IArmorUpgradeHandler<?>> exte
 	{
 		super.render2D(graphics, partialTicks, armorPieceHasPressure);
 
-		if (this.stat != null && this.oxygenComponent != null)
+		if (this.stat != null && this.oxygenComponent != null && !ArmorHUDLayout.INSTANCE.getLayoutFor(this.getCommonHandler().getID(), this.getDefaultStatLayout()).hidden())
 		{
 			Minecraft instance = Minecraft.getInstance();
 			Font fr = instance.font;
