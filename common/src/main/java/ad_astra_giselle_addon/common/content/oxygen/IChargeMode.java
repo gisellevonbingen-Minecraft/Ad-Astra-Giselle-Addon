@@ -1,5 +1,6 @@
 package ad_astra_giselle_addon.common.content.oxygen;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.jetbrains.annotations.NotNull;
@@ -17,27 +18,20 @@ public interface IChargeMode
 {
 	public static final String LANGUGE_CATEGORY_CHARGEMODE = "chargemode";
 
+	public static List<IChargeMode> getAllChargeModes()
+	{
+		return Arrays.asList(ChargeMode.values());
+	}
+
 	@NotNull
-	public static IChargeMode find(@Nullable List<IChargeMode> availableModes, @Nullable String name)
+	public static IChargeMode find(@Nullable ResourceLocation name)
 	{
 		if (name == null)
 		{
 			return ChargeMode.NONE;
 		}
 
-		ResourceLocation resourceLocation = ResourceLocation.tryParse(name);
-		return find(availableModes, resourceLocation);
-	}
-
-	@NotNull
-	public static IChargeMode find(@Nullable List<IChargeMode> availableModes, @Nullable ResourceLocation name)
-	{
-		if (availableModes == null || name == null)
-		{
-			return ChargeMode.NONE;
-		}
-
-		for (IChargeMode mode : availableModes)
+		for (IChargeMode mode : getAllChargeModes())
 		{
 			if (mode.getName().equals(name))
 			{
@@ -56,7 +50,7 @@ public interface IChargeMode
 	}
 
 	@NotNull
-	public static IChargeMode readNBT(@Nullable List<IChargeMode> availableModes, @Nullable Tag tag)
+	public static IChargeMode readNBT(@Nullable Tag tag)
 	{
 		if (tag == null)
 		{
@@ -64,7 +58,7 @@ public interface IChargeMode
 		}
 
 		ResourceLocation name = ResourceLocation.tryParse(tag.getAsString());
-		return find(availableModes, name);
+		return find(name);
 	}
 
 	public static Component createDisplayName(ResourceLocation name)
