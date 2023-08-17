@@ -41,7 +41,7 @@ public class NetheriteOxygenCanItem extends OxygenCanItem
 			public IChargeMode getChargeMode()
 			{
 				CompoundTag tag = NBTUtils.getTag(item.getStack(), KEY_OXYGEN_CHARGER);
-				return IChargeMode.find(this.getAvailableChargeModes(), tag.getString(KEY_CHARGE_MODE));
+				return IChargeMode.readNBT(tag.get(KEY_CHARGE_MODE));
 			}
 
 			@Override
