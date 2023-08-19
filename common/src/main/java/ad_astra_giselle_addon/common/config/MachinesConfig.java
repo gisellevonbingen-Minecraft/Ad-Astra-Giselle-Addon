@@ -47,4 +47,11 @@ public final class MachinesConfig
 	public static int GRAVITY_NORMALIZER_MAX_LENGTH = 31;
 	@ConfigEntry(id = GRAVITY_NORMALIZER_ID + "_proof_duration", type = EntryType.INTEGER, translation = GRAVITY_NORMALIZER_PREFIX + "_proof_duration")
 	public static int GRAVITY_NORMALIZER_PROOF_DURATION = 10;
+
+	public static final String ROCKET_SENSOR_ID = "rocket_sensor";
+	public static final String ROCKET_SENSOR_PREFIX = PREFIX + "." + ROCKET_SENSOR_ID;
+	@ConfigSeparator(translation = ROCKET_SENSOR_PREFIX)
+	@ConfigEntry(id = ROCKET_SENSOR_ID + "_working_range", type = EntryType.INTEGER, translation = ROCKET_SENSOR_PREFIX + "_working_range")
+	@Comment(value = "Blocks from Rocket Sensor to each direction", translation = ROCKET_SENSOR_PREFIX + "_working_range.comment")
+	public static int ROCKET_SENSOR_WORKING_RANGE = 2;
 }

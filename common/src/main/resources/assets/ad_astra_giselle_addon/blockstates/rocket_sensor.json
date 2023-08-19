@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "ad_astra_giselle_addon:block/rocket_sensor"
+    }
+  }
+}
