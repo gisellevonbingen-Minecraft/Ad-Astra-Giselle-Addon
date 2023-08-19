@@ -6,7 +6,6 @@ import java.util.List;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import ad_astra_giselle_addon.common.AdAstraGiselleAddon;
 import ad_astra_giselle_addon.common.item.ItemStackReference;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.nbt.Tag;
@@ -59,11 +58,6 @@ public interface IChargeMode
 
 		ResourceLocation name = ResourceLocation.tryParse(tag.getAsString());
 		return find(name);
-	}
-
-	public static Component createDisplayName(ResourceLocation name)
-	{
-		return Component.translatable(AdAstraGiselleAddon.tl(LANGUGE_CATEGORY_CHARGEMODE, name));
 	}
 
 	public ResourceLocation getName();
