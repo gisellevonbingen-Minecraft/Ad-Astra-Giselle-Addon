@@ -14,6 +14,7 @@ import ad_astra_giselle_addon.client.renderer.blockentity.WorkingAreaBlockEntity
 import ad_astra_giselle_addon.client.screen.AutomationNasaWorkbenchScreen;
 import ad_astra_giselle_addon.client.screen.FuelLoaderScreen;
 import ad_astra_giselle_addon.client.screen.GravityNormalizerScreen;
+import ad_astra_giselle_addon.client.screen.RocketSensorScreen;
 import ad_astra_giselle_addon.common.AdAstraGiselleAddon;
 import ad_astra_giselle_addon.common.enchantment.EnchantmentHelper2;
 import ad_astra_giselle_addon.common.registry.AddonBlockEntityTypes;
@@ -50,6 +51,7 @@ public class AdAstraGiselleAddonClient
 		ClientPlatformUtils.registerScreen(AddonMenuTypes.FUEL_LOADER.get(), FuelLoaderScreen::new);
 		ClientPlatformUtils.registerScreen(AddonMenuTypes.AUTOMATION_NASA_WORKBENCH.get(), AutomationNasaWorkbenchScreen::new);
 		ClientPlatformUtils.registerScreen(AddonMenuTypes.GRAVITY_NORMALIZER.get(), GravityNormalizerScreen::new);
+		ClientPlatformUtils.registerScreen(AddonMenuTypes.ROCKET_SENSOR.get(), RocketSensorScreen::new);
 	}
 
 	public static void registerOverlay(BiConsumer<String, RenderHud> register)
@@ -61,6 +63,7 @@ public class AdAstraGiselleAddonClient
 	{
 		register.regsiter(AddonBlockEntityTypes.FUEL_LOADER.get(), context -> new WorkingAreaBlockEntityRenderer<>(context));
 		register.regsiter(AddonBlockEntityTypes.GRAVITY_NORMALIZER.get(), context -> new WorkingAreaBlockEntityRenderer<>(context));
+		register.regsiter(AddonBlockEntityTypes.ROCKET_SENSOR.get(), context -> new WorkingAreaBlockEntityRenderer<>(context));
 	}
 
 	public static void registerItemTooltip(Consumer<TriConsumer<ItemStack, TooltipFlag, List<Component>>> register)

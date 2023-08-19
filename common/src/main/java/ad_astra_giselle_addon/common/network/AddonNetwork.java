@@ -15,6 +15,9 @@ public class AddonNetwork
 
 		CHANNEL.registerPacket(NetworkDirection.CLIENT_TO_SERVER, GravityNormalizerMessage.Length.ID, GravityNormalizerMessage.Length.HANDLER, GravityNormalizerMessage.Length.class);
 		CHANNEL.registerPacket(NetworkDirection.CLIENT_TO_SERVER, GravityNormalizerMessage.Offset.ID, GravityNormalizerMessage.Offset.HANDLER, GravityNormalizerMessage.Offset.class);
+
+		CHANNEL.registerPacket(NetworkDirection.CLIENT_TO_SERVER, RocketSensorMessage.SensingType.ID, RocketSensorMessage.SensingType.HANDLER, RocketSensorMessage.SensingType.class);
+		CHANNEL.registerPacket(NetworkDirection.CLIENT_TO_SERVER, RocketSensorMessage.Inverted.ID, RocketSensorMessage.Inverted.HANDLER, RocketSensorMessage.Inverted.class);
 	}
 
 }
