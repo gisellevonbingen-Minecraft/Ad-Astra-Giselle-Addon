@@ -9,7 +9,7 @@
   "item.ad_astra_giselle_addon.oxygen_can": "산소 캔",
   "item.ad_astra_giselle_addon.netherite_oxygen_can": "네더라이트 산소 캔",
   
-  "item.ad_astra_giselle_addon.fuel_loader.tooltip": "주변 '로버' 혹은 '로켓'의 연료를 채웁니다",
+  "item.ad_astra_giselle_addon.fuel_loader.tooltip": "주변 로버 혹은 로켓의 연료를 채웁니다",
   "item.ad_astra_giselle_addon.gravity_normalizer.tooltip": "범위내 생명체의 중력을 정규화합니다",
   
   "container.ad_astra_giselle_addon.fuel_loader": "연료 적재기",

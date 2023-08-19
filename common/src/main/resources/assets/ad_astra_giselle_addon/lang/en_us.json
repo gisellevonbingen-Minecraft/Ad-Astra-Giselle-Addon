@@ -9,7 +9,7 @@
   "item.ad_astra_giselle_addon.oxygen_can": "Oxygen Can",
   "item.ad_astra_giselle_addon.netherite_oxygen_can": "Netherite Oxygen Can",
   
-  "item.ad_astra_giselle_addon.fuel_loader.tooltip": "Give fuel to near 'Rover' or 'Rockets'",
+  "item.ad_astra_giselle_addon.fuel_loader.tooltip": "Give fuel to near Rover or Rocket",
   "item.ad_astra_giselle_addon.gravity_normalizer.tooltip": "Normalize living's gravity within range",
   
   "container.ad_astra_giselle_addon.fuel_loader": "Fuel Loader",
@@ -25,8 +25,8 @@
   "enchantment.ad_astra_giselle_addon.gravity_normalizing": "Gravity Normalizing",
   "enchantment.ad_astra_giselle_addon.gravity_normalizing.desc": "Normalize gravity like overworld in Ad Astra dimensions\nUse energy or durability",
   
-  "gui.ad_astra_giselle_addon.workingarea.show": "Show",
-  "gui.ad_astra_giselle_addon.workingarea.hide": "Hide",
+  "gui.ad_astra_giselle_addon.workingarea.show": "Show Working Area",
+  "gui.ad_astra_giselle_addon.workingarea.hide": "Hide Working Area",
   
   "gui.ad_astra_giselle_addon.gravity_normalizer.vector_element_tooltip": "Click: %1$s\nShift+Click: %2$s",
   "gui.ad_astra_giselle_addon.gravity_normalizer.length.x": "X Length: %s",
