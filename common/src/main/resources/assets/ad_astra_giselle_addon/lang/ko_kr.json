@@ -54,9 +54,9 @@
   "rocket_sensing_type.ad_astra_giselle_addon.flying_up": "날아오르는 중",
   "rocket_sensing_type.ad_astra_giselle_addon.flying_up.desc": "로켓이 날아오르는 중이면 %2$s 출력",
   "rocket_sensing_type.ad_astra_giselle_addon.fuel_loaded": "연료 적재됨",
-  "rocket_sensing_type.ad_astra_giselle_addon.fuel_loaded.desc": "로켓에 연로가 충분하면 %2$s",
+  "rocket_sensing_type.ad_astra_giselle_addon.fuel_loaded.desc": "로켓에 연로가 충분하면 %2$s 출력",
   "rocket_sensing_type.ad_astra_giselle_addon.launch_countdown": "발사 카운트다운",
-  "rocket_sensing_type.ad_astra_giselle_addon.launch_countdown.desc1": "발사 카운트다운으로 아날로그로 출력",
+  "rocket_sensing_type.ad_astra_giselle_addon.launch_countdown.desc1": "발사 카운트다운을 아날로그로 출력",
   "rocket_sensing_type.ad_astra_giselle_addon.launch_countdown.desc2": "처음에는 0, 카운트다운이 감소할 수록 출력 증가",
   
   
