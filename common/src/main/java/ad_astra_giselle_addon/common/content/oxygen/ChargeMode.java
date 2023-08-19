@@ -27,7 +27,7 @@ public enum ChargeMode implements IChargeMode
 	{
 		this.name = name;
 		this.function = function;
-		this.displayName = IChargeMode.createDisplayName(name);
+		this.displayName = Component.translatable(AdAstraGiselleAddon.tl(LANGUGE_CATEGORY_CHARGEMODE, name));
 	}
 
 	@Override
