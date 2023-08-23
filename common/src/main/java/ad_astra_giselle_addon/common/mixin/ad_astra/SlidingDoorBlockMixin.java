@@ -29,10 +29,10 @@ public abstract class SlidingDoorBlockMixin extends BaseEntityBlock
 		super(pProperties);
 	}
 
-	@Shadow
+	@Shadow(remap = false)
 	public abstract BlockPos getMainPos(BlockState state, BlockPos from);
 
-	@Inject(method = "<init>", at = @At("TAIL"), cancellable = true)
+	@Inject(method = "<init>", at = @At("TAIL"))
 	private void init(Properties properties, CallbackInfo ci)
 	{
 		this.registerDefaultState(this.defaultBlockState().setValue(SlidingDoorBlockProperties.LOCKED, false));
