@@ -1,0 +1,22 @@
+{
+   "type":"minecraft:crafting_shaped",
+   "result":{
+      "item":"ad_astra_giselle_addon:sliding_door_key"
+   },
+   "pattern":[
+      "NR",
+      " R",
+      " P"
+   ],
+   "key":{
+      "P":{
+         "tag":"ad_astra_platform:iron_plates"
+      },
+      "R":{
+         "tag":"ad_astra_platform:iron_rods"
+      },
+      "N":{
+         "tag":"ad_astra_platform:iron_nuggets"
+      }
+   }
+} 
