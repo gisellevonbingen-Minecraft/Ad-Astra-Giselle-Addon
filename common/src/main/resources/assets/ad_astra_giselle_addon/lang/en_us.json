@@ -64,8 +64,9 @@
   
   
   "jei.category.ad_astra_giselle_addon.fuel_loader": "Fuel Loader",
-  "jei.info.ad_astra_giselle_addon.fuel_loader": "Can receive '%2$s' tagged fluid.\nThen give fuel to 'Rover' or 'Rockets' within %1$s blocks.",
+  "jei.info.ad_astra_giselle_addon.fuel_loader": "Can receive '%2$s' tagged fluid.\nThen give fuel to Rover or Rocket within %1$s blocks.",
   "jei.info.ad_astra_giselle_addon.gravity_normalizer": "Normalize living's gravity like to overworld in working area.\nMaximum length is %1$s.",
+  "jei.info.ad_astra_giselle_addon.rocket_sensor": "Find Rocket within %1$s blocks.\nThen output that Rocket's state as redstone signal through Comparator.\nSignal type can be changed in the GUI.",
   
   
   "module.ad_astra_giselle_addon.space_breathing_unit": "Space Breathing Unit",
