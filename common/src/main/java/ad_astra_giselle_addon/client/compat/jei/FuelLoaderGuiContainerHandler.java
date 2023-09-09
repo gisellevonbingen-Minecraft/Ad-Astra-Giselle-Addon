@@ -28,6 +28,7 @@ public class FuelLoaderGuiContainerHandler extends BaseGuiContainerHandler<FuelL
 		return screen.getFluidTankTooltip();
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public Object getIngredientUnderMouse(FuelLoaderScreen screen, double mouseX, double mouseY)
 	{

@@ -1,0 +1,22 @@
+{
+   "type":"minecraft:crafting_shaped",
+   "result":{
+      "item":"ad_astra_giselle_addon:rocket_sensor"
+   },
+   "pattern":[
+      "SSS",
+      "POP",
+      "SSS"
+   ],
+   "key":{
+      "S":{
+         "tag":"ad_astra_platform:steel_ingots"
+      },
+      "P":{
+         "tag":"ad_astra_platform:iron_plates"
+      },
+      "O":{
+         "item":"minecraft:observer"
+      }
+   }
+}
