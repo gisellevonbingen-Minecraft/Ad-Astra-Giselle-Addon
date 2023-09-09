@@ -39,7 +39,7 @@ public class CustomCheckbox extends Checkbox
 		RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
 		int checkerWidth = this.height;
 		int checkerHeight = this.height;
-		float textureU = this.isHovered() ? 20.0F : 0.0F;
+		float textureU = this.isHoveredOrFocused() ? 20.0F : 0.0F;
 		float textureV = this.selected() ? 20.0F : 0.0F;
 		guiGraphics.blit(TEXTURE, this.getX(), this.getY(), checkerWidth, checkerHeight, textureU, textureV, 20, 20, 64, 64);
 
