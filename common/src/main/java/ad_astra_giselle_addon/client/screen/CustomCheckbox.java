@@ -41,14 +41,13 @@ public class CustomCheckbox extends Checkbox
 		RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
 		int checkerWidth = this.height;
 		int checkerHeight = this.height;
-		float textureU = this.isFocused() ? 20.0F : 0.0F;
+		float textureU = this.isHoveredOrFocused() ? 20.0F : 0.0F;
 		float textureV = this.selected() ? 20.0F : 0.0F;
 		GuiComponent.blit(pPoseStack, this.getX(), this.getY(), checkerWidth, checkerHeight, textureU, textureV, 20, 20, 64, 64);
-		super.renderWidget(pPoseStack, pMouseX, pMouseY, pPartialTick);
 
 		if (this.isShowLabel())
 		{
-			GuiComponent.drawString(pPoseStack, font, this.getMessage(), this.getX() + this.height + 2, this.getY() + (this.height - 8) / 2, 14737632 | Mth.ceil(this.alpha * 255.0F) << 24);
+			font.draw(pPoseStack, this.getMessage(), this.getX() + this.height + 2, this.getY() + (this.height - 8) / 2, 0x404040 | Mth.ceil(this.alpha * 255.0F) << 24);
 		}
 
 	}

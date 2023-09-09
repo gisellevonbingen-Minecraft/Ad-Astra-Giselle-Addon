@@ -38,7 +38,18 @@ public class TranslationUtils
 
 	public static Component getItemTooltip(ResourceLocation id)
 	{
-		return Component.translatable("item." + id.getNamespace() + "." + id.getPath() + ".tooltip").setStyle(Style.EMPTY.withColor(ChatFormatting.GREEN));
+		return getItemTooltip(id.getNamespace(), id.getPath(), "");
+	}
+
+	public static Component getItemTooltip(ResourceLocation id, String suffix)
+	{
+		return getItemTooltip(id.getNamespace(), id.getPath(), suffix);
+	}
+
+	public static Component getItemTooltip(String namespace, String path, String suffix)
+	{
+		String tooltipKey = new StringBuilder().append("item.").append(namespace).append(".").append(path).append(".tooltip").append(suffix).toString();
+		return Component.translatable(tooltipKey).setStyle(Style.EMPTY.withColor(ChatFormatting.GREEN));
 	}
 
 	public static Component description(String key, Component component)
