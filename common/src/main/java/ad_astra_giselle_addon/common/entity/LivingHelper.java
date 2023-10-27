@@ -36,26 +36,37 @@ public class LivingHelper
 
 		for (InteractionHand hand : InteractionHand.values())
 		{
-			list.add(new ItemStackReference(living.getItemInHand(hand), ItemStackConsumers.hand(hand, living::setItemInHand)));
+			list.add(getHandItem(living, hand));
 		}
 
-		list.addAll(getArmorItems(living));
+		list.addAll(getEquipmentItems(living));
+		list.addAll(DELEGATE.getExtraSlotItems(living));
 		return list;
 	}
 
-	public static List<ItemStackReference> getArmorItems(LivingEntity living)
+	public static ItemStackReference getHandItem(LivingEntity living, InteractionHand hand)
+	{
+		return new ItemStackReference(living.getItemInHand(hand), ItemStackConsumers.hand(hand, living::setItemInHand));
+	}
+
+	public static List<ItemStackReference> getEquipmentItems(LivingEntity living)
 	{
 		List<ItemStackReference> list = new ArrayList<>();
 
 		for (EquipmentSlot slot : EquipmentSlot.values())
 		{
-			list.add(new ItemStackReference(living.getItemBySlot(slot), ItemStackConsumers.equipment(slot, living::setItemSlot)));
+			list.add(getEquipmentItem(living, slot));
 		}
 
 		return list;
 	}
 
-	public static List<ItemStackReference> getInventoryStacks(LivingEntity living)
+	public static ItemStackReference getEquipmentItem(LivingEntity living, EquipmentSlot slot)
+	{
+		return new ItemStackReference(living.getItemBySlot(slot), ItemStackConsumers.equipment(slot, living::setItemSlot));
+	}
+
+	public static List<ItemStackReference> getInventoryItems(LivingEntity living)
 	{
 		List<ItemStackReference> list = new ArrayList<>();
 
@@ -70,25 +81,29 @@ public class LivingHelper
 
 				if (!item.isEmpty())
 				{
-					list.add(new ItemStackReference(item, ItemStackConsumers.index(i, inventory::setItem)));
+					list.add(getInventoryitem(inventory, i));
 				}
 
 			}
 
+			list.addAll(DELEGATE.getExtraSlotItems(living));
 		}
 		else
 		{
 			list.addAll(getSlotItems(living));
 		}
 
-		list.addAll(DELEGATE.getExtraInventoryStacks(living));
-
 		return list;
+	}
+
+	public static ItemStackReference getInventoryitem(Inventory inventory, int i)
+	{
+		return new ItemStackReference(inventory.getItem(i), ItemStackConsumers.index(i, inventory::setItem));
 	}
 
 	public static interface Delegate
 	{
-		default List<ItemStackReference> getExtraInventoryStacks(LivingEntity living)
+		default List<ItemStackReference> getExtraSlotItems(LivingEntity living)
 		{
 			return Collections.emptyList();
 		}

@@ -14,8 +14,8 @@ import net.minecraft.world.entity.LivingEntity;
 public enum ChargeMode implements IChargeMode
 {
 	NONE(AdAstraGiselleAddon.rl("none"), e -> Collections.emptyList()),
-	ARMORS(AdAstraGiselleAddon.rl("armors"), LivingHelper::getArmorItems),
-	ALL(AdAstraGiselleAddon.rl("all"), LivingHelper::getInventoryStacks),
+	ARMORS(AdAstraGiselleAddon.rl("armors"), LivingHelper::getEquipmentItems),
+	ALL(AdAstraGiselleAddon.rl("all"), LivingHelper::getInventoryItems),
 	//
 	;
 

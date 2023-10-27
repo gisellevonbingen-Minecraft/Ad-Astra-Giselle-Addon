@@ -70,7 +70,7 @@ public class OxygenChargerUtils
 
 	public static OptionalDouble getExtractableStoredRatio(LivingEntity living)
 	{
-		List<ItemStackReference> items = LivingHelper.getInventoryStacks(living);
+		List<ItemStackReference> items = LivingHelper.getInventoryItems(living);
 		long stored = 0L;
 		long capacity = 0L;
 		int temperature = (int) ModUtils.getWorldTemperature(living.getLevel());
@@ -108,7 +108,7 @@ public class OxygenChargerUtils
 	public static Stream<IOxygenCharger> streamExtractable(LivingEntity living, long extracting)
 	{
 		int temperature = (int) ModUtils.getWorldTemperature(living.getLevel());
-		return LivingHelper.getInventoryStacks(living).stream().map(OxygenChargerUtils::get).filter(oxygenCharger ->
+		return LivingHelper.getInventoryItems(living).stream().map(OxygenChargerUtils::get).filter(oxygenCharger ->
 		{
 			if (oxygenCharger != null && oxygenCharger.getTemperatureThreshold().contains(temperature))
 			{

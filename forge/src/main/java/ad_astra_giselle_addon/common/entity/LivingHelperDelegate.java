@@ -14,7 +14,14 @@ import net.minecraftforge.items.IItemHandlerModifiable;
 public class LivingHelperDelegate implements LivingHelper.Delegate
 {
 	@Override
-	public List<ItemStackReference> getExtraInventoryStacks(LivingEntity living)
+	public List<ItemStackReference> getExtraSlotItems(LivingEntity living)
+	{
+		List<ItemStackReference> list = new ArrayList<>();
+		list.addAll(this.getCuriousStacks(living));
+		return list;
+	}
+
+	public List<ItemStackReference> getCuriousStacks(LivingEntity living)
 	{
 		List<ItemStackReference> list = new ArrayList<>();
 
