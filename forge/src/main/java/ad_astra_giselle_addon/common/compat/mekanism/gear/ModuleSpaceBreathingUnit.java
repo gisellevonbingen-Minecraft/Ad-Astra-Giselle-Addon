@@ -8,9 +8,15 @@ import ad_astra_giselle_addon.common.compat.mekanism.AddonMekanismConfig;
 import ad_astra_giselle_addon.common.content.oxygen.IOxygenCharger;
 import ad_astra_giselle_addon.common.content.oxygen.OxygenChargerUtils;
 import ad_astra_giselle_addon.common.content.proof.ProofAbstractUtils;
+import ad_astra_giselle_addon.common.entity.LivingHelper;
 import ad_astra_giselle_addon.common.fluid.FluidHooks2;
 import ad_astra_giselle_addon.common.fluid.FluidPredicates;
 import ad_astra_giselle_addon.common.fluid.UniveralFluidHandler;
+import ad_astra_giselle_addon.common.item.ItemStackReference;
+import ad_astra_giselle_addon.common.item.OxygenCanItem;
+import earth.terrarium.ad_astra.common.registry.ModFluids;
+import earth.terrarium.botarium.api.fluid.FluidHolder;
+import earth.terrarium.botarium.api.fluid.FluidHooks;
 import mekanism.api.Action;
 import mekanism.api.MekanismAPI;
 import mekanism.api.chemical.gas.GasStack;
@@ -29,6 +35,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.fluids.FluidType;
@@ -86,6 +93,8 @@ public class ModuleSpaceBreathingUnit implements ICustomModule<ModuleSpaceBreath
 			productionRate = remain.getAmount();
 		}
 
+		productionRate = fillOxygenCan(player, productionRate);
+
 		long oxygenUsed = productionRateFirst - productionRate;
 		FloatingLong multiply = energyUsing.multiply(oxygenUsed);
 
@@ -97,6 +106,35 @@ public class ModuleSpaceBreathingUnit implements ICustomModule<ModuleSpaceBreath
 		int airSupply = player.getAirSupply();
 		int airFill = (int) Math.min(productionRateFirst, player.getMaxAirSupply() - airSupply);
 		player.setAirSupply(airSupply + airFill);
+	}
+
+	public long fillOxygenCan(Player player, long productionRate)
+	{
+		for (ItemStackReference item : LivingHelper.getSlotItems(player))
+		{
+			if (productionRate <= 0)
+			{
+				break;
+			}
+			else if (item.getStack().getItem() instanceof OxygenCanItem)
+			{
+				UniveralFluidHandler tank = UniveralFluidHandler.from(item);
+				FluidHolder containedStack = tank.getFluidInTank(0);
+				Fluid insertingFluid = ModFluids.OXYGEN.get();
+
+				if (!containedStack.isEmpty())
+				{
+					insertingFluid = containedStack.getFluid();
+				}
+
+				FluidHolder inserting = FluidHooks.newFluidHolder(insertingFluid, productionRate, null);
+				long inserted = tank.insertFluid(inserting, false);
+				productionRate -= inserted;
+			}
+
+		}
+
+		return productionRate;
 	}
 
 	public long getProduceRate(IModule<ModuleSpaceBreathingUnit> module, Player player)
