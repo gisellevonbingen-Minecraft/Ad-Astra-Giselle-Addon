@@ -27,9 +27,50 @@ import me.desht.pneumaticcraft.common.pneumatic_armor.CommonArmorHandler;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.event.entity.living.LivingEvent.LivingTickEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class PneumaticCraftProofProvidingHandler
 {
+	@SubscribeEvent
+	public void onLivingTick(LivingTickEvent e)
+	{
+		if (e.getEntity() instanceof Player player && !player.getLevel().isClientSide())
+		{
+			int airSupply = player.getAirSupply();
+			int maxAirSupply = player.getMaxAirSupply();
+
+			if (maxAirSupply - airSupply >= ProofAbstractUtils.OXYGEN_PROOF_INTERVAL)
+			{
+				ItemStack stack = getUpgradeUsablePneumaticArmorItem(player, AddonCommonUpgradeHandlers.SPACE_BREATHING);
+				long oxygenUsing = ProofAbstractUtils.OXYGEN_PROOF_USING;
+				IOxygenCharger oxygenCharger = OxygenChargerUtils.firstExtractable(player, oxygenUsing);
+
+				if (!stack.isEmpty() && oxygenCharger != null)
+				{
+					IAirHandlerItem airHandler = stack.getCapability(PNCCapabilities.AIR_HANDLER_ITEM_CAPABILITY).orElse(null);
+					int airUsing = AddonPneumaticCraftConfig.SPACE_BREATHING_AIR_USING;
+
+					if (airHandler != null && useAir(player, airHandler, airUsing, true))
+					{
+						if (!player.getLevel().isClientSide() && LivingHelper.isPlayingMode(player))
+						{
+							UniveralFluidHandler fluidHandler = oxygenCharger.getFluidHandler();
+							FluidHooks2.extractFluid(fluidHandler, FluidPredicates::isOxygen, oxygenUsing, false);
+							useAir(player, airHandler, airUsing, false);
+						}
+
+						player.setAirSupply(airSupply + ProofAbstractUtils.OXYGEN_PROOF_INTERVAL);
+					}
+
+				}
+
+			}
+
+		}
+
+	}
+
 	@Subscribe
 	public void onLivingSpaceOxygenProof(LivingSpaceOxygenProofProvidingEvent e)
 	{

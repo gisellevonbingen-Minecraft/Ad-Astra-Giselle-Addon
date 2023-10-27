@@ -11,6 +11,7 @@ import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.DistExecutor;
 
 public class PneumaticCraftCompat extends CompatibleMod
@@ -34,7 +35,9 @@ public class PneumaticCraftCompat extends CompatibleMod
 		AddonPNCUpgrades.UPGRADES.register();
 		AddonCommonUpgradeHandlers.register();
 
-		AdAstraGiselleAddon.eventBus().register(new PneumaticCraftProofProvidingHandler());
+		PneumaticCraftProofProvidingHandler handler = new PneumaticCraftProofProvidingHandler();
+		AdAstraGiselleAddon.eventBus().register(handler);
+		MinecraftForge.EVENT_BUS.register(handler);
 
 		DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> AddonPneumaticCraftCompatClient::new);
 	}
