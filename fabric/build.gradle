@@ -53,11 +53,10 @@ dependencies {
 
     // Ad Astra - Required
     modImplementation ("teamreborn:energy:2.2.0") { exclude(group: "net.fabricmc.fabric-api") }
-    modImplementation ("earth.terrarium:botarium-fabric-${mc_minor_previous_version}:${botarium_version}")  { transitive = false }
-    //modImplementation "earth.terrarium:adastra:ad_astra-fabric-${mc_version}:${ad_astra_version}"
-    modImplementation "curse.maven:ad-astra-635042:${ad_astra_fabric_file}"
+    modImplementation ("earth.terrarium.botarium:botarium-fabric-${mc_version}:${botarium_version}")  { transitive = false }
+    modImplementation "earth.terrarium.adastra:ad_astra-fabric-${mc_version}:${ad_astra_version}"
     modImplementation "com.teamresourceful.resourcefullib:resourcefullib-fabric-${mc_version}:${resourcefullib_version}"
-    modImplementation "com.teamresourceful.resourcefulconfig:resourcefulconfig-fabric-${mc_minor_previous_version}:${resourcefulconfig_version}"
+    modImplementation "com.teamresourceful.resourcefulconfig:resourcefulconfig-fabric-${mc_version}:${resourcefulconfig_version}"
 
     // Ad Astra - Optional
     modImplementation "com.terraformersmc:modmenu:${modmenu_version}"
