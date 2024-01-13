@@ -1,9 +1,6 @@
 package ad_astra_giselle_addon.common.item;
 
 import java.util.List;
-import java.util.function.BiPredicate;
-
-import org.apache.commons.lang3.Range;
 
 import ad_astra_giselle_addon.common.config.ItemsConfig;
 import ad_astra_giselle_addon.common.content.oxygen.ChargeMode;
@@ -12,15 +9,15 @@ import ad_astra_giselle_addon.common.content.oxygen.IOxygenCharger;
 import ad_astra_giselle_addon.common.content.oxygen.IOxygenChargerItem;
 import ad_astra_giselle_addon.common.content.oxygen.OxygenChargerUtils;
 import ad_astra_giselle_addon.common.fluid.FluidPredicates;
-import ad_astra_giselle_addon.common.fluid.UniveralFluidHandler;
 import ad_astra_giselle_addon.common.util.NBTUtils;
 import ad_astra_giselle_addon.common.util.TranslationUtils;
-import earth.terrarium.ad_astra.common.item.FluidContainingItem;
-import earth.terrarium.ad_astra.common.item.armor.SpaceSuit;
-import earth.terrarium.ad_astra.common.registry.ModFluids;
-import earth.terrarium.ad_astra.common.registry.ModItems;
+import earth.terrarium.adastra.common.registry.ModFluids;
+import earth.terrarium.adastra.common.utils.TooltipUtils;
+import earth.terrarium.botarium.common.fluid.base.BotariumFluidItem;
+import earth.terrarium.botarium.common.fluid.base.FluidContainer;
 import earth.terrarium.botarium.common.fluid.base.FluidHolder;
-import earth.terrarium.botarium.common.fluid.utils.FluidHooks;
+import earth.terrarium.botarium.common.fluid.impl.SimpleFluidContainer;
+import earth.terrarium.botarium.common.fluid.impl.WrappedItemFluidContainer;
 import earth.terrarium.botarium.common.item.ItemStackHolder;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -35,7 +32,7 @@ import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 
-public class OxygenCanItem extends Item implements FluidContainingItem, IOxygenChargerItem, ICreativeTabOutputProvider
+public class OxygenCanItem extends Item implements BotariumFluidItem<WrappedItemFluidContainer>, IOxygenChargerItem, ICreativeTabOutputProvider
 {
 	public static final String KEY_OXYGEN_CHARGER = "oxygencharger";
 	public static final String KEY_CHARGE_MODE = "chargemode";
@@ -46,15 +43,19 @@ public class OxygenCanItem extends Item implements FluidContainingItem, IOxygenC
 	}
 
 	@Override
-	public long getTankSize()
+	public WrappedItemFluidContainer getFluidContainer(ItemStack holder)
+	{
+		return new WrappedItemFluidContainer(holder, new SimpleFluidContainer(this.getFluidCapacity(), 1, FluidPredicates::isOxygen));
+	}
+
+	protected long getFluidCapacity()
 	{
 		return ItemsConfig.OXYGEN_CAN_FLUID_CAPACITY;
 	}
 
-	@Override
-	public BiPredicate<Integer, FluidHolder> getFilter()
+	protected long getFluidTransfer()
 	{
-		return FluidPredicates::isOxygen;
+		return ItemsConfig.OXYGEN_CAN_FLUID_TRANSFER;
 	}
 
 	@Override
@@ -62,7 +63,7 @@ public class OxygenCanItem extends Item implements FluidContainingItem, IOxygenC
 	{
 		ItemStackHolder full = new ItemStackHolder(new ItemStack(this));
 		IOxygenCharger oxygenCharger = OxygenChargerUtils.get(full);
-		oxygenCharger.getFluidHandler().insertFluid(FluidHooks.newFluidHolder(ModFluids.OXYGEN.get(), oxygenCharger.getTotalCapacity(), null), false);
+		oxygenCharger.getFluidContainer().insertFluid(FluidHolder.of(ModFluids.OXYGEN.get(), oxygenCharger.getTotalCapacity(), null), false);
 		output.accept(full.getStack());
 	}
 
@@ -126,16 +127,15 @@ public class OxygenCanItem extends Item implements FluidContainingItem, IOxygenC
 
 		if (oxygenCharger != null)
 		{
-			tooltip.add(TranslationUtils.descriptionTemperatureRange(oxygenCharger.getTemperatureThreshold()));
+			tooltip.addAll(TranslationUtils.descriptionCanUse(oxygenCharger.canUseOnCold(), oxygenCharger.canUseOnHot()));
 			tooltip.add(TranslationUtils.descriptionChargeMode(oxygenCharger.getChargeMode()));
 
-			UniveralFluidHandler fluidHandler = oxygenCharger.getFluidHandler();
+			FluidContainer fluidContainer = oxygenCharger.getFluidContainer();
+			List<FluidHolder> fluids = fluidContainer.getFluids();
 
-			for (int i = 0; i < fluidHandler.getTankAmount(); i++)
+			for (int i = 0; i < fluids.size(); i++)
 			{
-				FluidHolder fluid = fluidHandler.getFluidInTank(i);
-				long capacity = fluidHandler.getTankCapacity(i);
-				tooltip.add(TranslationUtils.oxygenStorage(fluid.getFluidAmount(), capacity));
+				TooltipUtils.getFluidComponent(fluids.get(i), fluidContainer.getTankCapacity(i));
 			}
 
 		}
@@ -165,40 +165,63 @@ public class OxygenCanItem extends Item implements FluidContainingItem, IOxygenC
 	@Override
 	public IOxygenCharger getOxygenCharger(ItemStackHolder item)
 	{
-		return new IOxygenCharger()
+		return new AbstractOxygenCharger(item)
 		{
 			@Override
-			public void setChargeMode(IChargeMode mode)
+			public boolean canUseOnCold()
 			{
-				CompoundTag tag = NBTUtils.getOrCreateTag(item.getStack(), KEY_OXYGEN_CHARGER);
-				tag.put(KEY_CHARGE_MODE, IChargeMode.writeNBT(mode));
+				return true;
 			}
 
 			@Override
-			public IChargeMode getChargeMode()
+			public boolean canUseOnHot()
 			{
-				CompoundTag tag = NBTUtils.getTag(item.getStack(), KEY_OXYGEN_CHARGER);
-				return IChargeMode.readNBT(tag.get(KEY_CHARGE_MODE));
+				return false;
 			}
 
-			@Override
-			public long getTransferAmount()
-			{
-				return ItemsConfig.OXYGEN_CAN_FLUID_TRANSFER;
-			}
-
-			@Override
-			public UniveralFluidHandler getFluidHandler()
-			{
-				return UniveralFluidHandler.from(item);
-			}
-
-			@Override
-			public Range<Integer> getTemperatureThreshold()
-			{
-				return ((SpaceSuit) ModItems.SPACE_SUIT.get()).getTemperatureThreshold();
-			}
 		};
+
+	}
+
+	public abstract class AbstractOxygenCharger implements IOxygenCharger
+	{
+		private final ItemStackHolder item;
+
+		public AbstractOxygenCharger(ItemStackHolder item)
+		{
+			this.item = item;
+		}
+
+		@Override
+		public void setChargeMode(IChargeMode mode)
+		{
+			CompoundTag tag = NBTUtils.getOrCreateTag(this.getItem().getStack(), KEY_OXYGEN_CHARGER);
+			tag.put(KEY_CHARGE_MODE, IChargeMode.writeNBT(mode));
+		}
+
+		@Override
+		public IChargeMode getChargeMode()
+		{
+			CompoundTag tag = NBTUtils.getTag(this.getItem().getStack(), KEY_OXYGEN_CHARGER);
+			return IChargeMode.readNBT(tag.get(KEY_CHARGE_MODE));
+		}
+
+		@Override
+		public long getTransferAmount()
+		{
+			return getFluidTransfer();
+		}
+
+		@Override
+		public FluidContainer getFluidContainer()
+		{
+			return FluidContainer.of(this.getItem());
+		}
+
+		public final ItemStackHolder getItem()
+		{
+			return this.item;
+		}
 
 	}
 

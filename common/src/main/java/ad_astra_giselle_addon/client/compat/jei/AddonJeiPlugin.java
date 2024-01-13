@@ -11,9 +11,8 @@ import ad_astra_giselle_addon.common.config.MachinesConfig;
 import ad_astra_giselle_addon.common.menu.AutomationNasaWorkbenchMenu;
 import ad_astra_giselle_addon.common.registry.AddonBlocks;
 import ad_astra_giselle_addon.common.registry.AddonMenuTypes;
-import earth.terrarium.ad_astra.common.compat.jei.category.NasaWorkbenchCategory;
-import earth.terrarium.ad_astra.common.compat.jei.transfer.MachineTransferInfo;
-import earth.terrarium.ad_astra.common.registry.ModTags;
+import earth.terrarium.adastra.common.compat.jei.categories.NasaWorkbenchCategory;
+import earth.terrarium.adastra.common.tags.ModFluidTags;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.VanillaTypes;
@@ -78,14 +77,7 @@ public class AddonJeiPlugin implements IModPlugin
 			category.addTransferHandler(registry);
 		}
 
-		registry.addRecipeTransferHandler(new MachineTransferInfo<>(AutomationNasaWorkbenchMenu.class, AddonMenuTypes.AUTOMATION_NASA_WORKBENCH.get(), NasaWorkbenchCategory.RECIPE)
-		{
-			@Override
-			protected int getInputSlotCount(AutomationNasaWorkbenchMenu menu)
-			{
-				return 14;
-			}
-		});
+		registry.addRecipeTransferHandler(new AddonMachineTransferInfo<>(AutomationNasaWorkbenchMenu.class, AddonMenuTypes.AUTOMATION_NASA_WORKBENCH.get(), NasaWorkbenchCategory.RECIPE));
 	}
 
 	@Override
@@ -118,7 +110,7 @@ public class AddonJeiPlugin implements IModPlugin
 			category.registerRecipes(registry);
 		}
 
-		this.addIngredientInfo(registry, AddonBlocks.FUEL_LOADER.get(), MachinesConfig.FUEL_LOADER_WORKING_RANGE, ModTags.FUELS.location());
+		this.addIngredientInfo(registry, AddonBlocks.FUEL_LOADER.get(), MachinesConfig.FUEL_LOADER_WORKING_RANGE, ModFluidTags.FUEL.location());
 		this.addIngredientInfo(registry, AddonBlocks.GRAVITY_NORMALIZER.get(), MachinesConfig.GRAVITY_NORMALIZER_MAX_LENGTH);
 		this.addIngredientInfo(registry, AddonBlocks.ROCKET_SENSOR.get(), MachinesConfig.ROCKET_SENSOR_WORKING_RANGE);
 	}

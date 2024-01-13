@@ -5,25 +5,21 @@ import java.awt.Rectangle;
 import ad_astra_giselle_addon.common.AdAstraGiselleAddon;
 import ad_astra_giselle_addon.common.block.entity.AutomationNasaWorkbenchBlockEntity;
 import ad_astra_giselle_addon.common.menu.AutomationNasaWorkbenchMenu;
-import earth.terrarium.ad_astra.client.screen.GuiUtil;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
-public class AutomationNasaWorkbenchScreen extends AddonMachineScreen<AutomationNasaWorkbenchBlockEntity, AutomationNasaWorkbenchMenu>
+public class AutomationNasaWorkbenchScreen extends AddonMachineScreen<AutomationNasaWorkbenchMenu, AutomationNasaWorkbenchBlockEntity>
 {
-	public static final int ARROW_LEFT = 79;
-	public static final int ARROW_TOP = 56;
-	public static final int ENERGY_LEFT = 147;
-	public static final int ENERGY_TOP = 50;
+	public static final ResourceLocation TEXTURE = AdAstraGiselleAddon.rl("textures/gui/container/automation_nasa_workbench.png");
+	public static final int WIDTH = 177;
+	public static final int HEIGHT = 224;
 
-	public AutomationNasaWorkbenchScreen(AutomationNasaWorkbenchMenu handler, Inventory inventory, Component title)
+	public AutomationNasaWorkbenchScreen(AutomationNasaWorkbenchMenu menu, Inventory inventory, Component title)
 	{
-		super(handler, inventory, title, AdAstraGiselleAddon.rl("textures/gui/container/automation_nasa_workbench.png"));
-		this.imageWidth = 177;
-		this.imageHeight = 224;
-		this.inventoryLabelY = this.imageHeight - 93;
+		super(menu, inventory, title, TEXTURE, STEEL_SLOT, WIDTH, HEIGHT);
 	}
 
 	@Override
@@ -31,12 +27,10 @@ public class AutomationNasaWorkbenchScreen extends AddonMachineScreen<Automation
 	{
 		super.renderBg(guiGraphics, delta, mouseX, mouseY);
 
-		AutomationNasaWorkbenchMenu menu = this.getMenu();
-		int cookTime = menu.getCookTime().get();
-		int cookTimeTotal = menu.getCookTimeTotal().get();
-		long maxCapacity = menu.getMachine().getEnergyStorage().getMaxCapacity();
-		GuiUtil2.drawArrow(guiGraphics, this.getArrowBounds(), cookTime, cookTimeTotal);
-		GuiUtil2.drawEnergy(guiGraphics, this.getEnergyBounds(), menu.getEnergyAmount(), maxCapacity);
+		AutomationNasaWorkbenchBlockEntity blockEntity = this.entity;
+		int cookTime = blockEntity.cookTime();
+		int cookTimeTotal = blockEntity.cookTimeTotal();
+		GuiUtils2.drawArrow(guiGraphics, this.getArrowBounds(), cookTime, cookTimeTotal);
 	}
 
 	@Override
@@ -44,7 +38,7 @@ public class AutomationNasaWorkbenchScreen extends AddonMachineScreen<Automation
 	{
 		super.render(guiGraphics, mouseX, mouseY, delta);
 
-		if (GuiUtil.isHovering(this.getArrowBounds(), mouseX, mouseY))
+		if (GuiUtils2.isHovering(this.getArrowBounds(), mouseX, mouseY))
 		{
 			if (shouldShowRecipeTooltip())
 			{
@@ -52,32 +46,21 @@ public class AutomationNasaWorkbenchScreen extends AddonMachineScreen<Automation
 			}
 
 		}
-		else if (GuiUtil.isHovering(this.getEnergyBounds(), mouseX, mouseY))
-		{
-			AutomationNasaWorkbenchMenu menu = this.getMenu();
-			long maxCapacity = menu.getMachine().getEnergyStorage().getMaxCapacity();
-			GuiUtil.drawEnergyTooltip(guiGraphics, menu.getEnergyAmount(), maxCapacity, mouseX, mouseY);
-		}
 
 	}
 
 	public MutableComponent getCookTimeTooltip()
 	{
-		AutomationNasaWorkbenchMenu menu = this.getMenu();
-		int cookTime = menu.getCookTime().get();
-		int cookTimeTotal = menu.getCookTimeTotal().get();
+		AutomationNasaWorkbenchBlockEntity blockEntity = this.entity;
+		int cookTime = blockEntity.cookTime();
+		int cookTimeTotal = blockEntity.cookTimeTotal();
 		MutableComponent translatable = Component.translatable("gauge.ad_astra.cook_time", cookTime, cookTimeTotal);
 		return translatable;
 	}
 
 	public Rectangle getArrowBounds()
 	{
-		return new Rectangle(this.leftPos + ARROW_LEFT, this.topPos + ARROW_TOP, GuiUtil.ARROW_WIDTH, GuiUtil.ARROW_HEIGHT);
-	}
-
-	public Rectangle getEnergyBounds()
-	{
-		return GuiUtil.getEnergyBounds(this.leftPos + ENERGY_LEFT, this.topPos + ENERGY_TOP);
+		return new Rectangle(this.leftPos + 79, this.topPos + 56, GuiUtils2.ARROW_WIDTH, GuiUtils2.ARROW_HEIGHT);
 	}
 
 	@Override

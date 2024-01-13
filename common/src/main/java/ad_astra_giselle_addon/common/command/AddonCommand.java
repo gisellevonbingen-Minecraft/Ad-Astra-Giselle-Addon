@@ -10,13 +10,14 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 
 import ad_astra_giselle_addon.common.AdAstraGiselleAddon;
 import ad_astra_giselle_addon.common.compat.CompatibleMod;
-import ad_astra_giselle_addon.common.fluid.UniveralFluidHandler;
 import ad_astra_giselle_addon.common.registry.AddonEnchantments;
 import ad_astra_giselle_addon.common.registry.ObjectRegistry;
-import earth.terrarium.ad_astra.common.registry.ModFluids;
-import earth.terrarium.ad_astra.common.registry.ModItems;
-import earth.terrarium.botarium.common.energy.util.EnergyHooks;
-import earth.terrarium.botarium.common.fluid.utils.FluidHooks;
+import earth.terrarium.adastra.common.registry.ModFluids;
+import earth.terrarium.adastra.common.registry.ModItems;
+import earth.terrarium.botarium.common.energy.base.EnergyContainer;
+import earth.terrarium.botarium.common.fluid.base.FluidContainer;
+import earth.terrarium.botarium.common.fluid.base.FluidHolder;
+import earth.terrarium.botarium.common.fluid.base.ItemFluidContainer;
 import earth.terrarium.botarium.common.item.ItemStackHolder;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
@@ -163,23 +164,26 @@ public class AddonCommand
 		private static ItemStack makeFull(Item item)
 		{
 			ItemStackHolder holder = new ItemStackHolder(new ItemStack(item));
-			EnergyHooks.safeGetItemEnergyManager(holder.getStack()).ifPresent(energyHandler ->
+			EnergyContainer energyContainer = EnergyContainer.of(holder);
+			ItemFluidContainer fluidContainer = FluidContainer.of(holder);
+
+			if (energyContainer != null)
 			{
 				for (int i = 0; i < 100000; i++)
 				{
-					if (energyHandler.insert(holder, energyHandler.getCapacity(), false) == 0)
+					if (energyContainer.insertEnergy(energyContainer.getMaxCapacity(), false) == 0)
 					{
 						break;
 					}
 
 				}
 
-			});
+			}
 
-			UniveralFluidHandler.fromSafe(holder).ifPresent(fluidHandler ->
+			if (fluidContainer != null)
 			{
-				fluidHandler.insertFluid(FluidHooks.newFluidHolder(ModFluids.OXYGEN.get(), Integer.MAX_VALUE, null), false);
-			});
+				fluidContainer.insertFluid(FluidHolder.of(ModFluids.OXYGEN.get(), Integer.MAX_VALUE, null), false);
+			}
 
 			return holder.getStack();
 		}

@@ -1,6 +1,6 @@
 package ad_astra_giselle_addon.common.enchantment;
 
-import earth.terrarium.ad_astra.common.item.armor.SpaceSuit;
+import earth.terrarium.adastra.common.items.armor.SpaceSuitItem;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
@@ -15,7 +15,7 @@ public class EnchantmentSpaceBreathing extends AddonEnchantment
 	@Override
 	public boolean canEnchant(ItemStack stack)
 	{
-		if (stack.getItem() instanceof SpaceSuit)
+		if (stack.getItem() instanceof SpaceSuitItem)
 		{
 			return false;
 		}

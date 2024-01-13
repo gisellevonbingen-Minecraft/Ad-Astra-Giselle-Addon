@@ -1,15 +1,16 @@
 package ad_astra_giselle_addon.common.content.proof;
 
 import ad_astra_giselle_addon.common.config.EnchantmentsConfig;
-import ad_astra_giselle_addon.common.enchantment.AddonEnchantment;
 import ad_astra_giselle_addon.common.item.ItemUsableResource;
-import net.minecraft.world.entity.LivingEntity;
+import ad_astra_giselle_addon.common.registry.AddonEnchantments;
+import net.minecraft.world.item.enchantment.Enchantment;
 
-public class GravityNormalizingEnchantmentSession extends ProofEnchantmentSession
+public class SpaceFireProofEnchantmentFunction extends ProofEnchantmentFunction
 {
-	public GravityNormalizingEnchantmentSession(LivingEntity living, AddonEnchantment enchantment)
+	@Override
+	public Enchantment getEnchantment()
 	{
-		super(living, enchantment);
+		return AddonEnchantments.SPACE_FIRE_PROOF.get();
 	}
 
 	@Override
@@ -17,11 +18,11 @@ public class GravityNormalizingEnchantmentSession extends ProofEnchantmentSessio
 	{
 		if (resource == ItemUsableResource.Energy)
 		{
-			return EnchantmentsConfig.GRAVITY_NORMALIZING_ENERGY_USING;
+			return EnchantmentsConfig.SPACE_FIRE_PROOF_ENERGY_USING;
 		}
 		else if (resource == ItemUsableResource.Durability)
 		{
-			return EnchantmentsConfig.GRAVITY_NORMALIZING_DURABILITY_USING;
+			return EnchantmentsConfig.SPACE_FIRE_PROOF_DURABILITY_USING;
 		}
 		else
 		{
@@ -39,7 +40,7 @@ public class GravityNormalizingEnchantmentSession extends ProofEnchantmentSessio
 		}
 		else if (resource == ItemUsableResource.Durability)
 		{
-			return EnchantmentsConfig.GRAVITY_NORMALIZING_DURABILITY_DURATION;
+			return EnchantmentsConfig.SPACE_FIRE_PROOF_DURABILITY_DURATION;
 		}
 		else
 		{

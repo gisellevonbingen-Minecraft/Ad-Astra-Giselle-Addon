@@ -9,8 +9,8 @@ import ad_astra_giselle_addon.client.screen.AutomationNasaWorkbenchScreen;
 import ad_astra_giselle_addon.common.compat.rei.AddonReiCommonPlugin;
 import ad_astra_giselle_addon.common.config.MachinesConfig;
 import ad_astra_giselle_addon.common.registry.AddonBlocks;
-import earth.terrarium.ad_astra.common.compat.rei.REICategories;
-import earth.terrarium.ad_astra.common.registry.ModTags;
+import earth.terrarium.adastra.common.compat.rei.categories.NasaWorkbenchCategory;
+import earth.terrarium.adastra.common.tags.ModFluidTags;
 import me.shedaniel.rei.api.client.plugins.REIClientPlugin;
 import me.shedaniel.rei.api.client.registry.category.CategoryRegistry;
 import me.shedaniel.rei.api.client.registry.display.DisplayRegistry;
@@ -41,7 +41,7 @@ public class AddonReiClientPlugin implements REIClientPlugin
 			registry.addWorkstations(category.getCategoryIdentifier(), category.getWorkStationItemStacks().stream().map(EntryStacks::of).toList().toArray(new EntryStack[0]));
 		}
 
-		registry.addWorkstations(REICategories.NASA_WORKBENCH_CATEGORY, EntryStacks.of(AddonBlocks.AUTOMATION_NASA_WORKBENCH));
+		registry.addWorkstations(NasaWorkbenchCategory.ID, EntryStacks.of(AddonBlocks.AUTOMATION_NASA_WORKBENCH));
 	}
 
 	@Override
@@ -73,7 +73,7 @@ public class AddonReiClientPlugin implements REIClientPlugin
 			category.registerRecipes(registry);
 		}
 
-		registry.add(this.createDisplayInfo(AddonBlocks.FUEL_LOADER.get(), MachinesConfig.FUEL_LOADER_WORKING_RANGE, ModTags.FUELS.location()));
+		registry.add(this.createDisplayInfo(AddonBlocks.FUEL_LOADER.get(), MachinesConfig.FUEL_LOADER_WORKING_RANGE, ModFluidTags.FUEL.location()));
 		registry.add(this.createDisplayInfo(AddonBlocks.GRAVITY_NORMALIZER.get(), MachinesConfig.GRAVITY_NORMALIZER_MAX_LENGTH));
 		registry.add(this.createDisplayInfo(AddonBlocks.ROCKET_SENSOR.get(), MachinesConfig.ROCKET_SENSOR_WORKING_RANGE));
 	}

@@ -2,27 +2,55 @@ package ad_astra_giselle_addon.common.menu;
 
 import ad_astra_giselle_addon.common.block.entity.RocketSensorBlockEntity;
 import ad_astra_giselle_addon.common.registry.AddonMenuTypes;
-import earth.terrarium.ad_astra.common.screen.menu.AbstractMachineMenu;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.inventory.Slot;
 
-public class RocketSensorMenu extends AbstractMachineMenu<RocketSensorBlockEntity>
+public class RocketSensorMenu extends AddonMachineMenu<RocketSensorBlockEntity>
 {
 	public RocketSensorMenu(int windowId, Inventory inv, RocketSensorBlockEntity blockEntity)
 	{
-		super(AddonMenuTypes.ROCKET_SENSOR.get(), windowId, inv, blockEntity, new Slot[0]);
+		super(AddonMenuTypes.ROCKET_SENSOR.get(), windowId, inv, blockEntity);
 	}
 
 	@Override
-	protected void setPlayerInventory(Inventory inventory)
+	protected void addMenuSlots()
 	{
 
 	}
 
 	@Override
-	public void syncClientScreen()
+	protected void addConfigSlots()
 	{
 
+	}
+
+	@Override
+	public int startIndex()
+	{
+		return 0;
+	}
+
+	@Override
+	public int getContainerInputEnd()
+	{
+		return 0;
+	}
+
+	@Override
+	public int getInventoryStart()
+	{
+		return 1;
+	}
+
+	@Override
+	public int getPlayerInvXOffset()
+	{
+		return super.getPlayerInvXOffset();
+	}
+
+	@Override
+	public int getPlayerInvYOffset()
+	{
+		return 130;
 	}
 
 }

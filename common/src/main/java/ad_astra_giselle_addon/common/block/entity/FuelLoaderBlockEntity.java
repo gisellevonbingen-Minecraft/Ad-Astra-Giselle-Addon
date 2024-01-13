@@ -1,28 +1,36 @@
 package ad_astra_giselle_addon.common.block.entity;
 
 import java.util.List;
+import java.util.function.Predicate;
 
+import org.apache.commons.lang3.ArrayUtils;
 import org.jetbrains.annotations.Nullable;
 
 import ad_astra_giselle_addon.common.config.MachinesConfig;
-import ad_astra_giselle_addon.common.fluid.FluidHooks2;
+import ad_astra_giselle_addon.common.entity.VehicleHelper;
 import ad_astra_giselle_addon.common.fluid.FluidPredicates;
-import ad_astra_giselle_addon.common.fluid.UniveralFluidHandler;
-import ad_astra_giselle_addon.common.item.ItemStackConsumers;
-import ad_astra_giselle_addon.common.item.ItemStackReference;
+import ad_astra_giselle_addon.common.fluid.FluidUtils2;
 import ad_astra_giselle_addon.common.item.ItemStackUtils;
 import ad_astra_giselle_addon.common.menu.FuelLoaderMenu;
-import ad_astra_giselle_addon.common.registry.AddonBlockEntityTypes;
-import earth.terrarium.ad_astra.common.entity.vehicle.Vehicle;
+import ad_astra_giselle_addon.common.world.ContainerHelper;
+import earth.terrarium.adastra.common.blockentities.base.ContainerMachineBlockEntity;
+import earth.terrarium.adastra.common.blockentities.base.sideconfig.Configuration;
+import earth.terrarium.adastra.common.blockentities.base.sideconfig.ConfigurationEntry;
+import earth.terrarium.adastra.common.blockentities.base.sideconfig.ConfigurationType;
+import earth.terrarium.adastra.common.constants.ConstantComponents;
+import earth.terrarium.adastra.common.entities.vehicles.Vehicle;
+import earth.terrarium.adastra.common.utils.TransferUtils;
 import earth.terrarium.botarium.common.fluid.base.BotariumFluidBlock;
+import earth.terrarium.botarium.common.fluid.base.FluidContainer;
 import earth.terrarium.botarium.common.fluid.base.FluidHolder;
+import earth.terrarium.botarium.common.fluid.base.ItemFluidContainer;
 import earth.terrarium.botarium.common.fluid.impl.SimpleFluidContainer;
 import earth.terrarium.botarium.common.fluid.impl.WrappedBlockFluidContainer;
-import earth.terrarium.botarium.common.fluid.utils.FluidHooks;
 import earth.terrarium.botarium.common.item.ItemStackHolder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -31,103 +39,41 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 
-public class FuelLoaderBlockEntity extends AddonMachineBlockEntity implements BotariumFluidBlock<WrappedBlockFluidContainer>, IRangedWorkingAreaBlockEntity
+public class FuelLoaderBlockEntity extends ContainerMachineBlockEntity implements BotariumFluidBlock<WrappedBlockFluidContainer>, IRangedWorkingAreaBlockEntity
 {
+	public static final List<ConfigurationEntry> SIDE_CONFIG = List.of(//
+			new ConfigurationEntry(ConfigurationType.SLOT, Configuration.NONE, ConstantComponents.SIDE_CONFIG_INPUT_SLOTS), //
+			new ConfigurationEntry(ConfigurationType.SLOT, Configuration.NONE, ConstantComponents.SIDE_CONFIG_OUTPUT_SLOTS), //
+
+			new ConfigurationEntry(ConfigurationType.FLUID, Configuration.NONE, ConstantComponents.SIDE_CONFIG_OUTPUT_FLUID));
+
 	public static final String DATA_WORKINGAREA_VISIBLE_KEY = "workingAreaVisible";
 
-	public static final int SLOTS_FLUID = 2;
-	public static final int SLOT_FLUID_SOURCE = 0;
-	public static final int SLOT_FLUID_SINK = 1;
+	public static final int[] FLUID_SOURCE_SLOTS = {0};
+	public static final int[] FLUID_SINK_SLOTS = {1};
+	public static final int[] FLUID_SLOTS = ArrayUtils.addAll(FLUID_SOURCE_SLOTS, FLUID_SINK_SLOTS);
+	public static final int CONTAINER_SIZE = FLUID_SLOTS.length;
 
 	private boolean workingAreaVisible;
 	private WrappedBlockFluidContainer fluidTank;
 
 	public FuelLoaderBlockEntity(BlockPos pos, BlockState state)
 	{
-		super(AddonBlockEntityTypes.FUEL_LOADER.get(), pos, state);
+		super(pos, state, CONTAINER_SIZE);
 	}
 
 	@Override
-	public void load(CompoundTag nbt)
+	public void load(CompoundTag tag)
 	{
-		super.load(nbt);
-		this.workingAreaVisible = nbt.getBoolean(DATA_WORKINGAREA_VISIBLE_KEY);
+		super.load(tag);
+		this.workingAreaVisible = tag.getBoolean(DATA_WORKINGAREA_VISIBLE_KEY);
 	}
 
 	@Override
-	public void saveAdditional(CompoundTag nbt)
+	public void saveAdditional(CompoundTag tag)
 	{
-		super.saveAdditional(nbt);
-		nbt.putBoolean(DATA_WORKINGAREA_VISIBLE_KEY, this.workingAreaVisible);
-	}
-
-	@Override
-	public int getMaxStackSize()
-	{
-		return 1;
-	}
-
-	@Override
-	public WrappedBlockFluidContainer getFluidContainer()
-	{
-		if (this.fluidTank == null)
-		{
-			return this.fluidTank = new WrappedBlockFluidContainer(this, new SimpleFluidContainer(tank -> MachinesConfig.FUEL_LOADER_FLUID_CAPACITY, 1, FluidPredicates::isFuel));
-		}
-		else
-		{
-			return this.fluidTank;
-		}
-
-	}
-
-	@Override
-	public int getInventorySize()
-	{
-		return super.getInventorySize() + this.getSlotsFluid();
-	}
-
-	@Override
-	public boolean canPlaceItemThroughFace(int slot, ItemStack stack, @Nullable Direction dir)
-	{
-		stack = ItemStackUtils.deriveCount(stack, 1);
-
-		if (slot == this.getSlotFluidSource())
-		{
-			if (FluidHooks.isFluidContainingItem(stack))
-			{
-				UniveralFluidHandler itemFluidHandler = UniveralFluidHandler.from(new ItemStackHolder(stack));
-				return itemFluidHandler.getFluidTanks().stream().anyMatch(FluidPredicates::isFuel);
-			}
-
-			return false;
-		}
-		else if (slot == this.getSlotFluidSink())
-		{
-			return dir == null;
-		}
-
-		return super.canPlaceItemThroughFace(slot, stack, dir);
-	}
-
-	@Override
-	public boolean canTakeItemThroughFace(int slot, ItemStack stack, @Nullable Direction dir)
-	{
-		if (slot == this.getSlotFluidSource())
-		{
-			if (FluidHooks.isFluidContainingItem(stack))
-			{
-				UniveralFluidHandler itemFluidHandler = UniveralFluidHandler.from(new ItemStackHolder(stack));
-				return !itemFluidHandler.getFluidTanks().stream().anyMatch(FluidPredicates::isFuel);
-			}
-
-		}
-		else if (slot == this.getSlotFluidSink())
-		{
-			return dir == null;
-		}
-
-		return super.canTakeItemThroughFace(slot, stack, dir);
+		super.saveAdditional(tag);
+		tag.putBoolean(DATA_WORKINGAREA_VISIBLE_KEY, this.workingAreaVisible);
 	}
 
 	@Override
@@ -138,34 +84,116 @@ public class FuelLoaderBlockEntity extends AddonMachineBlockEntity implements Bo
 	}
 
 	@Override
-	public void tick()
+	public WrappedBlockFluidContainer getFluidContainer()
 	{
-		Level level = this.getLevel();
-
-		if (!level.isClientSide())
+		if (this.fluidTank == null)
 		{
-			this.processTank();
-			this.exchangeFuelItemAround();
+			this.fluidTank = new WrappedBlockFluidContainer(this, new SimpleFluidContainer(tank -> MachinesConfig.FUEL_LOADER_FLUID_CAPACITY, 1, FluidPredicates::isFuel));
 		}
 
+		return this.fluidTank;
+	}
+
+	@Override
+	public void tickSideInteractions(BlockPos pos, Predicate<Direction> filter, List<ConfigurationEntry> sideConfig)
+	{
+		super.tickSideInteractions(pos, filter, sideConfig);
+
+		TransferUtils.pushItemsNearby(this, pos, FLUID_SOURCE_SLOTS, sideConfig.get(0), filter);
+		TransferUtils.pullItemsNearby(this, pos, FLUID_SOURCE_SLOTS, sideConfig.get(0), filter);
+		TransferUtils.pushItemsNearby(this, pos, FLUID_SINK_SLOTS, sideConfig.get(1), filter);
+		TransferUtils.pullItemsNearby(this, pos, FLUID_SINK_SLOTS, sideConfig.get(1), filter);
+
+		TransferUtils.pushFluidNearby(this, pos, this.getFluidContainer(), MachinesConfig.FUEL_LOADER_FLUID_CAPACITY, 0, sideConfig.get(2), filter);
+		TransferUtils.pullFluidNearby(this, pos, this.getFluidContainer(), MachinesConfig.FUEL_LOADER_FLUID_CAPACITY, 0, sideConfig.get(2), filter);
+	}
+
+	@Override
+	public int getMaxStackSize()
+	{
+		return 1;
+	}
+
+	@Override
+	public boolean canPlaceItemThroughFace(int slot, ItemStack stack, @Nullable Direction dir)
+	{
+		stack = ItemStackUtils.deriveCount(stack, 1);
+
+		if (ArrayUtils.contains(FLUID_SOURCE_SLOTS, slot))
+		{
+			ItemFluidContainer fluidContainer = FluidContainer.of(new ItemStackHolder(stack));
+
+			if (fluidContainer != null)
+			{
+				return fluidContainer.getFluids().stream().anyMatch(FluidPredicates::isFuel);
+			}
+
+			return false;
+		}
+		else if (ArrayUtils.contains(FLUID_SINK_SLOTS, slot))
+		{
+			return dir == null;
+		}
+
+		return super.canPlaceItemThroughFace(slot, stack, dir);
+	}
+
+	@Override
+	public boolean canTakeItemThroughFace(int slot, ItemStack stack, @Nullable Direction dir)
+	{
+		if (ArrayUtils.contains(FLUID_SOURCE_SLOTS, slot))
+		{
+			ItemFluidContainer fluidContainer = FluidContainer.of(new ItemStackHolder(stack));
+
+			if (fluidContainer != null)
+			{
+				return !fluidContainer.getFluids().stream().anyMatch(FluidPredicates::isFuel);
+			}
+
+		}
+		else if (ArrayUtils.contains(FLUID_SINK_SLOTS, slot))
+		{
+			return dir == null;
+		}
+
+		return super.canTakeItemThroughFace(slot, stack, dir);
+	}
+
+	@Override
+	public void serverTick(ServerLevel level, long time, BlockState state, BlockPos pos)
+	{
+		super.serverTick(level, time, state, pos);
+
+		this.processTank();
+		this.exchangeFuelItemAround();
 	}
 
 	public void processTank()
 	{
-		UniveralFluidHandler tank = UniveralFluidHandler.from(this.getFluidContainer());
-		UniveralFluidHandler.fromSafe(this.getItemRef(this.getSlotFluidSource())).ifPresent(source ->
-		{
-			FluidHooks2.moveFluidAny(source, tank, FluidPredicates::isFuel, false);
-		});
-		UniveralFluidHandler.fromSafe(this.getItemRef(this.getSlotFluidSink())).ifPresent(sink ->
-		{
-			FluidHooks2.moveFluidAny(tank, sink, null, false);
-		});
-	}
+		WrappedBlockFluidContainer tank = this.getFluidContainer();
 
-	public ItemStackReference getItemRef(int slot)
-	{
-		return new ItemStackReference(this.getItem(slot), ItemStackConsumers.index(slot, this::setItem));
+		for (int slot : FLUID_SOURCE_SLOTS)
+		{
+			ItemFluidContainer source = FluidContainer.of(ContainerHelper.getItem(this, slot));
+
+			if (source != null)
+			{
+				FluidUtils2.moveFluidAny(source, tank, FluidPredicates::isFuel, false);
+			}
+
+		}
+
+		for (int slot : FLUID_SINK_SLOTS)
+		{
+			ItemFluidContainer sink = FluidContainer.of(ContainerHelper.getItem(this, slot));
+
+			if (sink != null)
+			{
+				FluidUtils2.moveFluidAny(tank, sink, null, false);
+			}
+
+		}
+
 	}
 
 	public void exchangeFuelItemAround()
@@ -193,7 +221,7 @@ public class FuelLoaderBlockEntity extends AddonMachineBlockEntity implements Bo
 		if (this.isWorkingAreaVisible() != visible)
 		{
 			this.workingAreaVisible = visible;
-			this.setChanged();
+			this.sync();
 		}
 
 	}
@@ -217,34 +245,30 @@ public class FuelLoaderBlockEntity extends AddonMachineBlockEntity implements Bo
 
 	private FluidHolder giveFuel(Vehicle vehicle, long transfer)
 	{
-		UniveralFluidHandler from = UniveralFluidHandler.from(this.getFluidContainer());
-		UniveralFluidHandler to = UniveralFluidHandler.from(vehicle.getTank());
-		return FluidHooks2.moveFluidAny(from, to, FluidPredicates::isFuel, transfer, false);
+		FluidContainer to = VehicleHelper.getFluidContainer(vehicle);
+
+		if (to != null)
+		{
+			FluidContainer from = this.getFluidContainer();
+			return FluidUtils2.moveFluidAny(from, to, FluidPredicates::isFuel, transfer, false);
+		}
+		else
+		{
+			return FluidHolder.empty();
+		}
+
 	}
 
-	public int getSlotFluidStart()
+	@Override
+	public List<ConfigurationEntry> getDefaultConfig()
 	{
-		return 0;
+		return SIDE_CONFIG;
 	}
 
-	public int getSlotFluidEnd()
+	@Override
+	public int[] getSlotsForFace(Direction pSide)
 	{
-		return this.getSlotFluidStart() + this.getSlotsFluid();
-	}
-
-	public int getSlotsFluid()
-	{
-		return SLOTS_FLUID;
-	}
-
-	public int getSlotFluidSource()
-	{
-		return this.getSlotFluidStart() + SLOT_FLUID_SOURCE;
-	}
-
-	public int getSlotFluidSink()
-	{
-		return this.getSlotFluidStart() + SLOT_FLUID_SINK;
+		return FLUID_SLOTS;
 	}
 
 }

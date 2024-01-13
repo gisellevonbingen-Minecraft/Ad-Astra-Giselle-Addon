@@ -10,7 +10,7 @@
 	],
 	"key": {
 		"S": {
-			"tag": "ad_astra_platform:steel_plates"
+			"tag": "ad_astra:steel_plates"
 		},
 		"H": {
 			"item": "minecraft:hopper"

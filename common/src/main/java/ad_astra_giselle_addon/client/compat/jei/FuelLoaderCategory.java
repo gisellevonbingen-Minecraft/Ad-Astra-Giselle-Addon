@@ -7,7 +7,7 @@ import ad_astra_giselle_addon.client.screen.FuelLoaderScreen;
 import ad_astra_giselle_addon.common.config.MachinesConfig;
 import ad_astra_giselle_addon.common.registry.AddonBlocks;
 import ad_astra_giselle_addon.common.registry.ObjectRegistry;
-import earth.terrarium.ad_astra.client.screen.GuiUtil;
+import earth.terrarium.adastra.client.utils.GuiUtils;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.helpers.IGuiHelper;
@@ -35,7 +35,7 @@ public class FuelLoaderCategory extends AddonRecipeCategory<Fluid>
 	{
 		super.createGui(guiHelper);
 		this.background = guiHelper.createDrawable(RecipeHelper.FuelLoader.BACKGROUND_LOCATION, 0, 0, RecipeHelper.FuelLoader.BACKGROUND_WIDTH, RecipeHelper.FuelLoader.BACKGROUND_HEIGHT);
-		this.fluidOverlay = guiHelper.drawableBuilder(GuiUtil.FLUID_TANK_TEXTURE, 0, 0, RecipeHelper.FuelLoader.TANK_WIDTH, RecipeHelper.FuelLoader.TANK_HEIGHT).setTextureSize(GuiUtil.FLUID_TANK_WIDTH, GuiUtil.FLUID_TANK_HEIGHT).build();
+		this.fluidOverlay = guiHelper.drawableBuilder(GuiUtils.FLUID_BAR, 0, 0, RecipeHelper.FuelLoader.TANK_WIDTH, RecipeHelper.FuelLoader.TANK_HEIGHT).setTextureSize(GuiUtils.FLUID_BAR_WIDTH, GuiUtils.FLUID_BAR_HEIGHT).build();
 	}
 
 	@Override

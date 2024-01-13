@@ -35,7 +35,6 @@
   "gui.ad_astra_giselle_addon.gravity_normalizer.move_to_pos": "Przenieś do dolnego środka",
   "gui.ad_astra_giselle_addon.gravity_normalizer.energy_using": "%1$s ⚡ / %2$szt.",
   
-  "description.ad_astra_giselle_addon.temperature_range": "Zakres Temperatury",
   "description.ad_astra_giselle_addon.charge_mode": "Tryb Ładowania",
   
   "chargemode.ad_astra_giselle_addon.none": "Wyłączone",

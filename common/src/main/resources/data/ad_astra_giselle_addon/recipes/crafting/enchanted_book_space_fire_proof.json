@@ -21,7 +21,7 @@
 			"item": "minecraft:book"
 		},
 		"#": {
-			"tag": "ad_astra_platform:ostrum_plates"
+			"tag": "ad_astra:ostrum_plates"
 		},
 		"R": {
 			"item": "ad_astra:mercury_stone"

@@ -9,14 +9,13 @@ import ad_astra_giselle_addon.common.content.oxygen.IOxygenCharger;
 import ad_astra_giselle_addon.common.content.oxygen.OxygenChargerUtils;
 import ad_astra_giselle_addon.common.content.proof.ProofAbstractUtils;
 import ad_astra_giselle_addon.common.entity.LivingHelper;
-import ad_astra_giselle_addon.common.fluid.FluidHooks2;
 import ad_astra_giselle_addon.common.fluid.FluidPredicates;
-import ad_astra_giselle_addon.common.fluid.UniveralFluidHandler;
+import ad_astra_giselle_addon.common.fluid.FluidUtils2;
 import ad_astra_giselle_addon.common.item.ItemStackReference;
 import ad_astra_giselle_addon.common.item.OxygenCanItem;
-import earth.terrarium.ad_astra.common.registry.ModFluids;
+import earth.terrarium.adastra.common.registry.ModFluids;
+import earth.terrarium.botarium.common.fluid.base.FluidContainer;
 import earth.terrarium.botarium.common.fluid.base.FluidHolder;
-import earth.terrarium.botarium.common.fluid.utils.FluidHooks;
 import mekanism.api.Action;
 import mekanism.api.chemical.gas.GasStack;
 import mekanism.api.chemical.gas.IGasHandler;
@@ -44,7 +43,6 @@ public class ModuleSpaceBreathingUnit implements ICustomModule<ModuleSpaceBreath
 {
 	public static final ResourceLocation ICON = AdAstraGiselleAddon.rl(MekanismUtils.ResourceType.GUI_HUD.getPrefix() + "space_breathing_unit.png");
 
-	private int oxygenDuration = 0;
 	private FloatingLong energyUsingProvide;
 	private FloatingLong energyUsingProduce;
 
@@ -58,7 +56,6 @@ public class ModuleSpaceBreathingUnit implements ICustomModule<ModuleSpaceBreath
 	{
 		ICustomModule.super.init(module, configItemCreator);
 
-		this.oxygenDuration = ProofAbstractUtils.OXYGEN_PROOF_INTERVAL;
 		this.energyUsingProvide = FloatingLong.create(AddonMekanismConfig.MODULES_SPACE_BREATHING_ENERGY_USING_PROVIDE);
 		this.energyUsingProduce = FloatingLong.create(AddonMekanismConfig.MODULES_SPACE_BREATHING_ENERGY_USING_PRODUCE);
 	}
@@ -118,8 +115,8 @@ public class ModuleSpaceBreathingUnit implements ICustomModule<ModuleSpaceBreath
 			}
 			else if (item.getStack().getItem() instanceof OxygenCanItem)
 			{
-				UniveralFluidHandler tank = UniveralFluidHandler.from(item);
-				FluidHolder containedStack = tank.getFluidInTank(0);
+				FluidContainer tank = FluidContainer.of(item);
+				FluidHolder containedStack = tank.getFirstFluid();
 				Fluid insertingFluid = ModFluids.OXYGEN.get();
 
 				if (!containedStack.isEmpty())
@@ -127,7 +124,7 @@ public class ModuleSpaceBreathingUnit implements ICustomModule<ModuleSpaceBreath
 					insertingFluid = containedStack.getFluid();
 				}
 
-				FluidHolder inserting = FluidHooks.newFluidHolder(insertingFluid, productionRate, null);
+				FluidHolder inserting = FluidHolder.of(insertingFluid, productionRate, null);
 				long inserted = tank.insertFluid(inserting, false);
 				productionRate -= inserted;
 			}
@@ -160,14 +157,19 @@ public class ModuleSpaceBreathingUnit implements ICustomModule<ModuleSpaceBreath
 
 	public boolean useResources(IModule<ModuleSpaceBreathingUnit> module, LivingEntity living, boolean simulate)
 	{
+		if (LivingHelper.isPlayingMode(living))
+		{
+			return true;
+		}
+
 		long oxygenUsing = ProofAbstractUtils.OXYGEN_PROOF_USING;
 		IOxygenCharger oxygenCharger = OxygenChargerUtils.firstExtractable(living, oxygenUsing);
 
 		if (oxygenCharger != null)
 		{
-			UniveralFluidHandler fluidHandler = oxygenCharger.getFluidHandler();
+			FluidContainer fluidContainer = oxygenCharger.getFluidContainer();
 
-			if (FluidHooks2.extractFluid(fluidHandler, FluidPredicates::isOxygen, oxygenUsing, true).getFluidAmount() >= oxygenUsing)
+			if (FluidUtils2.extractFluid(fluidContainer, FluidPredicates::isOxygen, oxygenUsing, true).getFluidAmount() >= oxygenUsing)
 			{
 				FloatingLong energyUsing = this.getEnergyUsingProvide();
 
@@ -175,7 +177,7 @@ public class ModuleSpaceBreathingUnit implements ICustomModule<ModuleSpaceBreath
 				{
 					if (!simulate && !living.level().isClientSide())
 					{
-						FluidHooks2.extractFluid(fluidHandler, FluidPredicates::isOxygen, oxygenUsing, false);
+						FluidUtils2.extractFluid(fluidContainer, FluidPredicates::isOxygen, oxygenUsing, false);
 						module.useEnergy(living, energyUsing);
 					}
 
@@ -206,11 +208,6 @@ public class ModuleSpaceBreathingUnit implements ICustomModule<ModuleSpaceBreath
 	public long getMaxProduceRate(IModule<ModuleSpaceBreathingUnit> module)
 	{
 		return (long) Math.pow(2L, module.getInstalledCount() - 1);
-	}
-
-	public int getOxygenDuration()
-	{
-		return this.oxygenDuration;
 	}
 
 	public FloatingLong getEnergyUsingProvide()

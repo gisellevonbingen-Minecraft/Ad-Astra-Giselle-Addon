@@ -1,26 +1,31 @@
 package ad_astra_giselle_addon.client.screen;
 
+import java.awt.Rectangle;
 import java.text.NumberFormat;
 
 import org.jetbrains.annotations.Nullable;
 
+import ad_astra_giselle_addon.client.mixin.ad_astra.ConfigurationWidgetAccessor;
 import ad_astra_giselle_addon.common.AdAstraGiselleAddon;
 import ad_astra_giselle_addon.common.block.entity.IWorkingAreaBlockEntity;
 import ad_astra_giselle_addon.common.compat.CompatibleManager;
 import ad_astra_giselle_addon.common.network.AddonNetwork;
 import ad_astra_giselle_addon.common.network.WorkingAreaVisibleMessage;
-import earth.terrarium.ad_astra.client.screen.AbstractMachineScreen;
-import earth.terrarium.ad_astra.common.block.machine.entity.AbstractMachineBlockEntity;
-import earth.terrarium.ad_astra.common.screen.menu.AbstractMachineMenu;
+import earth.terrarium.adastra.client.components.machines.FluidBarWidget;
+import earth.terrarium.adastra.client.screens.base.MachineScreen;
+import earth.terrarium.adastra.common.blockentities.base.ContainerMachineBlockEntity;
+import earth.terrarium.adastra.common.menus.base.MachineMenu;
+import earth.terrarium.adastra.common.menus.configuration.FluidConfiguration;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.phys.AABB;
 
-public abstract class AddonMachineScreen<BLOCK_ENTITY extends AbstractMachineBlockEntity, MENU extends AbstractMachineMenu<BLOCK_ENTITY>> extends AbstractMachineScreen<BLOCK_ENTITY, MENU>
+public abstract class AddonMachineScreen<MENU extends MachineMenu<BLOCK_ENTITY>, BLOCK_ENTITY extends ContainerMachineBlockEntity> extends MachineScreen<MENU, BLOCK_ENTITY>
 {
 	public static final String WORKINGAREA_TEXT_PREFIX = ctl("workingarea.");
 	public static final String WORKINGAREA_TEXT_KEY = WORKINGAREA_TEXT_PREFIX + "text";
@@ -40,9 +45,9 @@ public abstract class AddonMachineScreen<BLOCK_ENTITY extends AbstractMachineBlo
 	private boolean cachedWorkingAreaVisible;
 	private Button workingAreaVisibleButton;
 
-	public AddonMachineScreen(MENU handler, Inventory inventory, Component title, ResourceLocation texture)
+	public AddonMachineScreen(MENU menu, Inventory inventory, Component title, ResourceLocation texture, ResourceLocation slotTexture, int width, int height)
 	{
-		super(handler, inventory, title, texture);
+		super(menu, inventory, title, texture, slotTexture, width, height);
 	}
 
 	@Override
@@ -80,18 +85,18 @@ public abstract class AddonMachineScreen<BLOCK_ENTITY extends AbstractMachineBlo
 
 	public boolean hasWorkingArea()
 	{
-		return this.getMenu().getMachine() instanceof IWorkingAreaBlockEntity;
+		return this.entity instanceof IWorkingAreaBlockEntity;
 	}
 
 	public boolean isWorkingAreaVisible()
 	{
-		return this.getMenu().getMachine() instanceof IWorkingAreaBlockEntity blockEntity && blockEntity.isWorkingAreaVisible();
+		return this.entity instanceof IWorkingAreaBlockEntity blockEntity && blockEntity.isWorkingAreaVisible();
 	}
 
 	@Nullable
 	public AABB getWorkingArea()
 	{
-		if (this.getMenu().getMachine() instanceof IWorkingAreaBlockEntity blockEntity)
+		if (this.entity instanceof IWorkingAreaBlockEntity blockEntity)
 		{
 			return blockEntity.getWorkingArea();
 		}
@@ -104,7 +109,7 @@ public abstract class AddonMachineScreen<BLOCK_ENTITY extends AbstractMachineBlo
 
 	public void setWorkingAreaVisible(boolean visible)
 	{
-		BLOCK_ENTITY machine = this.getMenu().getMachine();
+		BLOCK_ENTITY machine = this.entity;
 
 		if (machine instanceof IWorkingAreaBlockEntity blockEntity)
 		{
@@ -181,6 +186,34 @@ public abstract class AddonMachineScreen<BLOCK_ENTITY extends AbstractMachineBlo
 	{
 		String method = visible ? "hide" : "show";
 		return Component.translatable(WORKINGAREA_TEXT_PREFIX + method);
+	}
+
+	public int getTextColour()
+	{
+		return 0x404040;
+	}
+
+	public FluidBarWidget getFluidBarWidget(int tank)
+	{
+		for (GuiEventListener child : this.children())
+		{
+			if (child instanceof FluidBarWidget widget && child instanceof ConfigurationWidgetAccessor accessor)
+			{
+				if (accessor.getConfiguration() instanceof FluidConfiguration fluidConfiguration && fluidConfiguration.tank() == tank)
+				{
+					return widget;
+				}
+
+			}
+
+		}
+
+		return null;
+	}
+
+	public Rectangle getBounds(AbstractWidget widget)
+	{
+		return new Rectangle(this.leftPos() + widget.getX(), this.topPos() + widget.getY(), widget.getWidth(), widget.getHeight());
 	}
 
 }

@@ -1,15 +1,8 @@
 package ad_astra_giselle_addon.client;
 
-import java.util.function.BiConsumer;
-
-import earth.terrarium.ad_astra.client.AdAstraClient.RenderHud;
-import net.minecraft.client.gui.GuiGraphics;
 import net.minecraftforge.client.ConfigScreenHandler;
-import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.RegisterClientReloadListenersEvent;
-import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
-import net.minecraftforge.client.gui.overlay.ForgeGui;
-import net.minecraftforge.client.gui.overlay.IGuiOverlay;
+import net.minecraftforge.client.event.RenderGuiEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -22,12 +15,12 @@ public class AdAstraGiselleAddonClientForge
 	public AdAstraGiselleAddonClientForge()
 	{
 		IEventBus fml_bus = FMLJavaModLoadingContext.get().getModEventBus();
-		IEventBus forge_bus = MinecraftForge.EVENT_BUS;
 		fml_bus.addListener((FMLClientSetupEvent e) -> AdAstraGiselleAddonClient.initializeClient());
-		fml_bus.addListener((EntityRenderersEvent.RegisterRenderers e) -> AdAstraGiselleAddonClient.registerBlockEntityRenderer(e::registerBlockEntityRenderer));
-		fml_bus.addListener((RegisterGuiOverlaysEvent e) -> AdAstraGiselleAddonClient.registerOverlay(wrapHUD(e::registerBelowAll)));
-		forge_bus.addListener((ItemTooltipEvent e) -> AdAstraGiselleAddonClient.registerItemTooltip(register -> register.accept(e.getItemStack(), e.getFlags(), e.getToolTip())));
 		fml_bus.addListener((RegisterClientReloadListenersEvent e) -> AdAstraGiselleAddonClient.registerReloadListeners((id, listener) -> e.registerReloadListener(listener)));
+
+		IEventBus forge_bus = MinecraftForge.EVENT_BUS;
+		forge_bus.addListener((ItemTooltipEvent e) -> AdAstraGiselleAddonClient.registerItemTooltip(register -> register.accept(e.getItemStack(), e.getFlags(), e.getToolTip())));
+		forge_bus.addListener(AdAstraGiselleAddonClientForge::onRegisterClientHud);
 
 		ModLoadingContext.get().registerExtensionPoint(ConfigScreenHandler.ConfigScreenFactory.class, () ->
 		{
@@ -39,16 +32,9 @@ public class AdAstraGiselleAddonClientForge
 
 	}
 
-	public static BiConsumer<String, RenderHud> wrapHUD(BiConsumer<String, IGuiOverlay> consumer)
+	private static void onRegisterClientHud(RenderGuiEvent.Post event)
 	{
-		return (name, hud) -> consumer.accept(name, new IGuiOverlay()
-		{
-			@Override
-			public void render(ForgeGui gui, GuiGraphics guiGraphics, float partialTick, int screenWidth, int screenHeight)
-			{
-				hud.renderHud(guiGraphics, partialTick);
-			}
-		});
+		AdAstraGiselleAddonClient.onRegisterHud(hud -> hud.renderHud(event.getGuiGraphics(), event.getPartialTick()));
 	}
 
 }

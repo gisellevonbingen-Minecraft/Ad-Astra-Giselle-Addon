@@ -1,14 +1,22 @@
 package ad_astra_giselle_addon.common.block.entity;
 
+import java.util.List;
+
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import ad_astra_giselle_addon.common.config.MachinesConfig;
 import ad_astra_giselle_addon.common.menu.RocketSensorMenu;
-import ad_astra_giselle_addon.common.registry.AddonBlockEntityTypes;
-import earth.terrarium.ad_astra.common.entity.vehicle.Rocket;
+import earth.terrarium.adastra.common.blockentities.base.ContainerMachineBlockEntity;
+import earth.terrarium.adastra.common.blockentities.base.sideconfig.Configuration;
+import earth.terrarium.adastra.common.blockentities.base.sideconfig.ConfigurationEntry;
+import earth.terrarium.adastra.common.blockentities.base.sideconfig.ConfigurationType;
+import earth.terrarium.adastra.common.constants.ConstantComponents;
+import earth.terrarium.adastra.common.entities.vehicles.Rocket;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -17,12 +25,17 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.redstone.Redstone;
 import net.minecraft.world.phys.AABB;
 
-public class RocketSensorBlockEntity extends AddonMachineBlockEntity implements IRangedWorkingAreaBlockEntity
+public class RocketSensorBlockEntity extends ContainerMachineBlockEntity implements IRangedWorkingAreaBlockEntity
 {
+	public static final List<ConfigurationEntry> SIDE_CONFIG = List.of(//
+			new ConfigurationEntry(ConfigurationType.ENERGY, Configuration.NONE, ConstantComponents.SIDE_CONFIG_ENERGY));
+
 	public static final String DATA_WORKINGAREA_VISIBLE_KEY = "workingAreaVisible";
 	public static final String DATA_SENSING_TYPE_KEY = "sensingType";
 	public static final String DATA_INVERTED_KEY = "inverted";
 	public static final String DATA_ANALOG_SIGNAL_KEY = "analogSignal";
+
+	public static final int CONTAINER_SIZE = 0;
 
 	private boolean workingAreaVisible;
 	private IRocketSensingType sensingType;
@@ -33,7 +46,7 @@ public class RocketSensorBlockEntity extends AddonMachineBlockEntity implements 
 
 	public RocketSensorBlockEntity(BlockPos pos, BlockState state)
 	{
-		super(AddonBlockEntityTypes.ROCKET_SENSOR.get(), pos, state);
+		super(pos, state, CONTAINER_SIZE);
 		this.workingAreaVisible = false;
 		this.sensingType = RocketSensingType.DISABLED;
 		this.inverted = false;
@@ -41,23 +54,23 @@ public class RocketSensorBlockEntity extends AddonMachineBlockEntity implements 
 	}
 
 	@Override
-	public void load(CompoundTag nbt)
+	public void load(CompoundTag tag)
 	{
-		super.load(nbt);
-		this.workingAreaVisible = nbt.getBoolean(DATA_WORKINGAREA_VISIBLE_KEY);
-		this.sensingType = IRocketSensingType.readNBT(nbt.get(DATA_SENSING_TYPE_KEY));
-		this.inverted = nbt.getBoolean(DATA_INVERTED_KEY);
-		this.analogSignal = nbt.getInt(DATA_ANALOG_SIGNAL_KEY);
+		super.load(tag);
+		this.workingAreaVisible = tag.getBoolean(DATA_WORKINGAREA_VISIBLE_KEY);
+		this.sensingType = IRocketSensingType.readNBT(tag.get(DATA_SENSING_TYPE_KEY));
+		this.inverted = tag.getBoolean(DATA_INVERTED_KEY);
+		this.analogSignal = tag.getInt(DATA_ANALOG_SIGNAL_KEY);
 	}
 
 	@Override
-	public void saveAdditional(CompoundTag nbt)
+	public void saveAdditional(CompoundTag tag)
 	{
-		super.saveAdditional(nbt);
-		nbt.putBoolean(DATA_WORKINGAREA_VISIBLE_KEY, this.workingAreaVisible);
-		nbt.put(DATA_SENSING_TYPE_KEY, IRocketSensingType.writeNBT(this.sensingType));
-		nbt.putBoolean(DATA_INVERTED_KEY, this.inverted);
-		nbt.putInt(DATA_ANALOG_SIGNAL_KEY, this.analogSignal);
+		super.saveAdditional(tag);
+		tag.putBoolean(DATA_WORKINGAREA_VISIBLE_KEY, this.workingAreaVisible);
+		tag.put(DATA_SENSING_TYPE_KEY, IRocketSensingType.writeNBT(this.sensingType));
+		tag.putBoolean(DATA_INVERTED_KEY, this.inverted);
+		tag.putInt(DATA_ANALOG_SIGNAL_KEY, this.analogSignal);
 	}
 
 	@Override
@@ -68,32 +81,28 @@ public class RocketSensorBlockEntity extends AddonMachineBlockEntity implements 
 	}
 
 	@Override
-	public void tick()
+	public void serverTick(ServerLevel level, long time, BlockState state, BlockPos pos)
 	{
-		Level level = this.getLevel();
+		super.serverTick(level, time, state, pos);
 
-		if (!level.isClientSide())
+		Rocket newTarget = this.findRocket();
+		int analogSignal = newTarget != null ? this.getSensingType().getAnalogSignal(newTarget) : Redstone.SIGNAL_NONE;
+
+		if (this.isInverted())
 		{
-			Rocket newTarget = this.findRocket();
-			int analogSignal = newTarget != null ? this.getSensingType().getAnalogSignal(newTarget) : Redstone.SIGNAL_NONE;
+			analogSignal = Redstone.SIGNAL_MAX - analogSignal;
+		}
 
-			if (this.isInverted())
-			{
-				analogSignal = Redstone.SIGNAL_MAX - analogSignal;
-			}
-
-			if (this.getCachedTarget() != newTarget)
-			{
-				this.cachedTarget = newTarget;
-				this.analogSignal = analogSignal;
-				this.setChanged();
-			}
-			else if (this.getAnalogSignal() != analogSignal)
-			{
-				this.analogSignal = analogSignal;
-				this.setChanged();
-			}
-
+		if (this.getCachedTarget() != newTarget)
+		{
+			this.cachedTarget = newTarget;
+			this.analogSignal = analogSignal;
+			this.sync();
+		}
+		else if (this.getAnalogSignal() != analogSignal)
+		{
+			this.analogSignal = analogSignal;
+			this.sync();
 		}
 
 	}
@@ -117,7 +126,7 @@ public class RocketSensorBlockEntity extends AddonMachineBlockEntity implements 
 		if (this.isWorkingAreaVisible() != visible)
 		{
 			this.workingAreaVisible = visible;
-			this.setChanged();
+			this.sync();
 		}
 
 	}
@@ -155,7 +164,7 @@ public class RocketSensorBlockEntity extends AddonMachineBlockEntity implements 
 		if (this.getSensingType() != sensingType)
 		{
 			this.sensingType = sensingType;
-			this.setChanged();
+			this.sync();
 		}
 
 	}
@@ -170,7 +179,7 @@ public class RocketSensorBlockEntity extends AddonMachineBlockEntity implements 
 		if (this.isInverted() != inverted)
 		{
 			this.inverted = inverted;
-			this.setChanged();
+			this.sync();
 		}
 
 	}
@@ -178,6 +187,18 @@ public class RocketSensorBlockEntity extends AddonMachineBlockEntity implements 
 	public int getAnalogSignal()
 	{
 		return this.analogSignal;
+	}
+
+	@Override
+	public List<ConfigurationEntry> getDefaultConfig()
+	{
+		return SIDE_CONFIG;
+	}
+
+	@Override
+	public int[] getSlotsForFace(Direction pSide)
+	{
+		return new int[]{};
 	}
 
 }

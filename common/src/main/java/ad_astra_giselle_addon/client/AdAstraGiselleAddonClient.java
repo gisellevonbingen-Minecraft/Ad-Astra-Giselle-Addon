@@ -20,8 +20,9 @@ import ad_astra_giselle_addon.common.enchantment.EnchantmentHelper2;
 import ad_astra_giselle_addon.common.registry.AddonBlockEntityTypes;
 import ad_astra_giselle_addon.common.registry.AddonMenuTypes;
 import ad_astra_giselle_addon.common.util.TriConsumer;
-import earth.terrarium.ad_astra.client.AdAstraClient.RenderHud;
-import earth.terrarium.ad_astra.client.ClientPlatformUtils;
+import earth.terrarium.adastra.client.ClientPlatformUtils;
+import earth.terrarium.botarium.client.ClientHooks;
+import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.packs.resources.PreparableReloadListener;
@@ -48,22 +49,28 @@ public class AdAstraGiselleAddonClient
 
 	public static void initializeClient()
 	{
-		ClientPlatformUtils.registerScreen(AddonMenuTypes.FUEL_LOADER.get(), FuelLoaderScreen::new);
-		ClientPlatformUtils.registerScreen(AddonMenuTypes.AUTOMATION_NASA_WORKBENCH.get(), AutomationNasaWorkbenchScreen::new);
-		ClientPlatformUtils.registerScreen(AddonMenuTypes.GRAVITY_NORMALIZER.get(), GravityNormalizerScreen::new);
-		ClientPlatformUtils.registerScreen(AddonMenuTypes.ROCKET_SENSOR.get(), RocketSensorScreen::new);
+		registerScreens();
+		registerBlockEntityRenderer();
 	}
 
-	public static void registerOverlay(BiConsumer<String, RenderHud> register)
+	public static void registerScreens()
 	{
-		register.accept("oxygen_can", OxygenCanOverlay::renderHud);
+		MenuScreens.register(AddonMenuTypes.FUEL_LOADER.get(), FuelLoaderScreen::new);
+		MenuScreens.register(AddonMenuTypes.AUTOMATION_NASA_WORKBENCH.get(), AutomationNasaWorkbenchScreen::new);
+		MenuScreens.register(AddonMenuTypes.GRAVITY_NORMALIZER.get(), GravityNormalizerScreen::new);
+		MenuScreens.register(AddonMenuTypes.ROCKET_SENSOR.get(), RocketSensorScreen::new);
 	}
 
-	public static void registerBlockEntityRenderer(BlockEntityRendererRegister register)
+	public static void onRegisterHud(Consumer<ClientPlatformUtils.RenderHud> register)
 	{
-		register.regsiter(AddonBlockEntityTypes.FUEL_LOADER.get(), context -> new WorkingAreaBlockEntityRenderer<>(context));
-		register.regsiter(AddonBlockEntityTypes.GRAVITY_NORMALIZER.get(), context -> new WorkingAreaBlockEntityRenderer<>(context));
-		register.regsiter(AddonBlockEntityTypes.ROCKET_SENSOR.get(), context -> new WorkingAreaBlockEntityRenderer<>(context));
+		register.accept(OxygenCanOverlay::renderHud);
+	}
+
+	public static void registerBlockEntityRenderer()
+	{
+		ClientHooks.registerBlockEntityRenderers(AddonBlockEntityTypes.FUEL_LOADER.get(), context -> new WorkingAreaBlockEntityRenderer<>(context));
+		ClientHooks.registerBlockEntityRenderers(AddonBlockEntityTypes.GRAVITY_NORMALIZER.get(), context -> new WorkingAreaBlockEntityRenderer<>(context));
+		ClientHooks.registerBlockEntityRenderers(AddonBlockEntityTypes.ROCKET_SENSOR.get(), context -> new WorkingAreaBlockEntityRenderer<>(context));
 	}
 
 	public static void registerItemTooltip(Consumer<TriConsumer<ItemStack, TooltipFlag, List<Component>>> register)

@@ -6,7 +6,7 @@ import java.util.List;
 import ad_astra_giselle_addon.client.compat.RecipeHelper;
 import ad_astra_giselle_addon.client.screen.FuelLoaderScreen;
 import ad_astra_giselle_addon.common.compat.rei.FuelLoaderDisplay;
-import ad_astra_giselle_addon.common.fluid.FluidHooks2;
+import ad_astra_giselle_addon.common.fluid.FluidUtils2;
 import ad_astra_giselle_addon.common.registry.AddonBlocks;
 import ad_astra_giselle_addon.common.registry.ObjectRegistry;
 import me.shedaniel.math.Rectangle;
@@ -48,7 +48,7 @@ public class FuelLoaderCategory extends AddonDisplayCategory<FuelLoaderDisplay>
 	@Override
 	public List<Widget> setupDisplay(FuelLoaderDisplay display, Rectangle bounds)
 	{
-		long capacity = FluidHooks2.BUCKET;
+		long capacity = FluidUtils2.BUCKET;
 		Rectangle tankBounds = new Rectangle(bounds.x + RecipeHelper.FuelLoader.TANK_LEFT, bounds.y + RecipeHelper.FuelLoader.TANK_TOP, RecipeHelper.FuelLoader.TANK_WIDTH, RecipeHelper.FuelLoader.TANK_HEIGHT);
 
 		List<Widget> list = new ArrayList<>();

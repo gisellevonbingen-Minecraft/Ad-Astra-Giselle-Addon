@@ -1,34 +1,27 @@
 package ad_astra_giselle_addon.common.content.proof;
 
-import java.util.List;
-import java.util.function.Function;
-
-import com.google.common.eventbus.Subscribe;
-
 import ad_astra_giselle_addon.common.AdAstraGiselleAddon;
-import ad_astra_giselle_addon.common.registry.AddonEnchantments;
+import earth.terrarium.adastra.api.events.AdAstraEvents;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
 
 public class AcidRainProofUtils extends ProofAbstractUtils
 {
+	public static final AcidRainProofEnchantmentFunction ENCHANTMENT_FUNCTION = new AcidRainProofEnchantmentFunction();
 	public static final AcidRainProofUtils INSTANCE = new AcidRainProofUtils(AdAstraGiselleAddon.rl("acid_rain_proof"));
 
-	public AcidRainProofUtils(ResourceLocation id)
+	private AcidRainProofUtils(ResourceLocation id)
 	{
 		super(id);
+
+		this.register(ENCHANTMENT_FUNCTION);
+		AdAstraEvents.AcidRainTickEvent.register(this::onAcidRainTick);
 	}
 
-	@Override
-	public LivingProofProvidingEvent createEvent(LivingEntity entity, List<Function<LivingEntity, ProofSession>> functions)
+	private boolean onAcidRainTick(ServerLevel level, LivingEntity living)
 	{
-		return new LivingVenusAcidProofProvidingEvent(entity, functions);
-	}
-
-	@Subscribe
-	public void onEnchantmentProviding(LivingVenusAcidProofProvidingEvent e)
-	{
-		e.add(living -> new AcidRainProofEnchantmentSession(living, AddonEnchantments.ACID_RAIN_PROOF.get()));
+		return !this.tryProvideProof(living);
 	}
 
 }

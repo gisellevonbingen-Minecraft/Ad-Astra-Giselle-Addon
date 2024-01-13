@@ -2,13 +2,14 @@ package ad_astra_giselle_addon.common.content.oxygen;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
-import org.apache.commons.lang3.Range;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import ad_astra_giselle_addon.common.fluid.FluidHooks2;
-import ad_astra_giselle_addon.common.fluid.UniveralFluidHandler;
+import ad_astra_giselle_addon.common.fluid.FluidUtils2;
+import earth.terrarium.botarium.common.fluid.base.FluidContainer;
+import earth.terrarium.botarium.common.fluid.base.FluidHolder;
 
 public interface IOxygenCharger
 {
@@ -24,33 +25,43 @@ public interface IOxygenCharger
 
 	public long getTransferAmount();
 
-	public UniveralFluidHandler getFluidHandler();
+	public FluidContainer getFluidContainer();
 
-	public Range<Integer> getTemperatureThreshold();
+	public boolean canUseOnCold();
+
+	public boolean canUseOnHot();
+
+	public default boolean canUse(boolean isCold, boolean isHot)
+	{
+		if (isCold && !this.canUseOnCold())
+		{
+			return false;
+		}
+		else if (isHot && !this.canUseOnHot())
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}
+
+	}
 
 	public default long getTotalAmount()
 	{
-		UniveralFluidHandler fluidHandler = this.getFluidHandler();
-		int size = fluidHandler.getTankAmount();
-		long amount = 0L;
-
-		for (int i = 0; i < size; i++)
-		{
-			amount += fluidHandler.getFluidInTank(i).getFluidAmount();
-		}
-
-		return amount;
+		return this.getFluidContainer().getFluids().stream().collect(Collectors.summingLong(FluidHolder::getFluidAmount));
 	}
 
 	public default long getTotalCapacity()
 	{
-		UniveralFluidHandler fluidHandler = this.getFluidHandler();
-		int size = fluidHandler.getTankAmount();
+		FluidContainer fluidContainer = this.getFluidContainer();
+		int size = fluidContainer.getSize();
 		long capacity = 0L;
 
 		for (int i = 0; i < size; i++)
 		{
-			capacity += fluidHandler.getTankCapacity(i);
+			capacity += fluidContainer.getTankCapacity(i);
 		}
 
 		return capacity;
@@ -60,7 +71,7 @@ public interface IOxygenCharger
 	{
 		long amount = this.getTotalAmount();
 		long capacity = this.getTotalCapacity();
-		return FluidHooks2.getStoredRatio(amount, capacity);
+		return FluidUtils2.getStoredRatio(amount, capacity);
 	}
 
 }

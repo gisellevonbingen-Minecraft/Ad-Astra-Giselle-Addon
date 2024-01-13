@@ -3,11 +3,10 @@ package ad_astra_giselle_addon.common.content.proof;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.function.Function;
 
 import ad_astra_giselle_addon.common.AdAstraGiselleAddon;
 import ad_astra_giselle_addon.common.entity.EntityCustomDataHelper;
-import ad_astra_giselle_addon.common.fluid.FluidHooks2;
+import ad_astra_giselle_addon.common.fluid.FluidUtils2;
 import ad_astra_giselle_addon.common.util.NBTUtils;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
@@ -23,7 +22,7 @@ public abstract class ProofAbstractUtils
 
 	public static final int GENERAL_PROOF_INTERVAL = 10;
 	public static final int OXYGEN_PROOF_INTERVAL = 30;
-	public static final long OXYGEN_PROOF_USING = FluidHooks2.MILLI_BUCKET;
+	public static final long OXYGEN_PROOF_USING = FluidUtils2.MILLI_BUCKET;
 
 	public static CompoundTag getAllCustomData(LivingEntity living)
 	{
@@ -47,11 +46,13 @@ public abstract class ProofAbstractUtils
 
 	private final ResourceLocation id;
 	private final String customDataKey;
+	private final List<ProofFunction> listeners;
 
-	public ProofAbstractUtils(ResourceLocation id)
+	protected ProofAbstractUtils(ResourceLocation id)
 	{
 		this.id = id;
 		this.customDataKey = id.toString();
+		this.listeners = new ArrayList<>();
 		_PROOFS.add(this);
 	}
 
@@ -93,31 +94,12 @@ public abstract class ProofAbstractUtils
 		}
 		else
 		{
-			List<Function<LivingEntity, ProofSession>> list = new ArrayList<>();
-			LivingProofProvidingEvent event = this.createEvent(living, list);
-			AdAstraGiselleAddon.eventBus().post(event);
+			int proofDuration = this.post(living);
 
-			for (Function<LivingEntity, ProofSession> function : list)
+			if (proofDuration > 0)
 			{
-				ProofSession session = function.apply(living);
-
-				if (session == null)
-				{
-					continue;
-				}
-
-				int proofDuration = session.provide();
-
-				if (proofDuration <= 0)
-				{
-					continue;
-				}
-				else
-				{
-					this.setProofDuration(living, proofDuration);
-					return true;
-				}
-
+				this.setProofDuration(living, proofDuration);
+				return true;
 			}
 
 			return false;
@@ -125,5 +107,30 @@ public abstract class ProofAbstractUtils
 
 	}
 
-	public abstract LivingProofProvidingEvent createEvent(LivingEntity entity, List<Function<LivingEntity, ProofSession>> function);
+	public void register(ProofFunction event)
+	{
+		this.listeners.add(event);
+	}
+
+	public boolean unregister(ProofFunction event)
+	{
+		return this.listeners.remove(event);
+	}
+
+	public int post(LivingEntity living)
+	{
+		for (ProofFunction event : this.listeners)
+		{
+			int proofFunction = event.provide(living);
+
+			if (proofFunction > 0)
+			{
+				return proofFunction;
+			}
+
+		}
+
+		return 0;
+	}
+
 }

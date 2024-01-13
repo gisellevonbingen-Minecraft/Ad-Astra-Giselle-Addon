@@ -28,7 +28,7 @@ allprojects {
         }
         maven {
             name "Team Resourceful"
-            url "https://nexus.resourcefulbees.com/repository/maven-public/"
+            url "https://maven.teamresourceful.com/repository/maven-public/"
         }
         maven {
             name "shedaniel"

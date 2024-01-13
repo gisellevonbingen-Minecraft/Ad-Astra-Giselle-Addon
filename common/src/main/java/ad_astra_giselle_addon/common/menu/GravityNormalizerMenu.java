@@ -1,16 +1,11 @@
 package ad_astra_giselle_addon.common.menu;
 
-import java.util.Collections;
-
 import ad_astra_giselle_addon.common.block.entity.GravityNormalizerBlockEntity;
 import ad_astra_giselle_addon.common.registry.AddonMenuTypes;
-import earth.terrarium.ad_astra.common.networking.NetworkHandler;
-import earth.terrarium.ad_astra.common.networking.packet.messages.ClientboundMachineInfoPacket;
-import earth.terrarium.ad_astra.common.screen.menu.AbstractMachineMenu;
+import earth.terrarium.adastra.common.menus.configuration.EnergyConfiguration;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.entity.player.Player;
 
-public class GravityNormalizerMenu extends AbstractMachineMenu<GravityNormalizerBlockEntity>
+public class GravityNormalizerMenu extends AddonMachineMenu<GravityNormalizerBlockEntity>
 {
 	public GravityNormalizerMenu(int windowId, Inventory inv, GravityNormalizerBlockEntity blockEntity)
 	{
@@ -18,17 +13,46 @@ public class GravityNormalizerMenu extends AbstractMachineMenu<GravityNormalizer
 	}
 
 	@Override
-	public int getPlayerInventoryOffset()
+	protected void addMenuSlots()
 	{
-		return 30;
+		super.addMenuSlots();
 	}
 
 	@Override
-	public void syncClientScreen()
+	protected void addConfigSlots()
 	{
-		GravityNormalizerBlockEntity machine = this.getMachine();
-		Player player = this.player;
-		NetworkHandler.CHANNEL.sendToPlayer(new ClientboundMachineInfoPacket(machine.getEnergyStorage().getStoredEnergy(), Collections.emptyList()), player);
+		GravityNormalizerBlockEntity blockEntity = this.getEntity();
+		this.addConfigSlot(new EnergyConfiguration(0, 146, 22, blockEntity.getEnergyStorage()));
+	}
+
+	@Override
+	public int startIndex()
+	{
+		return 1;
+	}
+
+	@Override
+	public int getContainerInputEnd()
+	{
+		return 1;
+	}
+
+	@Override
+	public int getInventoryStart()
+	{
+		return 1;
+	}
+
+	@Override
+	public int getPlayerInvXOffset()
+	{
+		return 8;
+	}
+
+	@Override
+	public int getPlayerInvYOffset()
+	{
+		return 114;
 	}
 
 }

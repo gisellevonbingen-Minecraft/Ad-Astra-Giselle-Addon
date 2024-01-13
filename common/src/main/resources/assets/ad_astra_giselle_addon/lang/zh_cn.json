@@ -35,7 +35,6 @@
   "gui.ad_astra_giselle_addon.gravity_normalizer.move_to_pos": "移动到底部中心",
   "gui.ad_astra_giselle_addon.gravity_normalizer.energy_using": "%1$s ⚡ / %2$stick",
   
-  "description.ad_astra_giselle_addon.temperature_range": "温度范围",
   "description.ad_astra_giselle_addon.charge_mode": "充电模式",
   
   "chargemode.ad_astra_giselle_addon.none": "禁用",

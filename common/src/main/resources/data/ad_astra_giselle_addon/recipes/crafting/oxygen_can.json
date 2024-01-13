@@ -10,10 +10,10 @@
    ],
    "key":{
       "R":{
-         "tag":"ad_astra_platform:iron_rods"
+         "tag":"ad_astra:iron_rods"
       },
       "P":{
-         "tag":"ad_astra_platform:iron_plates"
+         "tag":"ad_astra:iron_plates"
       }
    }
 } 

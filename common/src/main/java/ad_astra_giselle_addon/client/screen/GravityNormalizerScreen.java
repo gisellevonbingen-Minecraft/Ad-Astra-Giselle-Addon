@@ -1,6 +1,5 @@
 package ad_astra_giselle_addon.client.screen;
 
-import java.awt.Rectangle;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +16,6 @@ import ad_astra_giselle_addon.common.menu.GravityNormalizerMenu;
 import ad_astra_giselle_addon.common.network.AddonNetwork;
 import ad_astra_giselle_addon.common.network.GravityNormalizerMessage;
 import ad_astra_giselle_addon.common.util.Vec3iUtils;
-import earth.terrarium.ad_astra.client.screen.GuiUtil;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
@@ -29,9 +27,12 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
 
-public class GravityNormalizerScreen extends AddonMachineScreen<GravityNormalizerBlockEntity, GravityNormalizerMenu>
+public class GravityNormalizerScreen extends AddonMachineScreen<GravityNormalizerMenu, GravityNormalizerBlockEntity>
 {
 	public static final ResourceLocation TEXTURE = AdAstraGiselleAddon.rl("textures/gui/container/gravity_normalizer.png");
+	public static final int WIDTH = 176;
+	public static final int HEIGHT = 196;
+	
 	public static final Component VECTOR_ELEMENT_MINUS_TEXT = Component.literal("-");
 	public static final Component VECTOR_ELEMENT_PLUS_TEXT = Component.literal("+");
 	public static final String VECTOR_ELEMENT_TOOLTIP = ctl("gravity_normalizer.vector_element_tooltip");
@@ -44,9 +45,6 @@ public class GravityNormalizerScreen extends AddonMachineScreen<GravityNormalize
 	public static final Component MINUS_TOOLTIP = createVectorElementButtonTooltipComponent(-1);
 	public static final Component PLUS_TOOLTIP = createVectorElementButtonTooltipComponent(+1);
 
-	public static final int ENERGY_LEFT = 146;
-	public static final int ENERGY_TOP = 22;
-
 	protected final List<AbstractWidget> element_length_x_widgets;
 	protected final List<AbstractWidget> element_length_y_widgets;
 	protected final List<AbstractWidget> element_length_z_widgets;
@@ -58,10 +56,7 @@ public class GravityNormalizerScreen extends AddonMachineScreen<GravityNormalize
 
 	public GravityNormalizerScreen(GravityNormalizerMenu menu, Inventory inventory, Component title)
 	{
-		super(menu, inventory, title, TEXTURE);
-		this.imageWidth = 176;
-		this.imageHeight = 196;
-		this.inventoryLabelY = this.imageHeight - 94;
+		super(menu, inventory, title, TEXTURE, STEEL_SLOT, WIDTH, HEIGHT);
 
 		this.element_length_x_widgets = new ArrayList<>();
 		this.element_length_y_widgets = new ArrayList<>();
@@ -82,7 +77,7 @@ public class GravityNormalizerScreen extends AddonMachineScreen<GravityNormalize
 		int lengthMax = GravityNormalizerBlockEntity.getMaxLength();
 		int offsetMin = GravityNormalizerBlockEntity.getMinOffset();
 		int offsetMax = GravityNormalizerBlockEntity.getMaxOffset();
-		GravityNormalizerBlockEntity machine = this.getMenu().getMachine();
+		GravityNormalizerBlockEntity machine = this.entity;
 		Supplier<Vec3i> getLength = machine::getLength;
 		Consumer<Vec3i> setLength = vec -> this.setMachineLength(machine, vec);
 		Supplier<Vec3i> getOffset = machine::getOffset;
@@ -180,8 +175,7 @@ public class GravityNormalizerScreen extends AddonMachineScreen<GravityNormalize
 	{
 		super.render(guiGraphics, mouseX, mouseY, delta);
 
-		GravityNormalizerMenu menu = this.getMenu();
-		GravityNormalizerBlockEntity machine = menu.getMachine();
+		GravityNormalizerBlockEntity machine = this.entity;
 
 		Vec3i length = machine.getLength();
 		this.setElement(this.element_length_x_widgets, length.getX());
@@ -192,15 +186,6 @@ public class GravityNormalizerScreen extends AddonMachineScreen<GravityNormalize
 		this.setElement(this.element_offset_x_widgets, offset.getX());
 		this.setElement(this.element_offset_y_widgets, offset.getY());
 		this.setElement(this.element_offset_z_widgets, offset.getZ());
-
-		long maxCapacity = machine.getEnergyStorage().getMaxCapacity();
-		GuiUtil2.drawEnergy(guiGraphics, this.getEnergyBounds(), menu.getEnergyAmount(), maxCapacity);
-
-		if (GuiUtil.isHovering(this.getEnergyBounds(), mouseX, mouseY))
-		{
-			GuiUtil.drawEnergyTooltip(guiGraphics, menu.getEnergyAmount(), maxCapacity, mouseX, mouseY);
-		}
-
 	}
 
 	@Override
@@ -208,7 +193,7 @@ public class GravityNormalizerScreen extends AddonMachineScreen<GravityNormalize
 	{
 		super.renderLabels(guiGraphics, mouseX, mouseY);
 
-		GravityNormalizerBlockEntity machine = this.getMenu().getMachine();
+		GravityNormalizerBlockEntity machine = this.entity;
 		long energyUsing = machine.getEnergyUsing();
 		int maxTimer = machine.getMaxTimer();
 		Component component = Component.translatable(ENERGY_USING_KEY, String.valueOf(energyUsing), String.valueOf(maxTimer));
@@ -247,11 +232,6 @@ public class GravityNormalizerScreen extends AddonMachineScreen<GravityNormalize
 
 		}
 
-	}
-
-	public Rectangle getEnergyBounds()
-	{
-		return GuiUtil.getEnergyBounds(this.leftPos + ENERGY_LEFT, this.topPos + ENERGY_TOP);
 	}
 
 	public static Component createVectorElementButtonTooltipComponent(int direction)

@@ -5,7 +5,6 @@ import java.awt.Rectangle;
 import ad_astra_giselle_addon.client.screen.FuelLoaderScreen;
 import ad_astra_giselle_addon.common.compat.rei.AddonReiCommonPlugin;
 import dev.architectury.event.CompoundEventResult;
-import earth.terrarium.ad_astra.common.compat.rei.BaseClickArea;
 import earth.terrarium.botarium.common.fluid.base.FluidHolder;
 import me.shedaniel.math.Point;
 import me.shedaniel.rei.api.client.registry.screen.FocusedStackProvider;
@@ -13,18 +12,18 @@ import me.shedaniel.rei.api.common.entry.EntryStack;
 import me.shedaniel.rei.api.common.util.EntryStacks;
 import net.minecraft.client.gui.screens.Screen;
 
-public class FuelLoaderGuiContainerHandler extends BaseClickArea<FuelLoaderScreen> implements FocusedStackProvider
+public class FuelLoaderGuiContainerHandler extends AddonClickArea<FuelLoaderScreen> implements FocusedStackProvider
 {
 	@Override
 	public Rectangle getBounds(FuelLoaderScreen screen)
 	{
-		return screen.getFluidTankBounds();
+		return screen.getBounds(screen.getFluidBarWidget(0));
 	}
 
 	@Override
 	public Result getSuccess(FuelLoaderScreen screen)
 	{
-		return categoryWithTooltip(AddonReiCommonPlugin.FUEL_LOADER_CATEGORY, screen.getFluidTankTooltip());
+		return category(AddonReiCommonPlugin.FUEL_LOADER_CATEGORY);
 	}
 
 	@Override
@@ -32,9 +31,9 @@ public class FuelLoaderGuiContainerHandler extends BaseClickArea<FuelLoaderScree
 	{
 		if (_screen instanceof FuelLoaderScreen screen)
 		{
-			if (screen.getFluidTankBounds().contains(mouse.getX(), mouse.getY()))
+			if (this.getBounds(screen).contains(mouse.getX(), mouse.getY()))
 			{
-				FluidHolder fluid = screen.getFluid();
+				FluidHolder fluid = screen.getMenu().getEntity().getFluidContainer().getFluids().get(0);
 				return CompoundEventResult.interruptTrue(EntryStacks.of(fluid.getFluid(), fluid.getFluidAmount()));
 			}
 

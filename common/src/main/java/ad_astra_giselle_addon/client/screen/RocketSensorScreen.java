@@ -10,7 +10,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
-public class RocketSensorScreen extends AddonMachineScreen<RocketSensorBlockEntity, RocketSensorMenu>
+public class RocketSensorScreen extends AddonMachineScreen<RocketSensorMenu, RocketSensorBlockEntity>
 {
 	public static final ResourceLocation TEXTURE = AdAstraGiselleAddon.rl("textures/gui/container/rocket_sensor.png");
 	public static String INVERTED_KEY = ctl("rocket_sensor.inverted");
@@ -21,9 +21,7 @@ public class RocketSensorScreen extends AddonMachineScreen<RocketSensorBlockEnti
 
 	public RocketSensorScreen(RocketSensorMenu handler, Inventory inventory, Component title)
 	{
-		super(handler, inventory, title, TEXTURE);
-		this.imageWidth = 176;
-		this.imageHeight = 160;
+		super(handler, inventory, title, TEXTURE, STEEL_SLOT, 176, 160);
 	}
 
 	@Override
@@ -31,7 +29,7 @@ public class RocketSensorScreen extends AddonMachineScreen<RocketSensorBlockEnti
 	{
 		super.init();
 
-		RocketSensorBlockEntity rocketSensor = this.getMenu().getMachine();
+		RocketSensorBlockEntity rocketSensor = this.entity;
 		int x0 = this.leftPos + 8;
 		int x1 = this.leftPos + this.imageWidth - 8;
 		int y0 = this.topPos + 18;
@@ -55,12 +53,12 @@ public class RocketSensorScreen extends AddonMachineScreen<RocketSensorBlockEnti
 	@Override
 	protected void renderLabels(GuiGraphics guiGraphics, int mouseX, int mouseY)
 	{
-		RocketSensorBlockEntity rocketSensor = this.getMenu().getMachine();
+		RocketSensorBlockEntity rocketSensor = this.entity;
 		guiGraphics.drawString(this.font, this.getTitle(), this.titleLabelX, this.titleLabelY, this.getTextColour(), false);
 		guiGraphics.drawString(this.font, Component.translatable(CURRENT_KEY, rocketSensor.getAnalogSignal()), this.titleLabelX, this.invertedCheckBox.getY() + this.invertedCheckBox.getHeight() + 8 - this.topPos, this.getTextColour(), false);
 
 		guiGraphics.pose().pushPose();
-		guiGraphics.pose().translate(-this.getLeftPos(), -this.getTopPos(), 0.0D);
+		guiGraphics.pose().translate(-this.leftPos, -this.topPos, 0.0D);
 		this.list.renderTooltip(guiGraphics, mouseX, mouseY);
 		guiGraphics.pose().popPose();
 	}
@@ -70,7 +68,7 @@ public class RocketSensorScreen extends AddonMachineScreen<RocketSensorBlockEnti
 	{
 		super.render(guiGraphics, mouseX, mouseY, delta);
 
-		RocketSensorBlockEntity rocketSensor = this.getMenu().getMachine();
+		RocketSensorBlockEntity rocketSensor = this.entity;
 		this.list.select(rocketSensor.getSensingType());
 
 		boolean newInverted = this.invertedCheckBox.selected();

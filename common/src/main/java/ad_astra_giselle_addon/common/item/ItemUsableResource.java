@@ -2,38 +2,25 @@ package ad_astra_giselle_addon.common.item;
 
 import org.jetbrains.annotations.Nullable;
 
-import earth.terrarium.botarium.common.energy.util.EnergyHooks;
+import earth.terrarium.botarium.common.energy.base.EnergyContainer;
 import earth.terrarium.botarium.common.item.ItemStackHolder;
 import net.minecraft.world.item.ItemStack;
 
 public enum ItemUsableResource
 {
-	None()
-		{
-			@Override
-			public boolean test(ItemStack item)
-			{
-				return false;
-			}
-
-			@Override
-			public long extract(ItemStackHolder item, long amount, boolean simulate)
-			{
-				return 0L;
-			}
-		},
 	Energy()
 		{
 			@Override
 			public boolean test(ItemStack item)
 			{
-				return EnergyHooks.isEnergyItem(item);
+				return EnergyContainer.holdsEnergy(item);
 			}
 
 			@Override
 			public long extract(ItemStackHolder item, long amount, boolean simulate)
 			{
-				return EnergyHooks.safeGetItemEnergyManager(item.getStack()).map(e -> e.extract(item, amount, simulate)).orElse(0L);
+				EnergyContainer energyContainer = EnergyContainer.of(item);
+				return energyContainer != null ? energyContainer.extractEnergy(amount, simulate) : 0L;
 			}
 		},
 	Durability()

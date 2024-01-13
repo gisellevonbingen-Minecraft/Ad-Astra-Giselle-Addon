@@ -1,16 +1,8 @@
 package ad_astra_giselle_addon.common.item;
 
-import org.apache.commons.lang3.Range;
-
 import ad_astra_giselle_addon.common.config.ItemsConfig;
-import ad_astra_giselle_addon.common.content.oxygen.IChargeMode;
 import ad_astra_giselle_addon.common.content.oxygen.IOxygenCharger;
-import ad_astra_giselle_addon.common.fluid.UniveralFluidHandler;
-import ad_astra_giselle_addon.common.util.NBTUtils;
-import earth.terrarium.ad_astra.common.item.armor.SpaceSuit;
-import earth.terrarium.ad_astra.common.registry.ModItems;
 import earth.terrarium.botarium.common.item.ItemStackHolder;
-import net.minecraft.nbt.CompoundTag;
 
 public class NetheriteOxygenCanItem extends OxygenCanItem
 {
@@ -20,47 +12,34 @@ public class NetheriteOxygenCanItem extends OxygenCanItem
 	}
 
 	@Override
-	public long getTankSize()
+	protected long getFluidCapacity()
 	{
 		return ItemsConfig.NETHERITE_OXYGEN_CAN_FLUID_CAPACITY;
+	}
+	
+	@Override
+	protected long getFluidTransfer()
+	{
+		return ItemsConfig.NETHERITE_OXYGEN_CAN_FLUID_TRANSFER;
 	}
 
 	@Override
 	public IOxygenCharger getOxygenCharger(ItemStackHolder item)
 	{
-		return new IOxygenCharger()
+		return new AbstractOxygenCharger(item)
 		{
 			@Override
-			public void setChargeMode(IChargeMode mode)
+			public boolean canUseOnCold()
 			{
-				CompoundTag tag = NBTUtils.getOrCreateTag(item.getStack(), KEY_OXYGEN_CHARGER);
-				tag.put(KEY_CHARGE_MODE, IChargeMode.writeNBT(mode));
+				return true;
 			}
 
 			@Override
-			public IChargeMode getChargeMode()
+			public boolean canUseOnHot()
 			{
-				CompoundTag tag = NBTUtils.getTag(item.getStack(), KEY_OXYGEN_CHARGER);
-				return IChargeMode.readNBT(tag.get(KEY_CHARGE_MODE));
+				return true;
 			}
 
-			@Override
-			public long getTransferAmount()
-			{
-				return ItemsConfig.NETHERITE_OXYGEN_CAN_FLUID_TRANSFER;
-			}
-
-			@Override
-			public UniveralFluidHandler getFluidHandler()
-			{
-				return UniveralFluidHandler.from(item);
-			}
-
-			@Override
-			public Range<Integer> getTemperatureThreshold()
-			{
-				return ((SpaceSuit) ModItems.NETHERITE_SPACE_SUIT.get()).getTemperatureThreshold();
-			}
 		};
 
 	}

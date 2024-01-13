@@ -35,7 +35,6 @@
   "gui.ad_astra_giselle_addon.gravity_normalizer.move_to_pos": "Переместить в центр",
   "gui.ad_astra_giselle_addon.gravity_normalizer.energy_using": "%1$s ⚡ / %2$sтик",
   
-  "description.ad_astra_giselle_addon.temperature_range": "Диапазон температур",
   "description.ad_astra_giselle_addon.charge_mode": "Режим зарядки",
   
   "chargemode.ad_astra_giselle_addon.none": "Отключён",

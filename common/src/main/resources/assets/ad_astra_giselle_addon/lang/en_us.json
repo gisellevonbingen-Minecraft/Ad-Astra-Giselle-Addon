@@ -6,9 +6,6 @@
   
   "item.ad_astra_giselle_addon.oxygen_can": "Oxygen Can",
   "item.ad_astra_giselle_addon.netherite_oxygen_can": "Netherite Oxygen Can",
-  "item.ad_astra_giselle_addon.sliding_door_key": "Sliding Door Key",
-  "item.ad_astra_giselle_addon.sliding_door_key.tooltip1": "Right click to lock/unlock Sliding Door",
-  "item.ad_astra_giselle_addon.sliding_door_key.tooltip2": "Locked door can only be opened or closed by redstone",
   
   "item.ad_astra_giselle_addon.fuel_loader.tooltip": "Give fuel to near Rover or Rocket",
   "item.ad_astra_giselle_addon.gravity_normalizer.tooltip": "Normalize living's gravity within range",
@@ -43,9 +40,12 @@
   "gui.ad_astra_giselle_addon.rocket_sensor.inverted": "Invert Output",
   "gui.ad_astra_giselle_addon.rocket_sensor.current": "Current Output: %s",
   
-  "description.ad_astra_giselle_addon.temperature_range": "Temperature Range",
-  "description.ad_astra_giselle_addon.charge_mode": "Charge Mode",
+  "description.ad_astra_giselle_addon.can_use.cold": "On Cold Planet",
+  "description.ad_astra_giselle_addon.can_use.hot": "On Hot Planet",
+  "can_use.ad_astra_giselle_addon.available": "Available",
+  "can_use.ad_astra_giselle_addon.unavailable": "Unavailable",
   
+  "description.ad_astra_giselle_addon.charge_mode": "Charge Mode",
   "chargemode.ad_astra_giselle_addon.none": "Disabled",
   "chargemode.ad_astra_giselle_addon.armors": "Enabled: All Armor",
   "chargemode.ad_astra_giselle_addon.all": "Enabled: All Inventory",
@@ -61,11 +61,6 @@
   "rocket_sensing_type.ad_astra_giselle_addon.launch_countdown": "Launch Countdown",
   "rocket_sensing_type.ad_astra_giselle_addon.launch_countdown.desc1": "Output analog about launch countdown",
   "rocket_sensing_type.ad_astra_giselle_addon.launch_countdown.desc2": "Output 0 at first, increases as countdown lower",
-  
-  "info.ad_astra_giselle_addon.locked": "Locked",
-  "info.ad_astra_giselle_addon.unlocked": "Unlocked",
-  "info.ad_astra_giselle_addon.sliding_door_locked_1": "This Sliding Door is locked, only be opened or closed by redstone",
-  "info.ad_astra_giselle_addon.sliding_door_locked_2": "Right click with either 'Wrench' or '%s' to unlock",
   
   
   "jei.category.ad_astra_giselle_addon.fuel_loader": "Fuel Loader",

@@ -6,10 +6,9 @@
 	"mixins": [
 		"minecraft.EntityMixin",
 		"minecraft.LivingEntityMixin",
-		"ad_astra.SlidingDoorBlockMixin",
-		"ad_astra.EntityAcidRainSystemMixin",
-		"ad_astra.EntityTemperatureSystemMixin",
-		"ad_astra.ModUtilsMixin"
+		"ad_astra.GravityApiImplMixin",
+		"ad_astra.OxygenApiImplMixin",
+		"ad_astra.SpaceSuitItemMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

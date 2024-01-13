@@ -9,7 +9,6 @@ import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.fabricmc.fabric.api.resource.IdentifiableResourceReloadListener;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.resources.ResourceManager;
@@ -20,9 +19,8 @@ public class AdAstraGiselleAddonClientFabric implements ClientModInitializer
 	@Override
 	public void onInitializeClient()
 	{
-		AdAstraGiselleAddonClient.initializeClient();
-		AdAstraGiselleAddonClient.registerOverlay((id, hud) -> HudRenderCallback.EVENT.register(hud::renderHud));
-		AdAstraGiselleAddonClient.registerBlockEntityRenderer(BlockEntityRenderers::register);
+		AdAstraGiselleAddonClient.registerScreens();
+		AdAstraGiselleAddonClient.onRegisterHud(hud -> HudRenderCallback.EVENT.register(hud::renderHud));
 		AdAstraGiselleAddonClient.registerItemTooltip(register -> ItemTooltipCallback.EVENT.register(register::accept));
 
 		AdAstraGiselleAddonClient.registerReloadListeners((id, listener) -> ResourceManagerHelper.get(PackType.CLIENT_RESOURCES).registerReloadListener(new IdentifiableResourceReloadListener()

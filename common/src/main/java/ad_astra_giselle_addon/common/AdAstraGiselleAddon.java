@@ -38,11 +38,6 @@ public class AdAstraGiselleAddon
 
 	private static Class<?> configClass;
 
-	public static EventBus eventBus()
-	{
-		return eventBus;
-	}
-
 	public static CompatibleManager compats()
 	{
 		return compats;

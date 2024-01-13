@@ -6,7 +6,7 @@ import java.util.List;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import earth.terrarium.ad_astra.common.entity.vehicle.Rocket;
+import earth.terrarium.adastra.common.entities.vehicles.Rocket;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;

@@ -4,15 +4,14 @@ import java.util.function.Function;
 
 import javax.annotation.Nullable;
 
+import ad_astra_giselle_addon.common.entity.LivingHelper;
 import mekanism.api.gear.ICustomModule;
 import mekanism.api.gear.IModule;
 import mekanism.api.gear.IModuleHelper;
 import mekanism.api.math.FloatingLong;
 import mekanism.api.providers.IModuleDataProvider;
-import mekanism.common.util.MekanismUtils;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
 public class AddonModuleHelper
@@ -41,7 +40,7 @@ public class AddonModuleHelper
 		{
 			return false;
 		}
-		else if (living instanceof Player player && !MekanismUtils.isPlayingMode(player))
+		else if (!LivingHelper.isPlayingMode(living))
 		{
 			return true;
 		}

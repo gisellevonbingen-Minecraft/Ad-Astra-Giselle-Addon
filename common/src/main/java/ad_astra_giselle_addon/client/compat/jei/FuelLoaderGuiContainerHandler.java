@@ -1,11 +1,13 @@
 package ad_astra_giselle_addon.client.compat.jei;
 
 import java.awt.Rectangle;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 import ad_astra_giselle_addon.client.screen.FuelLoaderScreen;
-import earth.terrarium.ad_astra.common.compat.jei.guihandler.BaseGuiContainerHandler;
+import earth.terrarium.adastra.client.components.machines.FluidBarWidget;
+import earth.terrarium.botarium.common.fluid.base.FluidHolder;
 import mezz.jei.api.helpers.IJeiHelpers;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.runtime.IClickableIngredient;
@@ -14,7 +16,7 @@ import mezz.jei.common.util.ImmutableRect2i;
 import mezz.jei.library.ingredients.TypedIngredient;
 import net.minecraft.network.chat.Component;
 
-public class FuelLoaderGuiContainerHandler extends BaseGuiContainerHandler<FuelLoaderScreen>
+public class FuelLoaderGuiContainerHandler extends AddonGuiContainerHandler<FuelLoaderScreen>
 {
 	private final IJeiHelpers jeiHelpers;
 
@@ -26,7 +28,17 @@ public class FuelLoaderGuiContainerHandler extends BaseGuiContainerHandler<FuelL
 	@Override
 	public Rectangle getRecipeClickableAreaBounds(FuelLoaderScreen screen)
 	{
-		return screen.getFluidTankBounds();
+		FluidBarWidget widget = screen.getFluidBarWidget(0);
+
+		if (widget != null)
+		{
+			return screen.getBounds(widget);
+		}
+		else
+		{
+			return new Rectangle();
+		}
+
 	}
 
 	@Override
@@ -38,17 +50,18 @@ public class FuelLoaderGuiContainerHandler extends BaseGuiContainerHandler<FuelL
 	@Override
 	public List<Component> getRecipeTooltip(FuelLoaderScreen screen)
 	{
-		return screen.getFluidTankTooltip();
+		return Collections.emptyList();
 	}
 
 	@Override
 	public Optional<IClickableIngredient<?>> getClickableIngredientUnderMouse(FuelLoaderScreen screen, double mouseX, double mouseY)
 	{
-		Rectangle fluidTankBounds = screen.getFluidTankBounds();
+		Rectangle fluidTankBounds = this.getRecipeClickableAreaBounds(screen);
 
 		if (fluidTankBounds.contains(mouseX, mouseY))
 		{
-			Object ingredient = IJeiFluidStackHelper.INSTANCE.get(screen.getFluid());
+			FluidHolder fluid = screen.getMenu().getEntity().getFluidContainer().getFluids().get(0);
+			Object ingredient = IJeiFluidStackHelper.INSTANCE.get(fluid);
 			return this.wrap(ingredient, fluidTankBounds);
 		}
 

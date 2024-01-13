@@ -7,9 +7,8 @@ import java.util.stream.IntStream;
 
 import ad_astra_giselle_addon.common.AdAstraGiselleAddon;
 import ad_astra_giselle_addon.common.util.RedstoneUtils;
-import earth.terrarium.ad_astra.common.config.VehiclesConfig;
-import earth.terrarium.ad_astra.common.entity.vehicle.Rocket;
-import earth.terrarium.ad_astra.common.registry.ModItems;
+import earth.terrarium.adastra.common.entities.vehicles.Rocket;
+import earth.terrarium.adastra.common.registry.ModItems;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -53,7 +52,7 @@ public enum RocketSensingType implements IRocketSensingType
 			@Override
 			public int getAnalogSignal(Rocket rocket)
 			{
-				return RedstoneUtils.onOff(rocket.isFlying() && rocket.getCountdownTicks() <= 0);
+				return RedstoneUtils.onOff(rocket.hasLaunched());
 			}
 
 			@Override
@@ -68,7 +67,7 @@ public enum RocketSensingType implements IRocketSensingType
 			@Override
 			public int getAnalogSignal(Rocket rocket)
 			{
-				return RedstoneUtils.onOff((rocket.getTankAmount() >= Rocket.getRequiredAmountForLaunch(rocket.getTankFluid())));
+				return RedstoneUtils.onOff(rocket.hasEnoughFuel());
 			}
 
 			@Override
@@ -83,8 +82,9 @@ public enum RocketSensingType implements IRocketSensingType
 			@Override
 			public int getAnalogSignal(Rocket rocket)
 			{
-				int max = VehiclesConfig.RocketConfig.countDownTicks;
-				return rocket.isFlying() ? RedstoneUtils.range((double) (max - rocket.getCountdownTicks()) / max) : Redstone.SIGNAL_MIN;
+				int max = Rocket.COUNTDOWN_LENGTH;
+				double ratio = (max - rocket.launchTicks()) / (double) max;
+				return rocket.isLaunching() ? RedstoneUtils.range(ratio) : Redstone.SIGNAL_MIN;
 			}
 
 			@Override

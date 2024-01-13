@@ -1,20 +1,25 @@
 package ad_astra_giselle_addon.common.block.entity;
 
 import java.util.List;
+import java.util.function.Predicate;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import ad_astra_giselle_addon.common.config.MachinesConfig;
 import ad_astra_giselle_addon.common.content.proof.GravityNormalizingUtils;
 import ad_astra_giselle_addon.common.menu.GravityNormalizerMenu;
-import ad_astra_giselle_addon.common.registry.AddonBlockEntityTypes;
 import ad_astra_giselle_addon.common.util.Vec3iUtils;
-import earth.terrarium.botarium.common.energy.base.BotariumEnergyBlock;
-import earth.terrarium.botarium.common.energy.base.PlatformEnergyManager;
-import earth.terrarium.botarium.common.energy.impl.SimpleEnergyContainer;
+import earth.terrarium.adastra.common.blockentities.base.EnergyContainerMachineBlockEntity;
+import earth.terrarium.adastra.common.blockentities.base.sideconfig.Configuration;
+import earth.terrarium.adastra.common.blockentities.base.sideconfig.ConfigurationEntry;
+import earth.terrarium.adastra.common.blockentities.base.sideconfig.ConfigurationType;
+import earth.terrarium.adastra.common.constants.ConstantComponents;
+import earth.terrarium.adastra.common.utils.TransferUtils;
+import earth.terrarium.botarium.common.energy.impl.InsertOnlyEnergyContainer;
 import earth.terrarium.botarium.common.energy.impl.WrappedBlockEnergyContainer;
-import earth.terrarium.botarium.common.energy.util.EnergyHooks;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
@@ -26,14 +31,18 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 
-public class GravityNormalizerBlockEntity extends AddonMachineBlockEntity implements BotariumEnergyBlock<WrappedBlockEnergyContainer>, IWorkingAreaBlockEntity
+public class GravityNormalizerBlockEntity extends EnergyContainerMachineBlockEntity implements IWorkingAreaBlockEntity
 {
+	public static final List<ConfigurationEntry> SIDE_CONFIG = List.of(//
+			new ConfigurationEntry(ConfigurationType.ENERGY, Configuration.NONE, ConstantComponents.SIDE_CONFIG_ENERGY));
+
 	public static final String DATA_LENGTH_KEY = "length";
 	public static final String DATA_OFFSET_KEY = "offset";
 	public static final String DATA_TIMER_KEY = "timer";
 	public static final String DATA_WORKINGAREA_VISIBLE_KEY = "workingAreaVisible";
 
-	private WrappedBlockEnergyContainer energyStorage;
+	public static final int CONTAINER_SIZE = 1;
+
 	private Vec3i length;
 	private Vec3i offset;
 	private int timer;
@@ -41,11 +50,31 @@ public class GravityNormalizerBlockEntity extends AddonMachineBlockEntity implem
 
 	public GravityNormalizerBlockEntity(BlockPos pos, BlockState state)
 	{
-		super(AddonBlockEntityTypes.GRAVITY_NORMALIZER.get(), pos, state);
+		super(pos, state, CONTAINER_SIZE);
 		this.length = new Vec3i(3, 3, 3);
 		this.offset = offsetFromLength(this.length);
 		this.timer = 0;
 		this.workingAreaVisible = false;
+	}
+
+	@Override
+	public void load(CompoundTag tag)
+	{
+		super.load(tag);
+		this.length = Vec3i.CODEC.parse(NbtOps.INSTANCE, tag.get(DATA_LENGTH_KEY)).result().get();
+		this.offset = Vec3i.CODEC.parse(NbtOps.INSTANCE, tag.get(DATA_OFFSET_KEY)).result().get();
+		this.timer = tag.getInt(DATA_TIMER_KEY);
+		this.workingAreaVisible = tag.getBoolean(DATA_WORKINGAREA_VISIBLE_KEY);
+	}
+
+	@Override
+	public void saveAdditional(CompoundTag tag)
+	{
+		super.saveAdditional(tag);
+		tag.put(DATA_LENGTH_KEY, Vec3i.CODEC.encodeStart(NbtOps.INSTANCE, this.length).result().get());
+		tag.put(DATA_OFFSET_KEY, Vec3i.CODEC.encodeStart(NbtOps.INSTANCE, this.offset).result().get());
+		tag.putInt(DATA_TIMER_KEY, this.timer);
+		tag.putBoolean(DATA_WORKINGAREA_VISIBLE_KEY, this.workingAreaVisible);
 	}
 
 	@Override
@@ -56,52 +85,21 @@ public class GravityNormalizerBlockEntity extends AddonMachineBlockEntity implem
 	}
 
 	@Override
-	public void load(CompoundTag nbt)
-	{
-		super.load(nbt);
-		this.length = Vec3i.CODEC.parse(NbtOps.INSTANCE, nbt.get(DATA_LENGTH_KEY)).result().get();
-		this.offset = Vec3i.CODEC.parse(NbtOps.INSTANCE, nbt.get(DATA_OFFSET_KEY)).result().get();
-		this.timer = nbt.getInt(DATA_TIMER_KEY);
-		this.workingAreaVisible = nbt.getBoolean(DATA_WORKINGAREA_VISIBLE_KEY);
-	}
-
-	@Override
-	public void saveAdditional(CompoundTag nbt)
-	{
-		super.saveAdditional(nbt);
-		nbt.put(DATA_LENGTH_KEY, Vec3i.CODEC.encodeStart(NbtOps.INSTANCE, this.length).result().get());
-		nbt.put(DATA_OFFSET_KEY, Vec3i.CODEC.encodeStart(NbtOps.INSTANCE, this.offset).result().get());
-		nbt.putInt(DATA_TIMER_KEY, this.timer);
-		nbt.putBoolean(DATA_WORKINGAREA_VISIBLE_KEY, this.workingAreaVisible);
-	}
-
-	@Override
 	public WrappedBlockEnergyContainer getEnergyStorage()
 	{
-		if (this.energyStorage == null)
+		if (this.energyContainer == null)
 		{
-			this.energyStorage = new WrappedBlockEnergyContainer(this, new SimpleEnergyContainer(MachinesConfig.GRAVITY_NORMALIZER_ENERGY_CAPACITY)
-			{
-				@Override
-				public long maxExtract()
-				{
-					return this.getMaxCapacity();
-				}
-
-				@Override
-				public long maxInsert()
-				{
-					return this.getMaxCapacity();
-				}
-			});
+			this.energyContainer = new WrappedBlockEnergyContainer(this, new WrappedBlockEnergyContainer(this, new InsertOnlyEnergyContainer(MachinesConfig.GRAVITY_NORMALIZER_ENERGY_CAPACITY, MachinesConfig.GRAVITY_NORMALIZER_ENERGY_CAPACITY)));
 		}
 
-		return this.energyStorage;
+		return this.energyContainer;
 	}
 
 	@Override
-	public void tick()
+	public void tick(Level level, long time, BlockState state, BlockPos pos)
 	{
+		super.tick(level, time, state, pos);
+
 		int timer = this.getTimer();
 		timer--;
 
@@ -110,7 +108,7 @@ public class GravityNormalizerBlockEntity extends AddonMachineBlockEntity implem
 			timer = this.getMaxTimer();
 			AABB workingArea = this.getWorkingArea();
 			this.doNormalize(workingArea);
-			this.setChanged();
+			this.sync();
 		}
 
 		this.setTimer(timer);
@@ -121,9 +119,9 @@ public class GravityNormalizerBlockEntity extends AddonMachineBlockEntity implem
 		Level level = this.getLevel();
 		GravityNormalizingUtils proof = GravityNormalizingUtils.INSTANCE;
 		long energyUsing = this.getEnergyUsing(workingArea);
-		PlatformEnergyManager energyManager = EnergyHooks.getBlockEnergyManager(this, null);
+		WrappedBlockEnergyContainer energyStorage = this.getEnergyStorage();
 
-		if (energyManager.extract(energyUsing, true) < energyUsing)
+		if (energyStorage.internalExtract(energyUsing, true) < energyUsing)
 		{
 			return;
 		}
@@ -135,7 +133,7 @@ public class GravityNormalizerBlockEntity extends AddonMachineBlockEntity implem
 			return;
 		}
 
-		energyManager.extract(energyUsing, false);
+		energyStorage.internalExtract(energyUsing, false);
 		int proofDuration = this.getMaxTimer() + 1;
 
 		for (LivingEntity entity : livings)
@@ -148,6 +146,12 @@ public class GravityNormalizerBlockEntity extends AddonMachineBlockEntity implem
 			proof.setProofDuration(entity, proofDuration);
 		}
 
+	}
+
+	@Override
+	public void tickSideInteractions(BlockPos pos, Predicate<Direction> filter, List<ConfigurationEntry> sideConfig)
+	{
+		TransferUtils.pullEnergyNearby(this, pos, getEnergyStorage().maxInsert(), sideConfig.get(0), filter);
 	}
 
 	public long getEnergyUsing()
@@ -183,7 +187,7 @@ public class GravityNormalizerBlockEntity extends AddonMachineBlockEntity implem
 		if (!this.getLength().equals(length))
 		{
 			this.length = length;
-			this.setChanged();
+			this.sync();
 		}
 
 	}
@@ -228,7 +232,7 @@ public class GravityNormalizerBlockEntity extends AddonMachineBlockEntity implem
 		if (!this.getOffset().equals(offset))
 		{
 			this.offset = offset;
-			this.setChanged();
+			this.sync();
 		}
 
 	}
@@ -283,9 +287,21 @@ public class GravityNormalizerBlockEntity extends AddonMachineBlockEntity implem
 		if (this.isWorkingAreaVisible() != visible)
 		{
 			this.workingAreaVisible = visible;
-			this.setChanged();
+			this.sync();
 		}
 
+	}
+
+	@Override
+	public List<ConfigurationEntry> getDefaultConfig()
+	{
+		return SIDE_CONFIG;
+	}
+
+	@Override
+	public int @NotNull [] getSlotsForFace(@NotNull Direction side)
+	{
+		return new int[]{};
 	}
 
 }

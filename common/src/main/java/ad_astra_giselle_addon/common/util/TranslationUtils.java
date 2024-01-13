@@ -6,14 +6,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang3.Range;
-
 import ad_astra_giselle_addon.common.AdAstraGiselleAddon;
 import ad_astra_giselle_addon.common.content.oxygen.IChargeMode;
 import ad_astra_giselle_addon.common.fluid.FluidHelper;
 import ad_astra_giselle_addon.common.registry.ObjectRegistry;
+import earth.terrarium.botarium.common.fluid.FluidConstants;
+import earth.terrarium.botarium.common.fluid.base.FluidContainer;
 import earth.terrarium.botarium.common.fluid.base.FluidHolder;
-import earth.terrarium.botarium.common.fluid.utils.FluidHooks;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -25,10 +24,15 @@ public class TranslationUtils
 {
 	private static final NumberFormat NUMBER_FORMAT = NumberFormat.getNumberInstance();
 	public static final int DEFAULT_DIGITS = 1;
-	private static final Map<IChargeMode, Component> CHANGE_MODES = new HashMap<>();
 
-	public static final String TEMPERATURE_RANGE = AdAstraGiselleAddon.tl("description", "temperature_range");
+	public static final String CAN_USE = AdAstraGiselleAddon.tl("description", "can_use");
+	public static final String CAN_USE_COLD = AdAstraGiselleAddon.tl("description", "can_use.cold");
+	public static final String CAN_USE_HOT = AdAstraGiselleAddon.tl("description", "can_use.hot");
+	public static final String CAN_USE_AVAILABLE = AdAstraGiselleAddon.tl("can_use", "available");
+	public static final String CAN_USE_UNAVAILABLE = AdAstraGiselleAddon.tl("can_use", "unavailable");
+
 	public static final String CHARGE_MODE = AdAstraGiselleAddon.tl("description", "charge_mode");
+	private static final Map<IChargeMode, Component> CHANGE_MODES = new HashMap<>();
 
 	static
 	{
@@ -58,9 +62,17 @@ public class TranslationUtils
 		return Component.translatable(key).withStyle(ChatFormatting.BLUE).append(": ").append(value);
 	}
 
-	public static Component descriptionTemperatureRange(Range<Integer> range)
+	public static List<Component> descriptionCanUse(boolean canUseOnCold, boolean canUseOnHot)
 	{
-		return description(TEMPERATURE_RANGE, Component.literal(range.getMinimum() + "℃ ~ " + range.getMaximum() + "℃"));
+		List<Component> list = new ArrayList<>();
+		list.add(descriptionCanUse(CAN_USE_COLD, canUseOnCold));
+		list.add(descriptionCanUse(CAN_USE_HOT, canUseOnHot));
+		return list;
+	}
+
+	private static Component descriptionCanUse(String key, boolean canUse)
+	{
+		return description(key, Component.translatable(canUse ? CAN_USE_AVAILABLE : CAN_USE_UNAVAILABLE));
 	}
 
 	public static Component descriptionChargeMode(IChargeMode mode)
@@ -75,18 +87,34 @@ public class TranslationUtils
 
 	public static Component oxygenStorage(long amount, long capacity)
 	{
-		long amountMB = FluidHooks.toMillibuckets(amount);
-		long capacityMB = FluidHooks.toMillibuckets(capacity);
+		long amountMB = FluidConstants.toMillibuckets(amount);
+		long capacityMB = FluidConstants.toMillibuckets(capacity);
 		Style style = Style.EMPTY.withColor(amountMB > 0 ? ChatFormatting.GREEN : ChatFormatting.RED);
 		return Component.translatable("tooltip.ad_astra.space_suit", amountMB, capacityMB).setStyle(style);
+	}
+
+	public static List<Component> fluid(FluidContainer container)
+	{
+		List<Component> list = new ArrayList<>();
+		int size = container.getSize();
+		List<FluidHolder> fluids = container.getFluids();
+
+		for (int i = 0; i < size; i++)
+		{
+			FluidHolder fluid = fluids.get(i);
+			long capacity = container.getTankCapacity(i);
+			list.addAll(fluid(fluid, capacity));
+		}
+
+		return list;
 	}
 
 	public static List<Component> fluid(FluidHolder fluid, long capacity)
 	{
 		String modid = ObjectRegistry.get(Registries.FLUID).getId(fluid.getFluid()).getNamespace();
 		Component name = FluidHelper.getDisplayName(fluid);
-		long amountMB = FluidHooks.toMillibuckets(fluid.getFluidAmount());
-		long capacityMB = FluidHooks.toMillibuckets(capacity);
+		long amountMB = FluidConstants.toMillibuckets(fluid.getFluidAmount());
+		long capacityMB = FluidConstants.toMillibuckets(capacity);
 		MutableComponent storage = Component.translatable("gauge_text.ad_astra.liquid_storage", amountMB, capacityMB);
 
 		List<Component> list = new ArrayList<>();

@@ -1,56 +1,89 @@
 package ad_astra_giselle_addon.common.menu;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import ad_astra_giselle_addon.common.block.entity.FuelLoaderBlockEntity;
 import ad_astra_giselle_addon.common.registry.AddonMenuTypes;
-import earth.terrarium.ad_astra.common.networking.NetworkHandler;
-import earth.terrarium.ad_astra.common.networking.packet.messages.ClientboundMachineInfoPacket;
-import earth.terrarium.ad_astra.common.screen.menu.AbstractMachineMenu;
+import earth.terrarium.adastra.common.menus.configuration.FluidConfiguration;
+import earth.terrarium.adastra.common.menus.configuration.MenuConfiguration;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 
-public class FuelLoaderMenu extends AbstractMachineMenu<FuelLoaderBlockEntity>
+public class FuelLoaderMenu extends AddonMachineMenu<FuelLoaderBlockEntity>
 {
+	public static final int FLUID_BAR_LEFT = 67;
+	public static final int FLUID_BAR_TOP = 27;
+
 	public FuelLoaderMenu(int windowId, Inventory inv, FuelLoaderBlockEntity blockEntity)
 	{
-		super(AddonMenuTypes.FUEL_LOADER.get(), windowId, inv, blockEntity, getSlots(blockEntity));
+		super(AddonMenuTypes.FUEL_LOADER.get(), windowId, inv, blockEntity);
 	}
 
-	public static Slot[] getSlots(FuelLoaderBlockEntity blockEntity)
+	@Override
+	protected void addMenuSlots()
 	{
-		List<Slot> list = new ArrayList<>();
+		FuelLoaderBlockEntity blockEntity = this.getEntity();
+		int[] slots = FuelLoaderBlockEntity.FLUID_SLOTS;
 
-		for (int i = blockEntity.getSlotFluidStart(); i < blockEntity.getSlotFluidEnd(); i++)
+		for (int i = 0; i < slots.length; i++)
 		{
-			list.add(new Slot(blockEntity, i, 95, 28 + 30 * i)
+			this.addSlot(new Slot(blockEntity, slots[i], 95, 28 + 30 * i)
 			{
 				@Override
 				public boolean mayPlace(ItemStack pStack)
 				{
 					return blockEntity.canPlaceItemThroughFace(this.index, pStack, null);
 				}
+
 			});
+
 		}
 
-		return list.toArray(new Slot[0]);
 	}
 
 	@Override
-	public int getPlayerInventoryOffset()
+	protected void addConfigSlots()
 	{
-		return 16;
+		FuelLoaderBlockEntity blockEntity = this.getEntity();
+		MenuHelper.addConfigSlots(this, this::addConfigSlot, 0, FuelLoaderBlockEntity.FLUID_SOURCE_SLOTS);
+		MenuHelper.addConfigSlots(this, this::addConfigSlot, 1, FuelLoaderBlockEntity.FLUID_SINK_SLOTS);
+		this.addConfigSlot(new FluidConfiguration(2, FLUID_BAR_LEFT, FLUID_BAR_TOP, blockEntity.getFluidContainer(), 0));
 	}
 
 	@Override
-	public void syncClientScreen()
+	protected void addConfigSlot(MenuConfiguration configuration)
 	{
-		FuelLoaderBlockEntity machine = this.getMachine();
-		Player player = this.player;
-		NetworkHandler.CHANNEL.sendToPlayer(new ClientboundMachineInfoPacket(0L, machine.getFluidContainer().getFluids()), player);
+		super.addConfigSlot(configuration);
+	}
+
+	@Override
+	public int startIndex()
+	{
+		return FuelLoaderBlockEntity.FLUID_SLOTS[0];
+	}
+
+	@Override
+	public int getContainerInputEnd()
+	{
+		int[] slots = FuelLoaderBlockEntity.FLUID_SLOTS;
+		return slots[slots.length - 1];
+	}
+
+	@Override
+	public int getInventoryStart()
+	{
+		return FuelLoaderBlockEntity.CONTAINER_SIZE;
+	}
+
+	@Override
+	public int getPlayerInvXOffset()
+	{
+		return super.getPlayerInvXOffset();
+	}
+
+	@Override
+	public int getPlayerInvYOffset()
+	{
+		return 100;
 	}
 
 }
