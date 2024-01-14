@@ -68,9 +68,9 @@ public class AdAstraGiselleAddonClient
 
 	public static void registerBlockEntityRenderer()
 	{
-		ClientHooks.registerBlockEntityRenderers(AddonBlockEntityTypes.FUEL_LOADER.get(), context -> new WorkingAreaBlockEntityRenderer<>(context));
-		ClientHooks.registerBlockEntityRenderers(AddonBlockEntityTypes.GRAVITY_NORMALIZER.get(), context -> new WorkingAreaBlockEntityRenderer<>(context));
-		ClientHooks.registerBlockEntityRenderers(AddonBlockEntityTypes.ROCKET_SENSOR.get(), context -> new WorkingAreaBlockEntityRenderer<>(context));
+		ClientHooks.registerBlockEntityRenderers(AddonBlockEntityTypes.FUEL_LOADER.get(), WorkingAreaBlockEntityRenderer::new);
+		ClientHooks.registerBlockEntityRenderers(AddonBlockEntityTypes.GRAVITY_NORMALIZER.get(), WorkingAreaBlockEntityRenderer::new);
+		ClientHooks.registerBlockEntityRenderers(AddonBlockEntityTypes.ROCKET_SENSOR.get(), WorkingAreaBlockEntityRenderer::new);
 	}
 
 	public static void registerItemTooltip(Consumer<TriConsumer<ItemStack, TooltipFlag, List<Component>>> register)

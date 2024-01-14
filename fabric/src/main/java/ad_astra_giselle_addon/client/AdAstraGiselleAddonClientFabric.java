@@ -19,7 +19,7 @@ public class AdAstraGiselleAddonClientFabric implements ClientModInitializer
 	@Override
 	public void onInitializeClient()
 	{
-		AdAstraGiselleAddonClient.registerScreens();
+		AdAstraGiselleAddonClient.initializeClient();
 		AdAstraGiselleAddonClient.onRegisterHud(hud -> HudRenderCallback.EVENT.register(hud::renderHud));
 		AdAstraGiselleAddonClient.registerItemTooltip(register -> ItemTooltipCallback.EVENT.register(register::accept));
 

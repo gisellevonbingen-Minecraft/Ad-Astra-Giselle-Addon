@@ -16,7 +16,7 @@ public class NetheriteOxygenCanItem extends OxygenCanItem
 	{
 		return ItemsConfig.NETHERITE_OXYGEN_CAN_FLUID_CAPACITY;
 	}
-	
+
 	@Override
 	protected long getFluidTransfer()
 	{

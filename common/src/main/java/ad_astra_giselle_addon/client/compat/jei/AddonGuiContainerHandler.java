@@ -64,7 +64,7 @@ public abstract class AddonGuiContainerHandler<T extends MachineScreen<?, ?>> im
 
 	public boolean testRecipeClickable(T screen)
 	{
-		return true;
+		return !screen.canConfigure();
 	}
 
 	public abstract Rectangle getRecipeClickableAreaBounds(T screen);

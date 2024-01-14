@@ -117,7 +117,7 @@ public class OxygenChargerUtils
 		BlockPos pos = living.blockPosition();
 		boolean isCold = TemperatureApi.API.isCold(level, pos);
 		boolean isHot = TemperatureApi.API.isHot(level, pos);
-		
+
 		return LivingHelper.getInventoryItems(living).stream().map(OxygenChargerUtils::get).filter(oxygenCharger ->
 		{
 			if (oxygenCharger != null && oxygenCharger.canUse(isCold, isHot))

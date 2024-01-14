@@ -148,9 +148,9 @@ public class AutomationNasaWorkbenchBlockEntity extends RecipeMachineBlockEntity
 
 		this.spawnResultParticles();
 
-		for (int i = 0; i < INPUT_SLOTS.length; i++)
+		for (int element : INPUT_SLOTS)
 		{
-			this.getItem(INPUT_SLOTS[i]).shrink(1);
+			this.getItem(element).shrink(1);
 		}
 
 		ItemUtils.addItem(this, this.recipe.result(), OUTPUT_SLOTS);

@@ -53,7 +53,12 @@ public class TranslationUtils
 	public static Component getItemTooltip(String namespace, String path, String suffix)
 	{
 		String tooltipKey = new StringBuilder().append("item.").append(namespace).append(".").append(path).append(".tooltip").append(suffix).toString();
-		return Component.translatable(tooltipKey).setStyle(Style.EMPTY.withColor(ChatFormatting.GREEN));
+		return styleItemTooltip(Component.translatable(tooltipKey));
+	}
+
+	public static Component styleItemTooltip(Component component)
+	{
+		return Component.empty().append(component).setStyle(Style.EMPTY.withColor(ChatFormatting.GREEN));
 	}
 
 	public static Component description(String key, Component component)
@@ -72,7 +77,7 @@ public class TranslationUtils
 
 	private static Component descriptionCanUse(String key, boolean canUse)
 	{
-		return description(key, Component.translatable(canUse ? CAN_USE_AVAILABLE : CAN_USE_UNAVAILABLE));
+		return description(key, Component.translatable(canUse ? CAN_USE_AVAILABLE : CAN_USE_UNAVAILABLE).withStyle(canUse ? ChatFormatting.GREEN : ChatFormatting.RED));
 	}
 
 	public static Component descriptionChargeMode(IChargeMode mode)

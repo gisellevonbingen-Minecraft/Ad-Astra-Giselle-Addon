@@ -4,12 +4,18 @@ import java.awt.Rectangle;
 
 import earth.terrarium.adastra.client.utils.GuiUtils;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.resources.ResourceLocation;
 
 public class GuiUtils2
 {
 	public static final int ARROW_WIDTH = 20;
 	public static final int ARROW_HEIGHT = 12;
+
+	public static Rectangle getBounds(AbstractWidget widget)
+	{
+		return new Rectangle(widget.getX(), widget.getY(), widget.getWidth(), widget.getHeight());
+	}
 
 	public static boolean isHovering(Rectangle bounds, double x, double y)
 	{

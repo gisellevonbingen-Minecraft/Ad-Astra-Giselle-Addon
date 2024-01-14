@@ -1,6 +1,5 @@
 package ad_astra_giselle_addon.client.screen;
 
-import java.awt.Rectangle;
 import java.text.NumberFormat;
 
 import org.jetbrains.annotations.Nullable;
@@ -190,7 +189,7 @@ public abstract class AddonMachineScreen<MENU extends MachineMenu<BLOCK_ENTITY>,
 
 	public int getTextColour()
 	{
-		return 0x404040;
+		return 0x303030;
 	}
 
 	public FluidBarWidget getFluidBarWidget(int tank)
@@ -209,11 +208,6 @@ public abstract class AddonMachineScreen<MENU extends MachineMenu<BLOCK_ENTITY>,
 		}
 
 		return null;
-	}
-
-	public Rectangle getBounds(AbstractWidget widget)
-	{
-		return new Rectangle(this.leftPos() + widget.getX(), this.topPos() + widget.getY(), widget.getWidth(), widget.getHeight());
 	}
 
 }

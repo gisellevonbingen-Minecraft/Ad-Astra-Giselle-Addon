@@ -6,7 +6,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import ad_astra_giselle_addon.common.content.proof.GravityNormalizingUtils;
-import earth.terrarium.adastra.common.constants.PlanetConstants;
 import earth.terrarium.adastra.common.systems.GravityApiImpl;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -19,11 +18,11 @@ public abstract class GravityApiImplMixin
 	{
 		float gravity = callbackInfo.getReturnValueF();
 
-		if (entity instanceof LivingEntity living && gravity != PlanetConstants.EARTH_GRAVITY)
+		if (entity instanceof LivingEntity living && gravity != 1.0F)
 		{
 			if (GravityNormalizingUtils.INSTANCE.tryProvideProof(living))
 			{
-				callbackInfo.setReturnValue(PlanetConstants.EARTH_GRAVITY);
+				callbackInfo.setReturnValue(1.0F);
 			}
 
 		}

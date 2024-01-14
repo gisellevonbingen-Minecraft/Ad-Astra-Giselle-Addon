@@ -32,7 +32,7 @@ public class GravityNormalizerScreen extends AddonMachineScreen<GravityNormalize
 	public static final ResourceLocation TEXTURE = AdAstraGiselleAddon.rl("textures/gui/container/gravity_normalizer.png");
 	public static final int WIDTH = 176;
 	public static final int HEIGHT = 196;
-	
+
 	public static final Component VECTOR_ELEMENT_MINUS_TEXT = Component.literal("-");
 	public static final Component VECTOR_ELEMENT_PLUS_TEXT = Component.literal("+");
 	public static final String VECTOR_ELEMENT_TOOLTIP = ctl("gravity_normalizer.vector_element_tooltip");

@@ -170,7 +170,7 @@ public class FuelLoaderBlockEntity extends ContainerMachineBlockEntity implement
 
 	public void processTank()
 	{
-		WrappedBlockFluidContainer tank = this.getFluidContainer();
+		FluidContainer tank = FluidContainer.of(this, null);
 
 		for (int slot : FLUID_SOURCE_SLOTS)
 		{
@@ -249,8 +249,9 @@ public class FuelLoaderBlockEntity extends ContainerMachineBlockEntity implement
 
 		if (to != null)
 		{
-			FluidContainer from = this.getFluidContainer();
-			return FluidUtils2.moveFluidAny(from, to, FluidPredicates::isFuel, transfer, false);
+			FluidContainer from = FluidContainer.of(this, null);
+			FluidHolder moved = FluidUtils2.moveFluidAny(from, to, FluidPredicates::isFuel, transfer, false);
+			return moved;
 		}
 		else
 		{

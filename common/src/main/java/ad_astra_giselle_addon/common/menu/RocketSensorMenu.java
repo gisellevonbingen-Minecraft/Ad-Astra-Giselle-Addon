@@ -53,4 +53,10 @@ public class RocketSensorMenu extends AddonMachineMenu<RocketSensorBlockEntity>
 		return 130;
 	}
 
+	@Override
+	protected void addPlayerInvSlots()
+	{
+
+	}
+
 }

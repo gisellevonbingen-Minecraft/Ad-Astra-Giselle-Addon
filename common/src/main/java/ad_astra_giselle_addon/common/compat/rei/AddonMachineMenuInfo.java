@@ -10,6 +10,7 @@ import me.shedaniel.rei.api.common.transfer.info.stack.SlotAccessor;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.crafting.Recipe;
 
+@SuppressWarnings({"deprecation", "removal"})
 public class AddonMachineMenuInfo<MENU extends AddonMachineMenu<?>, DISPLAY extends Display> implements SimplePlayerInventoryMenuInfo<MENU, DISPLAY>
 {
 	private final DISPLAY display;

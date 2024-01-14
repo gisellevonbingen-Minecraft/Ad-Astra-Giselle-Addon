@@ -6,6 +6,7 @@ import ad_astra_giselle_addon.common.registry.AddonBlockEntityTypes;
 import ad_astra_giselle_addon.common.registry.AddonBlocks;
 import ad_astra_giselle_addon.common.util.TranslationUtils;
 import earth.terrarium.adastra.common.blocks.base.MachineBlock;
+import earth.terrarium.adastra.common.utils.TooltipUtils;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -33,7 +34,7 @@ public class FuelLoaderBlock extends MachineBlock
 	public void appendHoverText(ItemStack item, BlockGetter level, List<Component> tooltip, TooltipFlag flag)
 	{
 		super.appendHoverText(item, level, tooltip, flag);
-		tooltip.add(TOOLTIP);
+		TooltipUtils.addDescriptionComponent(tooltip, TOOLTIP);
 	}
 
 }

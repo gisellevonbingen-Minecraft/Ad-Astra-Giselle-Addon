@@ -10,9 +10,9 @@ public class MenuHelper
 {
 	public static void addConfigSlots(MachineMenu<?> menu, Consumer<SlotConfiguration> addConfigSlot, int index, int[] slots)
 	{
-		for (int i = 0; i < slots.length; i++)
+		for (int slotNumber : slots)
 		{
-			Slot slot = menu.getSlot(slots[i]);
+			Slot slot = menu.getSlot(slotNumber);
 			addConfigSlot.accept(new SlotConfiguration(index, slot.x, slot.y));
 		}
 

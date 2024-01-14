@@ -3,6 +3,7 @@ package ad_astra_giselle_addon.client.compat.rei;
 import java.awt.Rectangle;
 
 import ad_astra_giselle_addon.client.screen.FuelLoaderScreen;
+import ad_astra_giselle_addon.client.screen.GuiUtils2;
 import ad_astra_giselle_addon.common.compat.rei.AddonReiCommonPlugin;
 import dev.architectury.event.CompoundEventResult;
 import earth.terrarium.botarium.common.fluid.base.FluidHolder;
@@ -17,7 +18,7 @@ public class FuelLoaderGuiContainerHandler extends AddonClickArea<FuelLoaderScre
 	@Override
 	public Rectangle getBounds(FuelLoaderScreen screen)
 	{
-		return screen.getBounds(screen.getFluidBarWidget(0));
+		return GuiUtils2.getBounds(screen.getFluidBarWidget(0));
 	}
 
 	@Override
@@ -29,7 +30,7 @@ public class FuelLoaderGuiContainerHandler extends AddonClickArea<FuelLoaderScre
 	@Override
 	public CompoundEventResult<EntryStack<?>> provide(Screen _screen, Point mouse)
 	{
-		if (_screen instanceof FuelLoaderScreen screen)
+		if (_screen instanceof FuelLoaderScreen screen && !screen.canConfigure())
 		{
 			if (this.getBounds(screen).contains(mouse.getX(), mouse.getY()))
 			{

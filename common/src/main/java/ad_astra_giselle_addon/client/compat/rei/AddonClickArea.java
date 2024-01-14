@@ -6,13 +6,13 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import earth.terrarium.adastra.client.screens.base.MachineScreen;
 import me.shedaniel.math.Point;
 import me.shedaniel.rei.api.client.registry.screen.ClickArea;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
-import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 
-public abstract class AddonClickArea<T extends Screen> implements ClickArea<T>
+public abstract class AddonClickArea<T extends MachineScreen<?, ?>> implements ClickArea<T>
 {
 	@Override
 	public Result handle(ClickAreaContext<T> context)
@@ -41,7 +41,7 @@ public abstract class AddonClickArea<T extends Screen> implements ClickArea<T>
 	{
 		T screen = context.getScreen();
 		Point mouse = context.getMousePosition();
-		return this.getBounds(screen).contains(mouse.getX(), mouse.getY());
+		return !screen.canConfigure() && this.getBounds(screen).contains(mouse.getX(), mouse.getY());
 	}
 
 	public static Result category(CategoryIdentifier<?> category)

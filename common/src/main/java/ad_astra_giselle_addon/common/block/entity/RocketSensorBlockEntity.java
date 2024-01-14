@@ -97,11 +97,13 @@ public class RocketSensorBlockEntity extends ContainerMachineBlockEntity impleme
 		{
 			this.cachedTarget = newTarget;
 			this.analogSignal = analogSignal;
+			this.setChanged();
 			this.sync();
 		}
 		else if (this.getAnalogSignal() != analogSignal)
 		{
 			this.analogSignal = analogSignal;
+			this.setChanged();
 			this.sync();
 		}
 

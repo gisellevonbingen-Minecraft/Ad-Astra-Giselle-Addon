@@ -4,10 +4,10 @@ import java.util.List;
 
 import ad_astra_giselle_addon.common.registry.AddonBlockEntityTypes;
 import ad_astra_giselle_addon.common.util.TranslationUtils;
-import earth.terrarium.adastra.AdAstra;
 import earth.terrarium.adastra.common.blocks.base.MachineBlock;
+import earth.terrarium.adastra.common.constants.ConstantComponents;
+import earth.terrarium.adastra.common.utils.TooltipUtils;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.BlockGetter;
@@ -16,7 +16,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class AutomationNasaWorkbenchBlock extends MachineBlock
 {
-	public static final Component TOOLTIP = TranslationUtils.getItemTooltip(new ResourceLocation(AdAstra.MOD_ID, "nasa_workbench"));
+	public static final Component TOOLTIP = TranslationUtils.styleItemTooltip(ConstantComponents.NASA_WORKBENCH_INFO);
 
 	public AutomationNasaWorkbenchBlock(Properties properties)
 	{
@@ -33,7 +33,7 @@ public class AutomationNasaWorkbenchBlock extends MachineBlock
 	public void appendHoverText(ItemStack item, BlockGetter level, List<Component> tooltip, TooltipFlag flag)
 	{
 		super.appendHoverText(item, level, tooltip, flag);
-		tooltip.add(TOOLTIP);
+		TooltipUtils.addDescriptionComponent(tooltip, TOOLTIP);
 	}
 
 }

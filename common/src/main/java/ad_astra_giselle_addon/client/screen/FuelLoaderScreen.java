@@ -25,5 +25,5 @@ public class FuelLoaderScreen extends AddonMachineScreen<FuelLoaderMenu, FuelLoa
 	{
 		return TranslationUtils.fluid(this.entity.getFluidContainer());
 	}
-	
+
 }

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 import ad_astra_giselle_addon.client.screen.FuelLoaderScreen;
+import ad_astra_giselle_addon.client.screen.GuiUtils2;
 import earth.terrarium.adastra.client.components.machines.FluidBarWidget;
 import earth.terrarium.botarium.common.fluid.base.FluidHolder;
 import mezz.jei.api.helpers.IJeiHelpers;
@@ -32,7 +33,7 @@ public class FuelLoaderGuiContainerHandler extends AddonGuiContainerHandler<Fuel
 
 		if (widget != null)
 		{
-			return screen.getBounds(widget);
+			return GuiUtils2.getBounds(widget);
 		}
 		else
 		{
