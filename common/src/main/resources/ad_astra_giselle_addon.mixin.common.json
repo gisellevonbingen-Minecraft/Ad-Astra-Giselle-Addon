@@ -6,6 +6,7 @@
 	"mixins": [
 		"minecraft.EntityMixin",
 		"minecraft.LivingEntityMixin",
+		"minecraft.ShapedRecipeAccessor",
 		"ad_astra.GravityApiImplMixin",
 		"ad_astra.OxygenApiImplMixin",
 		"ad_astra.SpaceSuitItemMixin"

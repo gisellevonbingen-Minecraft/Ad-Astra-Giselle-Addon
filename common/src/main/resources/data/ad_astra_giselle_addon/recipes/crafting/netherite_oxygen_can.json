@@ -1,5 +1,5 @@
 {
-	"type": "minecraft:crafting_shaped",
+	"type": "ad_astra_giselle_addon:can_upgrading",
 	"result": {
 		"item": "ad_astra_giselle_addon:netherite_oxygen_can"
 	},

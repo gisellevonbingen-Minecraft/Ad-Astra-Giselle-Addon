@@ -167,8 +167,12 @@ public class FuelLoaderBlockEntity extends ContainerMachineBlockEntity implement
 	{
 		super.serverTick(level, time, state, pos);
 
-		this.processTank();
-		this.exchangeFuelItemAround();
+		if (this.canFunction())
+		{
+			this.processTank();
+			this.exchangeFuelItemAround();
+		}
+
 	}
 
 	public void processTank()

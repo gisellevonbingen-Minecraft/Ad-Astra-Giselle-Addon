@@ -7,7 +7,6 @@ import earth.terrarium.adastra.common.menus.base.MachineMenu;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.MenuType;
-import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
 public abstract class AddonMachineMenu<T extends BlockEntity & SideConfigurable & Container> extends MachineMenu<T>
@@ -25,10 +24,4 @@ public abstract class AddonMachineMenu<T extends BlockEntity & SideConfigurable 
 
 	@Override
 	public abstract int getInventoryStart();
-
-	public void onAddonRecipeTransfer(Recipe<?> recipe)
-	{
-
-	}
-
 }

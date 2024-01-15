@@ -100,18 +100,22 @@ public class GravityNormalizerBlockEntity extends EnergyContainerMachineBlockEnt
 	{
 		super.tick(level, time, state, pos);
 
-		int timer = this.getTimer();
-		timer--;
-
-		if (timer <= 0)
+		if (this.canFunction())
 		{
-			timer = this.getMaxTimer();
-			AABB workingArea = this.getWorkingArea();
-			this.doNormalize(workingArea);
-			this.sync();
+			int timer = this.getTimer();
+			timer--;
+
+			if (timer <= 0)
+			{
+				timer = this.getMaxTimer();
+				AABB workingArea = this.getWorkingArea();
+				this.doNormalize(workingArea);
+				this.sync();
+			}
+
+			this.setTimer(timer);
 		}
 
-		this.setTimer(timer);
 	}
 
 	protected void doNormalize(AABB workingArea)
