@@ -6,8 +6,8 @@ import java.util.List;
 
 import ad_astra_giselle_addon.common.AdAstraGiselleAddon;
 import ad_astra_giselle_addon.common.entity.EntityCustomDataHelper;
-import ad_astra_giselle_addon.common.fluid.FluidUtils2;
 import ad_astra_giselle_addon.common.util.NBTUtils;
+import earth.terrarium.botarium.common.fluid.FluidConstants;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
@@ -22,7 +22,7 @@ public abstract class ProofAbstractUtils
 
 	public static final int GENERAL_PROOF_INTERVAL = 10;
 	public static final int OXYGEN_PROOF_INTERVAL = 30;
-	public static final long OXYGEN_PROOF_USING = FluidUtils2.MILLI_BUCKET;
+	public static final long OXYGEN_PROOF_USING = FluidConstants.fromMillibuckets(1L);
 
 	public static CompoundTag getAllCustomData(LivingEntity living)
 	{

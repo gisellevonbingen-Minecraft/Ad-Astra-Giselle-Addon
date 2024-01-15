@@ -20,6 +20,7 @@ import earth.terrarium.adastra.common.blockentities.base.sideconfig.Configuratio
 import earth.terrarium.adastra.common.constants.ConstantComponents;
 import earth.terrarium.adastra.common.entities.vehicles.Vehicle;
 import earth.terrarium.adastra.common.utils.TransferUtils;
+import earth.terrarium.botarium.common.fluid.FluidConstants;
 import earth.terrarium.botarium.common.fluid.base.BotariumFluidBlock;
 import earth.terrarium.botarium.common.fluid.base.FluidContainer;
 import earth.terrarium.botarium.common.fluid.base.FluidHolder;
@@ -88,7 +89,7 @@ public class FuelLoaderBlockEntity extends ContainerMachineBlockEntity implement
 	{
 		if (this.fluidTank == null)
 		{
-			this.fluidTank = new WrappedBlockFluidContainer(this, new SimpleFluidContainer(tank -> MachinesConfig.FUEL_LOADER_FLUID_CAPACITY, 1, FluidPredicates::isFuel));
+			this.fluidTank = new WrappedBlockFluidContainer(this, new SimpleFluidContainer(tank -> FluidConstants.fromMillibuckets(MachinesConfig.FUEL_LOADER_FLUID_CAPACITY), 1, FluidPredicates::isFuel));
 		}
 
 		return this.fluidTank;
@@ -104,8 +105,10 @@ public class FuelLoaderBlockEntity extends ContainerMachineBlockEntity implement
 		TransferUtils.pushItemsNearby(this, pos, FLUID_SINK_SLOTS, sideConfig.get(1), filter);
 		TransferUtils.pullItemsNearby(this, pos, FLUID_SINK_SLOTS, sideConfig.get(1), filter);
 
-		TransferUtils.pushFluidNearby(this, pos, this.getFluidContainer(), MachinesConfig.FUEL_LOADER_FLUID_CAPACITY, 0, sideConfig.get(2), filter);
-		TransferUtils.pullFluidNearby(this, pos, this.getFluidContainer(), MachinesConfig.FUEL_LOADER_FLUID_CAPACITY, 0, sideConfig.get(2), filter);
+		WrappedBlockFluidContainer fluidContainer = this.getFluidContainer();
+		long fluidCapacity = FluidConstants.fromMillibuckets(MachinesConfig.FUEL_LOADER_FLUID_CAPACITY);
+		TransferUtils.pushFluidNearby(this, pos, fluidContainer, fluidCapacity, 0, sideConfig.get(2), filter);
+		TransferUtils.pullFluidNearby(this, pos, fluidContainer, fluidCapacity, 0, sideConfig.get(2), filter);
 	}
 
 	@Override
@@ -240,7 +243,7 @@ public class FuelLoaderBlockEntity extends ContainerMachineBlockEntity implement
 
 	public FluidHolder giveFuel(Vehicle vehicle)
 	{
-		return this.giveFuel(vehicle, MachinesConfig.FUEL_LOADER_FLUID_TRANSFER);
+		return this.giveFuel(vehicle, FluidConstants.fromMillibuckets(MachinesConfig.FUEL_LOADER_FLUID_TRANSFER));
 	}
 
 	private FluidHolder giveFuel(Vehicle vehicle, long transfer)

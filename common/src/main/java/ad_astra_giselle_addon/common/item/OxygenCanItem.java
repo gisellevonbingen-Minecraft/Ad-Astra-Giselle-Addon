@@ -13,6 +13,7 @@ import ad_astra_giselle_addon.common.util.NBTUtils;
 import ad_astra_giselle_addon.common.util.TranslationUtils;
 import earth.terrarium.adastra.common.registry.ModFluids;
 import earth.terrarium.adastra.common.utils.TooltipUtils;
+import earth.terrarium.botarium.common.fluid.FluidConstants;
 import earth.terrarium.botarium.common.fluid.base.BotariumFluidItem;
 import earth.terrarium.botarium.common.fluid.base.FluidContainer;
 import earth.terrarium.botarium.common.fluid.base.FluidHolder;
@@ -50,12 +51,12 @@ public class OxygenCanItem extends Item implements BotariumFluidItem<WrappedItem
 
 	protected long getFluidCapacity()
 	{
-		return ItemsConfig.OXYGEN_CAN_FLUID_CAPACITY;
+		return FluidConstants.fromMillibuckets(ItemsConfig.OXYGEN_CAN_FLUID_CAPACITY);
 	}
 
 	protected long getFluidTransfer()
 	{
-		return ItemsConfig.OXYGEN_CAN_FLUID_TRANSFER;
+		return FluidConstants.fromMillibuckets(ItemsConfig.OXYGEN_CAN_FLUID_TRANSFER);
 	}
 
 	@Override
@@ -135,7 +136,7 @@ public class OxygenCanItem extends Item implements BotariumFluidItem<WrappedItem
 
 			for (int i = 0; i < fluids.size(); i++)
 			{
-				TooltipUtils.getFluidComponent(fluids.get(i), fluidContainer.getTankCapacity(i));
+				tooltip.add(TooltipUtils.getFluidComponent(fluids.get(i), fluidContainer.getTankCapacity(i)));
 			}
 
 		}

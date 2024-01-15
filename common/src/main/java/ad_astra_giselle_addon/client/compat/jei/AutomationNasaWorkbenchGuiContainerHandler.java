@@ -1,7 +1,6 @@
 package ad_astra_giselle_addon.client.compat.jei;
 
 import java.awt.Rectangle;
-import java.util.Collections;
 import java.util.List;
 
 import ad_astra_giselle_addon.client.screen.AutomationNasaWorkbenchScreen;
@@ -26,7 +25,7 @@ public class AutomationNasaWorkbenchGuiContainerHandler extends AddonGuiContaine
 	@Override
 	public List<Component> getRecipeTooltip(AutomationNasaWorkbenchScreen screen)
 	{
-		return Collections.singletonList(screen.getCookTimeTooltip());
+		return screen.getCookTimeTooltip();
 	}
 
 }

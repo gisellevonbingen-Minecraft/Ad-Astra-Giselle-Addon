@@ -44,7 +44,7 @@ public class PneumaticCraftProofProvidingHandler
 			int airUsing = AddonPneumaticCraftConfig.SPACE_BREATHING_AIR_USING;
 			long oxygenUsing = ProofAbstractUtils.OXYGEN_PROOF_USING;
 
-			if (this.useAirAndOxygen(living, upgradeHandler, airUsing, oxygenUsing))
+			if (this.useAirAndOxygen(living, upgradeHandler, airUsing, oxygenUsing, false))
 			{
 				living.setAirSupply(airSupply + airDuration);
 			}
@@ -58,7 +58,7 @@ public class PneumaticCraftProofProvidingHandler
 		SpaceBreathingCommonHandler upgradeHandler = AddonCommonUpgradeHandlers.SPACE_BREATHING;
 		int airUsing = AddonPneumaticCraftConfig.SPACE_BREATHING_AIR_USING;
 		long oxygenUsing = ProofAbstractUtils.OXYGEN_PROOF_USING;
-		return this.useAirAndOxygen(living, upgradeHandler, airUsing, oxygenUsing) ? ProofAbstractUtils.OXYGEN_PROOF_INTERVAL : 0;
+		return this.useAirAndOxygen(living, upgradeHandler, airUsing, oxygenUsing, false) ? ProofAbstractUtils.OXYGEN_PROOF_INTERVAL : 0;
 	}
 
 	public int onLivingSpaceFireProof(LivingEntity living)
@@ -82,7 +82,7 @@ public class PneumaticCraftProofProvidingHandler
 		return this.useAir(living, upgradeHandler, airUsing, false) ? ProofAbstractUtils.GENERAL_PROOF_INTERVAL : 0;
 	}
 
-	public boolean useAirAndOxygen(LivingEntity living, SpaceBreathingCommonHandler upgradeHandler, int airUsing, long oxygenUsing)
+	public boolean useAirAndOxygen(LivingEntity living, SpaceBreathingCommonHandler upgradeHandler, int airUsing, long oxygenUsing, boolean simulate)
 	{
 		if (this.useAir(living, upgradeHandler, airUsing, true))
 		{
@@ -92,10 +92,14 @@ public class PneumaticCraftProofProvidingHandler
 
 				if (oxygenCharger != null)
 				{
-					this.useAir(living, upgradeHandler, airUsing, false);
+					if (!simulate)
+					{
+						this.useAir(living, upgradeHandler, airUsing, false);
 
-					FluidContainer fluidContainer = oxygenCharger.getFluidContainer();
-					FluidUtils2.extractFluid(fluidContainer, FluidPredicates::isOxygen, oxygenUsing, false);
+						FluidContainer fluidContainer = oxygenCharger.getFluidContainer();
+						FluidUtils2.extractFluid(fluidContainer, FluidPredicates::isOxygen, oxygenUsing, false);
+					}
+
 					return true;
 				}
 

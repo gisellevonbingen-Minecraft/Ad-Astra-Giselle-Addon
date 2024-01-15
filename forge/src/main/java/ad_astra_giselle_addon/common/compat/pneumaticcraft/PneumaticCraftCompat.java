@@ -6,7 +6,10 @@ import com.mojang.brigadier.builder.ArgumentBuilder;
 
 import ad_astra_giselle_addon.client.compat.pneumaticcraft.AddonPneumaticCraftCompatClient;
 import ad_astra_giselle_addon.common.compat.CompatibleMod;
+import ad_astra_giselle_addon.common.content.proof.AcidRainProofUtils;
+import ad_astra_giselle_addon.common.content.proof.GravityNormalizingUtils;
 import ad_astra_giselle_addon.common.content.proof.SpaceFireProofUtils;
+import ad_astra_giselle_addon.common.content.proof.SpaceOxygenProofUtils;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.resources.ResourceLocation;
@@ -37,8 +40,10 @@ public class PneumaticCraftCompat extends CompatibleMod
 
 		PneumaticCraftProofProvidingHandler handler = new PneumaticCraftProofProvidingHandler();
 		MinecraftForge.EVENT_BUS.register(handler);
+		SpaceOxygenProofUtils.INSTANCE.register(handler::onLivingSpaceOxygenProof);
 		SpaceFireProofUtils.INSTANCE.register(handler::onLivingSpaceFireProof);
-		
+		AcidRainProofUtils.INSTANCE.register(handler::onLivingVenusAcidProof);
+		GravityNormalizingUtils.INSTANCE.register(handler::onLivingGravityNormalizing);
 
 		DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> AddonPneumaticCraftCompatClient::new);
 	}

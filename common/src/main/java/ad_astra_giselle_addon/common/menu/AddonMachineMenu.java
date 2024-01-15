@@ -26,7 +26,7 @@ public abstract class AddonMachineMenu<T extends BlockEntity & SideConfigurable 
 	@Override
 	public abstract int getInventoryStart();
 
-	public void onRecipeTransfer(Recipe<?> recipe)
+	public void onAddonRecipeTransfer(Recipe<?> recipe)
 	{
 
 	}
