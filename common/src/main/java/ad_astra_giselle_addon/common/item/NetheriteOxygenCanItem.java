@@ -2,6 +2,7 @@ package ad_astra_giselle_addon.common.item;
 
 import ad_astra_giselle_addon.common.config.ItemsConfig;
 import ad_astra_giselle_addon.common.content.oxygen.IOxygenCharger;
+import earth.terrarium.botarium.common.fluid.FluidConstants;
 import earth.terrarium.botarium.common.item.ItemStackHolder;
 
 public class NetheriteOxygenCanItem extends OxygenCanItem
@@ -14,13 +15,13 @@ public class NetheriteOxygenCanItem extends OxygenCanItem
 	@Override
 	protected long getFluidCapacity()
 	{
-		return ItemsConfig.NETHERITE_OXYGEN_CAN_FLUID_CAPACITY;
+		return FluidConstants.fromMillibuckets(ItemsConfig.NETHERITE_OXYGEN_CAN_FLUID_CAPACITY);
 	}
 
 	@Override
 	protected long getFluidTransfer()
 	{
-		return ItemsConfig.NETHERITE_OXYGEN_CAN_FLUID_TRANSFER;
+		return FluidConstants.fromMillibuckets(ItemsConfig.NETHERITE_OXYGEN_CAN_FLUID_TRANSFER);
 	}
 
 	@Override

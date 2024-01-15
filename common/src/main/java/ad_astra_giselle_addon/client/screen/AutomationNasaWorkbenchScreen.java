@@ -1,13 +1,15 @@
 package ad_astra_giselle_addon.client.screen;
 
 import java.awt.Rectangle;
+import java.util.ArrayList;
+import java.util.List;
 
 import ad_astra_giselle_addon.common.AdAstraGiselleAddon;
 import ad_astra_giselle_addon.common.block.entity.AutomationNasaWorkbenchBlockEntity;
 import ad_astra_giselle_addon.common.menu.AutomationNasaWorkbenchMenu;
+import earth.terrarium.adastra.common.utils.TooltipUtils;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
@@ -16,6 +18,8 @@ public class AutomationNasaWorkbenchScreen extends AddonMachineScreen<Automation
 	public static final ResourceLocation TEXTURE = AdAstraGiselleAddon.rl("textures/gui/container/automation_nasa_workbench.png");
 	public static final int WIDTH = 177;
 	public static final int HEIGHT = 224;
+	public static final int ARROW_LEFT = 79;
+	public static final int ARROW_TOP = 56;
 
 	public AutomationNasaWorkbenchScreen(AutomationNasaWorkbenchMenu menu, Inventory inventory, Component title)
 	{
@@ -30,7 +34,8 @@ public class AutomationNasaWorkbenchScreen extends AddonMachineScreen<Automation
 		AutomationNasaWorkbenchBlockEntity blockEntity = this.entity;
 		int cookTime = blockEntity.cookTime();
 		int cookTimeTotal = blockEntity.cookTimeTotal();
-		GuiUtils2.drawArrow(guiGraphics, this.getArrowBounds(), cookTime, cookTimeTotal);
+		Rectangle arrowBounds = this.getArrowBounds();
+		GuiUtils2.drawArrow(guiGraphics, arrowBounds.x, arrowBounds.y, cookTime, cookTimeTotal);
 	}
 
 	@Override
@@ -42,31 +47,28 @@ public class AutomationNasaWorkbenchScreen extends AddonMachineScreen<Automation
 		{
 			if (shouldShowRecipeTooltip())
 			{
-				guiGraphics.renderTooltip(this.font, this.getCookTimeTooltip(), mouseX, mouseY);
+				guiGraphics.renderComponentTooltip(this.font, this.getCookTimeTooltip(), mouseX, mouseY);
 			}
 
 		}
 
 	}
 
-	public MutableComponent getCookTimeTooltip()
+	public List<Component> getCookTimeTooltip()
 	{
 		AutomationNasaWorkbenchBlockEntity blockEntity = this.entity;
 		int cookTime = blockEntity.cookTime();
 		int cookTimeTotal = blockEntity.cookTimeTotal();
-		MutableComponent translatable = Component.translatable("gauge.ad_astra.cook_time", cookTime, cookTimeTotal);
-		return translatable;
+
+		List<Component> tooltip = new ArrayList<>();
+		tooltip.add(TooltipUtils.getProgressComponent(cookTime, cookTimeTotal));
+		tooltip.add(TooltipUtils.getEtaComponent(cookTime, cookTimeTotal, false));
+		return tooltip;
 	}
 
 	public Rectangle getArrowBounds()
 	{
-		return new Rectangle(this.leftPos + 79, this.topPos + 56, GuiUtils2.ARROW_WIDTH, GuiUtils2.ARROW_HEIGHT);
-	}
-
-	@Override
-	public int getTextColour()
-	{
-		return 0x2C282E;
+		return GuiUtils2.getArrowBounds(this.leftPos + ARROW_LEFT, this.topPos + ARROW_TOP);
 	}
 
 }

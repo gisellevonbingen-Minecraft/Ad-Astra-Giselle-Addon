@@ -1,7 +1,7 @@
 {
   "block.ad_astra_giselle_addon.fuel_loader": "Fuel Loader",
   "block.ad_astra_giselle_addon.automation_nasa_workbench": "Automation NASA Workbench",
-  "block.ad_astra_giselle_addon.gravity_normalizer": "Gravity Normalizer",
+  "block.ad_astra_giselle_addon.gravity_normalizer": "Gravity Normalizer(Deprecated)",
   "block.ad_astra_giselle_addon.rocket_sensor": "Rocket Sensor",
   
   "item.ad_astra_giselle_addon.oxygen_can": "Oxygen Can",
@@ -40,8 +40,8 @@
   "gui.ad_astra_giselle_addon.rocket_sensor.inverted": "Invert Output",
   "gui.ad_astra_giselle_addon.rocket_sensor.current": "Current Output: %s",
   
-  "description.ad_astra_giselle_addon.can_use.cold": "On Cold Planet",
-  "description.ad_astra_giselle_addon.can_use.hot": "On Hot Planet",
+  "description.ad_astra_giselle_addon.can_use.cold": "On Cold Dimension",
+  "description.ad_astra_giselle_addon.can_use.hot": "On Hot Dimension",
   "can_use.ad_astra_giselle_addon.available": "Available",
   "can_use.ad_astra_giselle_addon.unavailable": "Unavailable",
   
@@ -118,6 +118,9 @@
   "config.ad_astra_giselle_addon.machines.gravity_normalizer_energy_per_blocks.comment": "Blocks = x * y * z",
   "config.ad_astra_giselle_addon.machines.gravity_normalizer_max_length": "Max Length",
   "config.ad_astra_giselle_addon.machines.gravity_normalizer_proof_duration": "Proof Duration [ticks]",
+  "config.ad_astra_giselle_addon.machines.rocket_sensor": "Rocket Sensor",
+  "config.ad_astra_giselle_addon.machines.rocket_sensor_working_range": "Working Range",
+  "config.ad_astra_giselle_addon.machines.rocket_sensor_working_range.comment": "Blocks from Rocket Sensor to each direction",
   "config.ad_astra_giselle_addon.enchantments": "Enchantments",
   "config.ad_astra_giselle_addon.enchantments.tooltip_enabled": "Show Tooltip in Enchanted Book",
   "config.ad_astra_giselle_addon.enchantments.tooltip_enabled.comment": "Show tooltip on this mod's enchanted book",

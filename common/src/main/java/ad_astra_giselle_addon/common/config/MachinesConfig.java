@@ -6,8 +6,6 @@ import com.teamresourceful.resourcefulconfig.common.annotations.ConfigEntry;
 import com.teamresourceful.resourcefulconfig.common.annotations.ConfigSeparator;
 import com.teamresourceful.resourcefulconfig.common.config.EntryType;
 
-import ad_astra_giselle_addon.common.fluid.FluidUtils2;
-
 @Category(id = MachinesConfig.ID, translation = MachinesConfig.PREFIX)
 public final class MachinesConfig
 {
@@ -18,9 +16,9 @@ public final class MachinesConfig
 	public static final String FUEL_LOADER_PREFIX = PREFIX + "." + FUEL_LOADER_ID;
 	@ConfigSeparator(translation = FUEL_LOADER_PREFIX)
 	@ConfigEntry(id = FUEL_LOADER_ID + "_fluid_capacity", type = EntryType.LONG, translation = FUEL_LOADER_PREFIX + "_fluid_capacity")
-	public static long FUEL_LOADER_FLUID_CAPACITY = FluidUtils2.BUCKET * 8;
+	public static long FUEL_LOADER_FLUID_CAPACITY = 8_000L;
 	@ConfigEntry(id = FUEL_LOADER_ID + "_fluid_transfer", type = EntryType.LONG, translation = FUEL_LOADER_PREFIX + "_fluid_transfer")
-	public static long FUEL_LOADER_FLUID_TRANSFER = FluidUtils2.BUCKET / 4;
+	public static long FUEL_LOADER_FLUID_TRANSFER = 250L;
 	@ConfigEntry(id = FUEL_LOADER_ID + "_working_range", type = EntryType.INTEGER, translation = FUEL_LOADER_PREFIX + "_working_range")
 	@Comment(value = "Blocks from Fuel Loader to each direction", translation = FUEL_LOADER_PREFIX + "_working_range.comment")
 	public static int FUEL_LOADER_WORKING_RANGE = 2;
@@ -29,7 +27,7 @@ public final class MachinesConfig
 	public static final String AUTOMATION_NASA_WORKBENCH_PREFIX = PREFIX + "." + AUTOMATION_NASA_WORKBENCH_ID;
 	@ConfigSeparator(translation = AUTOMATION_NASA_WORKBENCH_PREFIX)
 	@ConfigEntry(id = AUTOMATION_NASA_WORKBENCH_ID + "_energy_capacity", type = EntryType.LONG, translation = AUTOMATION_NASA_WORKBENCH_PREFIX + "_energy_capacity")
-	public static long AUTOMATION_NASA_WORKBENCH_ENERGY_CAPACITY = 9600L;
+	public static long AUTOMATION_NASA_WORKBENCH_ENERGY_CAPACITY = 9_600L;
 	@ConfigEntry(id = AUTOMATION_NASA_WORKBENCH_ID + "_energy_usage", type = EntryType.LONG, translation = AUTOMATION_NASA_WORKBENCH_PREFIX + "_energy_usage")
 	public static long AUTOMATION_NASA_WORKBENCH_ENERGY_USAGE = 24L;
 	@ConfigEntry(id = AUTOMATION_NASA_WORKBENCH_ID + "_cook_time", type = EntryType.INTEGER, translation = AUTOMATION_NASA_WORKBENCH_PREFIX + "_cook_time")
@@ -39,7 +37,7 @@ public final class MachinesConfig
 	public static final String GRAVITY_NORMALIZER_PREFIX = PREFIX + "." + GRAVITY_NORMALIZER_ID;
 	@ConfigSeparator(translation = GRAVITY_NORMALIZER_PREFIX)
 	@ConfigEntry(id = GRAVITY_NORMALIZER_ID + "_energy_capacity", type = EntryType.LONG, translation = GRAVITY_NORMALIZER_PREFIX + "_energy_capacity")
-	public static long GRAVITY_NORMALIZER_ENERGY_CAPACITY = 9600L;
+	public static long GRAVITY_NORMALIZER_ENERGY_CAPACITY = 9_600L;
 	@ConfigEntry(id = GRAVITY_NORMALIZER_ID + "_energy_per_blocks", type = EntryType.DOUBLE, translation = GRAVITY_NORMALIZER_PREFIX + "_energy_per_blocks")
 	@Comment(value = "Blocks = x * y * z", translation = GRAVITY_NORMALIZER_PREFIX + "_energy_per_blocks.comment")
 	public static double GRAVITY_NORMALIZER_ENERGY_PER_BLOCKS = 0.5D;

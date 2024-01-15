@@ -13,6 +13,7 @@ import ad_astra_giselle_addon.common.item.ItemStackReference;
 import earth.terrarium.adastra.api.systems.TemperatureApi;
 import earth.terrarium.adastra.common.items.GasTankItem;
 import earth.terrarium.adastra.common.items.armor.SpaceSuitItem;
+import earth.terrarium.botarium.common.fluid.FluidConstants;
 import earth.terrarium.botarium.common.fluid.base.FluidContainer;
 import earth.terrarium.botarium.common.fluid.base.FluidHolder;
 import earth.terrarium.botarium.common.fluid.base.ItemFluidContainer;
@@ -26,7 +27,7 @@ public class OxygenChargerUtils
 {
 	public static void distributeToItems(LivingEntity living)
 	{
-		streamExtractable(living, FluidUtils2.MILLI_BUCKET).forEach(c ->
+		streamExtractable(living, FluidConstants.fromMillibuckets(1L)).forEach(c ->
 		{
 			distributeToItems(living, c);
 		});

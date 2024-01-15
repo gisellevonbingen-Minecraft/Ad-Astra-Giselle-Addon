@@ -22,7 +22,7 @@ public class FluidTankWidget extends EntryWidget
 
 		Rectangle bounds = this.getBounds();
 		RenderSystem.disableDepthTest();
-		GuiUtils2.drawVertical(guiGraphics, new java.awt.Rectangle(bounds.x, bounds.y, bounds.width, bounds.height), GuiUtils.FLUID_BAR, 1.0D);
+		GuiUtils2.drawVertical(guiGraphics, bounds.x, bounds.y, bounds.width, bounds.height, GuiUtils.FLUID_BAR, 0, 0, 1.0D);
 		RenderSystem.enableDepthTest();
 	}
 

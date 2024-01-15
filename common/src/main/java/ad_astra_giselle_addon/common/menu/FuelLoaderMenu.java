@@ -10,8 +10,8 @@ import net.minecraft.world.item.ItemStack;
 
 public class FuelLoaderMenu extends AddonMachineMenu<FuelLoaderBlockEntity>
 {
-	public static final int FLUID_BAR_LEFT = 67;
-	public static final int FLUID_BAR_TOP = 27;
+	public static final int FLUID_BAR_LEFT = 68;
+	public static final int FLUID_BAR_TOP = 28;
 
 	public FuelLoaderMenu(int windowId, Inventory inv, FuelLoaderBlockEntity blockEntity)
 	{

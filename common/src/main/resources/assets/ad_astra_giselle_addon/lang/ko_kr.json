@@ -1,7 +1,7 @@
 {
   "block.ad_astra_giselle_addon.fuel_loader": "연료 적재기",
   "block.ad_astra_giselle_addon.automation_nasa_workbench": "자동화 NASA 제작대",
-  "block.ad_astra_giselle_addon.gravity_normalizer": "중력 정규화기",
+  "block.ad_astra_giselle_addon.gravity_normalizer": "중력 정규화기(삭제 예정)",
   "block.ad_astra_giselle_addon.rocket_sensor": "로켓 센서",
   
   "item.ad_astra_giselle_addon.oxygen_can": "산소 캔",
@@ -40,8 +40,8 @@
   "gui.ad_astra_giselle_addon.rocket_sensor.inverted": "출력 반전",
   "gui.ad_astra_giselle_addon.rocket_sensor.current": "현재 출력: %s",
   
-  "description.ad_astra_giselle_addon.can_use.cold": "차가운 행성에서",
-  "description.ad_astra_giselle_addon.can_use.hot": "뜨거운 행성에서",
+  "description.ad_astra_giselle_addon.can_use.cold": "차가운 차원에서",
+  "description.ad_astra_giselle_addon.can_use.hot": "뜨거운 차원에서",
   "can_use.ad_astra_giselle_addon.available": "사용 가능",
   "can_use.ad_astra_giselle_addon.unavailable": "사용 불가",
   
@@ -118,6 +118,9 @@
   "config.ad_astra_giselle_addon.machines.gravity_normalizer_energy_per_blocks.comment": "블록 수 = x * y * z",
   "config.ad_astra_giselle_addon.machines.gravity_normalizer_max_length": "최대 길이",
   "config.ad_astra_giselle_addon.machines.gravity_normalizer_proof_duration": "정규화 유지 시간 [틱]",
+  "config.ad_astra_giselle_addon.machines.rocket_sensor": "로켓 센서",
+  "config.ad_astra_giselle_addon.machines.rocket_sensor_working_range": "동작 거리",
+  "config.ad_astra_giselle_addon.machines.rocket_sensor_working_range.comment": "로켓 센서를 중심으로 각 방향으로 블록 수",
   "config.ad_astra_giselle_addon.enchantments": "인챈트",
   "config.ad_astra_giselle_addon.enchantments.tooltip_enabled": "마법이 부여된 책에 설명 표시",
   "config.ad_astra_giselle_addon.enchantments.tooltip_enabled.comment": "이 모드의 인챈트의 설명을 마법이 부여된 책에 표시합니다",

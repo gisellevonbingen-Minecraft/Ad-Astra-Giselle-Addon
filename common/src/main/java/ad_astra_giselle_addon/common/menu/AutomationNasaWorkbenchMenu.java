@@ -4,8 +4,10 @@ import ad_astra_giselle_addon.common.block.entity.AutomationNasaWorkbenchBlockEn
 import ad_astra_giselle_addon.common.registry.AddonMenuTypes;
 import earth.terrarium.adastra.common.menus.configuration.EnergyConfiguration;
 import earth.terrarium.adastra.common.menus.slots.CustomSlot;
+import earth.terrarium.adastra.common.recipes.machines.NasaWorkbenchRecipe;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.crafting.Recipe;
 
 public class AutomationNasaWorkbenchMenu extends AddonMachineMenu<AutomationNasaWorkbenchBlockEntity>
 {
@@ -95,6 +97,18 @@ public class AutomationNasaWorkbenchMenu extends AddonMachineMenu<AutomationNasa
 	public int getPlayerInvYOffset()
 	{
 		return 142;
+	}
+
+	@Override
+	public void onAddonRecipeTransfer(Recipe<?> recipe)
+	{
+		super.onAddonRecipeTransfer(recipe);
+
+		if (recipe instanceof NasaWorkbenchRecipe nasaWorkbenchRecipe)
+		{
+	        this.broadcastFullState();
+		}
+
 	}
 
 }

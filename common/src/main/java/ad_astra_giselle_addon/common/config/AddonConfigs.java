@@ -13,8 +13,8 @@ import ad_astra_giselle_addon.common.AdAstraGiselleAddon;
 @Config(AddonConfigs.ID)
 public final class AddonConfigs
 {
-	public static final String ID = AdAstraGiselleAddon.MOD_ID;
-	public static final String PREFIX = "config." + ID;
+	public static final String ID = AdAstraGiselleAddon.MOD_ID + ".ver2";
+	public static final String PREFIX = "config." + AdAstraGiselleAddon.MOD_ID;
 
 	@InlineCategory
 	public static ItemsConfig ITEMS;

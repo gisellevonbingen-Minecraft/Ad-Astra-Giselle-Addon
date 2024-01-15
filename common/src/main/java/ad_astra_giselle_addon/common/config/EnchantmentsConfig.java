@@ -7,7 +7,6 @@ import com.teamresourceful.resourcefulconfig.common.annotations.ConfigSeparator;
 import com.teamresourceful.resourcefulconfig.common.config.EntryType;
 
 import ad_astra_giselle_addon.common.content.proof.ProofAbstractUtils;
-import ad_astra_giselle_addon.common.fluid.FluidUtils2;
 
 @Category(id = EnchantmentsConfig.ID, translation = EnchantmentsConfig.PREFIX)
 public final class EnchantmentsConfig
@@ -34,7 +33,7 @@ public final class EnchantmentsConfig
 	public static int SPACE_BREATHING_ENERGY_USING = 30;
 	@ConfigEntry(id = SPACE_BREATHING_ID + "_durability_oxygen", type = EntryType.LONG, translation = SPACE_BREATHING_PREFIX + "_durability_oxygen")
 	@Comment(value = "Oxygen usage on using durability", translation = SPACE_BREATHING_PREFIX + "_durability_oxygen.comment")
-	public static long SPACE_BREATHING_DURABILITY_OXYGEN = 2 * FluidUtils2.MILLI_BUCKET;
+	public static long SPACE_BREATHING_DURABILITY_OXYGEN = 2L;
 	@ConfigEntry(id = SPACE_BREATHING_ID + "_durability_using", type = EntryType.INTEGER, translation = SPACE_BREATHING_PREFIX + "_durability_using")
 	@Comment(value = "Durability usage for breath", translation = SPACE_BREATHING_PREFIX + "_durability_using.comment")
 	public static int SPACE_BREATHING_DURABILITY_USING = 1;

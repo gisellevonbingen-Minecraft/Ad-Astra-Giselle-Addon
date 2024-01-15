@@ -58,7 +58,7 @@ public class TranslationUtils
 
 	public static Component styleItemTooltip(Component component)
 	{
-		return Component.empty().append(component).setStyle(Style.EMPTY.withColor(ChatFormatting.GREEN));
+		return Component.empty().append(component).setStyle(Style.EMPTY.withColor(ChatFormatting.WHITE));
 	}
 
 	public static Component description(String key, Component component)

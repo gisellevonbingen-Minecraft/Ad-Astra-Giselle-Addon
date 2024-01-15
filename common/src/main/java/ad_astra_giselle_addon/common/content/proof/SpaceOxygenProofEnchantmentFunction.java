@@ -9,6 +9,7 @@ import ad_astra_giselle_addon.common.fluid.FluidUtils2;
 import ad_astra_giselle_addon.common.item.ItemStackReference;
 import ad_astra_giselle_addon.common.item.ItemUsableResource;
 import ad_astra_giselle_addon.common.registry.AddonEnchantments;
+import earth.terrarium.botarium.common.fluid.FluidConstants;
 import earth.terrarium.botarium.common.fluid.base.FluidContainer;
 import earth.terrarium.botarium.common.fluid.base.FluidHolder;
 import net.minecraft.world.entity.LivingEntity;
@@ -94,7 +95,7 @@ public class SpaceOxygenProofEnchantmentFunction extends ProofEnchantmentFunctio
 		}
 		else if (resource == ItemUsableResource.Durability)
 		{
-			return EnchantmentsConfig.SPACE_BREATHING_DURABILITY_OXYGEN;
+			return FluidConstants.fromMillibuckets(EnchantmentsConfig.SPACE_BREATHING_DURABILITY_OXYGEN);
 		}
 		else
 		{

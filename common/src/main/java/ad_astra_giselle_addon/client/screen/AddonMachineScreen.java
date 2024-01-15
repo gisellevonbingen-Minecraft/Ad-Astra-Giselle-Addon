@@ -1,5 +1,6 @@
 package ad_astra_giselle_addon.client.screen;
 
+import java.awt.Rectangle;
 import java.text.NumberFormat;
 
 import org.jetbrains.annotations.Nullable;
@@ -28,8 +29,6 @@ public abstract class AddonMachineScreen<MENU extends MachineMenu<BLOCK_ENTITY>,
 {
 	public static final String WORKINGAREA_TEXT_PREFIX = ctl("workingarea.");
 	public static final String WORKINGAREA_TEXT_KEY = WORKINGAREA_TEXT_PREFIX + "text";
-	public static final ResourceLocation WORKINGAREA_MIDDLE_TEXTURE = AdAstraGiselleAddon.rl("textures/gui/workingarea_middle.png");
-	public static final ResourceLocation WORKINGAREA_SIDE_TEXTURE = AdAstraGiselleAddon.rl("textures/gui/workingarea_side.png");
 
 	public static String ctl(String path)
 	{
@@ -161,16 +160,10 @@ public abstract class AddonMachineScreen<MENU extends MachineMenu<BLOCK_ENTITY>,
 		int workingAreaWidth = this.font.width(workingAreaText) + (sidePadding * 2);
 		int workingAreaHeight = 11;
 		int workingAreaLeft = left.getX() + left.getWidth() - this.leftPos;
-		int workignAreaTop = -workingAreaHeight;
-		int workingAreaOffsetX = workingAreaLeft;
-		guiGraphics.blit(WORKINGAREA_SIDE_TEXTURE, workingAreaOffsetX, workignAreaTop, 0, 0, sideWidth, workingAreaHeight, sideWidth, workingAreaHeight);
-		workingAreaOffsetX += sideWidth;
-		guiGraphics.blit(WORKINGAREA_MIDDLE_TEXTURE, workingAreaOffsetX, workignAreaTop, 0, 0, workingAreaWidth, workingAreaHeight, workingAreaWidth, workingAreaHeight);
-		workingAreaOffsetX += workingAreaWidth;
-		guiGraphics.blit(WORKINGAREA_SIDE_TEXTURE, workingAreaOffsetX, workignAreaTop, 0, 0, sideWidth, workingAreaHeight, sideWidth, workingAreaHeight);
-		workingAreaOffsetX += sideWidth;
+		int workingAreaTop = this.topPos - workingAreaHeight;
 
-		guiGraphics.drawString(this.font, workingAreaText, workingAreaLeft + sideWidth + sidePadding, workignAreaTop + 2, 0x303030);
+		GuiUtils2.drawWorkingAreaBackground(guiGraphics, new Rectangle(workingAreaLeft, workingAreaTop, workingAreaWidth, 11));
+		guiGraphics.drawString(this.font, workingAreaText, workingAreaLeft + sideWidth + sidePadding, workingAreaTop + 2, 0x303030);
 	}
 
 	protected Component getWorkingAreaBoundsText(AABB workingArea)

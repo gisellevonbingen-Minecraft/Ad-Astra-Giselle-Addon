@@ -157,7 +157,7 @@ public class ModuleSpaceBreathingUnit implements ICustomModule<ModuleSpaceBreath
 
 	public boolean useResources(IModule<ModuleSpaceBreathingUnit> module, LivingEntity living, boolean simulate)
 	{
-		if (LivingHelper.isPlayingMode(living))
+		if (!LivingHelper.isPlayingMode(living))
 		{
 			return true;
 		}

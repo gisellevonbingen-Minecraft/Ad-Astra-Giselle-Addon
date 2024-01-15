@@ -6,15 +6,11 @@ import java.util.function.Predicate;
 
 import org.jetbrains.annotations.Nullable;
 
-import earth.terrarium.botarium.common.fluid.FluidConstants;
 import earth.terrarium.botarium.common.fluid.base.FluidContainer;
 import earth.terrarium.botarium.common.fluid.base.FluidHolder;
 
 public class FluidUtils2
 {
-	public static final long BUCKET = FluidConstants.getBucketAmount();
-	public static final long MILLI_BUCKET = FluidConstants.fromMillibuckets(1);
-
 	public static boolean notEmptyAndTest(FluidHolder fluid, @Nullable Predicate<FluidHolder> predicate)
 	{
 		if (fluid.isEmpty())
