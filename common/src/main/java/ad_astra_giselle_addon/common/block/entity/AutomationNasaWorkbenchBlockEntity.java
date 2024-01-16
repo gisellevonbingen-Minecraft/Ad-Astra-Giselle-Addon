@@ -315,7 +315,7 @@ public class AutomationNasaWorkbenchBlockEntity extends RecipeMachineBlockEntity
 	@Override
 	public int getSideSlotLimit(int slot, @Nullable Direction directon)
 	{
-		return 1;
+		return directon == null ? this.getMaxStackSize() : 1;
 	}
 
 	@Override

@@ -1,12 +1,15 @@
 {
 	"required": true,
-	"package": "ad_astra_giselle_addon.common.mixin",
+	"package": "ad_astra_giselle_addon.common.mixin.mixin",
 	"minVersion": "0.8.5",
 	"compatibilityLevel": "JAVA_17",
 	"mixins": [
 		"minecraft.EntityMixin",
 		"minecraft.LivingEntityMixin",
-		"minecraft.ShapedRecipeAccessor"
+		"minecraft.ShapedRecipeAccessor",
+		"ad_astra.GravityApiImplMixin",
+		"ad_astra.OxygenApiImplMixin",
+		"ad_astra.SpaceSuitItemMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
