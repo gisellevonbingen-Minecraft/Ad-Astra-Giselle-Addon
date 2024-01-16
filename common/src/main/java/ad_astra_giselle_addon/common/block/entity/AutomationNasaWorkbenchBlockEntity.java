@@ -6,8 +6,10 @@ import java.util.function.Predicate;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import ad_astra_giselle_addon.common.config.MachinesConfig;
+import ad_astra_giselle_addon.common.item.SidedItemContainerBlock;
 import ad_astra_giselle_addon.common.menu.AutomationNasaWorkbenchMenu;
 import earth.terrarium.adastra.common.blockentities.base.RecipeMachineBlockEntity;
 import earth.terrarium.adastra.common.blockentities.base.sideconfig.Configuration;
@@ -27,6 +29,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -34,7 +37,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class AutomationNasaWorkbenchBlockEntity extends RecipeMachineBlockEntity<NasaWorkbenchRecipe>
+public class AutomationNasaWorkbenchBlockEntity extends RecipeMachineBlockEntity<NasaWorkbenchRecipe> implements SidedItemContainerBlock
 {
 	public static final List<ConfigurationEntry> SIDE_CONFIG = List.of(//
 			new ConfigurationEntry(ConfigurationType.SLOT, Configuration.NONE, ConstantComponents.SIDE_CONFIG_INPUT_SLOTS), //
@@ -307,6 +310,18 @@ public class AutomationNasaWorkbenchBlockEntity extends RecipeMachineBlockEntity
 	public int[] getSlotsForFace(Direction pSide)
 	{
 		return SLOTS_FOR_FACE;
+	}
+
+	@Override
+	public int getSideSlotLimit(int slot, @Nullable Direction directon)
+	{
+		return directon == null ? this.getMaxStackSize() : 1;
+	}
+
+	@Override
+	public WorldlyContainer getContainer()
+	{
+		return this;
 	}
 
 }
