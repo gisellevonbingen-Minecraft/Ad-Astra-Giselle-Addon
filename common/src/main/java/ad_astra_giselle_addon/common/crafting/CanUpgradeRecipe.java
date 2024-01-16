@@ -7,7 +7,7 @@ import com.google.gson.JsonObject;
 import ad_astra_giselle_addon.common.content.oxygen.IOxygenCharger;
 import ad_astra_giselle_addon.common.content.oxygen.OxygenChargerUtils;
 import ad_astra_giselle_addon.common.fluid.FluidUtils2;
-import ad_astra_giselle_addon.common.mixin.minecraft.ShapedRecipeAccessor;
+import ad_astra_giselle_addon.common.mixin.mixin.minecraft.ShapedRecipeAccessor;
 import ad_astra_giselle_addon.common.registry.AddonRecipeSerializers;
 import earth.terrarium.botarium.common.item.ItemStackHolder;
 import net.minecraft.core.RegistryAccess;

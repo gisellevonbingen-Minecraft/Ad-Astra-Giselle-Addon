@@ -37,7 +37,9 @@
 	},
 	"mixins": [
 		"ad_astra_giselle_addon.mixin.common.json",
-		"ad_astra_giselle_addon.mixin.client.json"
+		"ad_astra_giselle_addon.mixin.client.json",
+		"ad_astra_giselle_addon.mixin.fabric.common.json",
+		"ad_astra_giselle_addon.mixin.fabric.client.json"
 	],
 	"depends": {
 		"fabric": "*",

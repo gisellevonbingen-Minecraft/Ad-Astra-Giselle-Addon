@@ -5,7 +5,7 @@ import java.text.NumberFormat;
 
 import org.jetbrains.annotations.Nullable;
 
-import ad_astra_giselle_addon.client.mixin.ad_astra.ConfigurationWidgetAccessor;
+import ad_astra_giselle_addon.client.mixin.mixin.ad_astra.ConfigurationWidgetAccessor;
 import ad_astra_giselle_addon.common.AdAstraGiselleAddon;
 import ad_astra_giselle_addon.common.block.entity.IWorkingAreaBlockEntity;
 import ad_astra_giselle_addon.common.compat.CompatibleManager;

@@ -5,6 +5,8 @@ import ad_astra_giselle_addon.common.block.entity.RocketSensorBlockEntity;
 import ad_astra_giselle_addon.common.menu.RocketSensorMenu;
 import ad_astra_giselle_addon.common.network.AddonNetwork;
 import ad_astra_giselle_addon.common.network.RocketSensorMessage;
+import earth.terrarium.adastra.client.components.machines.OptionsBarWidget;
+import earth.terrarium.adastra.client.components.machines.OptionsBarWidget.Builder;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -42,6 +44,12 @@ public class RocketSensorScreen extends AddonMachineScreen<RocketSensorMenu, Roc
 
 		this.invertedCheckBox = new CustomCheckbox(x0, y1 + 3, x1 - x0, 10, Component.translatable(INVERTED_KEY), rocketSensor.isInverted());
 		this.addRenderableWidget(this.invertedCheckBox);
+	}
+
+	@Override
+	public Builder createOptionsBar()
+	{
+		return OptionsBarWidget.builder().addRedstoneButton(this.entity);
 	}
 
 	@Override

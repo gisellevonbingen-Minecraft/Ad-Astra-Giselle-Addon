@@ -1,23 +1,17 @@
-package ad_astra_giselle_addon.common.mixin.ad_astra;
+package ad_astra_giselle_addon.common.mixin.impl.ad_astra;
 
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import ad_astra_giselle_addon.common.content.proof.SpaceFireProofUtils;
 import ad_astra_giselle_addon.common.content.proof.SpaceOxygenProofUtils;
-import earth.terrarium.adastra.common.items.armor.SpaceSuitItem;
 import earth.terrarium.adastra.common.tags.ModItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 
-@Mixin(value = SpaceSuitItem.class, remap = false)
-public abstract class SpaceSuitItemMixin
+public abstract class SpaceSuitItemMixinImpl
 {
-	@Inject(method = "hasFullSet(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/tags/TagKey;)Z", at = @At("TAIL"), cancellable = true)
-	private static void hasFullSet(LivingEntity entity, TagKey<Item> spaceSuitTag, CallbackInfoReturnable<Boolean> cir)
+	public static void hasFullSet(LivingEntity entity, TagKey<Item> spaceSuitTag, CallbackInfoReturnable<Boolean> cir)
 	{
 		if (cir.getReturnValueZ())
 		{
