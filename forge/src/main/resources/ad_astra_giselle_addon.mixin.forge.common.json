@@ -6,6 +6,7 @@
 	"mixins": [
 		"ad_astra_giselle_addon.FuelLoaderBlockEntityMixin",
 		"ad_astra_giselle_addon.GravityNormalizerBlockEntityMixin",
+		"ad_astra_giselle_addon.RocketSensorBlockEntityMixin",
 		"pneumaticcraft.PNCUpgradeImplInject"
 	],
 	"injectors": {
