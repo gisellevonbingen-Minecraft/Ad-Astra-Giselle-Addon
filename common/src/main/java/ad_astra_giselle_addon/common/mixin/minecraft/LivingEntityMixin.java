@@ -1,4 +1,4 @@
-package ad_astra_giselle_addon.common.mixin.mixin.minecraft;
+package ad_astra_giselle_addon.common.mixin.minecraft;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
