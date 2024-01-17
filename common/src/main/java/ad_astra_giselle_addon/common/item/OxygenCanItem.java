@@ -52,6 +52,11 @@ public class OxygenCanItem extends Item implements FluidContainingItem, IOxygenC
 		return ItemsConfig.OXYGEN_CAN_FLUID_CAPACITY;
 	}
 
+	protected long getFluidTransfer()
+	{
+		return ItemsConfig.OXYGEN_CAN_FLUID_TRANSFER;
+	}
+
 	@Override
 	public BiPredicate<Integer, FluidHolder> getFilter()
 	{
@@ -172,40 +177,57 @@ public class OxygenCanItem extends Item implements FluidContainingItem, IOxygenC
 	@Override
 	public IOxygenCharger getOxygenCharger(ItemStackHolder item)
 	{
-		return new IOxygenCharger()
+		return new AbstractOxygenCharger(item)
 		{
-			@Override
-			public void setChargeMode(IChargeMode mode)
-			{
-				CompoundTag tag = NBTUtils.getOrCreateTag(item.getStack(), KEY_OXYGEN_CHARGER);
-				tag.put(KEY_CHARGE_MODE, IChargeMode.writeNBT(mode));
-			}
-
-			@Override
-			public IChargeMode getChargeMode()
-			{
-				CompoundTag tag = NBTUtils.getTag(item.getStack(), KEY_OXYGEN_CHARGER);
-				return IChargeMode.readNBT(tag.get(KEY_CHARGE_MODE));
-			}
-
-			@Override
-			public long getTransferAmount()
-			{
-				return ItemsConfig.OXYGEN_CAN_FLUID_TRANSFER;
-			}
-
-			@Override
-			public UniveralFluidHandler getFluidHandler()
-			{
-				return UniveralFluidHandler.from(item);
-			}
-
 			@Override
 			public Range<Integer> getTemperatureThreshold()
 			{
 				return ((SpaceSuit) ModItems.SPACE_SUIT.get()).getTemperatureThreshold();
 			}
+
 		};
+
+	}
+
+	public abstract class AbstractOxygenCharger implements IOxygenCharger
+	{
+		private final ItemStackHolder item;
+
+		public AbstractOxygenCharger(ItemStackHolder item)
+		{
+			this.item = item;
+		}
+
+		@Override
+		public void setChargeMode(IChargeMode mode)
+		{
+			CompoundTag tag = NBTUtils.getOrCreateTag(this.getItem().getStack(), KEY_OXYGEN_CHARGER);
+			tag.put(KEY_CHARGE_MODE, IChargeMode.writeNBT(mode));
+		}
+
+		@Override
+		public IChargeMode getChargeMode()
+		{
+			CompoundTag tag = NBTUtils.getTag(this.getItem().getStack(), KEY_OXYGEN_CHARGER);
+			return IChargeMode.readNBT(tag.get(KEY_CHARGE_MODE));
+		}
+
+		@Override
+		public long getTransferAmount()
+		{
+			return getFluidTransfer();
+		}
+
+		@Override
+		public UniveralFluidHandler getFluidHandler()
+		{
+			return UniveralFluidHandler.from(item);
+		}
+
+		public final ItemStackHolder getItem()
+		{
+			return this.item;
+		}
 
 	}
 
