@@ -1,15 +1,16 @@
 package ad_astra_giselle_addon.common.content.proof;
 
 import ad_astra_giselle_addon.common.config.EnchantmentsConfig;
-import ad_astra_giselle_addon.common.enchantment.AddonEnchantment;
 import ad_astra_giselle_addon.common.item.ItemUsableResource;
-import net.minecraft.world.entity.LivingEntity;
+import ad_astra_giselle_addon.common.registry.AddonEnchantments;
+import net.minecraft.world.item.enchantment.Enchantment;
 
-public class AcidRainProofEnchantmentSession extends ProofEnchantmentSession
+public class GravityNormalizingEnchantmentFunction extends ProofEnchantmentFunction
 {
-	public AcidRainProofEnchantmentSession(LivingEntity entity, AddonEnchantment enchantment)
+	@Override
+	public Enchantment getEnchantment()
 	{
-		super(entity, enchantment);
+		return AddonEnchantments.GRAVITY_NORMALIZING.get();
 	}
 
 	@Override
@@ -17,11 +18,11 @@ public class AcidRainProofEnchantmentSession extends ProofEnchantmentSession
 	{
 		if (resource == ItemUsableResource.Energy)
 		{
-			return EnchantmentsConfig.ACID_RAIN_PROOF_ENERGY_USING;
+			return EnchantmentsConfig.GRAVITY_NORMALIZING_ENERGY_USING;
 		}
 		else if (resource == ItemUsableResource.Durability)
 		{
-			return EnchantmentsConfig.ACID_RAIN_PROOF_DURABILITY_USING;
+			return EnchantmentsConfig.GRAVITY_NORMALIZING_DURABILITY_USING;
 		}
 		else
 		{
@@ -39,7 +40,7 @@ public class AcidRainProofEnchantmentSession extends ProofEnchantmentSession
 		}
 		else if (resource == ItemUsableResource.Durability)
 		{
-			return EnchantmentsConfig.ACID_RAIN_PROOF_DURABILITY_DURATION;
+			return EnchantmentsConfig.GRAVITY_NORMALIZING_DURABILITY_DURATION;
 		}
 		else
 		{

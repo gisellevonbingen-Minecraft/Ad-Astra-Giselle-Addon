@@ -8,20 +8,6 @@ import net.minecraft.world.item.ItemStack;
 
 public enum ItemUsableResource
 {
-	None()
-		{
-			@Override
-			public boolean test(ItemStack item)
-			{
-				return false;
-			}
-
-			@Override
-			public long extract(ItemStackHolder item, long amount, boolean simulate)
-			{
-				return 0L;
-			}
-		},
 	Energy()
 		{
 			@Override

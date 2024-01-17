@@ -3,7 +3,6 @@ package ad_astra_giselle_addon.common.content.proof;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.function.Function;
 
 import ad_astra_giselle_addon.common.AdAstraGiselleAddon;
 import ad_astra_giselle_addon.common.entity.EntityCustomDataHelper;
@@ -47,11 +46,13 @@ public abstract class ProofAbstractUtils
 
 	private final ResourceLocation id;
 	private final String customDataKey;
+	private final List<ProofFunction> listeners;
 
-	public ProofAbstractUtils(ResourceLocation id)
+	protected ProofAbstractUtils(ResourceLocation id)
 	{
 		this.id = id;
 		this.customDataKey = id.toString();
+		this.listeners = new ArrayList<>();
 		_PROOFS.add(this);
 	}
 
@@ -93,31 +94,12 @@ public abstract class ProofAbstractUtils
 		}
 		else
 		{
-			List<Function<LivingEntity, ProofSession>> list = new ArrayList<>();
-			LivingProofProvidingEvent event = this.createEvent(living, list);
-			AdAstraGiselleAddon.eventBus().post(event);
+			int proofDuration = this.post(living);
 
-			for (Function<LivingEntity, ProofSession> function : list)
+			if (proofDuration > 0)
 			{
-				ProofSession session = function.apply(living);
-
-				if (session == null)
-				{
-					continue;
-				}
-
-				int proofDuration = session.provide();
-
-				if (proofDuration <= 0)
-				{
-					continue;
-				}
-				else
-				{
-					this.setProofDuration(living, proofDuration);
-					return true;
-				}
-
+				this.setProofDuration(living, proofDuration);
+				return true;
 			}
 
 			return false;
@@ -125,5 +107,30 @@ public abstract class ProofAbstractUtils
 
 	}
 
-	public abstract LivingProofProvidingEvent createEvent(LivingEntity entity, List<Function<LivingEntity, ProofSession>> function);
+	public void register(ProofFunction event)
+	{
+		this.listeners.add(event);
+	}
+
+	public boolean unregister(ProofFunction event)
+	{
+		return this.listeners.remove(event);
+	}
+
+	public int post(LivingEntity living)
+	{
+		for (ProofFunction event : this.listeners)
+		{
+			int proofFunction = event.provide(living);
+
+			if (proofFunction > 0)
+			{
+				return proofFunction;
+			}
+
+		}
+
+		return 0;
+	}
+
 }

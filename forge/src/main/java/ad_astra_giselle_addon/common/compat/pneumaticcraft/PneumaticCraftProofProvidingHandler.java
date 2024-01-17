@@ -1,19 +1,11 @@
 package ad_astra_giselle_addon.common.compat.pneumaticcraft;
 
-import java.util.function.Function;
-
 import org.jetbrains.annotations.NotNull;
 
-import com.google.common.eventbus.Subscribe;
-
+import ad_astra_giselle_addon.common.compat.pneumaticcraft.pneumatic_armor.handlers.SpaceBreathingCommonHandler;
 import ad_astra_giselle_addon.common.content.oxygen.IOxygenCharger;
 import ad_astra_giselle_addon.common.content.oxygen.OxygenChargerUtils;
-import ad_astra_giselle_addon.common.content.proof.LivingGravityNormalizingProvidingEvent;
-import ad_astra_giselle_addon.common.content.proof.LivingSpaceFireProofProvidingEvent;
-import ad_astra_giselle_addon.common.content.proof.LivingSpaceOxygenProofProvidingEvent;
-import ad_astra_giselle_addon.common.content.proof.LivingVenusAcidProofProvidingEvent;
 import ad_astra_giselle_addon.common.content.proof.ProofAbstractUtils;
-import ad_astra_giselle_addon.common.content.proof.ProofSession;
 import ad_astra_giselle_addon.common.entity.LivingHelper;
 import ad_astra_giselle_addon.common.fluid.FluidHooks2;
 import ad_astra_giselle_addon.common.fluid.FluidPredicates;
@@ -35,185 +27,96 @@ public class PneumaticCraftProofProvidingHandler
 	@SubscribeEvent
 	public void onLivingTick(LivingTickEvent e)
 	{
-		if (e.getEntity() instanceof Player player && !player.getLevel().isClientSide())
+		LivingEntity living = e.getEntity();
+
+		if (living.getLevel().isClientSide())
 		{
-			int airSupply = player.getAirSupply();
-			int maxAirSupply = player.getMaxAirSupply();
+			return;
+		}
 
-			if (maxAirSupply - airSupply >= ProofAbstractUtils.OXYGEN_PROOF_INTERVAL)
+		int airSupply = living.getAirSupply();
+		int maxAirSupply = living.getMaxAirSupply();
+		int airDuration = ProofAbstractUtils.OXYGEN_PROOF_INTERVAL;
+
+		if (maxAirSupply - airSupply >= airDuration)
+		{
+			SpaceBreathingCommonHandler upgradeHandler = AddonCommonUpgradeHandlers.SPACE_BREATHING;
+			int airUsing = AddonPneumaticCraftConfig.SPACE_BREATHING_AIR_USING;
+			long oxygenUsing = ProofAbstractUtils.OXYGEN_PROOF_USING;
+
+			if (this.useAirAndOxygen(living, upgradeHandler, airUsing, oxygenUsing, false))
 			{
-				ItemStack stack = getUpgradeUsablePneumaticArmorItem(player, AddonCommonUpgradeHandlers.SPACE_BREATHING);
-				long oxygenUsing = ProofAbstractUtils.OXYGEN_PROOF_USING;
-				IOxygenCharger oxygenCharger = OxygenChargerUtils.firstExtractable(player, oxygenUsing);
-
-				if (!stack.isEmpty() && oxygenCharger != null)
-				{
-					IAirHandlerItem airHandler = stack.getCapability(PNCCapabilities.AIR_HANDLER_ITEM_CAPABILITY).orElse(null);
-					int airUsing = AddonPneumaticCraftConfig.SPACE_BREATHING_AIR_USING;
-
-					if (airHandler != null && useAir(player, airHandler, airUsing, true))
-					{
-						if (!player.getLevel().isClientSide() && LivingHelper.isPlayingMode(player))
-						{
-							UniveralFluidHandler fluidHandler = oxygenCharger.getFluidHandler();
-							FluidHooks2.extractFluid(fluidHandler, FluidPredicates::isOxygen, oxygenUsing, false);
-							useAir(player, airHandler, airUsing, false);
-						}
-
-						player.setAirSupply(airSupply + ProofAbstractUtils.OXYGEN_PROOF_INTERVAL);
-					}
-
-				}
-
+				living.setAirSupply(airSupply + airDuration);
 			}
 
 		}
 
 	}
 
-	@Subscribe
-	public void onLivingSpaceOxygenProof(LivingSpaceOxygenProofProvidingEvent e)
+	public int onLivingSpaceOxygenProof(LivingEntity living)
 	{
-		e.add(l ->
+		SpaceBreathingCommonHandler upgradeHandler = AddonCommonUpgradeHandlers.SPACE_BREATHING;
+		int airUsing = AddonPneumaticCraftConfig.SPACE_BREATHING_AIR_USING;
+		long oxygenUsing = ProofAbstractUtils.OXYGEN_PROOF_USING;
+		return this.useAirAndOxygen(living, upgradeHandler, airUsing, oxygenUsing, false) ? ProofAbstractUtils.OXYGEN_PROOF_INTERVAL : 0;
+	}
+
+	public int onLivingSpaceFireProof(LivingEntity living)
+	{
+		IArmorUpgradeHandler<?> upgradeHandler = AddonCommonUpgradeHandlers.SPACE_FIRE_PROOF;
+		int airUsing = AddonPneumaticCraftConfig.SPACE_FIRE_PROOF_AIR_USING;
+		return this.useAir(living, upgradeHandler, airUsing, false) ? ProofAbstractUtils.GENERAL_PROOF_INTERVAL : 0;
+	}
+
+	public int onLivingVenusAcidProof(LivingEntity living)
+	{
+		IArmorUpgradeHandler<?> upgradeHandler = AddonCommonUpgradeHandlers.ACID_RAIN_PROOF;
+		int airUsing = AddonPneumaticCraftConfig.ACID_RAIN_PROOF_AIR_USING;
+		return this.useAir(living, upgradeHandler, airUsing, false) ? ProofAbstractUtils.GENERAL_PROOF_INTERVAL : 0;
+	}
+
+	public int onLivingGravityNormalizing(LivingEntity living)
+	{
+		IArmorUpgradeHandler<?> upgradeHandler = AddonCommonUpgradeHandlers.GRAVITY_NORMALIZING;
+		int airUsing = AddonPneumaticCraftConfig.GRAVITY_NORMALIZING_AIR_USING;
+		return this.useAir(living, upgradeHandler, airUsing, false) ? ProofAbstractUtils.GENERAL_PROOF_INTERVAL : 0;
+	}
+
+	public boolean useAirAndOxygen(LivingEntity living, SpaceBreathingCommonHandler upgradeHandler, int airUsing, long oxygenUsing, boolean simulate)
+	{
+		if (this.useAir(living, upgradeHandler, airUsing, true))
 		{
-			if (!(l instanceof Player player))
+			if (LivingHelper.isPlayingMode(living))
 			{
-				return null;
-			}
-
-			ItemStack stack = getUpgradeUsablePneumaticArmorItem(player, AddonCommonUpgradeHandlers.SPACE_BREATHING);
-
-			if (stack.isEmpty())
-			{
-				return null;
-			}
-
-			IAirHandlerItem airHandler = stack.getCapability(PNCCapabilities.AIR_HANDLER_ITEM_CAPABILITY).orElse(null);
-			int airUsing = AddonPneumaticCraftConfig.SPACE_BREATHING_AIR_USING;
-
-			if (airHandler != null && useAir(player, airHandler, airUsing, true))
-			{
-				long oxygenUsing = ProofAbstractUtils.OXYGEN_PROOF_USING;
-				IOxygenCharger oxygenCharger = OxygenChargerUtils.firstExtractable(player, oxygenUsing);
+				IOxygenCharger oxygenCharger = OxygenChargerUtils.firstExtractable(living, oxygenUsing);
 
 				if (oxygenCharger != null)
 				{
-					return new ProofSession(l)
+					if (!simulate)
 					{
-						@Override
-						public void onProvide()
-						{
-							LivingEntity living = this.getLiving();
+						this.useAir(living, upgradeHandler, airUsing, false);
 
-							if (!living.getLevel().isClientSide() && LivingHelper.isPlayingMode(living))
-							{
-								UniveralFluidHandler fluidHandler = oxygenCharger.getFluidHandler();
-								FluidHooks2.extractFluid(fluidHandler, FluidPredicates::isOxygen, oxygenUsing, false);
-								useAir(player, airHandler, airUsing, false);
-							}
+						UniveralFluidHandler fluidHandler = oxygenCharger.getFluidHandler();
+						FluidHooks2.extractFluid(fluidHandler, FluidPredicates::isOxygen, oxygenUsing, false);
+					}
 
-						}
-
-						@Override
-						public int getProofDuration()
-						{
-							return ProofAbstractUtils.OXYGEN_PROOF_INTERVAL;
-						}
-					};
+					return true;
 				}
+
 			}
-
-			return null;
-		});
-
-	}
-
-	@Subscribe
-	public void onLivingSpaceFireProof(LivingSpaceFireProofProvidingEvent e)
-	{
-		e.add(new Function<LivingEntity, ProofSession>()
-		{
-			@Override
-			public ProofSession apply(LivingEntity living)
+			else
 			{
-				return new ProofSession(living)
-				{
-					@Override
-					public boolean canProvide()
-					{
-						return useAir(this.getLiving(), AddonCommonUpgradeHandlers.SPACE_FIRE_PROOF, AddonPneumaticCraftConfig.SPACE_FIRE_PROOF_AIR_USING);
-					}
-
-					@Override
-					public int getProofDuration()
-					{
-						return ProofAbstractUtils.GENERAL_PROOF_INTERVAL;
-					}
-				};
+				return true;
 			}
-		});
-	}
 
-	@Subscribe
-	public void onLivingVenusAcidProof(LivingVenusAcidProofProvidingEvent e)
-	{
-		e.add(new Function<LivingEntity, ProofSession>()
-		{
-			@Override
-			public ProofSession apply(LivingEntity living)
-			{
-				return new ProofSession(living)
-				{
-					@Override
-					public boolean canProvide()
-					{
-						return useAir(this.getLiving(), AddonCommonUpgradeHandlers.ACID_RAIN_PROOF, AddonPneumaticCraftConfig.ACID_RAIN_PROOF_AIR_USING);
-					}
-
-					@Override
-					public int getProofDuration()
-					{
-						return ProofAbstractUtils.GENERAL_PROOF_INTERVAL;
-					}
-				};
-			}
-		});
-	}
-
-	@Subscribe
-	public void onLivingGravityNormalizing(LivingGravityNormalizingProvidingEvent e)
-	{
-		e.add(new Function<LivingEntity, ProofSession>()
-		{
-			@Override
-			public ProofSession apply(LivingEntity living)
-			{
-				return new ProofSession(living)
-				{
-					@Override
-					public boolean canProvide()
-					{
-						return useAir(this.getLiving(), AddonCommonUpgradeHandlers.GRAVITY_NORMALIZING, AddonPneumaticCraftConfig.GRAVITY_NORMALIZING_AIR_USING);
-					}
-
-					@Override
-					public int getProofDuration()
-					{
-						return ProofAbstractUtils.GENERAL_PROOF_INTERVAL;
-					}
-				};
-			}
-		});
-	}
-
-	public boolean useAir(LivingEntity living, IArmorUpgradeHandler<?> upgradeHandler, int airUsing)
-	{
-		if (!(living instanceof Player player))
-		{
-			return false;
 		}
 
-		ItemStack stack = getUpgradeUsablePneumaticArmorItem(player, upgradeHandler);
+		return false;
+	}
+
+	public boolean useAir(LivingEntity living, IArmorUpgradeHandler<?> upgradeHandler, int airUsing, boolean simulate)
+	{
+		ItemStack stack = getUpgradeUsablePneumaticArmorItem(living, upgradeHandler);
 
 		if (stack.isEmpty())
 		{
@@ -221,32 +124,17 @@ public class PneumaticCraftProofProvidingHandler
 		}
 
 		IAirHandlerItem airHandler = stack.getCapability(PNCCapabilities.AIR_HANDLER_ITEM_CAPABILITY).orElse(null);
-
-		if (airHandler != null && useAir(player, airHandler, airUsing, true))
-		{
-			if (!player.getLevel().isClientSide())
-			{
-				useAir(player, airHandler, airUsing, false);
-			}
-
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-
+		return airHandler != null && this.useAir(living, airHandler, airUsing, simulate);
 	}
 
-	public static @NotNull ItemStack getUpgradeUsablePneumaticArmorItem(Player player, IArmorUpgradeHandler<?> upgradeHandler)
+	public static @NotNull ItemStack getUpgradeUsablePneumaticArmorItem(LivingEntity living, IArmorUpgradeHandler<?> upgradeHandler)
 	{
-		ItemStack stack = player.getItemBySlot(upgradeHandler.getEquipmentSlot());
-
-		if (stack.getItem() instanceof PneumaticArmorItem)
+		if (living instanceof Player player)
 		{
 			CommonArmorHandler commonHandler = CommonArmorHandler.getHandlerForPlayer(player);
+			ItemStack stack = living.getItemBySlot(upgradeHandler.getEquipmentSlot());
 
-			if (commonHandler.upgradeUsable(upgradeHandler, true))
+			if (commonHandler.upgradeUsable(upgradeHandler, true) && stack.getItem() instanceof PneumaticArmorItem)
 			{
 				return stack;
 			}
@@ -256,12 +144,12 @@ public class PneumaticCraftProofProvidingHandler
 		return ItemStack.EMPTY;
 	}
 
-	public boolean useAir(Player player, IAirHandlerItem airHandler, int airUsing, boolean simulate)
+	public boolean useAir(LivingEntity living, IAirHandlerItem airHandler, int airUsing, boolean simulate)
 	{
-		return !LivingHelper.isPlayingMode(player) || useAir(airHandler, airUsing, simulate);
+		return !LivingHelper.isPlayingMode(living) || this.useAir(airHandler, airUsing, simulate);
 	}
 
-	public static boolean useAir(IAirHandler airHandler, int airUsing, boolean simulate)
+	public boolean useAir(IAirHandler airHandler, int airUsing, boolean simulate)
 	{
 		if (airHandler.getAir() >= airUsing)
 		{

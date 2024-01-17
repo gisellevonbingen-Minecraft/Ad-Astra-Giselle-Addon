@@ -3,37 +3,36 @@ package ad_astra_giselle_addon.common.content.proof;
 import ad_astra_giselle_addon.common.config.EnchantmentsConfig;
 import ad_astra_giselle_addon.common.content.oxygen.IOxygenCharger;
 import ad_astra_giselle_addon.common.content.oxygen.OxygenChargerUtils;
-import ad_astra_giselle_addon.common.enchantment.AddonEnchantment;
 import ad_astra_giselle_addon.common.entity.LivingHelper;
 import ad_astra_giselle_addon.common.fluid.FluidHooks2;
 import ad_astra_giselle_addon.common.fluid.FluidPredicates;
 import ad_astra_giselle_addon.common.fluid.UniveralFluidHandler;
+import ad_astra_giselle_addon.common.item.ItemStackReference;
 import ad_astra_giselle_addon.common.item.ItemUsableResource;
+import ad_astra_giselle_addon.common.registry.AddonEnchantments;
+import earth.terrarium.botarium.api.fluid.FluidHolder;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.enchantment.Enchantment;
 
-public class SpaceOxygenProofEnchantmentSession extends ProofEnchantmentSession
+public class SpaceOxygenProofEnchantmentFunction extends ProofEnchantmentFunction
 {
-	private IOxygenCharger testedOxygenCharger;
-
-	public SpaceOxygenProofEnchantmentSession(LivingEntity living, AddonEnchantment enchantment)
+	@Override
+	public Enchantment getEnchantment()
 	{
-		super(living, enchantment);
+		return AddonEnchantments.SPACE_BREATHING.get();
 	}
 
 	@Override
-	public boolean canProvide()
+	public boolean consume(LivingEntity living, ItemStackReference enchantedItem, ItemUsableResource resource, boolean simulate)
 	{
-		if (!super.canProvide())
+		if (!super.consume(living, enchantedItem, resource, simulate))
 		{
 			return false;
 		}
-
-		LivingEntity entity = this.getLiving();
-
-		if (LivingHelper.isPlayingMode(entity))
+		else if (LivingHelper.isPlayingMode(living))
 		{
-			long oxygenUsing = this.getOxygenUsing();
-			IOxygenCharger oxygenCharger = OxygenChargerUtils.firstExtractable(entity, oxygenUsing);
+			long oxygenUsing = this.getOxygenUsing(resource);
+			IOxygenCharger oxygenCharger = OxygenChargerUtils.firstExtractable(living, oxygenUsing);
 
 			if (oxygenCharger == null)
 			{
@@ -41,36 +40,12 @@ public class SpaceOxygenProofEnchantmentSession extends ProofEnchantmentSession
 			}
 
 			UniveralFluidHandler fluidHandler = oxygenCharger.getFluidHandler();
-
-			if (FluidHooks2.extractFluid(fluidHandler, FluidPredicates::isOxygen, oxygenUsing, true).getFluidAmount() < oxygenUsing)
-			{
-				return false;
-			}
-
-			this.testedOxygenCharger = oxygenCharger;
+			FluidHolder extracted = FluidHooks2.extractFluid(fluidHandler, FluidPredicates::isOxygen, oxygenUsing, simulate);
+			return extracted.getFluidAmount() >= oxygenUsing;
 		}
-
-		return true;
-	}
-
-	@Override
-	public void onProvide()
-	{
-		super.onProvide();
-
-		LivingEntity entity = this.getLiving();
-
-		if (LivingHelper.isPlayingMode(entity))
+		else
 		{
-			IOxygenCharger oxygenCharger = this.testedOxygenCharger;
-
-			if (oxygenCharger != null && !entity.getLevel().isClientSide())
-			{
-				UniveralFluidHandler fluidHandler = oxygenCharger.getFluidHandler();
-				long oxygenUsing = this.getOxygenUsing();
-				FluidHooks2.extractFluid(fluidHandler, FluidPredicates::isOxygen, oxygenUsing, false);
-			}
-
+			return true;
 		}
 
 	}
@@ -109,12 +84,6 @@ public class SpaceOxygenProofEnchantmentSession extends ProofEnchantmentSession
 			return 0;
 		}
 
-	}
-
-	public long getOxygenUsing()
-	{
-		ItemUsableResource resource = this.getTestedUsableResource();
-		return this.getOxygenUsing(resource);
 	}
 
 	public long getOxygenUsing(ItemUsableResource resource)
