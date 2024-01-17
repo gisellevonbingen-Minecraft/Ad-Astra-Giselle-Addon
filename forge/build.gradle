@@ -39,66 +39,41 @@ minecraft {
     // accessTransformer = file("src/main/resources/META-INF/accesstransformer.cfg")
 
     runs {
-        client {
+        configureEach {
             workingDirectory project.file("run")
-            taskName "forge_client"
 
             property "forge.logging.markers", "REGISTRIES"
             property "forge.logging.console.level", "debug"
-            property "forge.enabledGameTestNamespaces", "ad_astra_giselle_addon"
-            args "-mixin.config=ad_astra_giselle_addon.mixin.common.json", "-mixin.config=ad_astra_giselle_addon.mixin.client.json", "-mixin.config=ad_astra_giselle_addon.mixin.forge.common.json", "-mixin.config=ad_astra_giselle_addon.mixin.forge.client.json"
 
             mods {
-                ad_astra_giselle_addon {
+                "${mod_id}" {
                     source sourceSets.main
                 }
             }
+        }
+
+        client {
+            taskName "forge_client"
+
+            property "forge.enabledGameTestNamespaces", "${mod_id}"
         }
 
         server {
-            workingDirectory project.file("run")
             taskName "forge_server"
 
-            property "forge.logging.markers", "REGISTRIES"
-            property "forge.logging.console.level", "debug"
-            property "forge.enabledGameTestNamespaces", "ad_astra_giselle_addon"
-            args "-mixin.config=ad_astra_giselle_addon.mixin.common.json", "-mixin.config=ad_astra_giselle_addon.mixin.client.json", "-mixin.config=ad_astra_giselle_addon.mixin.forge.common.json", "-mixin.config=ad_astra_giselle_addon.mixin.forge.client.json"
-
-            mods {
-                ad_astra_giselle_addon {
-                    source sourceSets.main
-                }
-            }
+            property "forge.enabledGameTestNamespaces", "${mod_id}"
         }
 
         gameTestServer {
-            workingDirectory project.file("run")
             taskName "forge_game_test_server"
 
-            property "forge.logging.markers", "REGISTRIES"
-            property "forge.logging.console.level", "debug"
-            property "forge.enabledGameTestNamespaces", "ad_astra_giselle_addon"
-
-            mods {
-                ad_astra_giselle_addon {
-                    source sourceSets.main
-                }
-            }
+            property "forge.enabledGameTestNamespaces", "${mod_id}"
         }
 
         data {
-            workingDirectory project.file("run")
             taskName "forge_data"
 
-            property "forge.logging.markers", "REGISTRIES"
-            property "forge.logging.console.level", "debug"
-            args "--mod", "ad_astra_giselle_addon", "--all", "--output", file("src/generated/resources/"), "--existing", file("src/main/resources/")
-
-            mods {
-                ad_astra_giselle_addon {
-                    source sourceSets.main
-                }
-            }
+            args "--mod", "${mod_id}", "--all", "--output", file("src/generated/resources/"), "--existing", file("src/main/resources/")
         }
     }
 }
@@ -134,20 +109,23 @@ dependencies {
 }
 
 mixin {
-    add sourceSets.main, "ad_astra_giselle_addon.mixin.refmap.json"
+    add sourceSets.main, "${mod_id}.mixin.refmap.json"
+    config "${mod_id}.mixin.common.json"
+    config "${mod_id}.mixin.client.json"
+    config "${mod_id}.mixin.forge.common.json"
+    config "${mod_id}.mixin.forge.client.json"
 }
 
 jar {
     manifest {
         attributes([
-                "Specification-Title"     : "ad_astra_giselle_addon",
+                "Specification-Title"     : "${mod_id}",
                 "Specification-Vendor"    : "gisellevonbingen",
                 "Specification-Version"   : "1",
                 "Implementation-Title"    : project.name,
                 "Implementation-Version"  : project.jar.archiveVersion,
                 "Implementation-Vendor"   : "gisellevonbingen",
-                "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
-                "MixinConfigs"            : "ad_astra_giselle_addon.mixin.common.json, ad_astra_giselle_addon.mixin.client.json, ad_astra_giselle_addon.mixin.forge.common.json, ad_astra_giselle_addon.mixin.forge.client.json"
+                "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
         ])
     }
 }
