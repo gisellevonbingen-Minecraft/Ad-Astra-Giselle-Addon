@@ -11,7 +11,6 @@ import ad_astra_giselle_addon.common.fluid.FluidHooks2;
 import ad_astra_giselle_addon.common.fluid.FluidPredicates;
 import ad_astra_giselle_addon.common.fluid.UniveralFluidHandler;
 import ad_astra_giselle_addon.common.item.ItemStackReference;
-import earth.terrarium.ad_astra.common.item.OxygenTankItem;
 import earth.terrarium.ad_astra.common.item.armor.SpaceSuit;
 import earth.terrarium.ad_astra.common.util.ModUtils;
 import earth.terrarium.botarium.api.fluid.FluidHolder;
@@ -40,7 +39,7 @@ public class OxygenChargerUtils
 		{
 			Item item = itemRef.getStack().getItem();
 
-			if (item instanceof SpaceSuit || item instanceof OxygenTankItem)
+			if (item instanceof SpaceSuit)
 			{
 				UniveralFluidHandler itemFluidHandler = UniveralFluidHandler.fromSafe(itemRef).orElse(null);
 
