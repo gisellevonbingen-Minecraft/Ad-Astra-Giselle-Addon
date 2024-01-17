@@ -23,6 +23,7 @@ import ad_astra_giselle_addon.common.registry.AddonMenuTypes;
 import ad_astra_giselle_addon.common.util.TriConsumer;
 import earth.terrarium.ad_astra.client.AdAstraClient.RenderHud;
 import earth.terrarium.ad_astra.client.ClientPlatformUtils;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -42,10 +43,10 @@ public class AdAstraGiselleAddonClient
 	}
 
 	@Nullable
-	public static ConfigScreen getConfigScreen()
+	public static ConfigScreen getConfigScreen(@Nullable Screen parent)
 	{
 		ResourcefulConfig config = AdAstraGiselleAddon.config();
-		return config != null ? new ConfigScreen(null, config) : null;
+		return config != null ? new ConfigScreen(parent, null, config) : null;
 	}
 
 	public static void initializeClient()

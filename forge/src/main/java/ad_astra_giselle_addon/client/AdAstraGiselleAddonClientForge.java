@@ -36,7 +36,7 @@ public class AdAstraGiselleAddonClientForge
 		{
 			return new ConfigScreenHandler.ConfigScreenFactory((client, parent) ->
 			{
-				return AdAstraGiselleAddonClient.getConfigScreen();
+				return AdAstraGiselleAddonClient.getConfigScreen(parent);
 			});
 		});
 
