@@ -13,7 +13,7 @@ public class ModMenuConfig implements ModMenuApi
 	@Override
 	public ConfigScreenFactory<?> getModConfigScreenFactory()
 	{
-		return parent -> AdAstraGiselleAddonClient.getConfigScreen();
+		return AdAstraGiselleAddonClient::getConfigScreen;
 	}
 
 }
