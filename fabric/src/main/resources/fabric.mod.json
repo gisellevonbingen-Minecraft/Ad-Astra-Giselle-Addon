@@ -1,6 +1,6 @@
 {
 	"schemaVersion": 1,
-	"id": "ad_astra_giselle_addon",
+	"id": "${mod_id}",
 	"version": "${mod_version}",
 	"name": "${mod_name}",
 	"description": "${mod_description}",
@@ -36,8 +36,8 @@
 		]
 	},
 	"mixins": [
-		"ad_astra_giselle_addon.mixin.common.json",
-		"ad_astra_giselle_addon.mixin.client.json"
+		"${mod_id}.mixin.common.json",
+		"${mod_id}.mixin.client.json"
 	],
 	"depends": {
 		"fabric": "*",
