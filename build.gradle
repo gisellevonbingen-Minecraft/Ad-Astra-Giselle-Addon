@@ -49,7 +49,7 @@ allprojects {
         withSourcesJar()
     }
 
-    def resourceTargets = ["META-INF/mods.toml", "fabric.mod.json"]
+    def resourceTargets = ["*.toml", "*.json"]
     def intoTargets = ["$rootDir/out/production/resources/", "$rootDir/out/production/${project.name}.main/", "$rootDir/${project.name}/bin/main/"]
     def replaceProperties = [mc_version: mc_version,
         mod_id: mod_id, mod_version: mod_version, mod_name: mod_name, mod_description: mod_description, mod_license: mod_license, mod_homepage: mod_homepage, mod_source: mod_source, mod_issues: mod_issues,
