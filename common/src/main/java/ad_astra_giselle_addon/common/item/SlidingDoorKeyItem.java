@@ -51,8 +51,7 @@ public class SlidingDoorKeyItem extends Item
 			}
 			else if (mainState.getValue(SlidingDoorBlockProperties.LOCKED))
 			{
-				pPlayer.displayClientMessage(Component.translatable(AdAstraGiselleAddon.tl("info", "sliding_door_locked_1")), false);
-				pPlayer.displayClientMessage(Component.translatable(AdAstraGiselleAddon.tl("info", "sliding_door_locked_2"), new ItemStack(key).getHoverName()), false);
+				pPlayer.displayClientMessage(Component.translatable(AdAstraGiselleAddon.tl("info", "sliding_door_locked")), false);
 				return InteractionResult.SUCCESS;
 			}
 

@@ -67,8 +67,7 @@
   
   "info.ad_astra_giselle_addon.locked": "Locked",
   "info.ad_astra_giselle_addon.unlocked": "Unlocked",
-  "info.ad_astra_giselle_addon.sliding_door_locked_1": "This Sliding Door is locked, only be opened or closed by redstone",
-  "info.ad_astra_giselle_addon.sliding_door_locked_2": "Right click with either 'Wrench' or '%s' to unlock",
+  "info.ad_astra_giselle_addon.sliding_door_locked": "This Sliding Door is locked, only be opened or closed by redstone",
   
   
   "jei.category.ad_astra_giselle_addon.fuel_loader": "Fuel Loader",
