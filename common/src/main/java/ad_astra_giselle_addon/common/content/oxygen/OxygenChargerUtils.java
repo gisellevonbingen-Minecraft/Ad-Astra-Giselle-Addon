@@ -11,7 +11,7 @@ import ad_astra_giselle_addon.common.fluid.FluidPredicates;
 import ad_astra_giselle_addon.common.fluid.FluidUtils2;
 import ad_astra_giselle_addon.common.item.ItemStackReference;
 import earth.terrarium.adastra.api.systems.TemperatureApi;
-import earth.terrarium.adastra.common.items.GasTankItem;
+import earth.terrarium.adastra.common.items.ZipGunItem;
 import earth.terrarium.adastra.common.items.armor.SpaceSuitItem;
 import earth.terrarium.botarium.common.fluid.FluidConstants;
 import earth.terrarium.botarium.common.fluid.base.FluidContainer;
@@ -44,7 +44,7 @@ public class OxygenChargerUtils
 		{
 			Item item = itemRef.getStack().getItem();
 
-			if (item instanceof SpaceSuitItem || item instanceof GasTankItem)
+			if (item instanceof SpaceSuitItem || item instanceof ZipGunItem)
 			{
 				ItemFluidContainer itemFluidContainer = FluidContainer.of(itemRef);
 
