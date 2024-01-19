@@ -4,21 +4,6 @@ plugins {
  
 version = "fabric-${rootProject.mc_version}-${rootProject.mod_version}"
 
-sourceSets {
-    main {
-        java {
-            srcDirs += "../common/src/main/java"
-        }
-
-        resources {
-            srcDirs += "src/generated/resources"
-            srcDirs += "../common/src/main/resources"
-            srcDirs += "../common/src/generated/resources"
-            exclude ".cache"
-        }
-    }
-}
-
 loom {
     runs {
         client {
