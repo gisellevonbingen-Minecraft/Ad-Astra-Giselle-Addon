@@ -24,8 +24,7 @@
   "enchantment.ad_astra_giselle_addon.gravity_normalizing": "Gravity Normalizing",
   "enchantment.ad_astra_giselle_addon.gravity_normalizing.desc": "Normalize gravity like overworld in Ad Astra dimensions\nUse energy or durability",
   
-  "gui.ad_astra_giselle_addon.workingarea.show": "Show Working Area",
-  "gui.ad_astra_giselle_addon.workingarea.hide": "Hide Working Area",
+  "gui.ad_astra_giselle_addon.workingarea": "Working Area",
   
   "gui.ad_astra_giselle_addon.gravity_normalizer.vector_element_tooltip": "Click: %1$s\nShift+Click: %2$s",
   "gui.ad_astra_giselle_addon.gravity_normalizer.length.x": "X Length: %s",

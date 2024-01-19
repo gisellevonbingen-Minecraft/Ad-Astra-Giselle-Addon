@@ -24,8 +24,7 @@
   "enchantment.ad_astra_giselle_addon.gravity_normalizing": "중력 정규화",
   "enchantment.ad_astra_giselle_addon.gravity_normalizing.desc": "Ad Astra 차원에서 중력을 오버월드처럼 정규화합니다\n갑옷의 에너지 혹은 내구도를 소모합니다",
   
-  "gui.ad_astra_giselle_addon.workingarea.show": "동작 범위 표시",
-  "gui.ad_astra_giselle_addon.workingarea.hide": "동작 범위 숨김",
+  "gui.ad_astra_giselle_addon.workingarea": "동작 범위",
   
   "gui.ad_astra_giselle_addon.gravity_normalizer.vector_element_tooltip": "클릭: %1$s\n시프트+클릭: %2$s",
   "gui.ad_astra_giselle_addon.gravity_normalizer.length.x": "X 길이: %s",
