@@ -1,18 +1,18 @@
-package ad_astra_giselle_addon.common.mixin.mixin.ad_astra_giselle_addon;
+package ad_astra_giselle_addon.common.mixin.ad_astra_giselle_addon;
 
 import org.spongepowered.asm.mixin.Mixin;
 
-import ad_astra_giselle_addon.common.block.entity.RocketSensorBlockEntity;
+import ad_astra_giselle_addon.common.block.entity.FuelLoaderBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 
-@Mixin(RocketSensorBlockEntity.class)
-public abstract class RocketSensorBlockEntityMixin extends BlockEntity
+@Mixin(FuelLoaderBlockEntity.class)
+public abstract class FuelLoaderBlockEntityMixin extends BlockEntity
 {
-	public RocketSensorBlockEntityMixin(BlockEntityType<?> pType, BlockPos pPos, BlockState pBlockState)
+	public FuelLoaderBlockEntityMixin(BlockEntityType<?> pType, BlockPos pPos, BlockState pBlockState)
 	{
 		super(pType, pPos, pBlockState);
 	}

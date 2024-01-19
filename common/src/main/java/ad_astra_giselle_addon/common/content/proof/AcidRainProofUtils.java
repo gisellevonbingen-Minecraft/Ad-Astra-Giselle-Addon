@@ -21,7 +21,12 @@ public class AcidRainProofUtils extends ProofAbstractUtils
 
 	private boolean onAcidRainTick(ServerLevel level, LivingEntity living)
 	{
-		return !this.tryProvideProof(living);
+		if (this.tryProvideProof(living))
+		{
+			return false;
+		}
+
+		return true;
 	}
 
 }

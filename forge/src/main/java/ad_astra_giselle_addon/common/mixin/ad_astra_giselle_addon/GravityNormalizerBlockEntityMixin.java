@@ -1,4 +1,4 @@
-package ad_astra_giselle_addon.common.mixin.mixin.ad_astra_giselle_addon;
+package ad_astra_giselle_addon.common.mixin.ad_astra_giselle_addon;
 
 import org.spongepowered.asm.mixin.Mixin;
 
