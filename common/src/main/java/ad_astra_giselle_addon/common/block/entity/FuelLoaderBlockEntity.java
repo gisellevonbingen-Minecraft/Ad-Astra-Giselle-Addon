@@ -229,6 +229,7 @@ public class FuelLoaderBlockEntity extends ContainerMachineBlockEntity implement
 		{
 			this.workingAreaVisible = visible;
 			this.sync();
+			this.setChanged();
 		}
 
 	}

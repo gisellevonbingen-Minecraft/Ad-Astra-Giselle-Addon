@@ -111,6 +111,7 @@ public class GravityNormalizerBlockEntity extends EnergyContainerMachineBlockEnt
 				AABB workingArea = this.getWorkingArea();
 				this.doNormalize(workingArea);
 				this.sync();
+				this.setChanged();
 			}
 
 			this.setTimer(timer);
@@ -192,6 +193,7 @@ public class GravityNormalizerBlockEntity extends EnergyContainerMachineBlockEnt
 		{
 			this.length = length;
 			this.sync();
+			this.setChanged();
 		}
 
 	}
@@ -237,6 +239,7 @@ public class GravityNormalizerBlockEntity extends EnergyContainerMachineBlockEnt
 		{
 			this.offset = offset;
 			this.sync();
+			this.setChanged();
 		}
 
 	}
@@ -292,6 +295,7 @@ public class GravityNormalizerBlockEntity extends EnergyContainerMachineBlockEnt
 		{
 			this.workingAreaVisible = visible;
 			this.sync();
+			this.setChanged();
 		}
 
 	}

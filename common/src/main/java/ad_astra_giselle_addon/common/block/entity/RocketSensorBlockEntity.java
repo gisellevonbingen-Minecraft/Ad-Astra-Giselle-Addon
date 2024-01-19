@@ -99,12 +99,14 @@ public class RocketSensorBlockEntity extends ContainerMachineBlockEntity impleme
 			this.analogSignal = analogSignal;
 			this.setChanged();
 			this.sync();
+			this.setChanged();
 		}
 		else if (this.getAnalogSignal() != analogSignal)
 		{
 			this.analogSignal = analogSignal;
 			this.setChanged();
 			this.sync();
+			this.setChanged();
 		}
 
 	}
@@ -129,6 +131,7 @@ public class RocketSensorBlockEntity extends ContainerMachineBlockEntity impleme
 		{
 			this.workingAreaVisible = visible;
 			this.sync();
+			this.setChanged();
 		}
 
 	}
@@ -167,6 +170,7 @@ public class RocketSensorBlockEntity extends ContainerMachineBlockEntity impleme
 		{
 			this.sensingType = sensingType;
 			this.sync();
+			this.setChanged();
 		}
 
 	}
@@ -182,6 +186,7 @@ public class RocketSensorBlockEntity extends ContainerMachineBlockEntity impleme
 		{
 			this.inverted = inverted;
 			this.sync();
+			this.setChanged();
 		}
 
 	}
