@@ -25,10 +25,10 @@ public class MekanismCommand
 		CommandSourceStack source = context.getSource();
 		ServerPlayer player = source.getPlayerOrException();
 
-		player.setItemSlot(EquipmentSlot.HEAD, makeFull(MekanismItems.MEKASUIT_HELMET.get(), AddonMekanismModules.SPACE_BREATHING_UNIT));
-		player.setItemSlot(EquipmentSlot.CHEST, makeFull(MekanismItems.MEKASUIT_BODYARMOR.get(), AddonMekanismModules.SPACE_FIRE_PROOF_UNIT, AddonMekanismModules.ACID_RAIN_PROOF_UNIT));
+		player.setItemSlot(EquipmentSlot.HEAD, makeFull(MekanismItems.MEKASUIT_HELMET.get(), AddonMekanismModules.OXYGEN_PROOF_UNIT));
+		player.setItemSlot(EquipmentSlot.CHEST, makeFull(MekanismItems.MEKASUIT_BODYARMOR.get(), AddonMekanismModules.HOT_TEMPERATURE_PROOF_UNIT, AddonMekanismModules.ACID_RAIN_PROOF_UNIT));
 		player.setItemSlot(EquipmentSlot.LEGS, makeFull(MekanismItems.MEKASUIT_PANTS.get()));
-		player.setItemSlot(EquipmentSlot.FEET, makeFull(MekanismItems.MEKASUIT_BOOTS.get(), AddonMekanismModules.GRAVITY_NORMALIZING_UNIT));
+		player.setItemSlot(EquipmentSlot.FEET, makeFull(MekanismItems.MEKASUIT_BOOTS.get(), AddonMekanismModules.GRAVITY_PROOF_UNIT));
 
 		return AddonCommand.sendEquipedMessage(source);
 	}

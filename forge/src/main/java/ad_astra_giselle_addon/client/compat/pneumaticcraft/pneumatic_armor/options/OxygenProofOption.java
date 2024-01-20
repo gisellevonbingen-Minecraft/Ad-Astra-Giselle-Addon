@@ -5,9 +5,9 @@ import me.desht.pneumaticcraft.api.client.pneumatic_helmet.IGuiScreen;
 import me.desht.pneumaticcraft.api.client.pneumatic_helmet.IOptionPage.SimpleOptionPage;
 import me.desht.pneumaticcraft.client.pneumatic_armor.ClientArmorRegistry;
 
-public class SpaceBreathingOption<T extends IArmorUpgradeClientHandler<?>> extends SimpleOptionPage<T>
+public class OxygenProofOption<T extends IArmorUpgradeClientHandler<?>> extends SimpleOptionPage<T>
 {
-	public SpaceBreathingOption(IGuiScreen screen, T clientUpgradeHandler)
+	public OxygenProofOption(IGuiScreen screen, T clientUpgradeHandler)
 	{
 		super(screen, clientUpgradeHandler);
 	}

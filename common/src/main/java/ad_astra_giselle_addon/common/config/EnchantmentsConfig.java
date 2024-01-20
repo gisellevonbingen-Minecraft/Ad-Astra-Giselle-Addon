@@ -26,34 +26,34 @@ public final class EnchantmentsConfig
 	@Comment(value = "Tooltip will don't show when 'Enchantment Descriptions' or 'Enchantment Lore' or 'CoFH Core' installed.\nbut, if this set 'true' show tooltip with ignore that mods.", translation = PREFIX + ".tooltip_ignore.comment")
 	public static boolean TOOLTIP_IGNORE = false;
 
-	public static final String SPACE_BREATHING_ID = "space_breathing";
-	public static final String SPACE_BREATHING_PREFIX = PREFIX + "." + SPACE_BREATHING_ID;
-	@ConfigSeparator(translation = SPACE_BREATHING_PREFIX)
-	@ConfigEntry(id = SPACE_BREATHING_ID + "_energy_using", type = EntryType.INTEGER, translation = SPACE_BREATHING_PREFIX + "_energy_using")
-	@Comment(value = "Energy usage for breath " + OXYGEN_ENERGY_INTERVAL_TOOLTIP, translation = SPACE_BREATHING_PREFIX + "_energy_using.comment")
-	public static int SPACE_BREATHING_ENERGY_USING = 30;
-	@ConfigEntry(id = SPACE_BREATHING_ID + "_durability_oxygen", type = EntryType.LONG, translation = SPACE_BREATHING_PREFIX + "_durability_oxygen")
-	@Comment(value = "Oxygen usage on using durability", translation = SPACE_BREATHING_PREFIX + "_durability_oxygen.comment")
-	public static long SPACE_BREATHING_DURABILITY_OXYGEN = 2 * FluidHooks2.MILLI_BUCKET;
-	@ConfigEntry(id = SPACE_BREATHING_ID + "_durability_using", type = EntryType.INTEGER, translation = SPACE_BREATHING_PREFIX + "_durability_using")
-	@Comment(value = "Durability usage for breath", translation = SPACE_BREATHING_PREFIX + "_durability_using.comment")
-	public static int SPACE_BREATHING_DURABILITY_USING = 1;
-	@ConfigEntry(id = SPACE_BREATHING_ID + "_durability_duration", type = EntryType.INTEGER, translation = SPACE_BREATHING_PREFIX + "_durability_duration")
-	@Comment(value = "Breath duration on using durability " + OXYGEN_DURABILITY_TICKS_TOOLTIP, translation = SPACE_BREATHING_PREFIX + "_durability_duration.comment")
-	public static int SPACE_BREATHING_DURABILITY_DURATION = 2 * ProofAbstractUtils.OXYGEN_PROOF_INTERVAL;
+	public static final String OXYGEN_PROOF_ID = "space_breathing";
+	public static final String OXYGEN_PROOF_PREFIX = PREFIX + "." + OXYGEN_PROOF_ID;
+	@ConfigSeparator(translation = OXYGEN_PROOF_PREFIX)
+	@ConfigEntry(id = OXYGEN_PROOF_ID + "_energy_using", type = EntryType.INTEGER, translation = OXYGEN_PROOF_PREFIX + "_energy_using")
+	@Comment(value = "Energy usage for breath " + OXYGEN_ENERGY_INTERVAL_TOOLTIP, translation = OXYGEN_PROOF_PREFIX + "_energy_using.comment")
+	public static int OXYGEN_PROOF_ENERGY_USING = 30;
+	@ConfigEntry(id = OXYGEN_PROOF_ID + "_durability_oxygen", type = EntryType.LONG, translation = OXYGEN_PROOF_PREFIX + "_durability_oxygen")
+	@Comment(value = "Oxygen usage on using durability", translation = OXYGEN_PROOF_PREFIX + "_durability_oxygen.comment")
+	public static long OXYGEN_PROOF_DURABILITY_OXYGEN = 2 * FluidHooks2.MILLI_BUCKET;
+	@ConfigEntry(id = OXYGEN_PROOF_ID + "_durability_using", type = EntryType.INTEGER, translation = OXYGEN_PROOF_PREFIX + "_durability_using")
+	@Comment(value = "Durability usage for breath", translation = OXYGEN_PROOF_PREFIX + "_durability_using.comment")
+	public static int OXYGEN_PROOF_DURABILITY_USING = 1;
+	@ConfigEntry(id = OXYGEN_PROOF_ID + "_durability_duration", type = EntryType.INTEGER, translation = OXYGEN_PROOF_PREFIX + "_durability_duration")
+	@Comment(value = "Breath duration on using durability " + OXYGEN_DURABILITY_TICKS_TOOLTIP, translation = OXYGEN_PROOF_PREFIX + "_durability_duration.comment")
+	public static int OXYGEN_PROOF_DURABILITY_DURATION = 2 * ProofAbstractUtils.OXYGEN_PROOF_INTERVAL;
 
-	public static final String SPACE_FIRE_PROOF_ID = "space_fire_proof";
-	public static final String SPACE_FIRE_PROOF_PREFIX = PREFIX + "." + SPACE_FIRE_PROOF_ID;
-	@ConfigSeparator(translation = SPACE_FIRE_PROOF_PREFIX)
-	@ConfigEntry(id = SPACE_FIRE_PROOF_ID + "_energy_using", type = EntryType.INTEGER, translation = SPACE_FIRE_PROOF_PREFIX + "_energy_using")
-	@Comment(value = "Energy usage for proof " + GENERAL_ENERGY_INTERVAL_TOOLTIP, translation = SPACE_FIRE_PROOF_PREFIX + "_energy_using.comment")
-	public static int SPACE_FIRE_PROOF_ENERGY_USING = 10;
-	@ConfigEntry(id = SPACE_FIRE_PROOF_ID + "_durability_using", type = EntryType.INTEGER, translation = SPACE_FIRE_PROOF_PREFIX + "_durability_using")
-	@Comment(value = "Durability usage for proof", translation = SPACE_FIRE_PROOF_PREFIX + "_durability_using.comment")
-	public static int SPACE_FIRE_PROOF_DURABILITY_USING = 1;
-	@ConfigEntry(id = SPACE_FIRE_PROOF_ID + "_durability_duration", type = EntryType.INTEGER, translation = SPACE_FIRE_PROOF_PREFIX + "_durability_duration")
-	@Comment(value = "Proof duration on using durability " + GENERAL_DURABILITY_TICKS_TOOLTIP, translation = SPACE_FIRE_PROOF_PREFIX + "_durability_duration.comment")
-	public static int SPACE_FIRE_PROOF_DURABILITY_DURATION = 6 * ProofAbstractUtils.GENERAL_PROOF_INTERVAL;
+	public static final String HOT_TEMPERATURE_PROOF_ID = "space_fire_proof";
+	public static final String HOT_TEMPERATURE_PROOF_PREFIX = PREFIX + "." + HOT_TEMPERATURE_PROOF_ID;
+	@ConfigSeparator(translation = HOT_TEMPERATURE_PROOF_PREFIX)
+	@ConfigEntry(id = HOT_TEMPERATURE_PROOF_ID + "_energy_using", type = EntryType.INTEGER, translation = HOT_TEMPERATURE_PROOF_PREFIX + "_energy_using")
+	@Comment(value = "Energy usage for proof " + GENERAL_ENERGY_INTERVAL_TOOLTIP, translation = HOT_TEMPERATURE_PROOF_PREFIX + "_energy_using.comment")
+	public static int HOT_TEMPERATURE_PROOF_ENERGY_USING = 10;
+	@ConfigEntry(id = HOT_TEMPERATURE_PROOF_ID + "_durability_using", type = EntryType.INTEGER, translation = HOT_TEMPERATURE_PROOF_PREFIX + "_durability_using")
+	@Comment(value = "Durability usage for proof", translation = HOT_TEMPERATURE_PROOF_PREFIX + "_durability_using.comment")
+	public static int HOT_TEMPERATURE_PROOF_DURABILITY_USING = 1;
+	@ConfigEntry(id = HOT_TEMPERATURE_PROOF_ID + "_durability_duration", type = EntryType.INTEGER, translation = HOT_TEMPERATURE_PROOF_PREFIX + "_durability_duration")
+	@Comment(value = "Proof duration on using durability " + GENERAL_DURABILITY_TICKS_TOOLTIP, translation = HOT_TEMPERATURE_PROOF_PREFIX + "_durability_duration.comment")
+	public static int HOT_TEMPERATURE_PROOF_DURABILITY_DURATION = 6 * ProofAbstractUtils.GENERAL_PROOF_INTERVAL;
 
 	public static final String ACID_RAIN_PROOF_ID = "acid_rain_proof";
 	public static final String ACID_RAIN_PROOF_PREFIX = PREFIX + "." + ACID_RAIN_PROOF_ID;
@@ -68,16 +68,16 @@ public final class EnchantmentsConfig
 	@Comment(value = "Proof duration on using durability " + GENERAL_DURABILITY_TICKS_TOOLTIP, translation = ACID_RAIN_PROOF_PREFIX + "_durability_duration.comment")
 	public static int ACID_RAIN_PROOF_DURABILITY_DURATION = 6 * ProofAbstractUtils.GENERAL_PROOF_INTERVAL;
 
-	public static final String GRAVITY_NORMALIZING_ID = "gravity_normalizing";
-	public static final String GRAVITY_NORMALIZING_PREFIX = PREFIX + "." + GRAVITY_NORMALIZING_ID;
-	@ConfigSeparator(translation = GRAVITY_NORMALIZING_PREFIX)
-	@ConfigEntry(id = GRAVITY_NORMALIZING_ID + "_energy_using", type = EntryType.INTEGER, translation = GRAVITY_NORMALIZING_PREFIX + "_energy_using")
-	@Comment(value = "Energy usage for proof " + GENERAL_ENERGY_INTERVAL_TOOLTIP, translation = GRAVITY_NORMALIZING_PREFIX + "_energy_using.comment")
-	public static int GRAVITY_NORMALIZING_ENERGY_USING = 10;
-	@ConfigEntry(id = GRAVITY_NORMALIZING_ID + "_durability_using", type = EntryType.INTEGER, translation = GRAVITY_NORMALIZING_PREFIX + "_durability_using")
-	@Comment(value = "Durability usage for proof", translation = GRAVITY_NORMALIZING_PREFIX + "_durability_using.comment")
-	public static int GRAVITY_NORMALIZING_DURABILITY_USING = 1;
-	@ConfigEntry(id = GRAVITY_NORMALIZING_ID + "_durability_duration", type = EntryType.INTEGER, translation = GRAVITY_NORMALIZING_PREFIX + "_durability_duration")
-	@Comment(value = "Proof duration on using durability " + GENERAL_DURABILITY_TICKS_TOOLTIP, translation = GRAVITY_NORMALIZING_PREFIX + "_durability_duration.comment")
-	public static int GRAVITY_NORMALIZING_DURABILITY_DURATION = 6 * ProofAbstractUtils.GENERAL_PROOF_INTERVAL;
+	public static final String GRAVITY_PROOF_ID = "gravity_normalizing";
+	public static final String GRAVITY_PROOF_PREFIX = PREFIX + "." + GRAVITY_PROOF_ID;
+	@ConfigSeparator(translation = GRAVITY_PROOF_PREFIX)
+	@ConfigEntry(id = GRAVITY_PROOF_ID + "_energy_using", type = EntryType.INTEGER, translation = GRAVITY_PROOF_PREFIX + "_energy_using")
+	@Comment(value = "Energy usage for proof " + GENERAL_ENERGY_INTERVAL_TOOLTIP, translation = GRAVITY_PROOF_PREFIX + "_energy_using.comment")
+	public static int GRAVITY_PROOF_ENERGY_USING = 10;
+	@ConfigEntry(id = GRAVITY_PROOF_ID + "_durability_using", type = EntryType.INTEGER, translation = GRAVITY_PROOF_PREFIX + "_durability_using")
+	@Comment(value = "Durability usage for proof", translation = GRAVITY_PROOF_PREFIX + "_durability_using.comment")
+	public static int GRAVITY_PROOF_DURABILITY_USING = 1;
+	@ConfigEntry(id = GRAVITY_PROOF_ID + "_durability_duration", type = EntryType.INTEGER, translation = GRAVITY_PROOF_PREFIX + "_durability_duration")
+	@Comment(value = "Proof duration on using durability " + GENERAL_DURABILITY_TICKS_TOOLTIP, translation = GRAVITY_PROOF_PREFIX + "_durability_duration.comment")
+	public static int GRAVITY_PROOF_DURABILITY_DURATION = 6 * ProofAbstractUtils.GENERAL_PROOF_INTERVAL;
 }

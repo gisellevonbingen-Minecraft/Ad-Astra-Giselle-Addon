@@ -6,16 +6,16 @@ import mekanism.api.gear.IModule;
 import mekanism.api.gear.config.ModuleConfigItemCreator;
 import mekanism.api.math.FloatingLong;
 
-public class ModuleVenusAcidProofUnit implements ICustomModule<ModuleVenusAcidProofUnit>
+public class ModuleGravityProofUnit implements ICustomModule<ModuleGravityProofUnit>
 {
 	private FloatingLong energyUsing;
 
 	@Override
-	public void init(IModule<ModuleVenusAcidProofUnit> module, ModuleConfigItemCreator configItemCreator)
+	public void init(IModule<ModuleGravityProofUnit> module, ModuleConfigItemCreator configItemCreator)
 	{
 		ICustomModule.super.init(module, configItemCreator);
 
-		this.energyUsing = FloatingLong.create(AddonMekanismConfig.MODULES_ACID_RAIN_PROOF_ENERGY_USING);
+		this.energyUsing = FloatingLong.create(AddonMekanismConfig.MODULES_GRAVITY_PROOF_ENERGY_USING);
 	}
 
 	public FloatingLong getEnergyUsing()

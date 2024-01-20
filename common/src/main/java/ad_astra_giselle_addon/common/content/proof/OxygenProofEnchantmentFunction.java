@@ -14,12 +14,12 @@ import earth.terrarium.botarium.api.fluid.FluidHolder;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.enchantment.Enchantment;
 
-public class SpaceOxygenProofEnchantmentFunction extends ProofEnchantmentFunction
+public class OxygenProofEnchantmentFunction extends ProofEnchantmentFunction
 {
 	@Override
 	public Enchantment getEnchantment()
 	{
-		return AddonEnchantments.SPACE_BREATHING.get();
+		return AddonEnchantments.OXYGEN_PROOF.get();
 	}
 
 	@Override
@@ -55,11 +55,11 @@ public class SpaceOxygenProofEnchantmentFunction extends ProofEnchantmentFunctio
 	{
 		if (resource == ItemUsableResource.Energy)
 		{
-			return EnchantmentsConfig.SPACE_BREATHING_ENERGY_USING;
+			return EnchantmentsConfig.OXYGEN_PROOF_ENERGY_USING;
 		}
 		else if (resource == ItemUsableResource.Durability)
 		{
-			return EnchantmentsConfig.SPACE_BREATHING_DURABILITY_USING;
+			return EnchantmentsConfig.OXYGEN_PROOF_DURABILITY_USING;
 		}
 		else
 		{
@@ -77,7 +77,7 @@ public class SpaceOxygenProofEnchantmentFunction extends ProofEnchantmentFunctio
 		}
 		else if (resource == ItemUsableResource.Durability)
 		{
-			return EnchantmentsConfig.SPACE_BREATHING_DURABILITY_DURATION;
+			return EnchantmentsConfig.OXYGEN_PROOF_DURABILITY_DURATION;
 		}
 		else
 		{
@@ -94,7 +94,7 @@ public class SpaceOxygenProofEnchantmentFunction extends ProofEnchantmentFunctio
 		}
 		else if (resource == ItemUsableResource.Durability)
 		{
-			return EnchantmentsConfig.SPACE_BREATHING_DURABILITY_OXYGEN;
+			return EnchantmentsConfig.OXYGEN_PROOF_DURABILITY_OXYGEN;
 		}
 		else
 		{

@@ -5,12 +5,12 @@ import ad_astra_giselle_addon.common.item.ItemUsableResource;
 import ad_astra_giselle_addon.common.registry.AddonEnchantments;
 import net.minecraft.world.item.enchantment.Enchantment;
 
-public class SpaceFireProofEnchantmentFunction extends ProofEnchantmentFunction
+public class HotTemperatureProofEnchantmentFunction extends ProofEnchantmentFunction
 {
 	@Override
 	public Enchantment getEnchantment()
 	{
-		return AddonEnchantments.SPACE_FIRE_PROOF.get();
+		return AddonEnchantments.HOT_TEMPERATURE_PROOF.get();
 	}
 
 	@Override
@@ -18,11 +18,11 @@ public class SpaceFireProofEnchantmentFunction extends ProofEnchantmentFunction
 	{
 		if (resource == ItemUsableResource.Energy)
 		{
-			return EnchantmentsConfig.SPACE_FIRE_PROOF_ENERGY_USING;
+			return EnchantmentsConfig.HOT_TEMPERATURE_PROOF_ENERGY_USING;
 		}
 		else if (resource == ItemUsableResource.Durability)
 		{
-			return EnchantmentsConfig.SPACE_FIRE_PROOF_DURABILITY_USING;
+			return EnchantmentsConfig.HOT_TEMPERATURE_PROOF_DURABILITY_USING;
 		}
 		else
 		{
@@ -40,7 +40,7 @@ public class SpaceFireProofEnchantmentFunction extends ProofEnchantmentFunction
 		}
 		else if (resource == ItemUsableResource.Durability)
 		{
-			return EnchantmentsConfig.SPACE_FIRE_PROOF_DURABILITY_DURATION;
+			return EnchantmentsConfig.HOT_TEMPERATURE_PROOF_DURABILITY_DURATION;
 		}
 		else
 		{

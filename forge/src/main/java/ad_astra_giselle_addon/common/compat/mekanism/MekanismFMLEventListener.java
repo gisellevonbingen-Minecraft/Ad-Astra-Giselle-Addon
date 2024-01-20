@@ -11,10 +11,10 @@ public class MekanismFMLEventListener
 	public static void onInterModeEnqueue(InterModEnqueueEvent event)
 	{
 		String modid = MekanismCompat.MOD_ID;
-		InterModComms.sendTo(modid, MekanismIMC.ADD_MEKA_SUIT_HELMET_MODULES, AddonMekanismModules.SPACE_BREATHING_UNIT);
-		InterModComms.sendTo(modid, MekanismIMC.ADD_MEKA_SUIT_BODYARMOR_MODULES, AddonMekanismModules.SPACE_FIRE_PROOF_UNIT);
+		InterModComms.sendTo(modid, MekanismIMC.ADD_MEKA_SUIT_HELMET_MODULES, AddonMekanismModules.OXYGEN_PROOF_UNIT);
+		InterModComms.sendTo(modid, MekanismIMC.ADD_MEKA_SUIT_BODYARMOR_MODULES, AddonMekanismModules.HOT_TEMPERATURE_PROOF_UNIT);
 		InterModComms.sendTo(modid, MekanismIMC.ADD_MEKA_SUIT_BODYARMOR_MODULES, AddonMekanismModules.ACID_RAIN_PROOF_UNIT);
-		InterModComms.sendTo(modid, MekanismIMC.ADD_MEKA_SUIT_BOOTS_MODULES, AddonMekanismModules.GRAVITY_NORMALIZING_UNIT);
+		InterModComms.sendTo(modid, MekanismIMC.ADD_MEKA_SUIT_BOOTS_MODULES, AddonMekanismModules.GRAVITY_PROOF_UNIT);
 	}
 
 	private MekanismFMLEventListener()

@@ -5,9 +5,10 @@ import java.util.List;
 import org.jetbrains.annotations.Nullable;
 
 import ad_astra_giselle_addon.common.config.MachinesConfig;
-import ad_astra_giselle_addon.common.content.proof.GravityNormalizingUtils;
+import ad_astra_giselle_addon.common.content.proof.GravityProofUtils;
 import ad_astra_giselle_addon.common.menu.GravityNormalizerMenu;
 import ad_astra_giselle_addon.common.registry.AddonBlockEntityTypes;
+import ad_astra_giselle_addon.common.registry.AddonProofs;
 import ad_astra_giselle_addon.common.util.Vec3iUtils;
 import earth.terrarium.botarium.api.energy.EnergyBlock;
 import earth.terrarium.botarium.api.energy.EnergyHooks;
@@ -124,7 +125,7 @@ public class GravityNormalizerBlockEntity extends AddonMachineBlockEntity implem
 	protected void doNormalize(AABB workingArea)
 	{
 		Level level = this.getLevel();
-		GravityNormalizingUtils proof = GravityNormalizingUtils.INSTANCE;
+		GravityProofUtils proof = AddonProofs.GRAVITY;
 		long energyUsing = this.getEnergyUsing(workingArea);
 		PlatformEnergyManager energyManager = EnergyHooks.getBlockEnergyManager(this, null);
 

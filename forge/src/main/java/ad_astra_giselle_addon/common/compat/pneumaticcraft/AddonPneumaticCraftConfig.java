@@ -17,19 +17,19 @@ public final class AddonPneumaticCraftConfig
 	public static final String PREFIX = ForgeCompatsConfig.PREFIX + "." + ID;
 	public static final String UPGRADE_ID = "upgades";
 
-	public static final String SPACE_BREATHING_ID = UPGRADE_ID + "_space_breathing";
-	public static final String SPACE_BREATHING_PREFIX = PREFIX + "." + SPACE_BREATHING_ID;
-	@ConfigSeparator(translation = SPACE_BREATHING_PREFIX)
-	@ConfigEntry(id = SPACE_BREATHING_ID + "_air_using", type = EntryType.INTEGER, translation = SPACE_BREATHING_PREFIX + "_air_using")
-	@Comment(value = "Air usage for provide oxygen " + EnchantmentsConfig.OXYGEN_ENERGY_INTERVAL_TOOLTIP, translation = SPACE_BREATHING_PREFIX + "_air_using.comment")
-	public static int SPACE_BREATHING_AIR_USING = 5 * ProofAbstractUtils.OXYGEN_PROOF_INTERVAL;
+	public static final String OXYGEN_PROOF_ID = UPGRADE_ID + "_space_breathing";
+	public static final String OXYGEN_PROOF_PREFIX = PREFIX + "." + OXYGEN_PROOF_ID;
+	@ConfigSeparator(translation = OXYGEN_PROOF_PREFIX)
+	@ConfigEntry(id = OXYGEN_PROOF_ID + "_air_using", type = EntryType.INTEGER, translation = OXYGEN_PROOF_PREFIX + "_air_using")
+	@Comment(value = "Air usage for provide oxygen " + EnchantmentsConfig.OXYGEN_ENERGY_INTERVAL_TOOLTIP, translation = OXYGEN_PROOF_PREFIX + "_air_using.comment")
+	public static int OXYGEN_PROOF_AIR_USING = 5 * ProofAbstractUtils.OXYGEN_PROOF_INTERVAL;
 
-	public static final String SPACE_FIRE_PROOF_ID = UPGRADE_ID + "_space_fire_proof";
-	public static final String SPACE_FIRE_PROOF_PREFIX = PREFIX + "." + SPACE_FIRE_PROOF_ID;
-	@ConfigSeparator(translation = SPACE_FIRE_PROOF_PREFIX)
-	@ConfigEntry(id = SPACE_FIRE_PROOF_ID + "_air_using", type = EntryType.INTEGER, translation = SPACE_FIRE_PROOF_PREFIX + "_air_using")
-	@Comment(value = "Air usage for proof " + EnchantmentsConfig.GENERAL_ENERGY_INTERVAL_TOOLTIP, translation = SPACE_FIRE_PROOF_PREFIX + "_air_using.comment")
-	public static int SPACE_FIRE_PROOF_AIR_USING = 5 * ProofAbstractUtils.GENERAL_PROOF_INTERVAL;
+	public static final String HOT_TEMPERATURE_PROOF_ID = UPGRADE_ID + "_space_fire_proof";
+	public static final String HOT_TEMPERATURE_PROOF_PREFIX = PREFIX + "." + HOT_TEMPERATURE_PROOF_ID;
+	@ConfigSeparator(translation = HOT_TEMPERATURE_PROOF_PREFIX)
+	@ConfigEntry(id = HOT_TEMPERATURE_PROOF_ID + "_air_using", type = EntryType.INTEGER, translation = HOT_TEMPERATURE_PROOF_PREFIX + "_air_using")
+	@Comment(value = "Air usage for proof " + EnchantmentsConfig.GENERAL_ENERGY_INTERVAL_TOOLTIP, translation = HOT_TEMPERATURE_PROOF_PREFIX + "_air_using.comment")
+	public static int HOT_TEMPERATURE_PROOF_AIR_USING = 5 * ProofAbstractUtils.GENERAL_PROOF_INTERVAL;
 
 	public static final String ACID_RAIN_PROOFID = UPGRADE_ID + "_acid_rain_proof";
 	public static final String ACID_RAIN_PROOF_PREFIX = PREFIX + "." + ACID_RAIN_PROOFID;
@@ -38,10 +38,10 @@ public final class AddonPneumaticCraftConfig
 	@Comment(value = "Air usage for proof " + EnchantmentsConfig.GENERAL_ENERGY_INTERVAL_TOOLTIP, translation = ACID_RAIN_PROOF_PREFIX + "_air_using.comment")
 	public static int ACID_RAIN_PROOF_AIR_USING = 5 * ProofAbstractUtils.GENERAL_PROOF_INTERVAL;
 
-	public static final String GRAVITY_NORMALIZINGID = UPGRADE_ID + "_gravity_normalizing";
-	public static final String GRAVITY_NORMALIZING_PREFIX = PREFIX + "." + GRAVITY_NORMALIZINGID;
-	@ConfigSeparator(translation = GRAVITY_NORMALIZING_PREFIX)
-	@ConfigEntry(id = GRAVITY_NORMALIZINGID + "_air_using", type = EntryType.INTEGER, translation = GRAVITY_NORMALIZING_PREFIX + "_air_using")
-	@Comment(value = "Air usage for proof " + EnchantmentsConfig.GENERAL_ENERGY_INTERVAL_TOOLTIP, translation = GRAVITY_NORMALIZING_PREFIX + "_air_using.comment")
-	public static int GRAVITY_NORMALIZING_AIR_USING = 5 * ProofAbstractUtils.GENERAL_PROOF_INTERVAL;
+	public static final String GRAVITY_PROOFID = UPGRADE_ID + "_gravity_normalizing";
+	public static final String GRAVITY_PROOF_PREFIX = PREFIX + "." + GRAVITY_PROOFID;
+	@ConfigSeparator(translation = GRAVITY_PROOF_PREFIX)
+	@ConfigEntry(id = GRAVITY_PROOFID + "_air_using", type = EntryType.INTEGER, translation = GRAVITY_PROOF_PREFIX + "_air_using")
+	@Comment(value = "Air usage for proof " + EnchantmentsConfig.GENERAL_ENERGY_INTERVAL_TOOLTIP, translation = GRAVITY_PROOF_PREFIX + "_air_using.comment")
+	public static int GRAVITY_PROOF_AIR_USING = 5 * ProofAbstractUtils.GENERAL_PROOF_INTERVAL;
 }

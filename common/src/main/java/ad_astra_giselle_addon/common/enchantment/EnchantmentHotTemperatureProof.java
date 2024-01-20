@@ -5,9 +5,9 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 
-public class EnchantmentSpaceFireProof extends AddonEnchantment
+public class EnchantmentHotTemperatureProof extends AddonEnchantment
 {
-	public EnchantmentSpaceFireProof()
+	public EnchantmentHotTemperatureProof()
 	{
 		super(Rarity.RARE, EnchantmentCategory.ARMOR_CHEST, EquipmentSlot.CHEST);
 	}
