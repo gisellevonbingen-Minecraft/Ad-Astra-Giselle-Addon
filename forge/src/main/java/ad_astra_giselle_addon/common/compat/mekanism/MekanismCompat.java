@@ -5,10 +5,7 @@ import java.util.List;
 import com.mojang.brigadier.builder.ArgumentBuilder;
 
 import ad_astra_giselle_addon.common.compat.CompatibleMod;
-import ad_astra_giselle_addon.common.content.proof.AcidRainProofUtils;
-import ad_astra_giselle_addon.common.content.proof.GravityNormalizingUtils;
-import ad_astra_giselle_addon.common.content.proof.SpaceFireProofUtils;
-import ad_astra_giselle_addon.common.content.proof.SpaceOxygenProofUtils;
+import ad_astra_giselle_addon.common.registry.AddonProofs;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.resources.ResourceLocation;
@@ -39,10 +36,10 @@ public class MekanismCompat extends CompatibleMod
 		fml_bus.register(MekanismFMLEventListener.class);
 
 		MekanismProofProvidingHandler handler = new MekanismProofProvidingHandler();
-		SpaceOxygenProofUtils.INSTANCE.register(handler::onLivingSpaceOxygenProof);
-		SpaceFireProofUtils.INSTANCE.register(handler::onLivingSpaceFireProof);
-		AcidRainProofUtils.INSTANCE.register(handler::onLivingVenusAcidProof);
-		GravityNormalizingUtils.INSTANCE.register(handler::onLivingGravityNormalizing);
+		AddonProofs.OXYGEN.register(handler::onOxygenProof);
+		AddonProofs.HOT_TEMPERATURE.register(handler::onHotTemperatureProof);
+		AddonProofs.ACID_RAIN.register(handler::onAcidRainProof);
+		AddonProofs.GRAVITY.register(handler::onGravityProof);
 	}
 
 	@Override

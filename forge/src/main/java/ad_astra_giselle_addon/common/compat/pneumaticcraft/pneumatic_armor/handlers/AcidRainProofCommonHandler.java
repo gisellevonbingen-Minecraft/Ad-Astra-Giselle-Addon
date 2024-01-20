@@ -7,9 +7,9 @@ import me.desht.pneumaticcraft.api.upgrade.PNCUpgrade;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 
-public class VenusAcidProofCommonHandler extends AddonArmorUpgradeCommonHandler<IArmorExtensionData>
+public class AcidRainProofCommonHandler extends AddonArmorUpgradeCommonHandler<IArmorExtensionData>
 {
-	public VenusAcidProofCommonHandler(ResourceLocation id)
+	public AcidRainProofCommonHandler(ResourceLocation id)
 	{
 		super(id);
 	}

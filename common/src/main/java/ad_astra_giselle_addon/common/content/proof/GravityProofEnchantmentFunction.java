@@ -5,12 +5,12 @@ import ad_astra_giselle_addon.common.item.ItemUsableResource;
 import ad_astra_giselle_addon.common.registry.AddonEnchantments;
 import net.minecraft.world.item.enchantment.Enchantment;
 
-public class GravityNormalizingEnchantmentFunction extends ProofEnchantmentFunction
+public class GravityProofEnchantmentFunction extends ProofEnchantmentFunction
 {
 	@Override
 	public Enchantment getEnchantment()
 	{
-		return AddonEnchantments.GRAVITY_NORMALIZING.get();
+		return AddonEnchantments.GRAVITY_PROOF.get();
 	}
 
 	@Override
@@ -18,11 +18,11 @@ public class GravityNormalizingEnchantmentFunction extends ProofEnchantmentFunct
 	{
 		if (resource == ItemUsableResource.Energy)
 		{
-			return EnchantmentsConfig.GRAVITY_NORMALIZING_ENERGY_USING;
+			return EnchantmentsConfig.GRAVITY_PROOF_ENERGY_USING;
 		}
 		else if (resource == ItemUsableResource.Durability)
 		{
-			return EnchantmentsConfig.GRAVITY_NORMALIZING_DURABILITY_USING;
+			return EnchantmentsConfig.GRAVITY_PROOF_DURABILITY_USING;
 		}
 		else
 		{
@@ -40,7 +40,7 @@ public class GravityNormalizingEnchantmentFunction extends ProofEnchantmentFunct
 		}
 		else if (resource == ItemUsableResource.Durability)
 		{
-			return EnchantmentsConfig.GRAVITY_NORMALIZING_DURABILITY_DURATION;
+			return EnchantmentsConfig.GRAVITY_PROOF_DURABILITY_DURATION;
 		}
 		else
 		{

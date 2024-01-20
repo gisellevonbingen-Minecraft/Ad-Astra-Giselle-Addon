@@ -4,7 +4,7 @@ import org.lwjgl.opengl.GL11;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 
-import ad_astra_giselle_addon.client.compat.pneumaticcraft.pneumatic_armor.options.SpaceBreathingOption;
+import ad_astra_giselle_addon.client.compat.pneumaticcraft.pneumatic_armor.options.OxygenProofOption;
 import ad_astra_giselle_addon.common.compat.pneumaticcraft.AddonPNCUpgrades;
 import ad_astra_giselle_addon.common.content.oxygen.OxygenChargerUtils;
 import ad_astra_giselle_addon.common.registry.AddonItems;
@@ -26,7 +26,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
-public class SpaceBreathingClientHandler<T extends IArmorUpgradeHandler<?>> extends AddonSimpleToggleableHandler<T>
+public class OxygenProofClientHandler<T extends IArmorUpgradeHandler<?>> extends AddonSimpleToggleableHandler<T>
 {
 	private static final StatPanelLayout DEFAULT_STAT_LAYOUT = StatPanelLayout.expandsRight(0.5F, 0.005F);
 	private static final ItemStack ICON = new ItemStack(AddonItems.OXYGEN_CAN.get());
@@ -34,7 +34,7 @@ public class SpaceBreathingClientHandler<T extends IArmorUpgradeHandler<?>> exte
 	private IGuiAnimatedStat stat;
 	private Component oxygenComponent;
 
-	public SpaceBreathingClientHandler(T commonHandler)
+	public OxygenProofClientHandler(T commonHandler)
 	{
 		super(commonHandler);
 	}
@@ -42,7 +42,7 @@ public class SpaceBreathingClientHandler<T extends IArmorUpgradeHandler<?>> exte
 	@Override
 	public IOptionPage getGuiOptionsPage(IGuiScreen screen)
 	{
-		return new SpaceBreathingOption<>(screen, this);
+		return new OxygenProofOption<>(screen, this);
 	}
 
 	@Override
@@ -99,7 +99,7 @@ public class SpaceBreathingClientHandler<T extends IArmorUpgradeHandler<?>> exte
 	{
 		if (this.stat == null)
 		{
-			PNCUpgrade upgrade = AddonPNCUpgrades.SPACE_BREATHING.get();
+			PNCUpgrade upgrade = AddonPNCUpgrades.OXYGEN_PROOF.get();
 			CommonArmorHandler handler = CommonArmorHandler.getHandlerForPlayer();
 			int tier = Math.max(1, handler.getUpgradeCount(this.getCommonHandler().getEquipmentSlot(), upgrade));
 			ItemStack stack = new ItemStack(upgrade.getItem(tier));

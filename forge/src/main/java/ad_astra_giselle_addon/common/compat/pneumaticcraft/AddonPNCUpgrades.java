@@ -9,10 +9,10 @@ public class AddonPNCUpgrades
 {
 	public static final UpgradeDeferredRegister UPGRADES = new UpgradeDeferredRegister(AdAstraGiselleAddon.MOD_ID);
 
-	public static final UpgradeRegistryHolder<PNCUpgrade, UpgradeItem> SPACE_BREATHING = UPGRADES.add("space_breathing", AddonItems::getMainItemProperties);
-	public static final UpgradeRegistryHolder<PNCUpgrade, UpgradeItem> SPACE_FIRE_PROOF = UPGRADES.add("space_fire_proof", AddonItems::getMainItemProperties);
+	public static final UpgradeRegistryHolder<PNCUpgrade, UpgradeItem> OXYGEN_PROOF = UPGRADES.add("space_breathing", AddonItems::getMainItemProperties);
+	public static final UpgradeRegistryHolder<PNCUpgrade, UpgradeItem> HOT_TEMPERATURE_PROOF = UPGRADES.add("space_fire_proof", AddonItems::getMainItemProperties);
 	public static final UpgradeRegistryHolder<PNCUpgrade, UpgradeItem> ACID_RAIN_PROOF = UPGRADES.add("acid_rain_proof", AddonItems::getMainItemProperties);
-	public static final UpgradeRegistryHolder<PNCUpgrade, UpgradeItem> GRAVITY_NORMALIZING = UPGRADES.add("gravity_normalizing", AddonItems::getMainItemProperties);
+	public static final UpgradeRegistryHolder<PNCUpgrade, UpgradeItem> GRAVITY_PROOF = UPGRADES.add("gravity_normalizing", AddonItems::getMainItemProperties);
 
 	private AddonPNCUpgrades()
 	{

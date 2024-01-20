@@ -7,9 +7,9 @@ import me.desht.pneumaticcraft.api.upgrade.PNCUpgrade;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 
-public class SpaceBreathingCommonHandler extends AddonArmorUpgradeCommonHandler<IArmorExtensionData>
+public class GravityProofCommonHandler extends AddonArmorUpgradeCommonHandler<IArmorExtensionData>
 {
-	public SpaceBreathingCommonHandler(ResourceLocation id)
+	public GravityProofCommonHandler(ResourceLocation id)
 	{
 		super(id);
 	}
@@ -17,7 +17,7 @@ public class SpaceBreathingCommonHandler extends AddonArmorUpgradeCommonHandler<
 	@Override
 	public EquipmentSlot getEquipmentSlot()
 	{
-		return EquipmentSlot.HEAD;
+		return EquipmentSlot.FEET;
 	}
 
 	@Override
@@ -29,7 +29,7 @@ public class SpaceBreathingCommonHandler extends AddonArmorUpgradeCommonHandler<
 	@Override
 	public PNCUpgrade[] getRequiredUpgrades()
 	{
-		return new PNCUpgrade[]{AddonPNCUpgrades.SPACE_BREATHING.get()};
+		return new PNCUpgrade[]{AddonPNCUpgrades.GRAVITY_PROOF.get()};
 	}
 
 }

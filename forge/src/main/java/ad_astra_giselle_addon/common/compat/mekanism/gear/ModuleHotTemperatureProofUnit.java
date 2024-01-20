@@ -6,16 +6,16 @@ import mekanism.api.gear.IModule;
 import mekanism.api.gear.config.ModuleConfigItemCreator;
 import mekanism.api.math.FloatingLong;
 
-public class ModuleSpaceFireProofUnit implements ICustomModule<ModuleSpaceFireProofUnit>
+public class ModuleHotTemperatureProofUnit implements ICustomModule<ModuleHotTemperatureProofUnit>
 {
 	private FloatingLong energyUsing;
 
 	@Override
-	public void init(IModule<ModuleSpaceFireProofUnit> module, ModuleConfigItemCreator configItemCreator)
+	public void init(IModule<ModuleHotTemperatureProofUnit> module, ModuleConfigItemCreator configItemCreator)
 	{
 		ICustomModule.super.init(module, configItemCreator);
 
-		this.energyUsing = FloatingLong.create(AddonMekanismConfig.MODULES_SPACE_FIRE_PROOF_ENERGY_USING);
+		this.energyUsing = FloatingLong.create(AddonMekanismConfig.MODULES_HOT_TEMPERATURE_PROOF_ENERGY_USING);
 	}
 
 	public FloatingLong getEnergyUsing()

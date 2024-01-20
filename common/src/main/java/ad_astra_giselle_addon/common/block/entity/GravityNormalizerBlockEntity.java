@@ -7,8 +7,9 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import ad_astra_giselle_addon.common.config.MachinesConfig;
-import ad_astra_giselle_addon.common.content.proof.GravityNormalizingUtils;
+import ad_astra_giselle_addon.common.content.proof.GravityProofUtils;
 import ad_astra_giselle_addon.common.menu.GravityNormalizerMenu;
+import ad_astra_giselle_addon.common.registry.AddonProofs;
 import ad_astra_giselle_addon.common.util.Vec3iUtils;
 import earth.terrarium.adastra.common.blockentities.base.EnergyContainerMachineBlockEntity;
 import earth.terrarium.adastra.common.blockentities.base.sideconfig.Configuration;
@@ -122,7 +123,7 @@ public class GravityNormalizerBlockEntity extends EnergyContainerMachineBlockEnt
 	protected void doNormalize(AABB workingArea)
 	{
 		Level level = this.getLevel();
-		GravityNormalizingUtils proof = GravityNormalizingUtils.INSTANCE;
+		GravityProofUtils proof = AddonProofs.GRAVITY;
 		long energyUsing = this.getEnergyUsing(workingArea);
 		WrappedBlockEnergyContainer energyStorage = this.getEnergyStorage();
 

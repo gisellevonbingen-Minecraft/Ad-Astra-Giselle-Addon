@@ -2,7 +2,7 @@ package ad_astra_giselle_addon.common.compat.pneumaticcraft;
 
 import org.jetbrains.annotations.NotNull;
 
-import ad_astra_giselle_addon.common.compat.pneumaticcraft.pneumatic_armor.handlers.SpaceBreathingCommonHandler;
+import ad_astra_giselle_addon.common.compat.pneumaticcraft.pneumatic_armor.handlers.OxygenProofCommonHandler;
 import ad_astra_giselle_addon.common.content.oxygen.IOxygenCharger;
 import ad_astra_giselle_addon.common.content.oxygen.OxygenChargerUtils;
 import ad_astra_giselle_addon.common.content.proof.ProofAbstractUtils;
@@ -40,8 +40,8 @@ public class PneumaticCraftProofProvidingHandler
 
 		if (maxAirSupply - airSupply >= airDuration)
 		{
-			SpaceBreathingCommonHandler upgradeHandler = AddonCommonUpgradeHandlers.SPACE_BREATHING;
-			int airUsing = AddonPneumaticCraftConfig.SPACE_BREATHING_AIR_USING;
+			OxygenProofCommonHandler upgradeHandler = AddonCommonUpgradeHandlers.OXYGEN_PROOF;
+			int airUsing = AddonPneumaticCraftConfig.OXYGEN_PROOF_AIR_USING;
 			long oxygenUsing = ProofAbstractUtils.OXYGEN_PROOF_USING;
 
 			if (this.useAirAndOxygen(living, upgradeHandler, airUsing, oxygenUsing, false))
@@ -53,36 +53,36 @@ public class PneumaticCraftProofProvidingHandler
 
 	}
 
-	public int onLivingSpaceOxygenProof(LivingEntity living)
+	public int onOxygenProof(LivingEntity living)
 	{
-		SpaceBreathingCommonHandler upgradeHandler = AddonCommonUpgradeHandlers.SPACE_BREATHING;
-		int airUsing = AddonPneumaticCraftConfig.SPACE_BREATHING_AIR_USING;
+		OxygenProofCommonHandler upgradeHandler = AddonCommonUpgradeHandlers.OXYGEN_PROOF;
+		int airUsing = AddonPneumaticCraftConfig.OXYGEN_PROOF_AIR_USING;
 		long oxygenUsing = ProofAbstractUtils.OXYGEN_PROOF_USING;
 		return this.useAirAndOxygen(living, upgradeHandler, airUsing, oxygenUsing, false) ? ProofAbstractUtils.OXYGEN_PROOF_INTERVAL : 0;
 	}
 
-	public int onLivingSpaceFireProof(LivingEntity living)
+	public int onHotTemperatureProof(LivingEntity living)
 	{
-		IArmorUpgradeHandler<?> upgradeHandler = AddonCommonUpgradeHandlers.SPACE_FIRE_PROOF;
-		int airUsing = AddonPneumaticCraftConfig.SPACE_FIRE_PROOF_AIR_USING;
+		IArmorUpgradeHandler<?> upgradeHandler = AddonCommonUpgradeHandlers.HOT_TEMPERATURE_PROOF;
+		int airUsing = AddonPneumaticCraftConfig.HOT_TEMPERATURE_PROOF_AIR_USING;
 		return this.useAir(living, upgradeHandler, airUsing, false) ? ProofAbstractUtils.GENERAL_PROOF_INTERVAL : 0;
 	}
 
-	public int onLivingVenusAcidProof(LivingEntity living)
+	public int onAcidRainProof(LivingEntity living)
 	{
 		IArmorUpgradeHandler<?> upgradeHandler = AddonCommonUpgradeHandlers.ACID_RAIN_PROOF;
 		int airUsing = AddonPneumaticCraftConfig.ACID_RAIN_PROOF_AIR_USING;
 		return this.useAir(living, upgradeHandler, airUsing, false) ? ProofAbstractUtils.GENERAL_PROOF_INTERVAL : 0;
 	}
 
-	public int onLivingGravityNormalizing(LivingEntity living)
+	public int onGravityProof(LivingEntity living)
 	{
-		IArmorUpgradeHandler<?> upgradeHandler = AddonCommonUpgradeHandlers.GRAVITY_NORMALIZING;
-		int airUsing = AddonPneumaticCraftConfig.GRAVITY_NORMALIZING_AIR_USING;
+		IArmorUpgradeHandler<?> upgradeHandler = AddonCommonUpgradeHandlers.GRAVITY_PROOF;
+		int airUsing = AddonPneumaticCraftConfig.GRAVITY_PROOF_AIR_USING;
 		return this.useAir(living, upgradeHandler, airUsing, false) ? ProofAbstractUtils.GENERAL_PROOF_INTERVAL : 0;
 	}
 
-	public boolean useAirAndOxygen(LivingEntity living, SpaceBreathingCommonHandler upgradeHandler, int airUsing, long oxygenUsing, boolean simulate)
+	public boolean useAirAndOxygen(LivingEntity living, OxygenProofCommonHandler upgradeHandler, int airUsing, long oxygenUsing, boolean simulate)
 	{
 		if (this.useAir(living, upgradeHandler, airUsing, true))
 		{

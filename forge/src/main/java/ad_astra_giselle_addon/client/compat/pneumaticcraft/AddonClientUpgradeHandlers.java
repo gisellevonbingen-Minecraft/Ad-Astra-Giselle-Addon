@@ -6,12 +6,12 @@ import java.util.List;
 import java.util.function.Function;
 
 import ad_astra_giselle_addon.client.compat.pneumaticcraft.pneumatic_armor.handlers.AddonSimpleToggleableHandler;
-import ad_astra_giselle_addon.client.compat.pneumaticcraft.pneumatic_armor.handlers.SpaceBreathingClientHandler;
+import ad_astra_giselle_addon.client.compat.pneumaticcraft.pneumatic_armor.handlers.OxygenProofClientHandler;
 import ad_astra_giselle_addon.common.compat.pneumaticcraft.AddonCommonUpgradeHandlers;
-import ad_astra_giselle_addon.common.compat.pneumaticcraft.pneumatic_armor.handlers.GravityNormalizingCommonHandler;
-import ad_astra_giselle_addon.common.compat.pneumaticcraft.pneumatic_armor.handlers.SpaceBreathingCommonHandler;
-import ad_astra_giselle_addon.common.compat.pneumaticcraft.pneumatic_armor.handlers.SpaceFireProofCommonHandler;
-import ad_astra_giselle_addon.common.compat.pneumaticcraft.pneumatic_armor.handlers.VenusAcidProofCommonHandler;
+import ad_astra_giselle_addon.common.compat.pneumaticcraft.pneumatic_armor.handlers.GravityProofCommonHandler;
+import ad_astra_giselle_addon.common.compat.pneumaticcraft.pneumatic_armor.handlers.OxygenProofCommonHandler;
+import ad_astra_giselle_addon.common.compat.pneumaticcraft.pneumatic_armor.handlers.HotTemperatureProofCommonHandler;
+import ad_astra_giselle_addon.common.compat.pneumaticcraft.pneumatic_armor.handlers.AcidRainProofCommonHandler;
 import me.desht.pneumaticcraft.api.client.pneumatic_helmet.IArmorUpgradeClientHandler;
 import me.desht.pneumaticcraft.api.client.pneumatic_helmet.IArmorUpgradeClientHandler.SimpleToggleableHandler;
 import me.desht.pneumaticcraft.api.pneumatic_armor.IArmorUpgradeHandler;
@@ -22,10 +22,10 @@ public class AddonClientUpgradeHandlers
 	private static final List<IArmorUpgradeClientHandler<? extends IArmorUpgradeHandler<?>>> HANDLERS = new ArrayList<>();
 	private static final List<IArmorUpgradeClientHandler<? extends IArmorUpgradeHandler<?>>> READONLY_LIST = Collections.unmodifiableList(HANDLERS);
 
-	public static final SpaceBreathingClientHandler<SpaceBreathingCommonHandler> SPACE_BREATHING = register(AddonCommonUpgradeHandlers.SPACE_BREATHING, SpaceBreathingClientHandler::new);
-	public static final SimpleToggleableHandler<SpaceFireProofCommonHandler> SPACE_FIRE_PROOF = register(AddonCommonUpgradeHandlers.SPACE_FIRE_PROOF, AddonSimpleToggleableHandler::new);
-	public static final SimpleToggleableHandler<VenusAcidProofCommonHandler> ACID_RAIN_PROOF = register(AddonCommonUpgradeHandlers.ACID_RAIN_PROOF, AddonSimpleToggleableHandler::new);
-	public static final SimpleToggleableHandler<GravityNormalizingCommonHandler> GRAVITY_NORMALIZING = register(AddonCommonUpgradeHandlers.GRAVITY_NORMALIZING, AddonSimpleToggleableHandler::new);
+	public static final OxygenProofClientHandler<OxygenProofCommonHandler> OXYGEN_PROOF = register(AddonCommonUpgradeHandlers.OXYGEN_PROOF, OxygenProofClientHandler::new);
+	public static final SimpleToggleableHandler<HotTemperatureProofCommonHandler> HOT_TEMPERATURE_PROOF = register(AddonCommonUpgradeHandlers.HOT_TEMPERATURE_PROOF, AddonSimpleToggleableHandler::new);
+	public static final SimpleToggleableHandler<AcidRainProofCommonHandler> ACID_RAIN_PROOF = register(AddonCommonUpgradeHandlers.ACID_RAIN_PROOF, AddonSimpleToggleableHandler::new);
+	public static final SimpleToggleableHandler<GravityProofCommonHandler> GRAVITY_PROOF = register(AddonCommonUpgradeHandlers.GRAVITY_PROOF, AddonSimpleToggleableHandler::new);
 
 	private static <C extends IArmorUpgradeHandler<?>, T extends IArmorUpgradeClientHandler<? extends C>> T register(C commonHandler, Function<C, T> func)
 	{

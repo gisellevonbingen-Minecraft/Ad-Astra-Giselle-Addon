@@ -7,9 +7,9 @@ import me.desht.pneumaticcraft.api.upgrade.PNCUpgrade;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 
-public class GravityNormalizingCommonHandler extends AddonArmorUpgradeCommonHandler<IArmorExtensionData>
+public class HotTemperatureProofCommonHandler extends AddonArmorUpgradeCommonHandler<IArmorExtensionData>
 {
-	public GravityNormalizingCommonHandler(ResourceLocation id)
+	public HotTemperatureProofCommonHandler(ResourceLocation id)
 	{
 		super(id);
 	}
@@ -17,7 +17,7 @@ public class GravityNormalizingCommonHandler extends AddonArmorUpgradeCommonHand
 	@Override
 	public EquipmentSlot getEquipmentSlot()
 	{
-		return EquipmentSlot.FEET;
+		return EquipmentSlot.CHEST;
 	}
 
 	@Override
@@ -29,7 +29,7 @@ public class GravityNormalizingCommonHandler extends AddonArmorUpgradeCommonHand
 	@Override
 	public PNCUpgrade[] getRequiredUpgrades()
 	{
-		return new PNCUpgrade[]{AddonPNCUpgrades.GRAVITY_NORMALIZING.get()};
+		return new PNCUpgrade[]{AddonPNCUpgrades.HOT_TEMPERATURE_PROOF.get()};
 	}
 
 }

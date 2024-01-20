@@ -7,9 +7,9 @@ import me.desht.pneumaticcraft.api.upgrade.PNCUpgrade;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 
-public class SpaceFireProofCommonHandler extends AddonArmorUpgradeCommonHandler<IArmorExtensionData>
+public class OxygenProofCommonHandler extends AddonArmorUpgradeCommonHandler<IArmorExtensionData>
 {
-	public SpaceFireProofCommonHandler(ResourceLocation id)
+	public OxygenProofCommonHandler(ResourceLocation id)
 	{
 		super(id);
 	}
@@ -17,7 +17,7 @@ public class SpaceFireProofCommonHandler extends AddonArmorUpgradeCommonHandler<
 	@Override
 	public EquipmentSlot getEquipmentSlot()
 	{
-		return EquipmentSlot.CHEST;
+		return EquipmentSlot.HEAD;
 	}
 
 	@Override
@@ -29,7 +29,7 @@ public class SpaceFireProofCommonHandler extends AddonArmorUpgradeCommonHandler<
 	@Override
 	public PNCUpgrade[] getRequiredUpgrades()
 	{
-		return new PNCUpgrade[]{AddonPNCUpgrades.SPACE_FIRE_PROOF.get()};
+		return new PNCUpgrade[]{AddonPNCUpgrades.OXYGEN_PROOF.get()};
 	}
 
 }

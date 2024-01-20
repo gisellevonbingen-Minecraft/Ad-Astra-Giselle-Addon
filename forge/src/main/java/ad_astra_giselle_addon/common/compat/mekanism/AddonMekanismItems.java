@@ -10,10 +10,10 @@ public class AddonMekanismItems
 {
 	public static final ItemDeferredRegister ITEMS = new ItemDeferredRegister(AdAstraGiselleAddon.MOD_ID);
 
-	public static final ItemRegistryObject<ItemModule> SPACE_BREATHING_UNIT = registerModule(ITEMS, AddonMekanismModules.SPACE_BREATHING_UNIT);
-	public static final ItemRegistryObject<ItemModule> SPACE_FIRE_PROOF_UNIT = registerModule(ITEMS, AddonMekanismModules.SPACE_FIRE_PROOF_UNIT);
+	public static final ItemRegistryObject<ItemModule> OXYGEN_PROOF_UNIT = registerModule(ITEMS, AddonMekanismModules.OXYGEN_PROOF_UNIT);
+	public static final ItemRegistryObject<ItemModule> HOT_TEMPERATURE_PROOF_UNIT = registerModule(ITEMS, AddonMekanismModules.HOT_TEMPERATURE_PROOF_UNIT);
 	public static final ItemRegistryObject<ItemModule> ACID_RAIN_PROOF_UNIT = registerModule(ITEMS, AddonMekanismModules.ACID_RAIN_PROOF_UNIT);
-	public static final ItemRegistryObject<ItemModule> GRAVITY_NORMALIZING_UNIT = registerModule(ITEMS, AddonMekanismModules.GRAVITY_NORMALIZING_UNIT);
+	public static final ItemRegistryObject<ItemModule> GRAVITY_PROOF_UNIT = registerModule(ITEMS, AddonMekanismModules.GRAVITY_PROOF_UNIT);
 
 	public static ItemRegistryObject<ItemModule> registerModule(ItemDeferredRegister register, ModuleRegistryObject<?> moduleDataSupplier)
 	{

@@ -39,36 +39,36 @@ import net.minecraft.world.phys.AABB;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.fluids.FluidType;
 
-public class ModuleSpaceBreathingUnit implements ICustomModule<ModuleSpaceBreathingUnit>
+public class ModuleOxygenProofUnit implements ICustomModule<ModuleOxygenProofUnit>
 {
 	public static final ResourceLocation ICON = AdAstraGiselleAddon.rl(MekanismUtils.ResourceType.GUI_HUD.getPrefix() + "space_breathing_unit.png");
 
 	private FloatingLong energyUsingProvide;
 	private FloatingLong energyUsingProduce;
 
-	public ModuleSpaceBreathingUnit()
+	public ModuleOxygenProofUnit()
 	{
 
 	}
 
 	@Override
-	public void init(IModule<ModuleSpaceBreathingUnit> module, ModuleConfigItemCreator configItemCreator)
+	public void init(IModule<ModuleOxygenProofUnit> module, ModuleConfigItemCreator configItemCreator)
 	{
 		ICustomModule.super.init(module, configItemCreator);
 
-		this.energyUsingProvide = FloatingLong.create(AddonMekanismConfig.MODULES_SPACE_BREATHING_ENERGY_USING_PROVIDE);
-		this.energyUsingProduce = FloatingLong.create(AddonMekanismConfig.MODULES_SPACE_BREATHING_ENERGY_USING_PRODUCE);
+		this.energyUsingProvide = FloatingLong.create(AddonMekanismConfig.MODULES_OXYGEN_PROOF_ENERGY_USING_PROVIDE);
+		this.energyUsingProduce = FloatingLong.create(AddonMekanismConfig.MODULES_OXYGEN_PROOF_ENERGY_USING_PRODUCE);
 	}
 
 	@Override
-	public void tickServer(IModule<ModuleSpaceBreathingUnit> module, Player player)
+	public void tickServer(IModule<ModuleOxygenProofUnit> module, Player player)
 	{
 		ICustomModule.super.tickServer(module, player);
 
 		this.produceOxygen(module, player);
 	}
 
-	private void produceOxygen(IModule<ModuleSpaceBreathingUnit> module, Player player)
+	private void produceOxygen(IModule<ModuleOxygenProofUnit> module, Player player)
 	{
 		long productionRate = this.getProduceRate(module, player);
 
@@ -134,7 +134,7 @@ public class ModuleSpaceBreathingUnit implements ICustomModule<ModuleSpaceBreath
 		return productionRate;
 	}
 
-	public long getProduceRate(IModule<ModuleSpaceBreathingUnit> module, Player player)
+	public long getProduceRate(IModule<ModuleOxygenProofUnit> module, Player player)
 	{
 		float eyeHeight = player.getEyeHeight();
 		Map<FluidType, FluidInDetails> fluidsIn = MekanismUtils.getFluidsIn(player, bb ->
@@ -155,7 +155,7 @@ public class ModuleSpaceBreathingUnit implements ICustomModule<ModuleSpaceBreath
 		return 0L;
 	}
 
-	public boolean useResources(IModule<ModuleSpaceBreathingUnit> module, LivingEntity living, boolean simulate)
+	public boolean useResources(IModule<ModuleOxygenProofUnit> module, LivingEntity living, boolean simulate)
 	{
 		if (!LivingHelper.isPlayingMode(living))
 		{
@@ -192,7 +192,7 @@ public class ModuleSpaceBreathingUnit implements ICustomModule<ModuleSpaceBreath
 	}
 
 	@Override
-	public void addHUDElements(IModule<ModuleSpaceBreathingUnit> module, Player player, Consumer<IHUDElement> hudElementAdder)
+	public void addHUDElements(IModule<ModuleOxygenProofUnit> module, Player player, Consumer<IHUDElement> hudElementAdder)
 	{
 		ICustomModule.super.addHUDElements(module, player, hudElementAdder);
 
@@ -205,7 +205,7 @@ public class ModuleSpaceBreathingUnit implements ICustomModule<ModuleSpaceBreath
 		hudElementAdder.accept(IModuleHelper.INSTANCE.hudElementPercent(ICON, ratio));
 	}
 
-	public long getMaxProduceRate(IModule<ModuleSpaceBreathingUnit> module)
+	public long getMaxProduceRate(IModule<ModuleOxygenProofUnit> module)
 	{
 		return (long) Math.pow(2L, module.getInstalledCount() - 1);
 	}

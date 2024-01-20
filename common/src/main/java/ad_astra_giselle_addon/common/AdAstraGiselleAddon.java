@@ -18,6 +18,7 @@ import ad_astra_giselle_addon.common.registry.AddonBlocks;
 import ad_astra_giselle_addon.common.registry.AddonEnchantments;
 import ad_astra_giselle_addon.common.registry.AddonItems;
 import ad_astra_giselle_addon.common.registry.AddonMenuTypes;
+import ad_astra_giselle_addon.common.registry.AddonProofs;
 import ad_astra_giselle_addon.common.registry.AddonRecipeSerializers;
 import ad_astra_giselle_addon.common.registry.AddonTabs;
 import net.minecraft.commands.CommandSourceStack;
@@ -60,6 +61,7 @@ public class AdAstraGiselleAddon
 		AddonMenuTypes.MENU_TYPES.register();
 		AddonRecipeSerializers.RECIPE_SERIALIZERS.init();
 		AddonNetwork.registerAll();
+		AddonProofs.registerAll();
 
 		COMPATS = new CompatibleManager();
 	}
