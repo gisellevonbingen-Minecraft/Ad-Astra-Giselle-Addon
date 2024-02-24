@@ -25,9 +25,11 @@ import net.minecraft.world.level.Level;
 
 public class OxygenChargerUtils
 {
+	public static final long LEAST_DISTRIBUTION_AMOUNT = FluidConstants.fromMillibuckets(1L);
+
 	public static void distributeToItems(LivingEntity living)
 	{
-		streamExtractable(living, FluidConstants.fromMillibuckets(1L)).forEach(c ->
+		streamExtractable(living, LEAST_DISTRIBUTION_AMOUNT).forEach(c ->
 		{
 			distributeToItems(living, c);
 		});

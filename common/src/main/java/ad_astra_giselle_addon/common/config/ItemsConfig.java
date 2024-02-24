@@ -11,6 +11,12 @@ public final class ItemsConfig
 	public static final String ID = "items";
 	public static final String PREFIX = AddonConfigs.PREFIX + "." + ID;
 
+	public static final String OXYGEN_CHARGERS_ID = "oxygen_chargers";
+	public static final String OXYGEN_CHARGERS_PREFIX = PREFIX + "." + OXYGEN_CHARGERS_ID;
+	@ConfigSeparator(translation = OXYGEN_CHARGERS_PREFIX)
+	@ConfigEntry(id = OXYGEN_CHARGERS_ID + "_distribution_interval", type = EntryType.INTEGER, translation = OXYGEN_CHARGERS_PREFIX + "_distribution_interval")
+	public static int OXYGEN_CHARGERS_DISTRUBUTION_INTERVAL = 20;
+
 	public static final String OXYGEN_CAN_ID = "oxygen_can";
 	public static final String OXYGEN_CAN_PREFIX = PREFIX + "." + OXYGEN_CAN_ID;
 	@ConfigSeparator(translation = OXYGEN_CAN_PREFIX)

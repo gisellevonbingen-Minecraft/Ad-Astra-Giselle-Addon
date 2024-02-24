@@ -95,6 +95,8 @@
   
   
   "config.ad_astra_giselle_addon.items": "Items",
+  "config.ad_astra_giselle_addon.items.oxygen_chargers": "Oxygen Cans(Common)",
+  "config.ad_astra_giselle_addon.items.oxygen_chargers_distribution_interval": "Distribution Interval [ticks]",
   "config.ad_astra_giselle_addon.items.oxygen_can": "Oxygen Can",
   "config.ad_astra_giselle_addon.items.oxygen_can_fluid_capacity": "Fluid Capacity",
   "config.ad_astra_giselle_addon.items.oxygen_can_fluid_transfer": "Fluid Transfer",

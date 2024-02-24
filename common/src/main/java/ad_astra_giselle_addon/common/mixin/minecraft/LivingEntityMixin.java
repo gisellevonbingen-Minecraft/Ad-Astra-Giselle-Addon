@@ -5,6 +5,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import ad_astra_giselle_addon.common.config.ItemsConfig;
 import ad_astra_giselle_addon.common.content.oxygen.OxygenChargerUtils;
 import ad_astra_giselle_addon.common.content.proof.ProofAbstractUtils;
 import net.minecraft.world.entity.Entity;
@@ -25,7 +26,7 @@ public abstract class LivingEntityMixin extends Entity
 	{
 		LivingEntity living = (LivingEntity) (Object) this;
 
-		if (!living.level().isClientSide())
+		if (!living.level().isClientSide() && living.tickCount % ItemsConfig.OXYGEN_CHARGERS_DISTRUBUTION_INTERVAL == 0)
 		{
 			OxygenChargerUtils.distributeToItems(living);
 		}

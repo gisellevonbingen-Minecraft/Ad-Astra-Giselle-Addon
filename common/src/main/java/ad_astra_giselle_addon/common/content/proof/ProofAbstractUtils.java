@@ -5,10 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 import ad_astra_giselle_addon.common.AdAstraGiselleAddon;
-import ad_astra_giselle_addon.common.entity.EntityCustomDataHelper;
-import ad_astra_giselle_addon.common.util.NBTUtils;
 import earth.terrarium.botarium.common.fluid.FluidConstants;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 
@@ -17,17 +14,11 @@ public abstract class ProofAbstractUtils
 	private static final List<ProofAbstractUtils> _PROOFS = new ArrayList<>();
 	public static final List<ProofAbstractUtils> PROOFS = Collections.unmodifiableList(_PROOFS);
 
-	public static final String KEY_PROOF_MAP = AdAstraGiselleAddon.rl("proof").toString();
-	public static final String KEY_PROOF_DURATION = "proof_duration";
+	public static final String KEY_PROOF_DURATION = AdAstraGiselleAddon.rl("proof_duration").toString();
 
 	public static final int GENERAL_PROOF_INTERVAL = 10;
 	public static final int OXYGEN_PROOF_INTERVAL = 30;
 	public static final long OXYGEN_PROOF_USING = FluidConstants.fromMillibuckets(1L);
-
-	public static CompoundTag getAllCustomData(LivingEntity living)
-	{
-		return NBTUtils.getOrCreateTag(EntityCustomDataHelper.getCustomData(living), KEY_PROOF_MAP);
-	}
 
 	public static void reduceProofDuration(LivingEntity living)
 	{
@@ -45,13 +36,13 @@ public abstract class ProofAbstractUtils
 	}
 
 	private final ResourceLocation id;
-	private final String customDataKey;
+	private final String dataKey;
 	private final List<ProofFunction> listeners;
 
 	protected ProofAbstractUtils(ResourceLocation id)
 	{
 		this.id = id;
-		this.customDataKey = id.toString();
+		this.dataKey = id.toString();
 		this.listeners = new ArrayList<>();
 		_PROOFS.add(this);
 	}
@@ -61,29 +52,19 @@ public abstract class ProofAbstractUtils
 		return this.id;
 	}
 
-	public String getCustomDataKey()
+	public String getDataKey()
 	{
-		return this.customDataKey;
-	}
-
-	public CompoundTag getCustomData(LivingEntity living)
-	{
-		return NBTUtils.getTag(getAllCustomData(living), this.getCustomDataKey());
-	}
-
-	public CompoundTag getOrCreateData(LivingEntity living)
-	{
-		return NBTUtils.getOrCreateTag(getAllCustomData(living), this.getCustomDataKey());
+		return this.dataKey;
 	}
 
 	public int getProofDuration(LivingEntity living)
 	{
-		return this.getCustomData(living).getInt(KEY_PROOF_DURATION);
+		return ((LivingProofDurationAccessor) living).ad_astra_giselle_addon$getProofDuration(this);
 	}
 
 	public void setProofDuration(LivingEntity living, int proofDuration)
 	{
-		this.getOrCreateData(living).putInt(KEY_PROOF_DURATION, proofDuration);
+		((LivingProofDurationAccessor) living).ad_astra_giselle_addon$setProofDuration(this, proofDuration);
 	}
 
 	public boolean tryProvideProof(LivingEntity living)

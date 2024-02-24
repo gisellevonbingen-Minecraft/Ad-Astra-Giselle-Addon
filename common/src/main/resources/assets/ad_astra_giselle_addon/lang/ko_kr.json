@@ -95,6 +95,8 @@
   
   
   "config.ad_astra_giselle_addon.items": "아이템",
+  "config.ad_astra_giselle_addon.items.oxygen_chargers": "산소 캔(공용)",
+  "config.ad_astra_giselle_addon.items.oxygen_chargers_distribution_interval": "충전 주기 [틱]",
   "config.ad_astra_giselle_addon.items.oxygen_can": "산소 캔",
   "config.ad_astra_giselle_addon.items.oxygen_can_fluid_capacity": "유체 용량",
   "config.ad_astra_giselle_addon.items.oxygen_can_fluid_transfer": "틱당 유체 전송량",
