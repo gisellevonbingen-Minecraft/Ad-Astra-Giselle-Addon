@@ -1,9 +1,9 @@
 package ad_astra_giselle_addon.common.compat.mekanism;
 
-import ad_astra_giselle_addon.common.compat.mekanism.gear.ModuleGravityProofUnit;
-import ad_astra_giselle_addon.common.compat.mekanism.gear.ModuleOxygenProofUnit;
-import ad_astra_giselle_addon.common.compat.mekanism.gear.ModuleHotTemperatureProofUnit;
 import ad_astra_giselle_addon.common.compat.mekanism.gear.ModuleAcidRainProofUnit;
+import ad_astra_giselle_addon.common.compat.mekanism.gear.ModuleGravityProofUnit;
+import ad_astra_giselle_addon.common.compat.mekanism.gear.ModuleHotTemperatureProofUnit;
+import ad_astra_giselle_addon.common.compat.mekanism.gear.ModuleOxygenProofUnit;
 import ad_astra_giselle_addon.common.content.proof.ProofAbstractUtils;
 import mekanism.api.gear.IModule;
 import net.minecraft.world.entity.LivingEntity;

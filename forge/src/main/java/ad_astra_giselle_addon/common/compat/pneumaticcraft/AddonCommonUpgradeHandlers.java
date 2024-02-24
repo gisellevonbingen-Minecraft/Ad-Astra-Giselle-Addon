@@ -6,10 +6,10 @@ import java.util.List;
 import java.util.function.Function;
 
 import ad_astra_giselle_addon.common.AdAstraGiselleAddon;
-import ad_astra_giselle_addon.common.compat.pneumaticcraft.pneumatic_armor.handlers.GravityProofCommonHandler;
-import ad_astra_giselle_addon.common.compat.pneumaticcraft.pneumatic_armor.handlers.OxygenProofCommonHandler;
-import ad_astra_giselle_addon.common.compat.pneumaticcraft.pneumatic_armor.handlers.HotTemperatureProofCommonHandler;
 import ad_astra_giselle_addon.common.compat.pneumaticcraft.pneumatic_armor.handlers.AcidRainProofCommonHandler;
+import ad_astra_giselle_addon.common.compat.pneumaticcraft.pneumatic_armor.handlers.GravityProofCommonHandler;
+import ad_astra_giselle_addon.common.compat.pneumaticcraft.pneumatic_armor.handlers.HotTemperatureProofCommonHandler;
+import ad_astra_giselle_addon.common.compat.pneumaticcraft.pneumatic_armor.handlers.OxygenProofCommonHandler;
 import me.desht.pneumaticcraft.api.pneumatic_armor.IArmorUpgradeHandler;
 import me.desht.pneumaticcraft.common.pneumatic_armor.ArmorUpgradeRegistry;
 import net.minecraft.resources.ResourceLocation;
