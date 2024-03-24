@@ -6,8 +6,8 @@ import java.util.function.Consumer;
 
 import org.jetbrains.annotations.Nullable;
 
+import com.teamresourceful.resourcefulconfig.api.types.ResourcefulConfig;
 import com.teamresourceful.resourcefulconfig.client.ConfigScreen;
-import com.teamresourceful.resourcefulconfig.common.config.ResourcefulConfig;
 
 import ad_astra_giselle_addon.client.overlay.OxygenCanOverlay;
 import ad_astra_giselle_addon.client.renderer.blockentity.WorkingAreaBlockEntityRenderer;
@@ -45,7 +45,7 @@ public class AdAstraGiselleAddonClient
 	public static ConfigScreen getConfigScreen(@Nullable Screen parent)
 	{
 		ResourcefulConfig config = AdAstraGiselleAddon.config();
-		return config != null ? new ConfigScreen(parent, null, config) : null;
+		return config != null ? new ConfigScreen(parent, config) : null;
 	}
 
 	public static void initializeClient()
@@ -54,6 +54,7 @@ public class AdAstraGiselleAddonClient
 		registerBlockEntityRenderer();
 	}
 
+	@SuppressWarnings("deprecation")
 	public static void registerScreens()
 	{
 		MenuScreens.register(AddonMenuTypes.FUEL_LOADER.get(), FuelLoaderScreen::new);

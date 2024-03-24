@@ -2,12 +2,13 @@ package ad_astra_giselle_addon.common.network;
 
 import java.util.function.Supplier;
 
-import com.teamresourceful.resourcefullib.common.networking.base.Packet;
-import com.teamresourceful.resourcefullib.common.networking.base.PacketContext;
-import com.teamresourceful.resourcefullib.common.networking.base.PacketHandler;
+import com.teamresourceful.resourcefullib.common.network.Packet;
+import com.teamresourceful.resourcefullib.common.network.base.PacketType;
+import com.teamresourceful.resourcefullib.common.network.defaults.AbstractPacketType;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
 
 public abstract class BlockPosMessage<T extends BlockPosMessage<T>> implements Packet<T>
 {
@@ -33,12 +34,13 @@ public abstract class BlockPosMessage<T extends BlockPosMessage<T>> implements P
 		this.blockPos = pos;
 	}
 
-	public static abstract class Handler<T extends BlockPosMessage<T>> implements PacketHandler<T>
+	public static abstract class Type<T extends BlockPosMessage<T>> extends AbstractPacketType<T> implements PacketType<T>
 	{
 		private final Supplier<T> constructor;
 
-		public Handler(Supplier<T> constructor)
+		public Type(Class<T> clazz, ResourceLocation id, Supplier<T> constructor)
 		{
+			super(clazz, id);
 			this.constructor = constructor;
 		}
 
@@ -70,16 +72,6 @@ public abstract class BlockPosMessage<T extends BlockPosMessage<T>> implements P
 			{
 				message.setBlockPos(buffer.readBlockPos());
 			}
-
-		}
-
-		@Override
-		public PacketContext handle(T message)
-		{
-			return (player, level) ->
-			{
-
-			};
 
 		}
 

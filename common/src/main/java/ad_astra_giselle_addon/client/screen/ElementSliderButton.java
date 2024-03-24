@@ -4,17 +4,15 @@ import java.util.function.IntConsumer;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 
+import ad_astra_giselle_addon.client.mixin.minecraft.AbstractSliderButtonInvoker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractSliderButton;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
 public class ElementSliderButton extends AbstractSliderButton
 {
-	private static final ResourceLocation SLIDER_LOCATION = new ResourceLocation("textures/gui/slider.png");
-
 	private String translationKey;
 	private IntConsumer setter;
 	private int intValue;
@@ -32,18 +30,6 @@ public class ElementSliderButton extends AbstractSliderButton
 		this.updateMessage();
 	}
 
-	private int getTextureY2()
-	{
-		int i = this.isFocused() ? 1 : 0;
-		return i * 20;
-	}
-
-	private int getHandleTextureY2()
-	{
-		int i = this.isHovered() ? 3 : 2;
-		return i * 20;
-	}
-
 	@Override
 	public void renderWidget(GuiGraphics guiGraphics, int p_275335_, int p_275551_, float p_275511_)
 	{
@@ -52,8 +38,9 @@ public class ElementSliderButton extends AbstractSliderButton
 		RenderSystem.enableBlend();
 		RenderSystem.defaultBlendFunc();
 		RenderSystem.enableDepthTest();
-		guiGraphics.blitNineSliced(SLIDER_LOCATION, this.getX(), this.getY(), this.getWidth(), this.getHeight(), 20, 4, 200, 20, 0, this.getTextureY2());
-		guiGraphics.blitNineSliced(SLIDER_LOCATION, this.getX() + (int) (this.value * (this.width - 8)), this.getY(), 8, this.getHeight(), 20, 4, 200, 20, 0, this.getHandleTextureY2());
+		AbstractSliderButtonInvoker invoker = (AbstractSliderButtonInvoker) this;
+		guiGraphics.blitSprite(invoker.invokeGetSprite(), this.getX(), this.getY(), this.getWidth(), this.getHeight());
+		guiGraphics.blitSprite(invoker.invokeGetHandleSprite(), this.getX() + (int) (this.value * (this.width - 8)), this.getY(), 8, this.getHeight());
 		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 		int i = this.active ? 16777215 : 10526880;
 		this.renderScrollingString(guiGraphics, minecraft.font, 2, i | Mth.ceil(this.alpha * 255.0F) << 24);

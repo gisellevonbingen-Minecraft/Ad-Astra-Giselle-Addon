@@ -2,20 +2,17 @@ package ad_astra_giselle_addon.common.registry;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
 import java.util.function.Supplier;
 
 import net.minecraft.core.Registry;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 
-@SuppressWarnings("unchecked")
 public class ObjectRegistryDelegate implements ObjectRegistry.Delegate
 {
 	private final Map<ResourceKey<?>, InternalRegistry<?>> internals = new HashMap<>();
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public <T> ObjectRegistry<T> get(ResourceKey<? extends Registry<T>> key)
 	{
@@ -24,11 +21,9 @@ public class ObjectRegistryDelegate implements ObjectRegistry.Delegate
 
 	private class InternalRegistry<T> extends ObjectRegistry<T>
 	{
-		private final ResourceKey<? extends Registry<T>> key;
-
 		private InternalRegistry(ResourceKey<? extends Registry<T>> key)
 		{
-			this.key = key;
+			super(key);
 		}
 
 		@Override
@@ -37,35 +32,6 @@ public class ObjectRegistryDelegate implements ObjectRegistry.Delegate
 			Registry<T> registry = this.getRegistry();
 			T object = Registry.register(registry, id, initializer.get());
 			return () -> object;
-		}
-
-		private Registry<T> getRegistry()
-		{
-			return (Registry<T>) BuiltInRegistries.REGISTRY.get(this.key.location());
-		}
-
-		@Override
-		public Set<Entry<ResourceKey<T>, T>> getEntries()
-		{
-			return this.getRegistry().entrySet();
-		}
-
-		@Override
-		public ResourceLocation getId(T value)
-		{
-			return this.getRegistry().getKey(value);
-		}
-
-		@Override
-		public T getValue(ResourceLocation id)
-		{
-			return this.getRegistry().get(id);
-		}
-
-		@Override
-		public Iterable<T> getValues()
-		{
-			return this.getRegistry();
 		}
 
 	}

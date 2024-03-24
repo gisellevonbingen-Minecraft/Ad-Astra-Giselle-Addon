@@ -1,20 +1,22 @@
 package ad_astra_giselle_addon.common.network;
 
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-import com.teamresourceful.resourcefullib.common.networking.base.PacketContext;
-import com.teamresourceful.resourcefullib.common.networking.base.PacketHandler;
+import com.teamresourceful.resourcefullib.common.network.base.PacketType;
+import com.teamresourceful.resourcefullib.common.network.base.ServerboundPacketType;
 
 import ad_astra_giselle_addon.common.AdAstraGiselleAddon;
 import ad_astra_giselle_addon.common.block.entity.IWorkingAreaBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Player;
 
 public class WorkingAreaVisibleMessage extends BlockPosMessage<WorkingAreaVisibleMessage>
 {
 	public static final ResourceLocation ID = AdAstraGiselleAddon.rl("working_visible");
-	public static final Handler HANDLER = new Handler(WorkingAreaVisibleMessage::new);
+	public static final Type TYPE = new Type(WorkingAreaVisibleMessage.class, ID, WorkingAreaVisibleMessage::new);
 
 	private boolean visible;
 
@@ -31,15 +33,9 @@ public class WorkingAreaVisibleMessage extends BlockPosMessage<WorkingAreaVisibl
 	}
 
 	@Override
-	public ResourceLocation getID()
+	public PacketType<WorkingAreaVisibleMessage> type()
 	{
-		return ID;
-	}
-
-	@Override
-	public PacketHandler<WorkingAreaVisibleMessage> getHandler()
-	{
-		return HANDLER;
+		return TYPE;
 	}
 
 	public boolean isVisible()
@@ -52,11 +48,11 @@ public class WorkingAreaVisibleMessage extends BlockPosMessage<WorkingAreaVisibl
 		this.visible = visible;
 	}
 
-	public static class Handler extends BlockPosMessage.Handler<WorkingAreaVisibleMessage>
+	public static class Type extends BlockPosMessage.Type<WorkingAreaVisibleMessage> implements ServerboundPacketType<WorkingAreaVisibleMessage>
 	{
-		public Handler(Supplier<WorkingAreaVisibleMessage> constructor)
+		public Type(Class<WorkingAreaVisibleMessage> clazz, ResourceLocation id, Supplier<WorkingAreaVisibleMessage> constructor)
 		{
-			super(constructor);
+			super(clazz, id, constructor);
 		}
 
 		@Override
@@ -74,11 +70,11 @@ public class WorkingAreaVisibleMessage extends BlockPosMessage<WorkingAreaVisibl
 		}
 
 		@Override
-		public PacketContext handle(WorkingAreaVisibleMessage message)
+		public Consumer<Player> handle(WorkingAreaVisibleMessage message)
 		{
-			return (player, level) ->
+			return player ->
 			{
-				if (level.getBlockEntity(message.getBlockPos()) instanceof IWorkingAreaBlockEntity blockEntity)
+				if (player.level().getBlockEntity(message.getBlockPos()) instanceof IWorkingAreaBlockEntity blockEntity)
 				{
 					blockEntity.setWorkingAreaVisible(message.isVisible());
 				}

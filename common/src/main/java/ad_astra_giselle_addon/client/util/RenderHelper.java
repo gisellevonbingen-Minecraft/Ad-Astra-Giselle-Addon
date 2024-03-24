@@ -7,7 +7,6 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
 import ad_astra_giselle_addon.common.AdAstraGiselleAddon;
-import net.minecraft.client.GraphicsStatus;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -74,18 +73,8 @@ public class RenderHelper
 
 	private static void drawSurfaces(MultiBufferSource buffer, Matrix4f matrix, Matrix3f normal, float startX, float startZ, float endX, float endZ, float botY, float topY, int r, int g, int b)
 	{
-		VertexConsumer builder;
+		VertexConsumer builder = buffer.getBuffer(RenderType.translucent());
 		Minecraft minecraft = Minecraft.getInstance();
-		GraphicsStatus graphicsFanciness = minecraft.options.graphicsMode().get();
-
-		if (graphicsFanciness == GraphicsStatus.FABULOUS)
-		{
-			builder = buffer.getBuffer(RenderType.translucentMovingBlock());
-		}
-		else
-		{
-			builder = buffer.getBuffer(RenderType.translucentNoCrumbling());
-		}
 
 		if (atlass == null)
 		{

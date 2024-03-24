@@ -30,7 +30,7 @@ dependencies {
     minecraft "com.mojang:minecraft:${mc_version}"
     mappings loom.layered() {
         officialMojangMappings()
-        parchment("org.parchmentmc.data:parchment-${mc_version}:${parchment_version}@zip")
+        parchment("org.parchmentmc.data:parchment-${parchment_mc_version}:${parchment_version}@zip")
     }
 
     modImplementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
@@ -39,7 +39,7 @@ dependencies {
     // Ad Astra - Required
     modImplementation ("teamreborn:energy:2.2.0") { exclude(group: "net.fabricmc.fabric-api") }
     modImplementation ("earth.terrarium.botarium:botarium-fabric-${mc_version}:${botarium_version}")  { transitive = false }
-    modImplementation "earth.terrarium.adastra:ad_astra-fabric-${mc_version}:${ad_astra_version}"
+    modImplementation "earth.terrarium.adastra:adastra-fabric-${mc_version}:${ad_astra_version}"
     modImplementation "com.teamresourceful.resourcefullib:resourcefullib-fabric-${mc_version}:${resourcefullib_version}"
     modImplementation "com.teamresourceful.resourcefulconfig:resourcefulconfig-fabric-${mc_version}:${resourcefulconfig_version}"
 

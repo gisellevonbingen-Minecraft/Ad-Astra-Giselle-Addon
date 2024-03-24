@@ -1,46 +1,36 @@
 package ad_astra_giselle_addon.common.config;
 
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Stream;
 
-import com.teamresourceful.resourcefulconfig.common.annotations.Config;
-import com.teamresourceful.resourcefulconfig.common.annotations.InlineCategory;
+import com.google.common.collect.Lists;
+import com.teamresourceful.resourcefulconfig.api.annotations.Config;
 
 import ad_astra_giselle_addon.common.AdAstraGiselleAddon;
 
-@Config(AddonConfigs.ID)
+@Config(value = AddonConfigs.ID, categories = {ItemsConfig.class, MachinesConfig.class, EnchantmentsConfig.class})
 public final class AddonConfigs
 {
 	public static final String ID = AdAstraGiselleAddon.MOD_ID + ".ver2";
 	public static final String PREFIX = "config." + AdAstraGiselleAddon.MOD_ID;
 
-	@InlineCategory
-	public static ItemsConfig ITEMS;
-
-	@InlineCategory
-	public static MachinesConfig MACHINES;
-
-	@InlineCategory
-	public static EnchantmentsConfig ENCHANTMENTS;
-
 	public static void validConfig(Class<?> clazz)
 	{
-		List<String> requireFields = getCatoryFieldNames(AddonConfigs.class);
-		List<String> currentFields = getCatoryFieldNames(clazz);
-		requireFields.removeAll(currentFields);
+		List<String> requireCategoires = Lists.newArrayList(getCatoryNames(AddonConfigs.class));
+		List<String> currentCategoires = Lists.newArrayList(getCatoryNames(clazz));
+		requireCategoires.removeAll(currentCategoires);
 
-		if (requireFields.size() > 0)
+		if (requireCategoires.size() > 0)
 		{
-			throw new IllegalArgumentException("config class (" + clazz + ") has missing categoris: " + requireFields);
+			throw new IllegalArgumentException("config class (" + clazz + ") has missing categoris: " + requireCategoires);
 		}
 
 	}
 
-	private static List<String> getCatoryFieldNames(Class<?> clazz)
+	private static String[] getCatoryNames(Class<?> clazz)
 	{
-		return new ArrayList<>(Arrays.stream(clazz.getDeclaredFields()).filter(f -> f.getAnnotation(InlineCategory.class) != null).map(Field::getName).toList());
+		Config config = clazz.getDeclaredAnnotation(Config.class);
+		return Stream.of(config.categories()).map(Class<?>::getName).toArray(String[]::new);
 	}
 
 }

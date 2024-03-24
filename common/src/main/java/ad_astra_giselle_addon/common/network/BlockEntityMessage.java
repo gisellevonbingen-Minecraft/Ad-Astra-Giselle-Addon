@@ -1,10 +1,11 @@
 package ad_astra_giselle_addon.common.network;
 
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-import com.teamresourceful.resourcefullib.common.networking.base.PacketContext;
+import com.teamresourceful.resourcefullib.common.network.base.PacketType;
 
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
@@ -20,41 +21,35 @@ public abstract class BlockEntityMessage<T extends BlockEntityMessage<T, BLOCK_E
 		super(blockEntity != null ? blockEntity.getBlockPos() : null);
 	}
 
-	public static abstract class Handler<T extends BlockEntityMessage<T, BLOCK_ENTITY>, BLOCK_ENTITY extends BlockEntity> extends BlockPosMessage.Handler<T>
+	public static abstract class Type<T extends BlockEntityMessage<T, BLOCK_ENTITY>, BLOCK_ENTITY extends BlockEntity> extends BlockPosMessage.Type<T> implements PacketType<T>
 	{
-		public Handler(Supplier<T> constructor)
+		public Type(Class<T> clazz, ResourceLocation id, Supplier<T> constructor)
 		{
-			super(constructor);
+			super(clazz, id, constructor);
 		}
 
 		@SuppressWarnings("unchecked")
-		@Override
-		public PacketContext handle(T message)
+		public void consume(T message, Level level, Consumer<BLOCK_ENTITY> consumer)
 		{
-			return (player, level) ->
+			BLOCK_ENTITY blockEntity = null;
+
+			try
 			{
-				BLOCK_ENTITY blockEntity = null;
+				BlockEntity original = level.getBlockEntity(message.getBlockPos());
+				blockEntity = (BLOCK_ENTITY) original;
+			}
+			catch (Exception e)
+			{
 
-				try
-				{
-					BlockEntity original = level.getBlockEntity(message.getBlockPos());
-					blockEntity = (BLOCK_ENTITY) original;
-				}
-				catch (Exception e)
-				{
+			}
 
-				}
-
-				if (blockEntity != null)
-				{
-					this.onHandle(blockEntity, message, player, level);
-				}
-
-			};
+			if (blockEntity != null)
+			{
+				consumer.accept(blockEntity);
+			}
 
 		}
 
-		protected abstract void onHandle(BLOCK_ENTITY blockEntity, T message, Player player, Level level);
 	}
 
 }

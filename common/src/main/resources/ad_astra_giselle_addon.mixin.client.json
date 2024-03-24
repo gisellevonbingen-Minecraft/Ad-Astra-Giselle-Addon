@@ -1,9 +1,10 @@
 {
 	"required": true,
 	"package": "ad_astra_giselle_addon.client.mixin",
-	"minVersion": "0.8.5",
+	"minVersion": "${mixin_version}",
 	"compatibilityLevel": "JAVA_17",
 	"client": [
+		"minecraft.AbstractSliderButtonInvoker",
 		"ad_astra.ConfigurationWidgetAccessor"
 	],
 	"injectors": {

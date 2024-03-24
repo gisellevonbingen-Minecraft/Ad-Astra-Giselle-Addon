@@ -35,6 +35,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class AutomationNasaWorkbenchBlockEntity extends RecipeMachineBlockEntity<NasaWorkbenchRecipe> implements SidedItemContainerBlock
@@ -69,7 +72,7 @@ public class AutomationNasaWorkbenchBlockEntity extends RecipeMachineBlockEntity
 	}
 
 	@Override
-	public WrappedBlockEnergyContainer getEnergyStorage()
+	public WrappedBlockEnergyContainer getEnergyStorage(Level level, BlockPos pos, BlockState state, @Nullable BlockEntity entity, @Nullable Direction direction)
 	{
 		if (this.energyContainer == null)
 		{
@@ -214,10 +217,10 @@ public class AutomationNasaWorkbenchBlockEntity extends RecipeMachineBlockEntity
 	private void cacheRecipes()
 	{
 		VirtualInputOnlyContainer container = this.recipeContainer;
-		List<NasaWorkbenchRecipe> recipes = this.getLevel().getRecipeManager().getAllRecipesFor(ModRecipeTypes.NASA_WORKBENCH.get());
+		List<RecipeHolder<NasaWorkbenchRecipe>> recipes = this.getLevel().getRecipeManager().getAllRecipesFor(ModRecipeTypes.NASA_WORKBENCH.get());
 
 		this.recipeCaches.clear();
-		this.recipeCaches.addAll(recipes.stream().map(recipe -> this.cache(recipe, container)).filter(cache -> cache != null).toList());
+		this.recipeCaches.addAll(recipes.stream().map(recipe -> this.cache(recipe.value(), container)).filter(cache -> cache != null).toList());
 		this.recipe = this.recipeCaches.stream().filter(cache -> cache.isComplete()).map(RecipeCache::recipe).findFirst().orElse(null);
 
 		if (this.recipe == null)

@@ -7,6 +7,7 @@ import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 
@@ -19,15 +20,45 @@ public abstract class ObjectRegistry<T>
 		return DELEGATE.get(key);
 	}
 
+	private final ResourceKey<? extends Registry<T>> key;
+
+	protected ObjectRegistry(ResourceKey<? extends Registry<T>> key)
+	{
+		this.key = key;
+	}
+
 	public abstract Supplier<T> register(ResourceLocation id, Supplier<? extends T> initializer);
 
-	public abstract Set<Entry<ResourceKey<T>, T>> getEntries();
+	public ResourceKey<? extends Registry<T>> getKey()
+	{
+		return this.key;
+	}
 
-	public abstract ResourceLocation getId(T value);
+	@SuppressWarnings("unchecked")
+	public Registry<T> getRegistry()
+	{
+		return (Registry<T>) BuiltInRegistries.REGISTRY.get(this.getKey().location());
+	}
 
-	public abstract T getValue(ResourceLocation id);
+	public Set<Entry<ResourceKey<T>, T>> getEntries()
+	{
+		return this.getRegistry().entrySet();
+	}
 
-	public abstract Iterable<T> getValues();
+	public ResourceLocation getId(T value)
+	{
+		return this.getRegistry().getKey(value);
+	}
+
+	public T getValue(ResourceLocation id)
+	{
+		return this.getRegistry().get(id);
+	}
+
+	public Iterable<T> getValues()
+	{
+		return this.getRegistry();
+	}
 
 	public Stream<T> stream()
 	{

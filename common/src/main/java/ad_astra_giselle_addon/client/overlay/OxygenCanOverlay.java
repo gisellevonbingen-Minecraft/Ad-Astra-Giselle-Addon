@@ -27,7 +27,7 @@ public class OxygenCanOverlay
 		{
 			return;
 		}
-		else if (minecraft.options.renderDebug)
+		else if (minecraft.getDebugOverlay().showDebugScreen())
 		{
 			return;
 		}

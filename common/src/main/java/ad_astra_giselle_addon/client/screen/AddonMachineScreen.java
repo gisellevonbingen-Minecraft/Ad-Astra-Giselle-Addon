@@ -83,7 +83,7 @@ public abstract class AddonMachineScreen<MENU extends MachineMenu<BLOCK_ENTITY>,
 	{
 		if (this.entity instanceof IWorkingAreaBlockEntity blockEntity)
 		{
-			return new PressableImageButton(0, 0, 18, 18, 0, 0, 18, blockEntity.isWorkingAreaVisible() ? GuiUtils.SHOW_BUTTON : GuiUtils.HIDE_BUTTON, 18, 54, button ->
+			return new PressableImageButton(0, 0, 18, 18, blockEntity.isWorkingAreaVisible() ? GuiUtils.SHOW_BUTTON_SPRITES : GuiUtils.HIDE_BUTTON_SPRITES, button ->
 			{
 				this.setWorkingAreaVisible(!this.isWorkingAreaVisible());
 			}, WORKINGAREA_TEXT);
@@ -145,7 +145,7 @@ public abstract class AddonMachineScreen<MENU extends MachineMenu<BLOCK_ENTITY>,
 		if (this.cachedWorkingAreaVisible != next)
 		{
 			this.cachedWorkingAreaVisible = next;
-			this.workingAreaVisibleButton.setTexture(next ? GuiUtils.SHOW_BUTTON : GuiUtils.HIDE_BUTTON);
+			this.workingAreaVisibleButton.setSprites(next ? GuiUtils.SHOW_BUTTON_SPRITES : GuiUtils.HIDE_BUTTON_SPRITES);
 		}
 
 	}

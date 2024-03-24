@@ -1,23 +1,22 @@
 package ad_astra_giselle_addon.common.network;
 
-import com.teamresourceful.resourcefullib.common.networking.NetworkChannel;
-import com.teamresourceful.resourcefullib.common.networking.base.NetworkDirection;
+import com.teamresourceful.resourcefullib.common.network.Network;
 
 import ad_astra_giselle_addon.common.AdAstraGiselleAddon;
 
 public class AddonNetwork
 {
-	public static final NetworkChannel CHANNEL = new NetworkChannel(AdAstraGiselleAddon.MOD_ID, 0, "main");
+	public static final Network CHANNEL = new Network(AdAstraGiselleAddon.rl("main"), 0);
 
 	public static void registerAll()
 	{
-		CHANNEL.registerPacket(NetworkDirection.CLIENT_TO_SERVER, WorkingAreaVisibleMessage.ID, WorkingAreaVisibleMessage.HANDLER, WorkingAreaVisibleMessage.class);
+		CHANNEL.register(WorkingAreaVisibleMessage.TYPE);
 
-		CHANNEL.registerPacket(NetworkDirection.CLIENT_TO_SERVER, GravityNormalizerMessage.Length.ID, GravityNormalizerMessage.Length.HANDLER, GravityNormalizerMessage.Length.class);
-		CHANNEL.registerPacket(NetworkDirection.CLIENT_TO_SERVER, GravityNormalizerMessage.Offset.ID, GravityNormalizerMessage.Offset.HANDLER, GravityNormalizerMessage.Offset.class);
+		CHANNEL.register(GravityNormalizerMessage.Length.TYPE);
+		CHANNEL.register(GravityNormalizerMessage.Offset.TYPE);
 
-		CHANNEL.registerPacket(NetworkDirection.CLIENT_TO_SERVER, RocketSensorMessage.SensingType.ID, RocketSensorMessage.SensingType.HANDLER, RocketSensorMessage.SensingType.class);
-		CHANNEL.registerPacket(NetworkDirection.CLIENT_TO_SERVER, RocketSensorMessage.Inverted.ID, RocketSensorMessage.Inverted.HANDLER, RocketSensorMessage.Inverted.class);
+		CHANNEL.register(RocketSensorMessage.SensingType.TYPE);
+		CHANNEL.register(RocketSensorMessage.Inverted.TYPE);
 	}
 
 }

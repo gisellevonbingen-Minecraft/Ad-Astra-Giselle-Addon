@@ -16,13 +16,12 @@ public class FluidTankWidget extends EntryWidget
 	}
 
 	@Override
-	public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float delta)
+	public void render(GuiGraphics graphics, Rectangle bounds, int mouseX, int mouseY, float delta)
 	{
-		super.render(guiGraphics, mouseX, mouseY, delta);
+		super.render(graphics, bounds, mouseX, mouseY, delta);
 
-		Rectangle bounds = this.getBounds();
 		RenderSystem.disableDepthTest();
-		GuiUtils2.drawVertical(guiGraphics, bounds.x, bounds.y, bounds.width, bounds.height, GuiUtils.FLUID_BAR, 0, 0, 1.0D);
+		GuiUtils2.drawVertical(graphics, bounds.x, bounds.y, bounds.width, bounds.height, GuiUtils.FLUID_BAR, 0, 0, 1.0D);
 		RenderSystem.enableDepthTest();
 	}
 

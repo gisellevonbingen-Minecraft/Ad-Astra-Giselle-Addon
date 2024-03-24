@@ -1,8 +1,10 @@
 package ad_astra_giselle_addon.common.network;
 
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-import com.teamresourceful.resourcefullib.common.networking.base.PacketHandler;
+import com.teamresourceful.resourcefullib.common.network.base.PacketType;
+import com.teamresourceful.resourcefullib.common.network.base.ServerboundPacketType;
 
 import ad_astra_giselle_addon.common.AdAstraGiselleAddon;
 import ad_astra_giselle_addon.common.block.entity.GravityNormalizerBlockEntity;
@@ -11,7 +13,6 @@ import net.minecraft.core.Vec3i;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.Level;
 
 public abstract class GravityNormalizerMessage<T extends BlockEntityMessage<T, GravityNormalizerBlockEntity>> extends BlockEntityMessage<T, GravityNormalizerBlockEntity>
 {
@@ -25,11 +26,11 @@ public abstract class GravityNormalizerMessage<T extends BlockEntityMessage<T, G
 		super(blockEntity);
 	}
 
-	public static abstract class Handler<T extends BlockEntityMessage<T, GravityNormalizerBlockEntity>> extends BlockEntityMessage.Handler<T, GravityNormalizerBlockEntity>
+	public static abstract class Type<T extends BlockEntityMessage<T, GravityNormalizerBlockEntity>> extends BlockEntityMessage.Type<T, GravityNormalizerBlockEntity>
 	{
-		public Handler(Supplier<T> constructor)
+		public Type(Class<T> clazz, ResourceLocation id, Supplier<T> constructor)
 		{
-			super(constructor);
+			super(clazz, id, constructor);
 		}
 
 	}
@@ -38,11 +39,11 @@ public abstract class GravityNormalizerMessage<T extends BlockEntityMessage<T, G
 	{
 		private Vec3i vector;
 
-		public static abstract class Handler<T extends Vector<T>> extends GravityNormalizerMessage.Handler<T>
+		public static abstract class Type<T extends Vector<T>> extends GravityNormalizerMessage.Type<T>
 		{
-			public Handler(Supplier<T> constructor)
+			public Type(Class<T> clazz, ResourceLocation id, Supplier<T> constructor)
 			{
-				super(constructor);
+				super(clazz, id, constructor);
 			}
 
 			@Override
@@ -87,15 +88,8 @@ public abstract class GravityNormalizerMessage<T extends BlockEntityMessage<T, G
 
 	public static class Length extends Vector<Length>
 	{
-		public static final ResourceLocation ID = AdAstraGiselleAddon.rl("gracity_normalizer_length");
-		public static final Vector.Handler<Length> HANDLER = new Vector.Handler<>(Length::new)
-		{
-			@Override
-			protected void onHandle(GravityNormalizerBlockEntity blockEntity, Length message, Player player, Level level)
-			{
-				blockEntity.setLength(message.getVector());
-			}
-		};
+		public static final ResourceLocation ID = AdAstraGiselleAddon.rl("gravity_normalizer_length");
+		public static final Type TYPE = new Type(Length.class, ID, Length::new);
 
 		public Length()
 		{
@@ -108,30 +102,32 @@ public abstract class GravityNormalizerMessage<T extends BlockEntityMessage<T, G
 		}
 
 		@Override
-		public ResourceLocation getID()
+		public PacketType<Length> type()
 		{
-			return ID;
+			return TYPE;
 		}
 
-		@Override
-		public PacketHandler<Length> getHandler()
+		public static class Type extends Vector.Type<Length> implements ServerboundPacketType<Length>
 		{
-			return HANDLER;
+			public Type(Class<Length> clazz, ResourceLocation id, Supplier<Length> constructor)
+			{
+				super(clazz, id, constructor);
+			}
+
+			@Override
+			public Consumer<Player> handle(Length message)
+			{
+				return player -> this.consume(message, player.level(), blockEntity -> blockEntity.setLength(message.getVector()));
+			}
+
 		}
 
 	}
 
 	public static class Offset extends Vector<Offset>
 	{
-		public static final ResourceLocation ID = AdAstraGiselleAddon.rl("gracity_normalizer_offset");
-		public static final Vector.Handler<Offset> HANDLER = new Vector.Handler<>(Offset::new)
-		{
-			@Override
-			protected void onHandle(GravityNormalizerBlockEntity blockEntity, Offset message, Player player, Level level)
-			{
-				blockEntity.setOffset(message.getVector());
-			}
-		};
+		public static final ResourceLocation ID = AdAstraGiselleAddon.rl("gravity_normalizer_offset");
+		public static final Type TYPE = new Type(Offset.class, ID, Offset::new);
 
 		public Offset()
 		{
@@ -144,15 +140,24 @@ public abstract class GravityNormalizerMessage<T extends BlockEntityMessage<T, G
 		}
 
 		@Override
-		public ResourceLocation getID()
+		public PacketType<Offset> type()
 		{
-			return ID;
+			return TYPE;
 		}
 
-		@Override
-		public PacketHandler<Offset> getHandler()
+		public static class Type extends Vector.Type<Offset> implements ServerboundPacketType<Offset>
 		{
-			return HANDLER;
+			public Type(Class<Offset> clazz, ResourceLocation id, Supplier<Offset> constructor)
+			{
+				super(clazz, id, constructor);
+			}
+
+			@Override
+			public Consumer<Player> handle(Offset message)
+			{
+				return player -> this.consume(message, player.level(), blockEntity -> blockEntity.setOffset(message.getVector()));
+			}
+
 		}
 
 	}

@@ -1,0 +1,61 @@
+modLoader="javafml"
+loaderVersion="[${neoforge_loader_version},)"
+license="${mod_license}"
+issueTrackerURL="${mod_issues}"
+
+[[mixins]]
+config="${mod_id}.mixin.client.json"
+
+[[mixins]]
+config="${mod_id}.mixin.common.json"
+
+[[mixins]]
+config="${mod_id}.mixin.forge.client.json"
+
+[[mixins]]
+config="${mod_id}.mixin.forge.common.json"
+
+[[mods]]
+    modId="${mod_id}"
+    version="${mod_version}"
+    displayName="${mod_name}"
+    displayURL="${mod_homepage}"
+    authors="gisellevonbingen"
+    logoFile="icon.png"
+    description='''${mod_description}'''
+
+[[dependencies.${mod_id}]]
+    modId="minecraft"
+    type="required"
+    versionRange="[${mc_version},)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.${mod_id}]]
+    modId="neoforge"
+    type="required"
+    versionRange="${neoforge_api_version_range}"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.${mod_id}]]
+    modId="botarium"
+    type="required"
+    versionRange="[${botarium_version},)"
+    ordering="AFTER"
+    side="BOTH"
+
+[[dependencies.${mod_id}]]
+    modId="ad_astra"
+    type="required"
+    versionRange="[${ad_astra_version},)"
+    ordering="AFTER"
+    side="BOTH"
+
+[[dependencies.${mod_id}]]
+    modId="resourcefulconfig"
+    type="required"
+    versionRange="[${resourcefulconfig_version},)"
+    ordering="AFTER"
+    side="BOTH"
+    

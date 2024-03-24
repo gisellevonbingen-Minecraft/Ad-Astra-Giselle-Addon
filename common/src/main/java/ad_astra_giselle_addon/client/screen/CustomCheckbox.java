@@ -6,15 +6,18 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.components.Checkbox;
+import net.minecraft.client.gui.components.AbstractButton;
+import net.minecraft.client.gui.narration.NarratedElementType;
+import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
-public class CustomCheckbox extends Checkbox
+public class CustomCheckbox extends AbstractButton
 {
 	private static final ResourceLocation TEXTURE = new ResourceLocation("textures/gui/checkbox.png");
 	private final boolean showLabel;
+	private boolean selected;
 
 	public CustomCheckbox(int pX, int pY, int pWidth, int pHeight, Component pMessage, boolean pSelected)
 	{
@@ -23,7 +26,8 @@ public class CustomCheckbox extends Checkbox
 
 	public CustomCheckbox(int pX, int pY, int pWidth, int pHeight, Component pMessage, boolean pSelected, boolean pShowLabel)
 	{
-		super(pX, pY, pWidth, pHeight, pMessage, pSelected, pShowLabel);
+		super(pX, pY, pWidth, pHeight, pMessage);
+		this.selected = pSelected;
 		this.showLabel = pShowLabel;
 	}
 
@@ -50,9 +54,45 @@ public class CustomCheckbox extends Checkbox
 
 	}
 
+	public boolean selected()
+	{
+		return this.selected;
+	}
+
+	public void setSelected(boolean selected)
+	{
+		this.selected = selected;
+	}
+
 	public boolean isShowLabel()
 	{
 		return this.showLabel;
+	}
+
+	@Override
+	public void onPress()
+	{
+		this.setSelected(!this.selected());
+	}
+
+	@Override
+	protected void updateWidgetNarration(NarrationElementOutput pNarrationElementOutput)
+	{
+		pNarrationElementOutput.add(NarratedElementType.TITLE, this.createNarrationMessage());
+
+		if (this.active)
+		{
+			if (this.isFocused())
+			{
+				pNarrationElementOutput.add(NarratedElementType.USAGE, Component.translatable("narration.checkbox.usage.focused"));
+			}
+			else
+			{
+				pNarrationElementOutput.add(NarratedElementType.USAGE, Component.translatable("narration.checkbox.usage.hovered"));
+			}
+
+		}
+
 	}
 
 }

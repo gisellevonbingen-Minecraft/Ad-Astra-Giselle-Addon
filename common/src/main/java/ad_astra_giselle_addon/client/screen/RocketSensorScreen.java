@@ -37,8 +37,8 @@ public class RocketSensorScreen extends AddonMachineScreen<RocketSensorMenu, Roc
 		int y0 = this.topPos + 18;
 		int y1 = this.topPos + this.imageHeight - 38;
 
-		this.list = new RocketSensingTypeList(this, rocketSensor, this.minecraft, x1 - x0, y1 - y0, y0, y1);
-		this.list.setLeftPos(x0);
+		this.list = new RocketSensingTypeList(this, rocketSensor, this.minecraft, x1 - x0, y1 - y0, y0);
+		this.list.setX(x0);
 		this.list.select(rocketSensor.getSensingType());
 		this.addRenderableWidget(this.list);
 

@@ -6,8 +6,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
-import com.teamresourceful.resourcefulconfig.common.config.Configurator;
-import com.teamresourceful.resourcefulconfig.common.config.ResourcefulConfig;
+import com.teamresourceful.resourcefulconfig.api.loader.Configurator;
+import com.teamresourceful.resourcefulconfig.api.types.ResourcefulConfig;
 
 import ad_astra_giselle_addon.common.command.AddonCommand;
 import ad_astra_giselle_addon.common.compat.CompatibleManager;
@@ -28,7 +28,7 @@ public class AdAstraGiselleAddon
 {
 	public static final String MOD_ID = "ad_astra_giselle_addon";
 	public static final Logger LOGGER = LogManager.getLogger();
-	private static final Configurator CONFIGURATOR = new Configurator();
+	private static final Configurator CONFIGURATOR = new Configurator(MOD_ID);
 
 	private static CompatibleManager COMPATS;
 
@@ -48,7 +48,7 @@ public class AdAstraGiselleAddon
 	{
 		AdAstraGiselleAddon.CONFIG_CLASS = configClass;
 		AddonConfigs.validConfig(configClass);
-		CONFIGURATOR.registerConfig(configClass);
+		CONFIGURATOR.register(configClass);
 	}
 
 	public static void initializeCommon()

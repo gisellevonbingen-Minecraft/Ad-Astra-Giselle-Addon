@@ -18,23 +18,22 @@ public class RocketSensingTypeList extends ObjectSelectionList<RocketSensingType
 	private final Screen screen;
 	private final RocketSensorBlockEntity rocketSensor;
 
-	public RocketSensingTypeList(Screen screen, RocketSensorBlockEntity rocketSensor, Minecraft pMinecraft, int pWidth, int pHeight, int pY0, int pY1)
+	public RocketSensingTypeList(Screen screen, RocketSensorBlockEntity rocketSensor, Minecraft pMinecraft, int pWidth, int pHeight, int pY0)
 	{
-		super(pMinecraft, pWidth, pHeight, pY0, pY1, 20);
+		super(pMinecraft, pWidth, pHeight, pY0, 20);
 		this.screen = screen;
 		this.rocketSensor = rocketSensor;
-		this.setRenderTopAndBottom(false);
+		this.setRenderHeader(false, 0);
 		this.setRenderBackground(false);
 		this.refreshList();
 	}
 
 	@Override
-	protected void renderBackground(GuiGraphics guiGraphics)
+	public void renderWidget(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick)
 	{
-		super.renderBackground(guiGraphics);
-
-		guiGraphics.fill(this.x0 - 2, this.y0, this.x1 + 2, this.y1, 0xFF000000);
-		guiGraphics.fill(this.x0, this.y0 + 2, this.x1, this.y1 - 2, 0xFF202020);
+		pGuiGraphics.fill(this.getX() - 2, this.getY(), this.getRight() + 2, this.getBottom(), 0xFF000000);
+		pGuiGraphics.fill(this.getX(), this.getY() + 2, this.getRight(), this.getBottom() - 2, 0xFF202020);
+		super.renderWidget(pGuiGraphics, pMouseX, pMouseY, pPartialTick);
 	}
 
 	public void renderTooltip(GuiGraphics guiGraphics, int mouseX, int mouseY)
@@ -83,7 +82,7 @@ public class RocketSensingTypeList extends ObjectSelectionList<RocketSensingType
 	@Override
 	protected int getScrollbarPosition()
 	{
-		return this.x0 + this.width;
+		return this.getX() + this.width;
 	}
 
 	@Override
@@ -108,8 +107,8 @@ public class RocketSensingTypeList extends ObjectSelectionList<RocketSensingType
 		{
 			RocketSensingTypeList parent = this.getParent();
 			Minecraft minecraft = parent.minecraft;
-			int y0 = Math.max(pTop, parent.y0 + 2);
-			int y1 = Math.min(pTop + pHeight, parent.y1 - 2);
+			int y0 = Math.max(pTop, parent.getY() + 2);
+			int y1 = Math.min(pTop + pHeight, parent.getBottom() - 2);
 
 			guiGraphics.fill(pLeft - 2, pTop + pHeight + 2, pLeft + pWidth - 2, pTop + pHeight + 3, 0xFF000000);
 

@@ -37,6 +37,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 
@@ -85,6 +86,11 @@ public class FuelLoaderBlockEntity extends ContainerMachineBlockEntity implement
 	}
 
 	@Override
+	public @Nullable WrappedBlockFluidContainer getFluidContainer(Level level, BlockPos pos, BlockState state, @Nullable BlockEntity entity, @Nullable Direction direction)
+	{
+		return this.getFluidContainer();
+	}
+
 	public WrappedBlockFluidContainer getFluidContainer()
 	{
 		if (this.fluidTank == null)

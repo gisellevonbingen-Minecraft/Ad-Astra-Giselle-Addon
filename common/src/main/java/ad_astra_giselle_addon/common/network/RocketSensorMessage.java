@@ -1,8 +1,10 @@
 package ad_astra_giselle_addon.common.network;
 
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-import com.teamresourceful.resourcefullib.common.networking.base.PacketHandler;
+import com.teamresourceful.resourcefullib.common.network.base.PacketType;
+import com.teamresourceful.resourcefullib.common.network.base.ServerboundPacketType;
 
 import ad_astra_giselle_addon.common.AdAstraGiselleAddon;
 import ad_astra_giselle_addon.common.block.entity.IRocketSensingType;
@@ -11,7 +13,6 @@ import ad_astra_giselle_addon.common.block.entity.RocketSensorBlockEntity;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.Level;
 
 public abstract class RocketSensorMessage<T extends BlockEntityMessage<T, RocketSensorBlockEntity>> extends BlockEntityMessage<T, RocketSensorBlockEntity>
 {
@@ -25,11 +26,11 @@ public abstract class RocketSensorMessage<T extends BlockEntityMessage<T, Rocket
 		super(blockEntity);
 	}
 
-	public static abstract class Handler<T extends BlockEntityMessage<T, RocketSensorBlockEntity>> extends BlockEntityMessage.Handler<T, RocketSensorBlockEntity>
+	public static abstract class Type<T extends BlockEntityMessage<T, RocketSensorBlockEntity>> extends BlockEntityMessage.Type<T, RocketSensorBlockEntity>
 	{
-		public Handler(Supplier<T> constructor)
+		public Type(Class<T> clazz, ResourceLocation id, Supplier<T> constructor)
 		{
-			super(constructor);
+			super(clazz, id, constructor);
 		}
 
 	}
@@ -37,13 +38,13 @@ public abstract class RocketSensorMessage<T extends BlockEntityMessage<T, Rocket
 	public static class SensingType extends RocketSensorMessage<SensingType>
 	{
 		public static final ResourceLocation ID = AdAstraGiselleAddon.rl("rocket_sensor_sensing_type");
-		public static final Handler HANDLER = new Handler(SensingType::new);
+		public static final Type TYPE = new Type(SensingType.class, ID, SensingType::new);
 
-		public static class Handler extends RocketSensorMessage.Handler<SensingType>
+		public static class Type extends RocketSensorMessage.Type<SensingType> implements ServerboundPacketType<SensingType>
 		{
-			public Handler(Supplier<SensingType> constructor)
+			public Type(Class<SensingType> clazz, ResourceLocation id, Supplier<SensingType> constructor)
 			{
-				super(constructor);
+				super(clazz, id, constructor);
 			}
 
 			@Override
@@ -61,9 +62,9 @@ public abstract class RocketSensorMessage<T extends BlockEntityMessage<T, Rocket
 			}
 
 			@Override
-			protected void onHandle(RocketSensorBlockEntity blockEntity, SensingType message, Player player, Level level)
+			public Consumer<Player> handle(SensingType message)
 			{
-				blockEntity.setSensingType(message.getSensingType());
+				return player -> this.consume(message, player.level(), blockEntity -> blockEntity.setSensingType(message.getSensingType()));
 			}
 
 		}
@@ -93,15 +94,9 @@ public abstract class RocketSensorMessage<T extends BlockEntityMessage<T, Rocket
 		}
 
 		@Override
-		public ResourceLocation getID()
+		public PacketType<SensingType> type()
 		{
-			return ID;
-		}
-
-		@Override
-		public PacketHandler<SensingType> getHandler()
-		{
-			return HANDLER;
+			return TYPE;
 		}
 
 	}
@@ -109,13 +104,13 @@ public abstract class RocketSensorMessage<T extends BlockEntityMessage<T, Rocket
 	public static class Inverted extends RocketSensorMessage<Inverted>
 	{
 		public static final ResourceLocation ID = AdAstraGiselleAddon.rl("rocket_sensor_inverted");
-		public static final Handler HANDLER = new Handler(Inverted::new);
+		public static final Type TYPE = new Type(Inverted.class, ID, Inverted::new);
 
-		public static class Handler extends RocketSensorMessage.Handler<Inverted>
+		public static class Type extends RocketSensorMessage.Type<Inverted> implements ServerboundPacketType<Inverted>
 		{
-			public Handler(Supplier<Inverted> constructor)
+			public Type(Class<Inverted> clazz, ResourceLocation id, Supplier<Inverted> constructor)
 			{
-				super(constructor);
+				super(clazz, id, constructor);
 			}
 
 			@Override
@@ -133,9 +128,9 @@ public abstract class RocketSensorMessage<T extends BlockEntityMessage<T, Rocket
 			}
 
 			@Override
-			protected void onHandle(RocketSensorBlockEntity blockEntity, Inverted message, Player player, Level level)
+			public Consumer<Player> handle(Inverted message)
 			{
-				blockEntity.setInverted(message.getInverted());
+				return player -> this.consume(message, player.level(), blockEntity -> blockEntity.setInverted(message.getInverted()));
 			}
 
 		}
@@ -165,15 +160,9 @@ public abstract class RocketSensorMessage<T extends BlockEntityMessage<T, Rocket
 		}
 
 		@Override
-		public ResourceLocation getID()
+		public PacketType<Inverted> type()
 		{
-			return ID;
-		}
-
-		@Override
-		public PacketHandler<Inverted> getHandler()
-		{
-			return HANDLER;
+			return TYPE;
 		}
 
 	}
