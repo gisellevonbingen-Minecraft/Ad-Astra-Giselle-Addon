@@ -74,4 +74,10 @@ public interface IOxygenCharger
 		return FluidUtils2.getStoredRatio(amount, capacity);
 	}
 
+	public default void copyFrom(IOxygenCharger from)
+	{
+		this.setChargeMode(from.getChargeMode());
+		FluidUtils2.moveFluidAny(from.getFluidContainer(), this.getFluidContainer(), f -> true, false);
+	}
+
 }

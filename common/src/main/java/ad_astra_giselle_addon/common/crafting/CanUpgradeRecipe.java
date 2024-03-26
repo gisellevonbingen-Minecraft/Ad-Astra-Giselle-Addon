@@ -3,11 +3,10 @@ package ad_astra_giselle_addon.common.crafting;
 import org.jetbrains.annotations.Nullable;
 
 import com.mojang.serialization.Codec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.mojang.serialization.MapCodec.MapCodecCodec;
 
 import ad_astra_giselle_addon.common.content.oxygen.IOxygenCharger;
 import ad_astra_giselle_addon.common.content.oxygen.OxygenChargerUtils;
-import ad_astra_giselle_addon.common.fluid.FluidUtils2;
 import ad_astra_giselle_addon.common.mixin.minecraft.ShapedRecipeAccessor;
 import ad_astra_giselle_addon.common.registry.AddonRecipeSerializers;
 import earth.terrarium.botarium.common.item.ItemStackHolder;
@@ -21,9 +20,12 @@ import net.minecraft.world.item.crafting.ShapedRecipePattern;
 
 public class CanUpgradeRecipe extends ShapedRecipe
 {
+	private final ShapedRecipe parent;
+
 	public CanUpgradeRecipe(ShapedRecipe parent)
 	{
 		super(parent.getGroup(), parent.category(), new ShapedRecipePattern(parent.getWidth(), parent.getHeight(), parent.getIngredients(), null), ((ShapedRecipeAccessor) parent).getResult(), parent.showNotification());
+		this.parent = parent;
 	}
 
 	@Override
@@ -46,8 +48,7 @@ public class CanUpgradeRecipe extends ShapedRecipe
 
 				if (from != null)
 				{
-					to.setChargeMode(from.getChargeMode());
-					FluidUtils2.moveFluidAny(from.getFluidContainer(), to.getFluidContainer(), f -> true, false);
+					to.copyFrom(from);
 				}
 
 			}
@@ -59,11 +60,12 @@ public class CanUpgradeRecipe extends ShapedRecipe
 
 	public static class Serializer implements RecipeSerializer<CanUpgradeRecipe>
 	{
-		public static final Codec<CanUpgradeRecipe> CODEC = RecordCodecBuilder.create(instance -> instance.group(ShapedRecipe.Serializer.CODEC.fieldOf("parent").forGetter(i -> i)).apply(instance, CanUpgradeRecipe::new));
+		public static final Codec<CanUpgradeRecipe> CODEC = ((MapCodecCodec<ShapedRecipe>) RecipeSerializer.SHAPED_RECIPE.codec()).codec().xmap(CanUpgradeRecipe::new, r -> r.parent).codec();
 
 		@Override
 		public @Nullable CanUpgradeRecipe fromNetwork(FriendlyByteBuf pBuffer)
 		{
+
 			ShapedRecipe parent = RecipeSerializer.SHAPED_RECIPE.fromNetwork(pBuffer);
 			return new CanUpgradeRecipe(parent);
 		}

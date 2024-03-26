@@ -15,7 +15,11 @@ import net.minecraft.util.Mth;
 
 public class CustomCheckbox extends AbstractButton
 {
-	private static final ResourceLocation TEXTURE = new ResourceLocation("textures/gui/checkbox.png");
+	private static final ResourceLocation CHECKBOX_SELECTED_HIGHLIGHTED_SPRITE = new ResourceLocation("widget/checkbox_selected_highlighted");
+	private static final ResourceLocation CHECKBOX_SELECTED_SPRITE = new ResourceLocation("widget/checkbox_selected");
+	private static final ResourceLocation CHECKBOX_HIGHLIGHTED_SPRITE = new ResourceLocation("widget/checkbox_highlighted");
+	private static final ResourceLocation CHECKBOX_SPRITE = new ResourceLocation("widget/checkbox");
+
 	private final boolean showLabel;
 	private boolean selected;
 
@@ -43,9 +47,9 @@ public class CustomCheckbox extends AbstractButton
 		RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
 		int checkerWidth = this.height;
 		int checkerHeight = this.height;
-		float textureU = this.isHoveredOrFocused() ? 20.0F : 0.0F;
-		float textureV = this.selected() ? 20.0F : 0.0F;
-		guiGraphics.blit(TEXTURE, this.getX(), this.getY(), checkerWidth, checkerHeight, textureU, textureV, 20, 20, 64, 64);
+		boolean focused = this.isHoveredOrFocused();
+		ResourceLocation texture = this.selected() ? (focused ? CHECKBOX_SELECTED_HIGHLIGHTED_SPRITE : CHECKBOX_SELECTED_SPRITE) : (focused ? CHECKBOX_HIGHLIGHTED_SPRITE : CHECKBOX_SPRITE);
+		guiGraphics.blitSprite(texture, this.getX(), this.getY(), checkerWidth, checkerHeight);
 
 		if (this.isShowLabel())
 		{
