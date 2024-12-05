@@ -15,6 +15,12 @@ public class VehicleHelper
 		if (vehicle instanceof Rocket rocket)
 		{
 			RocketProperties properties = Rocket.ROCKET_TO_PROPERTIES.get(rocket.getType());
+
+			if (properties == null)
+			{
+				return null;
+			}
+
 			return new VehicleFuelInformation(rocket.fluidContainer(), properties.fuel());
 		}
 		else if (vehicle instanceof Rover rover)
