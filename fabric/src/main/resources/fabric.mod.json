@@ -40,7 +40,7 @@
 		"${mod_id}.mixin.client.json"
 	],
 	"depends": {
-		"fabric": "*",
+		"fabric-api": "*",
 		"minecraft": ">=${mc_version}",
 		"botarium": ">=${botarium_version}",
 		"ad_astra": ">=${ad_astra_version}",
