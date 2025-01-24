@@ -1,7 +1,5 @@
 package ad_astra_giselle_addon.common.compat.pneumaticcraft;
 
-import org.jetbrains.annotations.NotNull;
-
 import ad_astra_giselle_addon.common.compat.pneumaticcraft.pneumatic_armor.handlers.OxygenProofCommonHandler;
 import ad_astra_giselle_addon.common.content.oxygen.IOxygenStorage;
 import ad_astra_giselle_addon.common.content.oxygen.OxygenStorageUtils;
@@ -11,6 +9,7 @@ import me.desht.pneumaticcraft.api.PNCCapabilities;
 import me.desht.pneumaticcraft.api.pneumatic_armor.IArmorUpgradeHandler;
 import me.desht.pneumaticcraft.api.tileentity.IAirHandler;
 import me.desht.pneumaticcraft.api.tileentity.IAirHandlerItem;
+import me.desht.pneumaticcraft.common.core.ModUpgrades;
 import me.desht.pneumaticcraft.common.item.PneumaticArmorItem;
 import me.desht.pneumaticcraft.common.pneumatic_armor.CommonArmorHandler;
 import net.minecraft.world.effect.MobEffectUtil;
@@ -62,7 +61,7 @@ public class PneumaticCraftProofProvidingHandler
 		{
 			IArmorUpgradeHandler<?> upgradeHandler = AddonCommonUpgradeHandlers.OXYGEN_PROOF;
 			long oxygenUsing = ProofAbstractUtils.OXYGEN_PROOF_USING;
-			return this.useAir(living, upgradeHandler, 0, false) && this.useOxygen(living, oxygenUsing, false) ? ProofAbstractUtils.OXYGEN_PROOF_INTERVAL : 0;
+			return this.useAir(living, upgradeHandler, 0, false) && this.useOxygen(living, upgradeHandler, oxygenUsing, false) ? ProofAbstractUtils.OXYGEN_PROOF_INTERVAL : 0;
 		}
 		else
 		{
@@ -116,9 +115,34 @@ public class PneumaticCraftProofProvidingHandler
 
 	}
 
-	public boolean useOxygen(LivingEntity living, long oxygenUsing, boolean simulate)
+	public boolean skipUse(LivingEntity living, IArmorUpgradeHandler<?> upgradeHandler)
 	{
 		if (!LivingHelper.isPlayingMode(living))
+		{
+			return true;
+		}
+		else if (living instanceof Player player)
+		{
+			CommonArmorHandler commonHandler = CommonArmorHandler.getHandlerForPlayer(player);
+			ItemStack stack = living.getItemBySlot(upgradeHandler.getEquipmentSlot());
+
+			if (commonHandler.upgradeUsable(upgradeHandler, true) && stack.getItem() instanceof PneumaticArmorItem)
+			{
+				if (commonHandler.getUpgradeCount(upgradeHandler.getEquipmentSlot(), ModUpgrades.CREATIVE.get()) > 0)
+				{
+					return true;
+				}
+
+			}
+
+		}
+
+		return false;
+	}
+
+	public boolean useOxygen(LivingEntity living, IArmorUpgradeHandler<?> upgradeHandler, long oxygenUsing, boolean simulate)
+	{
+		if (this.skipUse(living, upgradeHandler))
 		{
 			return true;
 		}
@@ -138,20 +162,7 @@ public class PneumaticCraftProofProvidingHandler
 		return false;
 	}
 
-	public boolean useAir(LivingEntity living, IArmorUpgradeHandler<?> upgradeHandler, int airUsing, boolean simulate)
-	{
-		ItemStack stack = getUpgradeUsablePneumaticArmorItem(living, upgradeHandler);
-
-		if (stack.isEmpty())
-		{
-			return false;
-		}
-
-		IAirHandlerItem airHandler = stack.getCapability(PNCCapabilities.AIR_HANDLER_ITEM_CAPABILITY).orElse(null);
-		return airHandler != null && this.useAir(living, airHandler, airUsing, simulate);
-	}
-
-	public static @NotNull ItemStack getUpgradeUsablePneumaticArmorItem(LivingEntity living, IArmorUpgradeHandler<?> upgradeHandler)
+	public IAirHandlerItem getUsableAirHandler(LivingEntity living, IArmorUpgradeHandler<?> upgradeHandler)
 	{
 		if (living instanceof Player player)
 		{
@@ -160,17 +171,28 @@ public class PneumaticCraftProofProvidingHandler
 
 			if (commonHandler.upgradeUsable(upgradeHandler, true) && stack.getItem() instanceof PneumaticArmorItem)
 			{
-				return stack;
+				return stack.getCapability(PNCCapabilities.AIR_HANDLER_ITEM_CAPABILITY).orElse(null);
 			}
 
 		}
 
-		return ItemStack.EMPTY;
+		return null;
 	}
 
-	public boolean useAir(LivingEntity living, IAirHandlerItem airHandler, int airUsing, boolean simulate)
+	public boolean useAir(LivingEntity living, IArmorUpgradeHandler<?> upgradeHandler, int airUsing, boolean simulate)
 	{
-		return !LivingHelper.isPlayingMode(living) || this.useAir(airHandler, airUsing, simulate);
+		IAirHandlerItem airHandler = this.getUsableAirHandler(living, upgradeHandler);
+
+		if (airHandler == null)
+		{
+			return false;
+		}
+		else if (this.skipUse(living, upgradeHandler))
+		{
+			return true;
+		}
+
+		return this.useAir(airHandler, airUsing, simulate);
 	}
 
 	public boolean useAir(IAirHandler airHandler, int airUsing, boolean simulate)
