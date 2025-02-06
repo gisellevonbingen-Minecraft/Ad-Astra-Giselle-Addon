@@ -25,10 +25,17 @@ public class TranslationUtils
 {
 	private static final NumberFormat NUMBER_FORMAT = NumberFormat.getNumberInstance();
 	public static final int DEFAULT_DIGITS = 1;
-	private static final Map<IChargeMode, Component> CHANGE_MODES = new HashMap<>();
 
+	private static final Map<Range<Integer>, Component> TEMPERATURE_RANGES = new HashMap<>();
 	public static final String TEMPERATURE_RANGE = AdAstraGiselleAddon.tl("description", "temperature_range");
+
+	private static final Map<IChargeMode, Component> CHANGE_MODES = new HashMap<>();
 	public static final String CHARGE_MODE = AdAstraGiselleAddon.tl("description", "charge_mode");
+
+	private static final Map<Boolean, Component> CREATIVE_OXYGENS = new HashMap<>();
+	public static final String CREATIVE_OXYGEN = AdAstraGiselleAddon.tl("description", "creative_oxygen");
+	public static final String CREATIVE_OXYGEN_EMPTY = AdAstraGiselleAddon.tl("creative_oxygen", "empty");
+	public static final String CREATIVE_OXYGEN_INFINITY = AdAstraGiselleAddon.tl("creative_oxygen", "infinity");
 
 	static
 	{
@@ -60,7 +67,7 @@ public class TranslationUtils
 
 	public static Component descriptionTemperatureRange(Range<Integer> range)
 	{
-		return description(TEMPERATURE_RANGE, Component.literal(range.getMinimum() + "℃ ~ " + range.getMaximum() + "℃"));
+		return TEMPERATURE_RANGES.computeIfAbsent(range, k -> description(TEMPERATURE_RANGE, Component.literal(k.getMinimum() + "℃ ~ " + k.getMaximum() + "℃")));
 	}
 
 	public static Component descriptionChargeMode(IChargeMode mode)
@@ -79,6 +86,15 @@ public class TranslationUtils
 		long capacityMB = FluidHooks.toMillibuckets(capacity);
 		Style style = Style.EMPTY.withColor(amountMB > 0 ? ChatFormatting.GREEN : ChatFormatting.RED);
 		return Component.translatable("tooltip.ad_astra.space_suit", amountMB, capacityMB).setStyle(style);
+	}
+
+	public static Component descriptionCreativeOxygen(boolean empty)
+	{
+		return CREATIVE_OXYGENS.computeIfAbsent(empty, k ->
+		{
+			return description(CREATIVE_OXYGEN, Component.translatable(k ? CREATIVE_OXYGEN_EMPTY : CREATIVE_OXYGEN_INFINITY)//
+					.withStyle(k ? ChatFormatting.RED : ChatFormatting.GREEN));
+		});
 	}
 
 	public static List<Component> fluid(FluidHolder fluid, long capacity)

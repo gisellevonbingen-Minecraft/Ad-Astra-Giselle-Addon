@@ -11,6 +11,7 @@ import net.minecraft.nbt.StringTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 
 public interface IChargeMode
@@ -65,4 +66,6 @@ public interface IChargeMode
 	public Component getDisplayName();
 
 	public List<ItemStackReference> getItems(LivingEntity living);
+
+	public boolean contains(EquipmentSlot slot);
 }

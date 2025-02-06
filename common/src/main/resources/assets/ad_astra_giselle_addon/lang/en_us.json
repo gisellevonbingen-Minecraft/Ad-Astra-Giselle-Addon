@@ -9,6 +9,7 @@
   
   "item.ad_astra_giselle_addon.oxygen_can": "Oxygen Can",
   "item.ad_astra_giselle_addon.netherite_oxygen_can": "Netherite Oxygen Can",
+  "item.ad_astra_giselle_addon.creative_oxygen_can": "Creative Oxygen Can",
   "item.ad_astra_giselle_addon.sliding_door_key": "Sliding Door Key",
   "item.ad_astra_giselle_addon.sliding_door_key.tooltip1": "Right click to lock/unlock Sliding Door",
   "item.ad_astra_giselle_addon.sliding_door_key.tooltip2": "Locked door can only be opened or closed by redstone",
@@ -49,10 +50,14 @@
   
   "description.ad_astra_giselle_addon.temperature_range": "Temperature Range",
   "description.ad_astra_giselle_addon.charge_mode": "Charge Mode",
+  "description.ad_astra_giselle_addon.creative_oxygen": "Oxygen",
   
   "chargemode.ad_astra_giselle_addon.none": "Disabled",
   "chargemode.ad_astra_giselle_addon.armors": "Enabled: All Armor",
   "chargemode.ad_astra_giselle_addon.all": "Enabled: All Inventory",
+  
+  "creative_oxygen.ad_astra_giselle_addon.empty": "Empty",
+  "creative_oxygen.ad_astra_giselle_addon.infinity": "Infinity",
   
   "rocket_sensing_type.ad_astra_giselle_addon.disabled": "Disabled",
   "rocket_sensing_type.ad_astra_giselle_addon.disabled.desc": "Always output %1$s",

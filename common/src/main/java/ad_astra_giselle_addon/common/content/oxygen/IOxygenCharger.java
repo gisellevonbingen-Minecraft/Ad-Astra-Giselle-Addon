@@ -2,6 +2,7 @@ package ad_astra_giselle_addon.common.content.oxygen;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -9,6 +10,7 @@ import org.jetbrains.annotations.Nullable;
 import ad_astra_giselle_addon.common.fluid.FluidHooks2;
 import ad_astra_giselle_addon.common.fluid.FluidPredicates;
 import ad_astra_giselle_addon.common.fluid.UniveralFluidHandler;
+import earth.terrarium.botarium.api.fluid.FluidHolder;
 import net.minecraft.world.entity.LivingEntity;
 
 public interface IOxygenCharger extends IOxygenStorage
@@ -37,16 +39,7 @@ public interface IOxygenCharger extends IOxygenStorage
 	@Override
 	default long getOxygenAmount()
 	{
-		UniveralFluidHandler fluidHandler = this.getFluidHandler();
-		int size = fluidHandler.getTankAmount();
-		long amount = 0L;
-
-		for (int i = 0; i < size; i++)
-		{
-			amount += fluidHandler.getFluidInTank(i).getFluidAmount();
-		}
-
-		return amount;
+		return this.getFluidHandler().getFluidTanks().stream().filter(FluidPredicates::isOxygen).collect(Collectors.summingLong(FluidHolder::getFluidAmount));
 	}
 
 	@Override

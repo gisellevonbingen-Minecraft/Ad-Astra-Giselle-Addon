@@ -11,6 +11,7 @@ import ad_astra_giselle_addon.common.content.oxygen.IChargeMode;
 import ad_astra_giselle_addon.common.content.oxygen.IOxygenCharger;
 import ad_astra_giselle_addon.common.content.oxygen.IOxygenChargerItem;
 import ad_astra_giselle_addon.common.content.oxygen.OxygenChargerUtils;
+import ad_astra_giselle_addon.common.fluid.FluidHooks2;
 import ad_astra_giselle_addon.common.fluid.FluidPredicates;
 import ad_astra_giselle_addon.common.fluid.UniveralFluidHandler;
 import ad_astra_giselle_addon.common.util.NBTUtils;
@@ -21,6 +22,7 @@ import earth.terrarium.ad_astra.common.registry.ModFluids;
 import earth.terrarium.ad_astra.common.registry.ModItems;
 import earth.terrarium.botarium.api.fluid.FluidHolder;
 import earth.terrarium.botarium.api.fluid.FluidHooks;
+import earth.terrarium.botarium.api.fluid.ItemFluidContainer;
 import earth.terrarium.botarium.api.item.ItemStackHolder;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
@@ -32,7 +34,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 
@@ -70,18 +71,13 @@ public class OxygenCanItem extends Item implements FluidContainingItem, IOxygenC
 
 		if (this.allowedIn(group))
 		{
-			ItemStackHolder full = new ItemStackHolder(new ItemStack(this));
-			IOxygenCharger oxygenCharger = OxygenChargerUtils.get(full);
-			oxygenCharger.getFluidHandler().insertFluid(FluidHooks.newFluidHolder(ModFluids.OXYGEN.get(), oxygenCharger.getOxygenCapacity(), null), false);
-			list.add(full.getStack());
+			ItemStack full = new ItemStack(this);
+			ItemFluidContainer fluidContainer = this.getFluidContainer(full);
+			fluidContainer.setFluid(0, FluidHooks.newFluidHolder(ModFluids.OXYGEN.get(), this.getTankSize(), null));
+			fluidContainer.update(full);
+			list.add(full);
 		}
 
-	}
-
-	@Override
-	public Rarity getRarity(ItemStack item)
-	{
-		return this.isFoil(item) ? Rarity.EPIC : super.getRarity(item);
 	}
 
 	@Override
@@ -152,8 +148,17 @@ public class OxygenCanItem extends Item implements FluidContainingItem, IOxygenC
 			for (int i = 0; i < fluidHandler.getTankAmount(); i++)
 			{
 				FluidHolder fluid = fluidHandler.getFluidInTank(i);
-				long capacity = fluidHandler.getTankCapacity(i);
-				tooltip.add(TranslationUtils.oxygenStorage(fluid.getFluidAmount(), capacity));
+
+				if (this instanceof CreativeOxygenCanItem)
+				{
+					tooltip.add(TranslationUtils.descriptionCreativeOxygen(fluid.isEmpty()));
+				}
+				else
+				{
+					long capacity = fluidHandler.getTankCapacity(i);
+					tooltip.add(TranslationUtils.oxygenStorage(fluid.getFluidAmount(), capacity));
+				}
+
 			}
 
 		}
@@ -166,17 +171,25 @@ public class OxygenCanItem extends Item implements FluidContainingItem, IOxygenC
 		return true;
 	}
 
+	private double getOxygenStoredRatio(ItemStack item)
+	{
+		IOxygenCharger oxygenCharnger = OxygenChargerUtils.get(new ItemStackHolder(item));
+		long amount = oxygenCharnger.getOxygenAmount();
+		long capacity = oxygenCharnger.getOxygenCapacity();
+		return FluidHooks2.getStoredRatio(amount, capacity);
+	}
+
 	@Override
 	public int getBarWidth(ItemStack item)
 	{
-		double ratio = OxygenChargerUtils.get(new ItemStackHolder(item)).getOxygenStoredRatio();
+		double ratio = this.getOxygenStoredRatio(item);
 		return (int) (ratio * 13);
 	}
 
 	@Override
 	public int getBarColor(ItemStack item)
 	{
-		double ratio = OxygenChargerUtils.get(new ItemStackHolder(item)).getOxygenStoredRatio();
+		double ratio = this.getOxygenStoredRatio(item);
 		return Mth.hsvToRgb((float) (ratio / 3.0F), 1.0F, 1.0F);
 	}
 
@@ -227,7 +240,7 @@ public class OxygenCanItem extends Item implements FluidContainingItem, IOxygenC
 		@Override
 		public UniveralFluidHandler getFluidHandler()
 		{
-			return UniveralFluidHandler.from(item);
+			return UniveralFluidHandler.from(this.getItem());
 		}
 
 		public final ItemStackHolder getItem()

@@ -2,6 +2,8 @@ package ad_astra_giselle_addon.client.overlay;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import ad_astra_giselle_addon.common.content.oxygen.IOxygenCharger;
+import ad_astra_giselle_addon.common.content.oxygen.OxygenChargerUtils;
 import ad_astra_giselle_addon.common.content.oxygen.OxygenStorageUtils;
 import ad_astra_giselle_addon.common.registry.AddonEnchantments;
 import ad_astra_giselle_addon.common.registry.AddonItems;
@@ -17,6 +19,7 @@ import net.minecraft.client.renderer.Rect2i;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 
@@ -26,6 +29,18 @@ public class OxygenCanOverlay
 	public static final ResourceLocation OXYGEN_TANK_FULL_TEXTURE = new ResourceLocation(AdAstra.MOD_ID, "textures/gui/overlay/oxygen_tank_full.png");
 
 	public static final String OXYGENCAN_DESCRIPTION_ID = Util.makeDescriptionId("item", AddonItems.OXYGEN_CAN.getId());
+	public static final Component INFINITY_TEXT = Component.translatable(TranslationUtils.CREATIVE_OXYGEN_INFINITY);
+
+	public static Component getOxygenComponent(double ratio)
+	{
+		Component text = getRatioText(ratio);
+		return Component.translatable(OXYGENCAN_DESCRIPTION_ID).append(": ").append(text).withStyle(s -> s.withColor(Mth.hsvToRgb((float) (ratio / 3.0F), 1.0F, 1.0F)));
+	}
+
+	public static Component getRatioText(double ratio)
+	{
+		return ratio == Double.POSITIVE_INFINITY ? INFINITY_TEXT : TranslationUtils.formatPercent(ratio);
+	}
 
 	public static void renderHud(PoseStack poseStack, float partialTick)
 	{
@@ -38,10 +53,14 @@ public class OxygenCanOverlay
 		}
 		else if (PlayerOverlayScreen.shouldRenderOxygen)
 		{
-			OxygenStorageUtils.getExtractableStoredRatio(player).ifPresent(ratio ->
+			OxygenStorageUtils.getStoredRatio(OxygenStorageUtils.stream(player).filter(item ->
+			{
+				IOxygenCharger oxygenCharger = OxygenChargerUtils.get(item);
+				return oxygenCharger != null && oxygenCharger.getChargeMode().contains(EquipmentSlot.CHEST);
+			})).ifPresent(ratio ->
 			{
 				Font font = minecraft.font;
-				Component component = Component.translatable(OXYGENCAN_DESCRIPTION_ID).append(": ").append(TranslationUtils.formatPercent(ratio)).withStyle(s -> s.withColor(Mth.hsvToRgb((float) (ratio / 3.0F), 1.0F, 1.0F)));
+				Component component = getOxygenComponent(ratio);
 				int textureWidth = 62;
 				int textureHeight = 52;
 				int width = font.width(component);
@@ -52,7 +71,7 @@ public class OxygenCanOverlay
 		}
 		else if (EnchantmentHelper.getEnchantmentLevel(AddonEnchantments.OXYGEN_PROOF.get(), player) > 0)
 		{
-			OxygenStorageUtils.getExtractableStoredRatio(player).ifPresent(ratio ->
+			OxygenStorageUtils.getStoredRatio(player).ifPresent(ratio ->
 			{
 				renderOxygenCanTank(poseStack, minecraft, ratio);
 			});
@@ -63,15 +82,16 @@ public class OxygenCanOverlay
 
 	public static void renderOxygenCanTank(PoseStack poseStack, Minecraft minecraft, double oxygenRatio)
 	{
+		var normalizedRatio = Math.min(oxygenRatio, 1.0D);
 		poseStack.pushPose();
 		poseStack.scale(AdAstraConfig.oxygenBarScale, AdAstraConfig.oxygenBarScale, AdAstraConfig.oxygenBarScale);
 
 		Rect2i rect = PlayerOverlayScreen.getOxygenTankUnscaledRect(minecraft);
-		GuiUtil.drawVerticalReverse(poseStack, rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight(), OXYGEN_TANK_EMPTY_TEXTURE, oxygenRatio);
-		GuiUtil.drawVertical(poseStack, rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight(), OXYGEN_TANK_FULL_TEXTURE, oxygenRatio);
+		GuiUtil.drawVerticalReverse(poseStack, rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight(), OXYGEN_TANK_EMPTY_TEXTURE, normalizedRatio);
+		GuiUtil.drawVertical(poseStack, rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight(), OXYGEN_TANK_FULL_TEXTURE, normalizedRatio);
 
 		// Oxygen text
-		Component text = Component.translatable(OXYGENCAN_DESCRIPTION_ID).append(": ").append(TranslationUtils.formatPercent(oxygenRatio)).withStyle(s -> s.withColor(Mth.hsvToRgb((float) (oxygenRatio / 3.0F), 1.0F, 1.0F)));
+		Component text = getOxygenComponent(oxygenRatio);
 		int textWidth = minecraft.font.width(text);
 		minecraft.font.drawShadow(poseStack, text, (rect.getX() + (rect.getWidth() - textWidth) / 2.0f), rect.getY() + rect.getHeight() + 3, 0xFFFFFF);
 		poseStack.popPose();

@@ -10,6 +10,7 @@ import ad_astra_giselle_addon.common.compat.CompatibleManager;
 import ad_astra_giselle_addon.common.compat.create.BacktankOxygenStorage;
 import ad_astra_giselle_addon.common.entity.LivingHelper;
 import ad_astra_giselle_addon.common.fluid.UniveralFluidHandler;
+import ad_astra_giselle_addon.common.item.CreativeOxygenCanItem;
 import ad_astra_giselle_addon.common.item.ItemStackReference;
 import ad_astra_giselle_addon.common.item.OxygenCanItem;
 import earth.terrarium.ad_astra.common.registry.ModFluids;
@@ -18,22 +19,52 @@ import earth.terrarium.botarium.api.fluid.FluidHolder;
 import earth.terrarium.botarium.api.fluid.FluidHooks;
 import earth.terrarium.botarium.api.item.ItemStackHolder;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.material.Fluid;
 
 public class OxygenStorageUtils
 {
-	public static OptionalDouble getExtractableStoredRatio(LivingEntity living)
+	/**
+	 *
+	 * @param living
+	 * @return 0..1, Double.MAX_VALUE
+	 */
+	public static OptionalDouble getStoredRatio(LivingEntity living)
 	{
-		List<ItemStackReference> items = LivingHelper.getInventoryItems(living);
+		return getStoredRatio(stream(living));
+	}
+
+	/**
+	 *
+	 * @param living
+	 * @return 0..1, Double.MAX_VALUE
+	 */
+	public static OptionalDouble getStoredRatio(Stream<ItemStackHolder> items)
+	{
+		ItemStackHolder[] array = items.toArray(ItemStackHolder[]::new);
+
+		for (ItemStackHolder stack : array)
+		{
+			if (isInfinifySource(stack.getStack()))
+			{
+				return OptionalDouble.of(Double.POSITIVE_INFINITY);
+			}
+
+		}
+
 		long stored = 0L;
 		long capacity = 0L;
-		int temperature = (int) ModUtils.getWorldTemperature(living.getLevel());
 
-		for (ItemStackReference item : items)
+		for (ItemStackHolder item : array)
 		{
+			if (item.getStack().getItem() instanceof CreativeOxygenCanItem)
+			{
+				continue;
+			}
+
 			IOxygenStorage oxygenStorage = OxygenStorageUtils.get(item);
 
-			if (oxygenStorage != null && oxygenStorage.testTemperature(temperature))
+			if (oxygenStorage != null)
 			{
 				stored += oxygenStorage.getOxygenAmount();
 				capacity += oxygenStorage.getOxygenCapacity();
@@ -59,24 +90,37 @@ public class OxygenStorageUtils
 	}
 
 	@Nullable
-	public static Stream<IOxygenStorage> streamExtractable(LivingEntity living, long extracting)
+	public static Stream<ItemStackHolder> stream(LivingEntity living)
 	{
 		int temperature = (int) ModUtils.getWorldTemperature(living.getLevel());
-		return LivingHelper.getInventoryItems(living).stream().map(OxygenStorageUtils::get).filter(oxygenStorage ->
+		List<ItemStackReference> items = LivingHelper.getInventoryItems(living);
+
+		return Stream.concat(items.stream().filter(item ->
 		{
-			if (oxygenStorage != null && oxygenStorage.testTemperature(temperature))
-			{
-				long extract = oxygenStorage.extractOxygen(living, extracting, true);
+			return isInfinifySource(item.getStack());
+		}), items.stream().filter(item ->
+		{
+			return !(item.getStack().getItem() instanceof CreativeOxygenCanItem);
+		}).filter(item ->
+		{
+			var oxygenStorage = OxygenStorageUtils.get(item);
+			return oxygenStorage != null && oxygenStorage.testTemperature(temperature);
+		}));
+	}
 
-				if (extract >= extracting)
-				{
-					return true;
-				}
-
-			}
-
-			return false;
+	@Nullable
+	public static Stream<IOxygenStorage> streamExtractable(LivingEntity living, long extracting)
+	{
+		return stream(living).map(OxygenStorageUtils::get).filter(oxygenStorage ->
+		{
+			long extract = oxygenStorage.extractOxygen(living, extracting, true);
+			return extract >= extracting;
 		});
+	}
+
+	public static boolean isInfinifySource(ItemStack item)
+	{
+		return item.getItem() instanceof CreativeOxygenCanItem type && !type.getFluidContainer(item).isEmpty();
 	}
 
 	@Nullable

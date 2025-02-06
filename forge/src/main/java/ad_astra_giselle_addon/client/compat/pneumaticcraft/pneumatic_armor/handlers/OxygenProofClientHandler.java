@@ -3,6 +3,7 @@ package ad_astra_giselle_addon.client.compat.pneumaticcraft.pneumatic_armor.hand
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import ad_astra_giselle_addon.client.compat.pneumaticcraft.pneumatic_armor.options.OxygenProofOption;
+import ad_astra_giselle_addon.client.overlay.OxygenCanOverlay;
 import ad_astra_giselle_addon.common.compat.pneumaticcraft.AddonPNCUpgrade;
 import ad_astra_giselle_addon.common.compat.pneumaticcraft.AddonPNCUpgrades;
 import ad_astra_giselle_addon.common.content.oxygen.OxygenStorageUtils;
@@ -15,11 +16,11 @@ import me.desht.pneumaticcraft.api.client.pneumatic_helmet.StatPanelLayout;
 import me.desht.pneumaticcraft.api.pneumatic_armor.IArmorUpgradeHandler;
 import me.desht.pneumaticcraft.api.pneumatic_armor.ICommonArmorHandler;
 import me.desht.pneumaticcraft.client.pneumatic_armor.ClientArmorRegistry;
+import me.desht.pneumaticcraft.common.core.ModUpgrades;
 import me.desht.pneumaticcraft.common.pneumatic_armor.CommonArmorHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
 public class OxygenProofClientHandler<T extends IArmorUpgradeHandler<?>> extends AddonSimpleToggleableHandler<T>
@@ -48,9 +49,16 @@ public class OxygenProofClientHandler<T extends IArmorUpgradeHandler<?>> extends
 
 		if (isEnabled && this.stat.isStatOpen())
 		{
-			Player player = armorHandler.getPlayer();
-			double ratio = OxygenStorageUtils.getExtractableStoredRatio(player).orElse(0.0D);
-			this.oxygenComponent = TranslationUtils.formatPercent(ratio);
+			if (armorHandler.getUpgradeCount(this.getCommonHandler().getEquipmentSlot(), ModUpgrades.CREATIVE.get()) > 0)
+			{
+				this.oxygenComponent = Component.translatable(TranslationUtils.CREATIVE_OXYGEN_INFINITY);
+			}
+			else
+			{
+				var ratio = OxygenStorageUtils.getStoredRatio(armorHandler.getPlayer()).orElse(0.0D);
+				this.oxygenComponent = OxygenCanOverlay.getRatioText(ratio);
+			}
+
 		}
 		else
 		{
