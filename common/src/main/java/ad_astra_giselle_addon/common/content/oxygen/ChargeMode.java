@@ -3,30 +3,34 @@ package ad_astra_giselle_addon.common.content.oxygen;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
+import java.util.function.Predicate;
 
 import ad_astra_giselle_addon.common.AdAstraGiselleAddon;
 import ad_astra_giselle_addon.common.entity.LivingHelper;
 import ad_astra_giselle_addon.common.item.ItemStackReference;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 
 public enum ChargeMode implements IChargeMode
 {
-	NONE(AdAstraGiselleAddon.rl("none"), e -> Collections.emptyList()),
-	ARMORS(AdAstraGiselleAddon.rl("armors"), LivingHelper::getEquipmentItems),
-	ALL(AdAstraGiselleAddon.rl("all"), LivingHelper::getInventoryItems),
+	NONE(AdAstraGiselleAddon.rl("none"), e -> Collections.emptyList(), slot -> false),
+	ARMORS(AdAstraGiselleAddon.rl("armors"), LivingHelper::getEquipmentItems, slot -> true),
+	ALL(AdAstraGiselleAddon.rl("all"), LivingHelper::getInventoryItems, slot -> true),
 	//
 	;
 
 	private final ResourceLocation name;
 	private final Function<LivingEntity, List<ItemStackReference>> function;
+	private final Predicate<EquipmentSlot> predicate;
 	private final Component displayName;
 
-	private ChargeMode(ResourceLocation name, Function<LivingEntity, List<ItemStackReference>> function)
+	private ChargeMode(ResourceLocation name, Function<LivingEntity, List<ItemStackReference>> function, Predicate<EquipmentSlot> predicate)
 	{
 		this.name = name;
 		this.function = function;
+		this.predicate = predicate;
 		this.displayName = Component.translatable(AdAstraGiselleAddon.tl(LANGUGE_CATEGORY_CHARGEMODE, name));
 	}
 
@@ -36,15 +40,16 @@ public enum ChargeMode implements IChargeMode
 		return this.name;
 	}
 
-	public Function<LivingEntity, List<ItemStackReference>> getFunction()
-	{
-		return this.function;
-	}
-
 	@Override
 	public List<ItemStackReference> getItems(LivingEntity living)
 	{
-		return this.getFunction().apply(living);
+		return this.function.apply(living);
+	}
+
+	@Override
+	public boolean contains(EquipmentSlot slot)
+	{
+		return this.predicate.test(slot);
 	}
 
 	@Override

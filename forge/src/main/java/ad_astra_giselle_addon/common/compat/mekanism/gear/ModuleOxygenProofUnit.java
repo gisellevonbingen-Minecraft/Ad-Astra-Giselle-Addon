@@ -3,6 +3,7 @@ package ad_astra_giselle_addon.common.compat.mekanism.gear;
 import java.util.Map;
 import java.util.function.Consumer;
 
+import ad_astra_giselle_addon.client.overlay.OxygenCanOverlay;
 import ad_astra_giselle_addon.common.AdAstraGiselleAddon;
 import ad_astra_giselle_addon.common.compat.mekanism.AddonMekanismConfig;
 import ad_astra_giselle_addon.common.content.oxygen.IOxygenStorage;
@@ -14,6 +15,7 @@ import mekanism.api.chemical.gas.GasStack;
 import mekanism.api.chemical.gas.IGasHandler;
 import mekanism.api.gear.ICustomModule;
 import mekanism.api.gear.IHUDElement;
+import mekanism.api.gear.IHUDElement.HUDColor;
 import mekanism.api.gear.IModule;
 import mekanism.api.gear.IModuleHelper;
 import mekanism.api.gear.config.ModuleConfigItemCreator;
@@ -153,8 +155,17 @@ public class ModuleOxygenProofUnit implements ICustomModule<ModuleOxygenProofUni
 			return;
 		}
 
-		double ratio = OxygenStorageUtils.getExtractableStoredRatio(player).orElse(0.0D);
-		hudElementAdder.accept(IModuleHelper.INSTANCE.hudElementPercent(ICON, ratio));
+		double ratio = OxygenStorageUtils.getStoredRatio(player).orElse(0.0D);
+
+		if (ratio == Double.POSITIVE_INFINITY)
+		{
+			hudElementAdder.accept(IModuleHelper.INSTANCE.hudElement(ICON, OxygenCanOverlay.INFINITY_TEXT, HUDColor.REGULAR));
+		}
+		else
+		{
+			hudElementAdder.accept(IModuleHelper.INSTANCE.hudElementPercent(ICON, ratio));
+		}
+
 	}
 
 	public long getMaxProduceRate(IModule<ModuleOxygenProofUnit> module)

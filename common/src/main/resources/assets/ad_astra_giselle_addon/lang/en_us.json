@@ -6,6 +6,7 @@
   
   "item.ad_astra_giselle_addon.oxygen_can": "Oxygen Can",
   "item.ad_astra_giselle_addon.netherite_oxygen_can": "Netherite Oxygen Can",
+  "item.ad_astra_giselle_addon.creative_oxygen_can": "Creative Oxygen Can",
   
   "item.ad_astra_giselle_addon.fuel_loader.tooltip": "Give fuel to near Rover or Rocket",
   "item.ad_astra_giselle_addon.gravity_normalizer.tooltip": "Normalize living's gravity within range",
@@ -49,6 +50,10 @@
   "chargemode.ad_astra_giselle_addon.none": "Disabled",
   "chargemode.ad_astra_giselle_addon.armors": "Enabled: All Armor",
   "chargemode.ad_astra_giselle_addon.all": "Enabled: All Inventory",
+  
+  "description.ad_astra_giselle_addon.creative_oxygen": "Oxygen",
+  "creative_oxygen.ad_astra_giselle_addon.empty": "Empty",
+  "creative_oxygen.ad_astra_giselle_addon.infinity": "Infinity",
   
   "rocket_sensing_type.ad_astra_giselle_addon.disabled": "Disabled",
   "rocket_sensing_type.ad_astra_giselle_addon.disabled.desc": "Always output %1$s",

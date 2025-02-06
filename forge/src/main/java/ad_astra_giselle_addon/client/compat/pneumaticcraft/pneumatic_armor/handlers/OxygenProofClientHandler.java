@@ -5,10 +5,10 @@ import org.lwjgl.opengl.GL11;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import ad_astra_giselle_addon.client.compat.pneumaticcraft.pneumatic_armor.options.OxygenProofOption;
+import ad_astra_giselle_addon.client.overlay.OxygenCanOverlay;
 import ad_astra_giselle_addon.common.compat.pneumaticcraft.AddonPNCUpgrades;
 import ad_astra_giselle_addon.common.content.oxygen.OxygenStorageUtils;
 import ad_astra_giselle_addon.common.registry.AddonItems;
-import ad_astra_giselle_addon.common.util.TranslationUtils;
 import me.desht.pneumaticcraft.api.client.IGuiAnimatedStat;
 import me.desht.pneumaticcraft.api.client.pneumatic_helmet.IGuiScreen;
 import me.desht.pneumaticcraft.api.client.pneumatic_helmet.IOptionPage;
@@ -19,11 +19,11 @@ import me.desht.pneumaticcraft.api.upgrade.PNCUpgrade;
 import me.desht.pneumaticcraft.client.pneumatic_armor.ClientArmorRegistry;
 import me.desht.pneumaticcraft.common.config.subconfig.ArmorHUDLayout;
 import me.desht.pneumaticcraft.common.pneumatic_armor.CommonArmorHandler;
+import me.desht.pneumaticcraft.common.upgrades.ModUpgrades;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
 public class OxygenProofClientHandler<T extends IArmorUpgradeHandler<?>> extends AddonSimpleToggleableHandler<T>
@@ -52,9 +52,16 @@ public class OxygenProofClientHandler<T extends IArmorUpgradeHandler<?>> extends
 
 		if (isEnabled && this.stat.isStatOpen())
 		{
-			Player player = armorHandler.getPlayer();
-			double ratio = OxygenStorageUtils.getExtractableStoredRatio(player).orElse(0.0D);
-			this.oxygenComponent = TranslationUtils.formatPercent(ratio);
+			if (armorHandler.getUpgradeCount(this.getCommonHandler().getEquipmentSlot(), ModUpgrades.CREATIVE.get()) > 0)
+			{
+				this.oxygenComponent = OxygenCanOverlay.INFINITY_TEXT;
+			}
+			else
+			{
+				var ratio = OxygenStorageUtils.getStoredRatio(armorHandler.getPlayer()).orElse(0.0D);
+				this.oxygenComponent = OxygenCanOverlay.getRatioText(ratio);
+			}
+
 		}
 		else
 		{

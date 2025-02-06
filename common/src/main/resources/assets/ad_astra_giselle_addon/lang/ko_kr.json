@@ -6,6 +6,7 @@
   
   "item.ad_astra_giselle_addon.oxygen_can": "산소 캔",
   "item.ad_astra_giselle_addon.netherite_oxygen_can": "네더라이트 산소 캔",
+  "item.ad_astra_giselle_addon.creative_oxygen_can": "크리에이티브 산소 캔",
   
   "item.ad_astra_giselle_addon.fuel_loader.tooltip": "주변 로버나 로켓의 연료를 채웁니다",
   "item.ad_astra_giselle_addon.gravity_normalizer.tooltip": "범위내 생명체의 중력을 정규화합니다",
@@ -49,6 +50,10 @@
   "chargemode.ad_astra_giselle_addon.none": "비활성화",
   "chargemode.ad_astra_giselle_addon.armors": "활성화: 모든 갑옷",
   "chargemode.ad_astra_giselle_addon.all": "활성화: 보관함 전체",
+  
+  "description.ad_astra_giselle_addon.creative_oxygen": "산소",
+  "creative_oxygen.ad_astra_giselle_addon.empty": "비어있음",
+  "creative_oxygen.ad_astra_giselle_addon.infinity": "무한",
   
   "rocket_sensing_type.ad_astra_giselle_addon.disabled": "비활성화",
   "rocket_sensing_type.ad_astra_giselle_addon.disabled.desc": "항상 %1$s 출력",

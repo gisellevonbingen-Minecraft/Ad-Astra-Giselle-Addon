@@ -2,6 +2,8 @@ package ad_astra_giselle_addon.client.overlay;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import ad_astra_giselle_addon.common.content.oxygen.IOxygenCharger;
+import ad_astra_giselle_addon.common.content.oxygen.OxygenChargerUtils;
 import ad_astra_giselle_addon.common.content.oxygen.OxygenStorageUtils;
 import ad_astra_giselle_addon.common.registry.AddonEnchantments;
 import ad_astra_giselle_addon.common.registry.AddonItems;
@@ -22,6 +24,18 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 public class OxygenCanOverlay
 {
 	public static final String OXYGENCAN_DESCRIPTION_ID = Util.makeDescriptionId("item", AddonItems.OXYGEN_CAN.getId());
+	public static final Component INFINITY_TEXT = Component.translatable(TranslationUtils.CREATIVE_OXYGEN_INFINITY);
+
+	public static Component getOxygenComponent(double ratio)
+	{
+		Component text = getRatioText(ratio);
+		return Component.translatable(OXYGENCAN_DESCRIPTION_ID).append(": ").append(text).withStyle(s -> s.withColor(Mth.hsvToRgb((float) (ratio / 3.0F), 1.0F, 1.0F)));
+	}
+
+	public static Component getRatioText(double ratio)
+	{
+		return ratio == Double.POSITIVE_INFINITY ? INFINITY_TEXT : TranslationUtils.formatPercent(ratio);
+	}
 
 	public static void renderHud(GuiGraphics guiGraphics, float partialTick)
 	{
@@ -38,10 +52,14 @@ public class OxygenCanOverlay
 		}
 		else if (SpaceSuitItem.hasFullSet(player) && player.getItemBySlot(EquipmentSlot.CHEST).getItem() instanceof SpaceSuitItem)
 		{
-			OxygenStorageUtils.getExtractableStoredRatio(player).ifPresent(ratio ->
+			OxygenStorageUtils.getStoredRatio(OxygenStorageUtils.stream(player).filter(item ->
+			{
+				IOxygenCharger oxygenCharger = OxygenChargerUtils.get(item);
+				return oxygenCharger != null && oxygenCharger.getChargeMode().contains(EquipmentSlot.CHEST);
+			})).ifPresent(ratio ->
 			{
 				Font font = minecraft.font;
-				Component component = Component.translatable(OXYGENCAN_DESCRIPTION_ID).append(": ").append(Component.empty().append(TranslationUtils.formatPercent(ratio)).withStyle(s -> s.withColor(Mth.hsvToRgb((float) (ratio / 3.0F), 1.0F, 1.0F))));
+				Component component = getOxygenComponent(ratio);
 				int textureWidth = 62;
 				int textureHeight = 52;
 				int width = font.width(component);
@@ -52,7 +70,7 @@ public class OxygenCanOverlay
 		}
 		else if (EnchantmentHelper.getEnchantmentLevel(AddonEnchantments.OXYGEN_PROOF.get(), player) > 0)
 		{
-			OxygenStorageUtils.getExtractableStoredRatio(player).ifPresent(ratio ->
+			OxygenStorageUtils.getStoredRatio(player).ifPresent(ratio ->
 			{
 				renderOxygenCanTank(guiGraphics, minecraft, ratio);
 			});
@@ -63,7 +81,7 @@ public class OxygenCanOverlay
 
 	public static void renderOxygenCanTank(GuiGraphics graphics, Minecraft minecraft, double oxygenRatio)
 	{
-		int barHeight = (int) (oxygenRatio * 52);
+		int barHeight = (int) (Math.min(oxygenRatio, 1.0D) * 52);
 
 		int x = AdAstraConfigClient.oxygenBarX;
 		int y = AdAstraConfigClient.oxygenBarY;
@@ -76,7 +94,7 @@ public class OxygenCanOverlay
 		graphics.blit(OverlayScreen.OXYGEN_TANK, x, y + 52 - barHeight, 0, 52 - barHeight, 62, barHeight, 62, 52);
 
 		var font = minecraft.font;
-		var text = Component.translatable(OXYGENCAN_DESCRIPTION_ID).append(": ").append(Component.empty().append(TranslationUtils.formatPercent(oxygenRatio)).withStyle(s -> s.withColor(Mth.hsvToRgb((float) (oxygenRatio / 3.0F), 1.0F, 1.0F))));
+		var text = getOxygenComponent(oxygenRatio);
 		int textWidth = font.width(text);
 		graphics.drawString(font, text, (int) (x + (62 - textWidth) / 2f), y + 52 + 3, 0xFFFFFF);
 		poseStack.popPose();

@@ -25,14 +25,21 @@ public class TranslationUtils
 	private static final NumberFormat NUMBER_FORMAT = NumberFormat.getNumberInstance();
 	public static final int DEFAULT_DIGITS = 1;
 
+	private static final Map<CanUseTuple, List<Component>> CAN_USES = new HashMap<>();
+	private static final Map<Boolean, Component> CAN_USE_AVAILABLES = new HashMap<>();
 	public static final String CAN_USE = AdAstraGiselleAddon.tl("description", "can_use");
 	public static final String CAN_USE_COLD = AdAstraGiselleAddon.tl("description", "can_use.cold");
 	public static final String CAN_USE_HOT = AdAstraGiselleAddon.tl("description", "can_use.hot");
 	public static final String CAN_USE_AVAILABLE = AdAstraGiselleAddon.tl("can_use", "available");
 	public static final String CAN_USE_UNAVAILABLE = AdAstraGiselleAddon.tl("can_use", "unavailable");
 
-	public static final String CHARGE_MODE = AdAstraGiselleAddon.tl("description", "charge_mode");
 	private static final Map<IChargeMode, Component> CHANGE_MODES = new HashMap<>();
+	public static final String CHARGE_MODE = AdAstraGiselleAddon.tl("description", "charge_mode");
+
+	private static final Map<Boolean, Component> CREATIVE_OXYGENS = new HashMap<>();
+	public static final String CREATIVE_OXYGEN = AdAstraGiselleAddon.tl("description", "creative_oxygen");
+	public static final String CREATIVE_OXYGEN_EMPTY = AdAstraGiselleAddon.tl("creative_oxygen", "empty");
+	public static final String CREATIVE_OXYGEN_INFINITY = AdAstraGiselleAddon.tl("creative_oxygen", "infinity");
 
 	static
 	{
@@ -69,15 +76,15 @@ public class TranslationUtils
 
 	public static List<Component> descriptionCanUse(boolean canUseOnCold, boolean canUseOnHot)
 	{
-		List<Component> list = new ArrayList<>();
-		list.add(descriptionCanUse(CAN_USE_COLD, canUseOnCold));
-		list.add(descriptionCanUse(CAN_USE_HOT, canUseOnHot));
-		return list;
+		return CAN_USES.computeIfAbsent(new CanUseTuple(canUseOnCold, canUseOnHot), k ->
+		{
+			return List.of(descriptionCanUse(CAN_USE_COLD, k.canUseOnCold()), descriptionCanUse(CAN_USE_HOT, k.canUseOnHot()));
+		});
 	}
 
 	private static Component descriptionCanUse(String key, boolean canUse)
 	{
-		return description(key, Component.translatable(canUse ? CAN_USE_AVAILABLE : CAN_USE_UNAVAILABLE).withStyle(canUse ? ChatFormatting.GREEN : ChatFormatting.RED));
+		return CAN_USE_AVAILABLES.computeIfAbsent(canUse, k -> description(key, Component.translatable(k ? CAN_USE_AVAILABLE : CAN_USE_UNAVAILABLE).withStyle(k ? ChatFormatting.GREEN : ChatFormatting.RED)));
 	}
 
 	public static Component descriptionChargeMode(IChargeMode mode)
@@ -96,6 +103,15 @@ public class TranslationUtils
 		long capacityMB = FluidConstants.toMillibuckets(capacity);
 		Style style = Style.EMPTY.withColor(amountMB > 0 ? ChatFormatting.GREEN : ChatFormatting.RED);
 		return Component.translatable("tooltip.ad_astra.space_suit", amountMB, capacityMB).setStyle(style);
+	}
+
+	public static Component descriptionCreativeOxygen(boolean empty)
+	{
+		return CREATIVE_OXYGENS.computeIfAbsent(empty, k ->
+		{
+			return description(CREATIVE_OXYGEN, Component.translatable(k ? CREATIVE_OXYGEN_EMPTY : CREATIVE_OXYGEN_INFINITY)//
+					.withStyle(k ? ChatFormatting.RED : ChatFormatting.GREEN));
+		});
 	}
 
 	public static List<Component> fluid(FluidContainer container)
@@ -134,6 +150,11 @@ public class TranslationUtils
 	}
 
 	private TranslationUtils()
+	{
+
+	}
+
+	private record CanUseTuple(boolean canUseOnCold, boolean canUseOnHot)
 	{
 
 	}

@@ -39,7 +39,7 @@ public interface IOxygenCharger extends IOxygenStorage
 	@Override
 	default long getOxygenAmount()
 	{
-		return this.getFluidContainer().getFluids().stream().collect(Collectors.summingLong(FluidHolder::getFluidAmount));
+		return this.getFluidContainer().getFluids().stream().filter(FluidPredicates::isOxygen).collect(Collectors.summingLong(FluidHolder::getFluidAmount));
 	}
 
 	@Override

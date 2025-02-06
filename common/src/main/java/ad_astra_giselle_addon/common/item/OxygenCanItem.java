@@ -9,6 +9,7 @@ import ad_astra_giselle_addon.common.content.oxygen.IOxygenCharger;
 import ad_astra_giselle_addon.common.content.oxygen.IOxygenChargerItem;
 import ad_astra_giselle_addon.common.content.oxygen.OxygenChargerUtils;
 import ad_astra_giselle_addon.common.fluid.FluidPredicates;
+import ad_astra_giselle_addon.common.fluid.FluidUtils2;
 import ad_astra_giselle_addon.common.util.NBTUtils;
 import ad_astra_giselle_addon.common.util.TranslationUtils;
 import earth.terrarium.adastra.common.registry.ModFluids;
@@ -29,7 +30,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.CreativeModeTab.Output;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 
@@ -62,16 +62,10 @@ public class OxygenCanItem extends Item implements BotariumFluidItem<WrappedItem
 	@Override
 	public void provideCreativeTabOutput(Output output)
 	{
-		ItemStackHolder full = new ItemStackHolder(new ItemStack(this));
-		IOxygenCharger oxygenCharger = OxygenChargerUtils.get(full);
-		oxygenCharger.getFluidContainer().insertFluid(FluidHolder.of(ModFluids.OXYGEN.get(), oxygenCharger.getOxygenCapacity(), null), false);
-		output.accept(full.getStack());
-	}
-
-	@Override
-	public Rarity getRarity(ItemStack item)
-	{
-		return this.isFoil(item) ? Rarity.EPIC : super.getRarity(item);
+		ItemStack full = new ItemStack(this);
+		WrappedItemFluidContainer fluidContainer = this.getFluidContainer(full);
+		fluidContainer.setFluid(0, FluidHolder.of(ModFluids.OXYGEN.get(), this.getFluidCapacity(), null));
+		output.accept(full);
 	}
 
 	@Override
@@ -136,7 +130,15 @@ public class OxygenCanItem extends Item implements BotariumFluidItem<WrappedItem
 
 			for (int i = 0; i < fluids.size(); i++)
 			{
-				tooltip.add(TooltipUtils.getFluidComponent(fluids.get(i), fluidContainer.getTankCapacity(i)));
+				if (this instanceof CreativeOxygenCanItem)
+				{
+					tooltip.add(TranslationUtils.descriptionCreativeOxygen(fluids.get(i).isEmpty()));
+				}
+				else
+				{
+					tooltip.add(TooltipUtils.getFluidComponent(fluids.get(i), fluidContainer.getTankCapacity(i)));
+				}
+
 			}
 
 		}
@@ -149,17 +151,25 @@ public class OxygenCanItem extends Item implements BotariumFluidItem<WrappedItem
 		return true;
 	}
 
+	private double getOxygenStoredRatio(ItemStack item)
+	{
+		IOxygenCharger oxygenCharnger = OxygenChargerUtils.get(new ItemStackHolder(item));
+		long amount = oxygenCharnger.getOxygenAmount();
+		long capacity = oxygenCharnger.getOxygenCapacity();
+		return FluidUtils2.getStoredRatio(amount, capacity);
+	}
+
 	@Override
 	public int getBarWidth(ItemStack item)
 	{
-		double ratio = OxygenChargerUtils.get(new ItemStackHolder(item)).getOxygenStoredRatio();
+		double ratio = this.getOxygenStoredRatio(item);
 		return (int) (ratio * 13);
 	}
 
 	@Override
 	public int getBarColor(ItemStack item)
 	{
-		double ratio = OxygenChargerUtils.get(new ItemStackHolder(item)).getOxygenStoredRatio();
+		double ratio = this.getOxygenStoredRatio(item);
 		return Mth.hsvToRgb((float) (ratio / 3.0F), 1.0F, 1.0F);
 	}
 
