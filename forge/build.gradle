@@ -29,10 +29,14 @@ minecraft {
 
             property "forge.logging.markers", "REGISTRIES"
             property "forge.logging.console.level", "debug"
+            arg "-mixin.config=test.mixin.json"
 
             mods {
                 "${mod_id}" {
                     source sourceSets.main
+                }
+                "testmod" {
+                    source sourceSets.test
                 }
             }
         }
