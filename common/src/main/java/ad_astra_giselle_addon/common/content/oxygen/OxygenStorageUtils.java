@@ -33,7 +33,7 @@ public class OxygenStorageUtils
 		{
 			IOxygenStorage oxygenStorage = OxygenStorageUtils.get(item);
 
-			if (oxygenStorage != null && oxygenStorage.getTemperatureThreshold().contains(temperature))
+			if (oxygenStorage != null && oxygenStorage.testTemperature(temperature))
 			{
 				stored += oxygenStorage.getOxygenAmount();
 				capacity += oxygenStorage.getOxygenCapacity();
@@ -64,7 +64,7 @@ public class OxygenStorageUtils
 		int temperature = (int) ModUtils.getWorldTemperature(living.getLevel());
 		return LivingHelper.getInventoryItems(living).stream().map(OxygenStorageUtils::get).filter(oxygenStorage ->
 		{
-			if (oxygenStorage != null && oxygenStorage.getTemperatureThreshold().contains(temperature))
+			if (oxygenStorage != null && oxygenStorage.testTemperature(temperature))
 			{
 				long extract = oxygenStorage.extractOxygen(living, extracting, true);
 

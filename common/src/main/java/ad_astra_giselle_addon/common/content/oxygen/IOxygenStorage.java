@@ -14,6 +14,12 @@ public interface IOxygenStorage
 
 	long getOxygenCapacity();
 
+	default boolean testTemperature(int temperature)
+	{
+		Range<Integer> temperatureThreshold = this.getTemperatureThreshold();
+		return temperatureThreshold == null || temperatureThreshold.contains(temperature);
+	}
+
 	Range<Integer> getTemperatureThreshold();
 
 	default double getOxygenStoredRatio()

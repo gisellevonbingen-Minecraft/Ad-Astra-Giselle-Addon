@@ -138,7 +138,13 @@ public class OxygenCanItem extends Item implements FluidContainingItem, IOxygenC
 
 		if (oxygenCharger != null)
 		{
-			tooltip.add(TranslationUtils.descriptionTemperatureRange(oxygenCharger.getTemperatureThreshold()));
+			Range<Integer> temperatureThreshold = oxygenCharger.getTemperatureThreshold();
+
+			if (temperatureThreshold != null)
+			{
+				tooltip.add(TranslationUtils.descriptionTemperatureRange(temperatureThreshold));
+			}
+
 			tooltip.add(TranslationUtils.descriptionChargeMode(oxygenCharger.getChargeMode()));
 
 			UniveralFluidHandler fluidHandler = oxygenCharger.getFluidHandler();
