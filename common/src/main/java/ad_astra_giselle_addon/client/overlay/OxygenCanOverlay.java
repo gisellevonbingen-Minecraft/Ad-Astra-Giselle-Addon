@@ -85,10 +85,13 @@ public class OxygenCanOverlay
 				Component component = getOxygenComponent(ratio);
 				int textureWidth = 62;
 				int textureHeight = 52;
-				int width = font.width(component);
-				float x = 5 + AdAstraConfig.oxygenBarXOffset + (textureWidth - width) / 2.0F;
-				float y = 25 + AdAstraConfig.oxygenBarYOffset + textureHeight + font.lineHeight + 3;
-				font.drawShadow(poseStack, component, Math.max(x, 0), y, 0xFFFFFF);
+				int textWidth = font.width(component);
+				float textX = 5 + AdAstraConfig.oxygenBarXOffset + (textureWidth - textWidth) / 2.0F;
+				float textY = 25 + AdAstraConfig.oxygenBarYOffset + textureHeight + font.lineHeight + 3;
+				poseStack.pushPose();
+				poseStack.scale(AdAstraConfig.oxygenBarScale, AdAstraConfig.oxygenBarScale, AdAstraConfig.oxygenBarScale);
+				font.drawShadow(poseStack, component, Math.max(textX, 0.0F), textY, 0xFFFFFF);
+				poseStack.popPose();
 			});
 		}
 		else if (shouldRender(player))
@@ -113,9 +116,12 @@ public class OxygenCanOverlay
 		GuiUtil.drawVertical(poseStack, rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight(), OXYGEN_TANK_FULL_TEXTURE, normalizedRatio);
 
 		// Oxygen text
+		Font font = minecraft.font;
 		Component text = getOxygenComponent(oxygenRatio);
-		int textWidth = minecraft.font.width(text);
-		minecraft.font.drawShadow(poseStack, text, (rect.getX() + (rect.getWidth() - textWidth) / 2.0f), rect.getY() + rect.getHeight() + 3, 0xFFFFFF);
+		int textWidth = font.width(text);
+		float textX = rect.getX() + (rect.getWidth() - textWidth) / 2.0F;
+		float textY = rect.getY() + rect.getHeight() + 3;
+		font.drawShadow(poseStack, text, Math.max(textX, 0.0F), textY, 0xFFFFFF);
 		poseStack.popPose();
 	}
 
