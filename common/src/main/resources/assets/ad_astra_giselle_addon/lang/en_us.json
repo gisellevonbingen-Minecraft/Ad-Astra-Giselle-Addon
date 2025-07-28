@@ -101,6 +101,19 @@
   "pneumaticcraft.gui.tab.info.item.armor.generic.ad_astra_giselle_addon.acid_rain_proofUpgrade": "Don't damage from acid rain in Ad Astra dimensions",
   "pneumaticcraft.gui.tab.info.item.armor.generic.ad_astra_giselle_addon.gravity_normalizingUpgrade": "Normalize gravity like overworld in Ad Astra dimensions",
   
+  "modifier.ad_astra_giselle_addon.space_breathing": "Space Breathing",
+  "modifier.ad_astra_giselle_addon.space_breathing.flavor": "Space Breathing",
+  "modifier.ad_astra_giselle_addon.space_breathing.description": "Can breath in Ad Astra dimensions\nRequire 'Oxygen Can' in inventory",
+  "modifier.ad_astra_giselle_addon.space_fire_proof": "Space Fire Proof",
+  "modifier.ad_astra_giselle_addon.space_fire_proof.flavor": "Space Fire Proof",
+  "modifier.ad_astra_giselle_addon.space_fire_proof.description": "Don't set fire to player in Ad Astra dimensions",
+  "modifier.ad_astra_giselle_addon.acid_rain_proof": "Acid Rain Proof",
+  "modifier.ad_astra_giselle_addon.acid_rain_proof.flavor": "Acid Rain Proof",
+  "modifier.ad_astra_giselle_addon.acid_rain_proof.description": "Don't damage from acid rain in Ad Astra dimensions",
+  "modifier.ad_astra_giselle_addon.gravity_normalizing": "Gravity Normalizing",
+  "modifier.ad_astra_giselle_addon.gravity_normalizing.flavor": "Gravity Normalizing",
+  "modifier.ad_astra_giselle_addon.gravity_normalizing.description": "Normalize gravity like overworld in Ad Astra dimensions",
+  
   
   "config.ad_astra_giselle_addon.items": "Items",
   "config.ad_astra_giselle_addon.items.oxygen_chargers": "Oxygen Cans(Common)",
