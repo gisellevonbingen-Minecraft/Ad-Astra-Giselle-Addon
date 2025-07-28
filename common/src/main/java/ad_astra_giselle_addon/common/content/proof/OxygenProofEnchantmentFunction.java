@@ -12,21 +12,13 @@ import net.minecraft.world.item.enchantment.Enchantment;
 
 public class OxygenProofEnchantmentFunction extends ProofEnchantmentFunction
 {
-	@Override
-	public Enchantment getEnchantment()
-	{
-		return AddonEnchantments.OXYGEN_PROOF.get();
-	}
-
-	@Override
-	public boolean consume(LivingEntity living, EquipmentSlot slot, ItemStackReference enchantedItem, ItemUsableResource resource, boolean simulate)
+	public static boolean consumeOxygen(LivingEntity living, long oxygenUsing, boolean simulate)
 	{
 		if (!LivingHelper.isPlayingMode(living))
 		{
 			return true;
 		}
 
-		long oxygenUsing = this.getOxygenUsing(resource);
 		IOxygenStorage oxygenStorage = OxygenStorageUtils.firstExtractable(living, oxygenUsing);
 
 		if (oxygenStorage == null)
@@ -36,6 +28,18 @@ public class OxygenProofEnchantmentFunction extends ProofEnchantmentFunction
 
 		long extracted = oxygenStorage.extractOxygen(living, oxygenUsing, simulate);
 		return extracted >= oxygenUsing;
+	}
+
+	@Override
+	public Enchantment getEnchantment()
+	{
+		return AddonEnchantments.OXYGEN_PROOF.get();
+	}
+
+	@Override
+	public boolean consume(LivingEntity living, EquipmentSlot slot, ItemStackReference enchantedItem, ItemUsableResource resource, boolean simulate)
+	{
+		return consumeOxygen(living, this.getOxygenUsing(resource), simulate);
 	}
 
 	@Override
