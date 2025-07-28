@@ -5,6 +5,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import ad_astra_giselle_addon.common.content.oxygen.IOxygenCharger;
 import ad_astra_giselle_addon.common.content.oxygen.OxygenChargerUtils;
 import ad_astra_giselle_addon.common.content.oxygen.OxygenStorageUtils;
+import ad_astra_giselle_addon.common.event.EventSystem;
 import ad_astra_giselle_addon.common.registry.AddonEnchantments;
 import ad_astra_giselle_addon.common.registry.AddonItems;
 import ad_astra_giselle_addon.common.util.TranslationUtils;
@@ -15,16 +16,23 @@ import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 
 public class OxygenCanOverlay
 {
+	public static final EventSystem<ShouldRenderEventListener> SHOULD_RENDER_EVENT = new EventSystem<>();
+
 	public static final String OXYGENCAN_DESCRIPTION_ID = Util.makeDescriptionId("item", AddonItems.OXYGEN_CAN.getId());
 	public static final Component INFINITY_TEXT = Component.translatable(TranslationUtils.CREATIVE_OXYGEN_INFINITY);
+
+	static
+	{
+		SHOULD_RENDER_EVENT.register(player -> EnchantmentHelper.getEnchantmentLevel(AddonEnchantments.OXYGEN_PROOF.get(), player) > 0);
+	}
 
 	public static Component getOxygenComponent(double ratio)
 	{
@@ -37,10 +45,24 @@ public class OxygenCanOverlay
 		return ratio == Double.POSITIVE_INFINITY ? INFINITY_TEXT : TranslationUtils.formatPercent(ratio);
 	}
 
+	public static boolean shouldRender(LocalPlayer player)
+	{
+		for (var listener : SHOULD_RENDER_EVENT.getListeners())
+		{
+			if (listener.shouldRender(player))
+			{
+				return true;
+			}
+
+		}
+
+		return false;
+	}
+
 	public static void renderHud(GuiGraphics guiGraphics, float partialTick)
 	{
 		Minecraft minecraft = Minecraft.getInstance();
-		Player player = minecraft.player;
+		LocalPlayer player = minecraft.player;
 
 		if (player == null || player.isSpectator())
 		{
@@ -68,7 +90,7 @@ public class OxygenCanOverlay
 				guiGraphics.drawString(font, component, Math.max(x, 0), y, 0xFFFFFF);
 			});
 		}
-		else if (EnchantmentHelper.getEnchantmentLevel(AddonEnchantments.OXYGEN_PROOF.get(), player) > 0)
+		else if (shouldRender(player))
 		{
 			OxygenStorageUtils.getStoredRatio(player).ifPresent(ratio ->
 			{
@@ -98,6 +120,12 @@ public class OxygenCanOverlay
 		int textWidth = font.width(text);
 		graphics.drawString(font, text, (int) (x + (62 - textWidth) / 2f), y + 52 + 3, 0xFFFFFF);
 		poseStack.popPose();
+	}
+
+	@FunctionalInterface
+	public static interface ShouldRenderEventListener
+	{
+		boolean shouldRender(LocalPlayer player);
 	}
 
 }
