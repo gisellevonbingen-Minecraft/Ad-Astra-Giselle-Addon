@@ -1,5 +1,5 @@
 plugins {
-    id "fabric-loom" version "1.0-SNAPSHOT"
+    id "fabric-loom" version "1.8-SNAPSHOT"
 }
  
 version = "fabric-${rootProject.mc_version}-${rootProject.mod_version}"
@@ -27,11 +27,11 @@ loom {
 
 repositories {
     maven {
-        name "Create  Porting Lib"
+        name "Create Porting Lib"
         url "https://mvn.devos.one/snapshots/"
     }
     maven {
-        name "Create  Porting Lib"
+        name "Create Porting Lib"
         url "https://mvn.devos.one/releases/"
     }
     maven {
@@ -70,7 +70,7 @@ dependencies {
     modImplementation "mezz.jei:jei-${mc_version}-fabric:${jei_version}"
 
     // Implementation
-    modCompileOnly("com.simibubi.create:create-fabric-${mc_version}:${create_version}")
+    modImplementation "com.simibubi.create:create-fabric-${mc_version}:${create_version}"
 
     // Runtiem Only
     modRuntimeOnly "RebornCore:RebornCore-1.20:${techreborn_version}"
