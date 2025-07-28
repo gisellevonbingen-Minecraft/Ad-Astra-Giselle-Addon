@@ -1,0 +1,30 @@
+{
+	"type": "tconstruct:modifier",
+	"allow_crystal": true,
+	"check_trait_level": true,
+	"inputs": [
+		{
+			"tag": "forge:plates/calorite"
+		},
+		{
+			"item": "ad_astra:venus_stone"
+		},
+		{
+			"item": "ad_astra:venus_stone"
+		},
+		{
+			"item": "ad_astra:venus_stone"
+		},
+		{
+			"item": "ad_astra:venus_stone"
+		}
+	],
+	"level": 1,
+	"result": "ad_astra_giselle_addon:acid_rain_proof",
+	"slots": {
+		"upgrades": 1
+	},
+	"tools": {
+		"tag": "tconstruct:modifiable/armor/chestplate"
+	}
+}

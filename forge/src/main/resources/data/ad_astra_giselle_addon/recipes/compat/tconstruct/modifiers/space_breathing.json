@@ -1,0 +1,30 @@
+{
+	"type": "tconstruct:modifier",
+	"allow_crystal": true,
+	"check_trait_level": true,
+	"inputs": [
+		{
+			"item": "ad_astra:space_suit"
+		},
+		{
+			"item": "ad_astra:moon_stone"
+		},
+		{
+			"item": "ad_astra:moon_stone"
+		},
+		{
+			"item": "ad_astra:moon_stone"
+		},
+		{
+			"item": "ad_astra:moon_stone"
+		}
+	],
+	"level": 1,
+	"result": "ad_astra_giselle_addon:space_breathing",
+	"slots": {
+		"upgrades": 1
+	},
+	"tools": {
+		"tag": "tconstruct:modifiable/armor/helmets"
+	}
+}
