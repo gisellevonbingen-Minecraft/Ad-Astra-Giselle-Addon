@@ -81,13 +81,16 @@ public class OxygenCanOverlay
 			})).ifPresent(ratio ->
 			{
 				Font font = minecraft.font;
-				Component component = getOxygenComponent(ratio);
+				Component text = getOxygenComponent(ratio);
 				int textureWidth = 62;
 				int textureHeight = 52;
-				int width = font.width(component);
-				int x = (int) (AdAstraConfigClient.oxygenBarX + (textureWidth - width) / 2.0F);
-				int y = AdAstraConfigClient.oxygenBarY + textureHeight + font.lineHeight + 3;
-				guiGraphics.drawString(font, component, Math.max(x, 0), y, 0xFFFFFF);
+				int textWidth = font.width(text);
+				int textX = (int) (AdAstraConfigClient.oxygenBarX + (textureWidth - textWidth) / 2.0F);
+				int textY = AdAstraConfigClient.oxygenBarY + textureHeight + font.lineHeight + 3;
+				guiGraphics.pose().pushPose();
+				guiGraphics.pose().scale(AdAstraConfigClient.oxygenBarScale, AdAstraConfigClient.oxygenBarScale, AdAstraConfigClient.oxygenBarScale);
+				guiGraphics.drawString(font, text, Math.max(textX, 0), textY, 0xFFFFFF);
+				guiGraphics.pose().popPose();
 			});
 		}
 		else if (shouldRender(player))
@@ -103,7 +106,9 @@ public class OxygenCanOverlay
 
 	public static void renderOxygenCanTank(GuiGraphics graphics, Minecraft minecraft, double oxygenRatio)
 	{
-		int barHeight = (int) (Math.min(oxygenRatio, 1.0D) * 52);
+		int textureWidth = 62;
+		int textureHeight = 52;
+		int barHeight = (int) (Math.min(oxygenRatio, 1.0D) * textureHeight);
 
 		int x = AdAstraConfigClient.oxygenBarX;
 		int y = AdAstraConfigClient.oxygenBarY;
@@ -112,13 +117,15 @@ public class OxygenCanOverlay
 		PoseStack poseStack = graphics.pose();
 		poseStack.pushPose();
 		poseStack.scale(scale, scale, scale);
-		graphics.blit(OverlayScreen.OXYGEN_TANK_EMPTY, x, y, 0, 0, 62, 52, 62, 52);
-		graphics.blit(OverlayScreen.OXYGEN_TANK, x, y + 52 - barHeight, 0, 52 - barHeight, 62, barHeight, 62, 52);
+		graphics.blit(OverlayScreen.OXYGEN_TANK_EMPTY, x, y, 0, 0, textureWidth, textureHeight, textureWidth, textureHeight);
+		graphics.blit(OverlayScreen.OXYGEN_TANK, x, y + textureHeight - barHeight, 0, textureHeight - barHeight, textureWidth, barHeight, textureWidth, textureHeight);
 
 		var font = minecraft.font;
 		var text = getOxygenComponent(oxygenRatio);
 		int textWidth = font.width(text);
-		graphics.drawString(font, text, (int) (x + (62 - textWidth) / 2f), y + 52 + 3, 0xFFFFFF);
+		int textX = (int) (x + (textureWidth - textWidth) / 2.0F);
+		int textY = y + textureHeight + 3;
+		graphics.drawString(font, text, Math.max(textX, 0), textY, 0xFFFFFF);
 		poseStack.popPose();
 	}
 
