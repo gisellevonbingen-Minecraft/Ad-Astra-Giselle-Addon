@@ -1,5 +1,11 @@
 {
 	"type": "tconstruct:modifier_salvage",
+	"conditions": [
+		{
+			"type": "forge:mod_loaded",
+			"modid": "tconstruct"
+		}
+	],
 	"modifier": "ad_astra_giselle_addon:acid_rain_proof",
 	"slots": {
 		"upgrades": 1
