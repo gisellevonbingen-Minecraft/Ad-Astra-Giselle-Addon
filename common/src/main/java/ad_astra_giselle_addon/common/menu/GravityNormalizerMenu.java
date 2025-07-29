@@ -28,13 +28,13 @@ public class GravityNormalizerMenu extends AddonMachineMenu<GravityNormalizerBlo
 	@Override
 	public int startIndex()
 	{
-		return 1;
+		return 0;
 	}
 
 	@Override
 	public int getContainerInputEnd()
 	{
-		return 1;
+		return 0;
 	}
 
 	@Override

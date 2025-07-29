@@ -64,8 +64,7 @@ public class FuelLoaderMenu extends AddonMachineMenu<FuelLoaderBlockEntity>
 	@Override
 	public int getContainerInputEnd()
 	{
-		int[] slots = FuelLoaderBlockEntity.FLUID_SLOTS;
-		return slots[slots.length - 1];
+		return this.startIndex() + FuelLoaderBlockEntity.FLUID_SLOTS.length;
 	}
 
 	@Override

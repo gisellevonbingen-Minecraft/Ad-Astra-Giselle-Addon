@@ -75,8 +75,7 @@ public class AutomationNasaWorkbenchMenu extends AddonMachineMenu<AutomationNasa
 	@Override
 	public int getContainerInputEnd()
 	{
-		int[] slots = AutomationNasaWorkbenchBlockEntity.INPUT_SLOTS;
-		return slots[slots.length - 1];
+		return this.startIndex() + AutomationNasaWorkbenchBlockEntity.INPUT_SLOTS.length;
 	}
 
 	@Override

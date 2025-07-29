@@ -9,6 +9,7 @@ import ad_astra_giselle_addon.client.screen.AutomationNasaWorkbenchScreen;
 import ad_astra_giselle_addon.common.compat.rei.AddonReiCommonPlugin;
 import ad_astra_giselle_addon.common.config.MachinesConfig;
 import ad_astra_giselle_addon.common.registry.AddonBlocks;
+import ad_astra_giselle_addon.common.registry.AddonMenuTypes;
 import earth.terrarium.adastra.common.compat.rei.categories.NasaWorkbenchCategory;
 import earth.terrarium.adastra.common.tags.ModFluidTags;
 import me.shedaniel.rei.api.client.plugins.REIClientPlugin;
@@ -52,6 +53,7 @@ public class AddonReiClientPlugin implements REIClientPlugin
 			category.addTransferHandler(registry);
 		}
 
+		registry.register(new AddonTransferHandler<>(AddonMenuTypes.AUTOMATION_NASA_WORKBENCH.get()));
 	}
 
 	@Override
