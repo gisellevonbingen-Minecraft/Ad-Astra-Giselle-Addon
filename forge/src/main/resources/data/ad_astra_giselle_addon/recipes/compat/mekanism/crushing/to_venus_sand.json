@@ -1,0 +1,26 @@
+{
+	"type": "mekanism:crushing",
+	"conditions": [
+		{
+			"type": "forge:mod_loaded",
+			"modid": "mekanism"
+		}
+	],
+	"input": {
+		"ingredient": [
+			{
+				"item": "ad_astra:venus_sandstone"
+			},
+			{
+				"item": "ad_astra:venus_sandstone_bricks"
+			},
+			{
+				"item": "ad_astra:cracked_venus_sandstone_bricks"
+			}
+		]
+	},
+	"output": {
+		"count": 2,
+		"item": "ad_astra:venus_sand"
+	}
+}
