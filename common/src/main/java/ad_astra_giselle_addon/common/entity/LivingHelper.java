@@ -40,7 +40,7 @@ public class LivingHelper
 		}
 
 		list.addAll(getEquipmentItems(living));
-		list.addAll(DELEGATE.getExtraSlotItems(living));
+		list.addAll(DELEGATE.getExtraSlotEquipments(living));
 		return list;
 	}
 
@@ -81,12 +81,12 @@ public class LivingHelper
 
 				if (!item.isEmpty())
 				{
-					list.add(getInventoryitem(inventory, i));
+					list.add(getInventoryItem(inventory, i));
 				}
 
 			}
 
-			list.addAll(DELEGATE.getExtraSlotItems(living));
+			list.addAll(DELEGATE.getExtraSlotEquipments(living));
 		}
 		else
 		{
@@ -96,14 +96,14 @@ public class LivingHelper
 		return list;
 	}
 
-	public static ItemStackReference getInventoryitem(Inventory inventory, int i)
+	public static ItemStackReference getInventoryItem(Inventory inventory, int i)
 	{
 		return new ItemStackReference(inventory.getItem(i), ItemStackConsumers.index(i, inventory::setItem));
 	}
 
 	public static interface Delegate
 	{
-		default List<ItemStackReference> getExtraSlotItems(LivingEntity living)
+		default List<ItemStackReference> getExtraSlotEquipments(LivingEntity living)
 		{
 			return Collections.emptyList();
 		}
