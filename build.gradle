@@ -46,9 +46,9 @@ allprojects {
             name "tterrag maven"
             url "https://maven.tterrag.com"
         }
-        maven {
-            name "Local"
-            url uri("${projectDir}/libs")
+        flatDir {
+            name "LocalFlatDir"
+            dir "${projectDir}/libs"
         }
     }
 
