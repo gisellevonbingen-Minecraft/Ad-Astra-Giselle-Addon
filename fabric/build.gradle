@@ -67,7 +67,7 @@ dependencies {
     modImplementation "mezz.jei:jei-${mc_version}-fabric:${jei_version}"
 
     // Implementation
-    modImplementation("com.simibubi.create:create-fabric-${mc_version}:${create_version}")
+    modImplementation "com.simibubi.create:create-fabric-${mc_version}:${create_version}"
 
     // Runtiem Only
     modRuntimeOnly "RebornCore:RebornCore-1.19:${techreborn_version}"
