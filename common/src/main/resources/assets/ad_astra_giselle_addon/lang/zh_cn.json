@@ -72,6 +72,8 @@
   "pneumaticcraft.gui.tab.info.item.armor.generic.ad_astra_giselle_addon.acid_rain_proofUpgrade": "在 Ad Astra 维度中不会被酸雨伤害",
   "pneumaticcraft.gui.tab.info.item.armor.generic.ad_astra_giselle_addon.gravity_normalizingUpgrade": "在 Ad Astra 维度中标准化重力，像在主世界一样",
   
+  "trinkets.slot.oxygen_can.oxygen_can": "氧气罐",
+  
   
   "config.ad_astra_giselle_addon.items": "物品",
   "config.ad_astra_giselle_addon.items.oxygen_can": "氧气罐",

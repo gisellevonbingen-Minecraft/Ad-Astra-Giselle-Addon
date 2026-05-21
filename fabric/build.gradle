@@ -71,6 +71,9 @@ dependencies {
 
     // Implementation
     modImplementation "com.simibubi.create:create-fabric-${mc_version}:${create_version}"
+    modImplementation "curse.maven:trinkets-341284:${trinkets_file}"
+    modImplementation "blank:cardinal-components-base:${cardinal_components_version}"
+    modImplementation "blank:cardinal-components-entity:${cardinal_components_version}"
 
     // Runtiem Only
     modRuntimeOnly "RebornCore:RebornCore-1.20:${techreborn_version}"

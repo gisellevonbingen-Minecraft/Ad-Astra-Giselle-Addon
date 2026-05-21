@@ -72,6 +72,8 @@
   "pneumaticcraft.gui.tab.info.item.armor.generic.ad_astra_giselle_addon.acid_rain_proofUpgrade": "Ochrona przed kwaśnym deszczem w wymiarach Ad Astra",
   "pneumaticcraft.gui.tab.info.item.armor.generic.ad_astra_giselle_addon.gravity_normalizingUpgrade": "Utrzymanie normalnej grawitacji jak w normalnym świecie w wymiarach Ad Astra",
   
+  "trinkets.slot.oxygen_can.oxygen_can": "Zbiornik na tlen",
+  
   
   "config.ad_astra_giselle_addon.items": "Przemioty",
   "config.ad_astra_giselle_addon.items.oxygen_can": "Zbiornik z tlenem",

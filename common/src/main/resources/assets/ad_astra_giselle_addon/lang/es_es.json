@@ -96,6 +96,8 @@
   "pneumaticcraft.gui.tab.info.item.armor.generic.ad_astra_giselle_addon.acid_rain_proofUpgrade": "No dañes con la lluvia ácida en las dimensiones de Ad Astra",
   "pneumaticcraft.gui.tab.info.item.armor.generic.ad_astra_giselle_addon.gravity_normalizingUpgrade": "Normaliza la gravedad como el mundo exterior en las dimensiones de Ad Astra",
 
+  "trinkets.slot.oxygen_can.oxygen_can": "Lata de oxígeno",
+
 
   "config.ad_astra_giselle_addon.items": "Elementos",
   "config.ad_astra_giselle_addon.items.oxygen_chargers": "Cargadores de oxígeno (común)",
