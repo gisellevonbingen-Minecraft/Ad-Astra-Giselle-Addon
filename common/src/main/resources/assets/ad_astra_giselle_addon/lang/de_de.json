@@ -93,6 +93,8 @@
   "pneumaticcraft.gui.tab.info.item.armor.generic.ad_astra_giselle_addon.acid_rain_proofUpgrade": "Keine Schäden durch sauren Regen in Ad-Astra-Dimensionen",
   "pneumaticcraft.gui.tab.info.item.armor.generic.ad_astra_giselle_addon.gravity_normalizingUpgrade": "Normalisieren Sie die Schwerkraft wie die Oberwelt in Ad-Astra-Dimensionen",
   
+  "trinkets.slot.oxygen_can.oxygen_can": "Sauerstoffdose",
+  
   
   "config.ad_astra_giselle_addon.items": "Artikel",
   "config.ad_astra_giselle_addon.items.oxygen_chargers": "Sauerstoffdosen (üblich)",

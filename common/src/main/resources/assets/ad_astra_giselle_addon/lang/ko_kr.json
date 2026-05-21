@@ -121,6 +121,8 @@
   "modifier.ad_astra_giselle_addon.gravity_normalizing.flavor": "중력 정규화",
   "modifier.ad_astra_giselle_addon.gravity_normalizing.description": "Ad Astra 차원에서 중력을 오버월드처럼 정규화합니다",
   
+  "trinkets.slot.oxygen_can.oxygen_can": "산소 캔",
+  
   
   "config.ad_astra_giselle_addon.items": "아이템",
   "config.ad_astra_giselle_addon.items.oxygen_can": "산소 캔",

@@ -122,6 +122,8 @@
   "modifier.ad_astra_giselle_addon.gravity_normalizing.flavor": "Gravity Normalizing",
   "modifier.ad_astra_giselle_addon.gravity_normalizing.description": "Normalize gravity like overworld in Ad Astra dimensions",
   
+  "trinkets.slot.oxygen_can.oxygen_can": "Oxygen Can",
+  
   
   "config.ad_astra_giselle_addon.items": "Items",
   "config.ad_astra_giselle_addon.items.oxygen_can": "Oxygen Can",

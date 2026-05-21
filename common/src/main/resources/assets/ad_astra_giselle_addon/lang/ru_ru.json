@@ -76,6 +76,8 @@
   "pneumaticcraft.gui.tab.info.item.armor.generic.ad_astra_giselle_addon.acid_rain_proofUpgrade": "Предотвращает урон от кислотных дождей в измерениях Ad Astra.",
   "pneumaticcraft.gui.tab.info.item.armor.generic.ad_astra_giselle_addon.gravity_normalizingUpgrade": "Возвращает земную гравитацию в измерения Ad Astra.",
   
+  "trinkets.slot.oxygen_can.oxygen_can": "Кислородный баллон",
+  
   
   "config.ad_astra_giselle_addon.items": "Предметы",
   "config.ad_astra_giselle_addon.items.oxygen_can": "Кислородный баллон",
