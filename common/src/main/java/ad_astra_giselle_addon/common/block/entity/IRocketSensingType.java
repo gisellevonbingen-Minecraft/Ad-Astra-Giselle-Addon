@@ -6,6 +6,8 @@ import java.util.List;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import com.mojang.serialization.Codec;
+
 import earth.terrarium.ad_astra.common.entity.vehicle.Vehicle;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.nbt.Tag;
@@ -16,6 +18,7 @@ import net.minecraft.world.item.ItemStack;
 public interface IRocketSensingType
 {
 	public static final String LANGUGE_CATEGORY_ROCKET_SENSING_TYPE = "rocket_sensing_type";
+	public static final Codec<IRocketSensingType> CODEC = ResourceLocation.CODEC.xmap(IRocketSensingType::find, IRocketSensingType::getName);
 
 	public static List<IRocketSensingType> getRocketSensingTypes()
 	{

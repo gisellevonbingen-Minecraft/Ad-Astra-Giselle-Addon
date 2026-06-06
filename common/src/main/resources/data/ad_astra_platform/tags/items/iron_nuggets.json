@@ -2,11 +2,11 @@
   "values": [
     {
       "required": false,
-      "id": "#c:iron_ingots"
+      "id": "#c:iron_nuggets"
     },
     {
       "required": false,
-      "id": "#forge:ingots/iron"
+      "id": "#forge:nuggets/iron"
     }
   ]
 }

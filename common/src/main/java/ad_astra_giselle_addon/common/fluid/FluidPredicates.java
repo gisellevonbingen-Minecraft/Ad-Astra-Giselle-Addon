@@ -25,7 +25,7 @@ public class FluidPredicates
 
 	public static boolean isOxygen(FluidHolder fluid)
 	{
-		return isOxygen(fluid.getFluid());
+		return hasTag(fluid, ModTags.OXYGEN);
 	}
 
 	public static boolean isOxygen(int tank, FluidHolder fluid)
@@ -40,7 +40,7 @@ public class FluidPredicates
 
 	public static boolean isFuel(FluidHolder fluid)
 	{
-		return isFuel(fluid.getFluid());
+		return hasTag(fluid, ModTags.FUELS);
 	}
 
 	public static boolean isFuel(int tank, FluidHolder fluid)

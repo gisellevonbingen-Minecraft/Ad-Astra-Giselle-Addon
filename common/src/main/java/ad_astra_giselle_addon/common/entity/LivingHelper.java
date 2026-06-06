@@ -6,7 +6,6 @@ import java.util.List;
 
 import ad_astra_giselle_addon.common.item.ItemStackConsumers;
 import ad_astra_giselle_addon.common.item.ItemStackReference;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Inventory;
@@ -33,20 +32,9 @@ public class LivingHelper
 	public static List<ItemStackReference> getSlotItems(LivingEntity living)
 	{
 		List<ItemStackReference> list = new ArrayList<>();
-
-		for (InteractionHand hand : InteractionHand.values())
-		{
-			list.add(getHandItem(living, hand));
-		}
-
 		list.addAll(getEquipmentItems(living));
-		list.addAll(DELEGATE.getExtraSlotEquipments(living));
+		list.addAll(DELEGATE.getExtraEquipmentItems(living));
 		return list;
-	}
-
-	public static ItemStackReference getHandItem(LivingEntity living, InteractionHand hand)
-	{
-		return new ItemStackReference(living.getItemInHand(hand), ItemStackConsumers.hand(hand, living::setItemInHand));
 	}
 
 	public static List<ItemStackReference> getEquipmentItems(LivingEntity living)
@@ -86,7 +74,7 @@ public class LivingHelper
 
 			}
 
-			list.addAll(DELEGATE.getExtraSlotEquipments(living));
+			list.addAll(DELEGATE.getExtraEquipmentItems(living));
 		}
 		else
 		{
@@ -103,7 +91,7 @@ public class LivingHelper
 
 	public static interface Delegate
 	{
-		default List<ItemStackReference> getExtraSlotEquipments(LivingEntity living)
+		default List<ItemStackReference> getExtraEquipmentItems(LivingEntity living)
 		{
 			return Collections.emptyList();
 		}

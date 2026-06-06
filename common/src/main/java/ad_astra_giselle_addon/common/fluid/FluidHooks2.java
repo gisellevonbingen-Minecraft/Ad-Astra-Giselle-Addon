@@ -144,7 +144,6 @@ public class FluidHooks2
 		}
 
 		return inserting;
-
 	}
 
 	private FluidHooks2()

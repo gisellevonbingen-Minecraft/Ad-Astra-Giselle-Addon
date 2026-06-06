@@ -74,11 +74,8 @@ public class OxygenChargerUtils
 		{
 			return oxygenChargerItem.getOxygenCharger(item);
 		}
-		else
-		{
-			return null;
-		}
 
+		return null;
 	}
 
 	private OxygenChargerUtils()
