@@ -14,14 +14,14 @@ import net.minecraft.world.item.ItemStack;
 public class LivingHelperDelegate implements LivingHelper.Delegate
 {
 	@Override
-	public List<ItemStackReference> getExtraSlotEquipments(LivingEntity living)
+	public List<ItemStackReference> getExtraEquipmentItems(LivingEntity living)
 	{
 		List<ItemStackReference> list = new ArrayList<>();
-		list.addAll(this.getTrinketsStacks(living));
+		list.addAll(this.getTrinketsItems(living));
 		return list;
 	}
 
-	public List<ItemStackReference> getTrinketsStacks(LivingEntity living)
+	public List<ItemStackReference> getTrinketsItems(LivingEntity living)
 	{
 		List<ItemStackReference> list = new ArrayList<>();
 

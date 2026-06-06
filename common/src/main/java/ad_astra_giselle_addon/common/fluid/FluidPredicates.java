@@ -15,17 +15,12 @@ public class FluidPredicates
 
 	public static boolean hasTag(FluidHolder fluid, TagKey<Fluid> tag)
 	{
-		return hasTag(fluid.getFluid(), tag);
-	}
-
-	public static boolean isOxygen(Fluid fluid)
-	{
-		return hasTag(fluid, ModFluidTags.OXYGEN);
+		return fluid.is(tag);
 	}
 
 	public static boolean isOxygen(FluidHolder fluid)
 	{
-		return isOxygen(fluid.getFluid());
+		return hasTag(fluid, ModFluidTags.OXYGEN);
 	}
 
 	public static boolean isOxygen(int tank, FluidHolder fluid)

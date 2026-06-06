@@ -6,6 +6,8 @@ import java.util.List;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import com.mojang.serialization.Codec;
+
 import ad_astra_giselle_addon.common.item.ItemStackReference;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.nbt.Tag;
@@ -17,6 +19,7 @@ import net.minecraft.world.entity.LivingEntity;
 public interface IChargeMode
 {
 	public static final String LANGUGE_CATEGORY_CHARGEMODE = "chargemode";
+	public static final Codec<IChargeMode> CODEC = ResourceLocation.CODEC.xmap(IChargeMode::find, IChargeMode::getName);
 
 	public static List<IChargeMode> getAllChargeModes()
 	{

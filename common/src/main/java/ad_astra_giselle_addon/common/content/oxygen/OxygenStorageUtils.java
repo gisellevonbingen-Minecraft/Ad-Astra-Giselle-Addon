@@ -130,6 +130,13 @@ public class OxygenStorageUtils
 	@Nullable
 	public static IOxygenStorage get(ItemStackHolder item)
 	{
+		IOxygenCharger oxygenCharger = OxygenChargerUtils.get(item);
+
+		if (oxygenCharger != null)
+		{
+			return oxygenCharger;
+		}
+
 		if (item.getStack().getItem() instanceof IOxygenStorageItem oxygenStorageItem)
 		{
 			return oxygenStorageItem.getOxygenStorage(item);
