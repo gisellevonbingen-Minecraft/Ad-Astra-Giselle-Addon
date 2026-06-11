@@ -46,7 +46,7 @@ public class ObjectRegistryCollection<T>
 	@SuppressWarnings("unchecked")
 	protected <I extends T, HOLDER extends ObjectRegistryHolder<I>> HOLDER add(String name, Supplier<I> initializer, TriFunction<ResourceLocation, Supplier<I>, ResourceKey<? extends Registry<?>>, HOLDER> func)
 	{
-		HOLDER holder = func.apply(new ResourceLocation(this.getModid(), name), initializer, this.getKey());
+		HOLDER holder = func.apply(ResourceLocation.fromNamespaceAndPath(this.getModid(), name), initializer, this.getKey());
 		this.objects.add((ObjectRegistryHolder<T>) holder);
 		return holder;
 	}

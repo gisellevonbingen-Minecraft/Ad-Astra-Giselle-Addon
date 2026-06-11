@@ -1,20 +1,20 @@
 package ad_astra_giselle_addon.common.crafting;
 
-import org.jetbrains.annotations.Nullable;
+import java.util.function.UnaryOperator;
 
-import com.google.gson.JsonObject;
+import com.mojang.serialization.MapCodec;
 
 import ad_astra_giselle_addon.common.content.oxygen.IOxygenCharger;
 import ad_astra_giselle_addon.common.content.oxygen.OxygenChargerUtils;
 import ad_astra_giselle_addon.common.fluid.FluidUtils2;
+import ad_astra_giselle_addon.common.item.StorageSlotContext;
 import ad_astra_giselle_addon.common.mixin.minecraft.ShapedRecipeAccessor;
 import ad_astra_giselle_addon.common.registry.AddonRecipeSerializers;
-import earth.terrarium.botarium.common.item.ItemStackHolder;
-import net.minecraft.core.RegistryAccess;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.inventory.CraftingContainer;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.ShapedRecipe;
 
@@ -22,7 +22,7 @@ public class CanUpgradeRecipe extends ShapedRecipe
 {
 	public CanUpgradeRecipe(ShapedRecipe parent)
 	{
-		super(parent.getId(), parent.getGroup(), parent.category(), parent.getWidth(), parent.getHeight(), parent.getIngredients(), ((ShapedRecipeAccessor) parent).getResult(), parent.showNotification());
+		super(parent.getGroup(), parent.category(), parent.pattern, ((ShapedRecipeAccessor) parent).getResult(), parent.showNotification());
 	}
 
 	@Override
@@ -32,16 +32,16 @@ public class CanUpgradeRecipe extends ShapedRecipe
 	}
 
 	@Override
-	public ItemStack assemble(CraftingContainer pContainer, RegistryAccess pRegistryAccess)
+	public ItemStack assemble(CraftingInput input, HolderLookup.Provider registries)
 	{
-		ItemStack result = super.assemble(pContainer, pRegistryAccess);
-		IOxygenCharger to = OxygenChargerUtils.get(new ItemStackHolder(result));
+		StorageSlotContext result = StorageSlotContext.ofIsolated(super.assemble(input, registries));
+		IOxygenCharger to = OxygenChargerUtils.get(result);
 
 		if (to != null)
 		{
-			for (ItemStack item : pContainer.getItems())
+			for (int i = 0; i < input.size(); i++)
 			{
-				IOxygenCharger from = OxygenChargerUtils.get(new ItemStackHolder(item.copy()));
+				IOxygenCharger from = OxygenChargerUtils.get(StorageSlotContext.ofIsolated(input.getItem(i)));
 
 				if (from != null)
 				{
@@ -53,29 +53,24 @@ public class CanUpgradeRecipe extends ShapedRecipe
 
 		}
 
-		return result.copy();
+		return result.getItemStack();
 	}
 
 	public static class Serializer implements RecipeSerializer<CanUpgradeRecipe>
 	{
+		public static final MapCodec<CanUpgradeRecipe> CODEC = RecipeSerializer.SHAPED_RECIPE.codec().xmap(CanUpgradeRecipe::new, UnaryOperator.identity());
+		public static final StreamCodec<RegistryFriendlyByteBuf, CanUpgradeRecipe> STREAM_CODEC = RecipeSerializer.SHAPED_RECIPE.streamCodec().map(CanUpgradeRecipe::new, UnaryOperator.identity());
+
 		@Override
-		public CanUpgradeRecipe fromJson(ResourceLocation pRecipeId, JsonObject pJson)
+		public MapCodec<CanUpgradeRecipe> codec()
 		{
-			ShapedRecipe parent = RecipeSerializer.SHAPED_RECIPE.fromJson(pRecipeId, pJson);
-			return new CanUpgradeRecipe(parent);
+			return CODEC;
 		}
 
 		@Override
-		public @Nullable CanUpgradeRecipe fromNetwork(ResourceLocation pRecipeId, FriendlyByteBuf pBuffer)
+		public StreamCodec<RegistryFriendlyByteBuf, CanUpgradeRecipe> streamCodec()
 		{
-			ShapedRecipe parent = RecipeSerializer.SHAPED_RECIPE.fromNetwork(pRecipeId, pBuffer);
-			return new CanUpgradeRecipe(parent);
-		}
-
-		@Override
-		public void toNetwork(FriendlyByteBuf pBuffer, CanUpgradeRecipe pRecipe)
-		{
-			RecipeSerializer.SHAPED_RECIPE.toNetwork(pBuffer, pRecipe);
+			return STREAM_CODEC;
 		}
 
 	}

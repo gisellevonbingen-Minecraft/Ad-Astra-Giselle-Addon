@@ -1,0 +1,28 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"neoforge:conditions": [
+		{
+			"type": "neoforge:item_exists",
+			"item": "ad_astra_giselle_addon:pneumatic_acid_rain_proof_upgrade"
+		}
+	],
+	"result": {
+		"id": "ad_astra_giselle_addon:pneumatic_acid_rain_proof_upgrade"
+	},
+	"pattern": [
+		"LXL",
+		"XCX",
+		"LXL"
+	],
+	"key": {
+		"L": {
+			"tag": "pneumaticcraft:upgrade_components"
+		},
+		"X": {
+			"item": "ad_astra:venus_stone"
+		},
+		"C": {
+			"tag": "c:plates/calorite"
+		}
+	}
+}

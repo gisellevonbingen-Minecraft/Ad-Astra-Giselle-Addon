@@ -4,11 +4,12 @@ import java.util.List;
 
 import ad_astra_giselle_addon.client.compat.RecipeHelper;
 import ad_astra_giselle_addon.client.screen.FuelLoaderScreen;
+import ad_astra_giselle_addon.client.util.RenderHelper;
 import ad_astra_giselle_addon.common.config.MachinesConfig;
 import ad_astra_giselle_addon.common.registry.AddonBlocks;
 import ad_astra_giselle_addon.common.registry.ObjectRegistry;
 import earth.terrarium.adastra.client.utils.GuiUtils;
-import earth.terrarium.botarium.common.fluid.FluidConstants;
+import earth.terrarium.common_storage_lib.resources.fluid.util.FluidAmounts;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.helpers.IGuiHelper;
@@ -36,7 +37,7 @@ public class FuelLoaderCategory extends AddonRecipeCategory<Fluid>
 	{
 		super.createGui(guiHelper);
 		this.background = guiHelper.createDrawable(RecipeHelper.FuelLoader.BACKGROUND_LOCATION, 0, 0, RecipeHelper.FuelLoader.BACKGROUND_WIDTH, RecipeHelper.FuelLoader.BACKGROUND_HEIGHT);
-		this.fluidOverlay = guiHelper.drawableBuilder(GuiUtils.FLUID_BAR, 0, 0, RecipeHelper.FuelLoader.TANK_WIDTH, RecipeHelper.FuelLoader.TANK_HEIGHT).setTextureSize(GuiUtils.FLUID_BAR_WIDTH, GuiUtils.FLUID_BAR_HEIGHT).build();
+		this.fluidOverlay = guiHelper.drawableBuilder(RenderHelper.SPRITE_FLUID_BAR, 0, 0, RecipeHelper.FuelLoader.TANK_WIDTH, RecipeHelper.FuelLoader.TANK_HEIGHT).setTextureSize(GuiUtils.FLUID_BAR_WIDTH, GuiUtils.FLUID_BAR_HEIGHT).build();
 	}
 
 	@Override
@@ -55,7 +56,7 @@ public class FuelLoaderCategory extends AddonRecipeCategory<Fluid>
 	{
 		super.setRecipe(builder, recipe, focuses);
 
-		long capacity = FluidConstants.fromMillibuckets(MachinesConfig.FUEL_LOADER_FLUID_CAPACITY);
+		long capacity = FluidAmounts.toPlatformAmount(MachinesConfig.FUEL_LOADER.fluidCapacity);
 		builder.addSlot(RecipeIngredientRole.INPUT, RecipeHelper.FuelLoader.TANK_LEFT, RecipeHelper.FuelLoader.TANK_TOP) //
 				.addFluidStack(recipe, capacity) //
 				.setFluidRenderer(capacity, false, RecipeHelper.FuelLoader.TANK_WIDTH, RecipeHelper.FuelLoader.TANK_HEIGHT) //

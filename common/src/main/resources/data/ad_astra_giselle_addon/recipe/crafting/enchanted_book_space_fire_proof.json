@@ -1,0 +1,29 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"result": {
+		"id": "minecraft:enchanted_book",
+		"components": {
+			"minecraft:stored_enchantments": {
+				"levels": {
+					"ad_astra_giselle_addon:space_fire_proof": 1
+				}
+			}
+		}
+	},
+	"pattern": [
+		"R#R",
+		"RBR",
+		"RRR"
+	],
+	"key": {
+		"B": {
+			"item": "minecraft:book"
+		},
+		"#": {
+			"tag": "ad_astra:ostrum_plates"
+		},
+		"R": {
+			"item": "ad_astra:mercury_stone"
+		}
+	}
+}

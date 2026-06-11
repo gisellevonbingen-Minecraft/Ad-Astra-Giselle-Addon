@@ -1,7 +1,10 @@
 package ad_astra_giselle_addon.common.menu;
 
+import java.util.List;
+
 import ad_astra_giselle_addon.common.block.entity.RocketSensorBlockEntity;
 import ad_astra_giselle_addon.common.registry.AddonMenuTypes;
+import earth.terrarium.adastra.common.menus.configuration.MenuConfiguration;
 import net.minecraft.world.entity.player.Inventory;
 
 public class RocketSensorMenu extends AddonMachineMenu<RocketSensorBlockEntity>
@@ -9,6 +12,12 @@ public class RocketSensorMenu extends AddonMachineMenu<RocketSensorBlockEntity>
 	public RocketSensorMenu(int windowId, Inventory inv, RocketSensorBlockEntity blockEntity)
 	{
 		super(AddonMenuTypes.ROCKET_SENSOR.get(), windowId, inv, blockEntity);
+	}
+	
+	@Override
+	public List<MenuConfiguration> getConfigurations()
+	{
+		return super.getConfigurations();
 	}
 
 	@Override

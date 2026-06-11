@@ -8,7 +8,9 @@ import java.util.Optional;
 import ad_astra_giselle_addon.client.screen.FuelLoaderScreen;
 import ad_astra_giselle_addon.client.screen.GuiUtils2;
 import earth.terrarium.adastra.client.components.machines.FluidBarWidget;
-import earth.terrarium.botarium.common.fluid.base.FluidHolder;
+import earth.terrarium.common_storage_lib.resources.ResourceStack;
+import earth.terrarium.common_storage_lib.resources.fluid.FluidResource;
+import mezz.jei.api.gui.builder.IClickableIngredientFactory;
 import mezz.jei.api.helpers.IJeiHelpers;
 import mezz.jei.api.ingredients.ITypedIngredient;
 import mezz.jei.api.recipe.RecipeType;
@@ -55,23 +57,23 @@ public class FuelLoaderGuiContainerHandler extends AddonGuiContainerHandler<Fuel
 	}
 
 	@Override
-	public Optional<IClickableIngredient<?>> getClickableIngredientUnderMouse(FuelLoaderScreen screen, double mouseX, double mouseY)
+	public Optional<? extends IClickableIngredient<?>> getClickableIngredientUnderMouse(IClickableIngredientFactory builder, FuelLoaderScreen screen, double mouseX, double mouseY)
 	{
 		Rectangle fluidTankBounds = this.getRecipeClickableAreaBounds(screen);
 
 		if (fluidTankBounds.contains(mouseX, mouseY))
 		{
-			FluidHolder fluid = screen.getMenu().getEntity().getFluidContainer().getFluids().get(0);
+			ResourceStack<FluidResource> fluid = screen.getMenu().getEntity().getFluids(null).getContents(0);
 			Object ingredient = IJeiFluidStackHelper.INSTANCE.get(fluid);
 			return this.wrap(ingredient, fluidTankBounds);
 		}
 
-		return super.getClickableIngredientUnderMouse(screen, mouseX, mouseY);
+		return super.getClickableIngredientUnderMouse(builder, screen, mouseX, mouseY);
 	}
 
 	public Optional<IClickableIngredient<?>> wrap(Object ingredient, Rectangle bounds)
 	{
-		return this.jeiHelpers.getIngredientManager().createTypedIngredient(ingredient).map(typedIngredient ->
+		return this.jeiHelpers.getIngredientManager().createTypedIngredient(ingredient, false).map(typedIngredient ->
 		{
 			return new ClickableIngredient<>(typedIngredient, new ImmutableRect2i(bounds.x, bounds.y, bounds.width, bounds.height));
 		});

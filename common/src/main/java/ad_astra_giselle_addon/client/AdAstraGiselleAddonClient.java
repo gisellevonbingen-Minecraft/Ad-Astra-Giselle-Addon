@@ -1,7 +1,6 @@
 package ad_astra_giselle_addon.client;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -10,8 +9,8 @@ import java.util.function.Consumer;
 
 import org.jetbrains.annotations.Nullable;
 
+import com.teamresourceful.resourcefulconfig.api.types.ResourcefulConfig;
 import com.teamresourceful.resourcefulconfig.client.ConfigScreen;
-import com.teamresourceful.resourcefulconfig.common.config.ResourcefulConfig;
 
 import ad_astra_giselle_addon.client.overlay.OxygenCanOverlay;
 import ad_astra_giselle_addon.client.renderer.blockentity.WorkingAreaBlockEntityRenderer;
@@ -26,23 +25,19 @@ import ad_astra_giselle_addon.common.item.IClientExtensionItem;
 import ad_astra_giselle_addon.common.registry.AddonBlockEntityTypes;
 import ad_astra_giselle_addon.common.registry.AddonItems;
 import ad_astra_giselle_addon.common.registry.AddonMenuTypes;
-import ad_astra_giselle_addon.common.util.TriConsumer;
+import earth.terrarium.adastra.client.AdAstraClient.BlockEntityRegistrar;
 import earth.terrarium.adastra.client.ClientPlatformUtils;
 import earth.terrarium.adastra.client.models.entities.vehicles.LanderModel;
 import earth.terrarium.adastra.client.renderers.entities.vehicles.LanderRenderer;
-import earth.terrarium.botarium.client.ClientHooks;
-import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
-import net.minecraft.network.chat.Component;
 import net.minecraft.server.packs.resources.PreparableReloadListener;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.ResourceManagerReloadListener;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 
 public class AdAstraGiselleAddonClient
 {
@@ -57,23 +52,20 @@ public class AdAstraGiselleAddonClient
 	public static ConfigScreen getConfigScreen(@Nullable Screen parent)
 	{
 		ResourcefulConfig config = AdAstraGiselleAddon.config();
-		return config != null ? new ConfigScreen(parent, null, config) : null;
+		return config != null ? new ConfigScreen(parent, config) : null;
 	}
 
 	public static void initializeClient()
 	{
-		registerScreens();
-		registerBlockEntityRenderer();
-
 		ITEM_RENDERERS.put(AddonItems.LANDER_ICON.get(), new LanderIconItemRenderer(LanderModel.LAYER, LanderRenderer.TEXTURE));
 	}
 
-	public static void registerScreens()
+	public static void registerScreens(RegisterMenuScreensEvent e)
 	{
-		MenuScreens.register(AddonMenuTypes.FUEL_LOADER.get(), FuelLoaderScreen::new);
-		MenuScreens.register(AddonMenuTypes.AUTOMATION_NASA_WORKBENCH.get(), AutomationNasaWorkbenchScreen::new);
-		MenuScreens.register(AddonMenuTypes.GRAVITY_NORMALIZER.get(), GravityNormalizerScreen::new);
-		MenuScreens.register(AddonMenuTypes.ROCKET_SENSOR.get(), RocketSensorScreen::new);
+		e.register(AddonMenuTypes.FUEL_LOADER.get(), FuelLoaderScreen::new);
+		e.register(AddonMenuTypes.AUTOMATION_NASA_WORKBENCH.get(), AutomationNasaWorkbenchScreen::new);
+		e.register(AddonMenuTypes.GRAVITY_NORMALIZER.get(), GravityNormalizerScreen::new);
+		e.register(AddonMenuTypes.ROCKET_SENSOR.get(), RocketSensorScreen::new);
 	}
 
 	public static void onRegisterHud(Consumer<ClientPlatformUtils.RenderHud> register)
@@ -81,14 +73,14 @@ public class AdAstraGiselleAddonClient
 		register.accept(OxygenCanOverlay::renderHud);
 	}
 
-	public static void registerBlockEntityRenderer()
+	public static void registerBlockEntityRenderer(BlockEntityRegistrar registrar)
 	{
-		ClientHooks.registerBlockEntityRenderers(AddonBlockEntityTypes.FUEL_LOADER.get(), WorkingAreaBlockEntityRenderer::new);
-		ClientHooks.registerBlockEntityRenderers(AddonBlockEntityTypes.GRAVITY_NORMALIZER.get(), WorkingAreaBlockEntityRenderer::new);
-		ClientHooks.registerBlockEntityRenderers(AddonBlockEntityTypes.ROCKET_SENSOR.get(), WorkingAreaBlockEntityRenderer::new);
+		registrar.register(AddonBlockEntityTypes.FUEL_LOADER.get(), WorkingAreaBlockEntityRenderer::new);
+		registrar.register(AddonBlockEntityTypes.GRAVITY_NORMALIZER.get(), WorkingAreaBlockEntityRenderer::new);
+		registrar.register(AddonBlockEntityTypes.ROCKET_SENSOR.get(), WorkingAreaBlockEntityRenderer::new);
 	}
 
-	public static void registerItemTooltip(Consumer<TriConsumer<ItemStack, TooltipFlag, List<Component>>> register)
+	public static void registerItemTooltip(Consumer<Consumer<ItemTooltipModifier>> register)
 	{
 		register.accept(EnchantedBookTooltipHelper::addTooltip);
 	}

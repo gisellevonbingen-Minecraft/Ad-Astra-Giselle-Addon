@@ -8,9 +8,9 @@ import earth.terrarium.adastra.common.blocks.base.MachineBlock;
 import earth.terrarium.adastra.common.constants.ConstantComponents;
 import earth.terrarium.adastra.common.utils.TooltipUtils;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -30,9 +30,9 @@ public class AutomationNasaWorkbenchBlock extends MachineBlock
 	}
 
 	@Override
-	public void appendHoverText(ItemStack item, BlockGetter level, List<Component> tooltip, TooltipFlag flag)
+	public void appendHoverText(ItemStack item, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flag)
 	{
-		super.appendHoverText(item, level, tooltip, flag);
+		super.appendHoverText(item, context, tooltip, flag);
 		TooltipUtils.addDescriptionComponent(tooltip, TOOLTIP);
 	}
 

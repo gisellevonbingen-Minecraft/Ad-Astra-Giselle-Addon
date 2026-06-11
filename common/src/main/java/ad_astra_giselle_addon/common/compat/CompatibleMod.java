@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.mojang.brigadier.builder.ArgumentBuilder;
 
-import earth.terrarium.botarium.util.CommonHooks;
+import ad_astra_giselle_addon.common.util.ModHooks;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.resources.ResourceLocation;
 
@@ -16,7 +16,7 @@ public abstract class CompatibleMod
 
 	public void tryLoad()
 	{
-		if (CommonHooks.isModLoaded(this.getModId()))
+		if (ModHooks.isLoaded(this.getModId()))
 		{
 			this.isLoaded = true;
 			this.onLoad();
@@ -33,7 +33,7 @@ public abstract class CompatibleMod
 
 	public ResourceLocation getId(String path)
 	{
-		return new ResourceLocation(this.getModId(), path);
+		return ResourceLocation.fromNamespaceAndPath(this.getModId(), path);
 	}
 
 	public void collectEquipCommands(List<ArgumentBuilder<CommandSourceStack, ?>> list)

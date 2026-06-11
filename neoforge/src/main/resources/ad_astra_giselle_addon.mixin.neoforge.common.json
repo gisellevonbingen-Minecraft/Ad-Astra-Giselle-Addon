@@ -1,0 +1,13 @@
+{
+	"required": true,
+	"package": "ad_astra_giselle_addon.common.mixin",
+	"minVersion": "0.8.5",
+	"compatibilityLevel": "JAVA_21",
+	"mixins": [
+		"pneumaticcraft.PNCUpgradeImplInject"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	},
+	"refmap": "${mod_id}.mixin.refmap.json"
+}

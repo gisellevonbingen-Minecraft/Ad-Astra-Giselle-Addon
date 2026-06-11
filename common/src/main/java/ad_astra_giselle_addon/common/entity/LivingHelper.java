@@ -4,14 +4,16 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import ad_astra_giselle_addon.common.item.ItemStackConsumers;
-import ad_astra_giselle_addon.common.item.ItemStackReference;
+import org.jetbrains.annotations.Nullable;
+
+import ad_astra_giselle_addon.common.item.StorageSlotContext;
+import earth.terrarium.common_storage_lib.context.impl.PlayerContext;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.EquipmentSlot.Type;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 
 public class LivingHelper
 {
@@ -30,80 +32,84 @@ public class LivingHelper
 
 	}
 
-	public static List<ItemStackReference> getSlotItems(LivingEntity living)
+	// TODO: Support LivingEntity
+	public static List<StorageSlotContext> getSlots(Player living)
 	{
-		List<ItemStackReference> list = new ArrayList<>();
-
-		for (InteractionHand hand : InteractionHand.values())
-		{
-			list.add(getHandItem(living, hand));
-		}
-
-		list.addAll(getEquipmentItems(living));
-		list.addAll(DELEGATE.getExtraSlotEquipments(living));
+		List<StorageSlotContext> list = new ArrayList<>();
+		list.addAll(getEquipmentSlots(living));
+		list.addAll(DELEGATE.getExtraEquipmentSlots(living));
 		return list;
 	}
 
-	public static ItemStackReference getHandItem(LivingEntity living, InteractionHand hand)
+	// TODO: Support LivingEntity
+	public static List<StorageSlotContext> getEquipmentSlots(Player living)
 	{
-		return new ItemStackReference(living.getItemInHand(hand), ItemStackConsumers.hand(hand, living::setItemInHand));
-	}
+		List<StorageSlotContext> list = new ArrayList<>();
 
-	public static List<ItemStackReference> getEquipmentItems(LivingEntity living)
-	{
-		List<ItemStackReference> list = new ArrayList<>();
-
-		for (EquipmentSlot slot : EquipmentSlot.values())
+		// TODO : Fix
+		for (EquipmentSlot equipmentSlot : EquipmentSlot.values())
 		{
-			list.add(getEquipmentItem(living, slot));
-		}
+			StorageSlotContext itemSlot = getEquipmentSlot(living, equipmentSlot);
 
-		return list;
-	}
-
-	public static ItemStackReference getEquipmentItem(LivingEntity living, EquipmentSlot slot)
-	{
-		return new ItemStackReference(living.getItemBySlot(slot), ItemStackConsumers.equipment(slot, living::setItemSlot));
-	}
-
-	public static List<ItemStackReference> getInventoryItems(LivingEntity living)
-	{
-		List<ItemStackReference> list = new ArrayList<>();
-
-		if (living instanceof Player player)
-		{
-			Inventory inventory = player.getInventory();
-			int size = inventory.getContainerSize();
-
-			for (int i = 0; i < size; i++)
+			if (itemSlot != null)
 			{
-				ItemStack item = inventory.getItem(i);
-
-				if (!item.isEmpty())
-				{
-					list.add(getInventoryItem(inventory, i));
-				}
-
+				list.add(itemSlot);
 			}
 
-			list.addAll(DELEGATE.getExtraSlotEquipments(living));
-		}
-		else
-		{
-			list.addAll(getSlotItems(living));
 		}
 
 		return list;
 	}
 
-	public static ItemStackReference getInventoryItem(Inventory inventory, int i)
+	@Nullable
+	public static StorageSlotContext getEquipmentSlot(Player living, EquipmentSlot slot)
 	{
-		return new ItemStackReference(inventory.getItem(i), ItemStackConsumers.index(i, inventory::setItem));
+		if (slot.getType() == EquipmentSlot.Type.HAND)
+		{
+			if (slot == EquipmentSlot.MAINHAND)
+			{
+				return StorageSlotContext.ofContext(PlayerContext.ofHand(living, InteractionHand.MAIN_HAND));
+			}
+			else if (slot == EquipmentSlot.OFFHAND)
+			{
+				return StorageSlotContext.ofContext(PlayerContext.ofHand(living, InteractionHand.OFF_HAND));
+			}
+
+		}
+		else if (slot.getType() == Type.HUMANOID_ARMOR)
+		{
+			if (slot == EquipmentSlot.FEET || slot == EquipmentSlot.LEGS || slot == EquipmentSlot.CHEST || slot == EquipmentSlot.HEAD)
+			{
+				return StorageSlotContext.ofContext(PlayerContext.ofSlot(living, Inventory.INVENTORY_SIZE + slot.getIndex()));
+			}
+
+		}
+
+		return null;
+	}
+
+	// TODO : Support LivingEntity
+	public static List<StorageSlotContext> getInventorySlots(Player living)
+	{
+		List<StorageSlotContext> list = new ArrayList<>();
+
+		for (int i = 0; i < living.getInventory().getContainerSize(); i++)
+		{
+			list.add(StorageSlotContext.ofContext(getInventorySlot(living, i)));
+		}
+
+		list.addAll(DELEGATE.getExtraEquipmentSlots(living));
+		return list;
+	}
+
+	public static StorageSlotContext getInventorySlot(Player living, int slot)
+	{
+		return StorageSlotContext.ofContext(PlayerContext.ofSlot(living, slot));
 	}
 
 	public static interface Delegate
 	{
-		default List<ItemStackReference> getExtraSlotEquipments(LivingEntity living)
+		default List<StorageSlotContext> getExtraEquipmentSlots(LivingEntity living)
 		{
 			return Collections.emptyList();
 		}

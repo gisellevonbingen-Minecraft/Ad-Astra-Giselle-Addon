@@ -1,0 +1,19 @@
+{
+	"type": "mekanism:crushing",
+	"neoforge:conditions": [
+		{
+			"type": "neoforge:mod_loaded",
+			"modid": "mekanism"
+		},
+		{
+			"type": "neoforge:mod_loaded",
+			"modid": "ae2"
+		}
+	],
+	"input": {
+		"item": "ad_astra:sky_stone"
+	},
+	"output": {
+		"id": "ae2:sky_dust"
+	}
+}

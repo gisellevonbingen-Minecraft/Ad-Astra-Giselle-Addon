@@ -5,7 +5,7 @@ import com.teamresourceful.resourcefullib.client.utils.RenderUtils;
 import ad_astra_giselle_addon.common.block.entity.IRocketSensingType;
 import ad_astra_giselle_addon.common.block.entity.RocketSensorBlockEntity;
 import ad_astra_giselle_addon.common.network.AddonNetwork;
-import ad_astra_giselle_addon.common.network.RocketSensorMessage;
+import ad_astra_giselle_addon.common.network.ServerboundRocketSensorMessage;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
@@ -18,14 +18,12 @@ public class RocketSensingTypeList extends ObjectSelectionList<RocketSensingType
 	private final Screen screen;
 	private final RocketSensorBlockEntity rocketSensor;
 
-	public RocketSensingTypeList(Screen screen, RocketSensorBlockEntity rocketSensor, Minecraft pMinecraft, int pWidth, int pHeight, int pY0, int pY1)
+	public RocketSensingTypeList(Screen screen, RocketSensorBlockEntity rocketSensor, Minecraft pMinecraft, int pWidth, int pHeight, int pY0)
 	{
-		super(pMinecraft, pWidth, pHeight, pY0, pY1, 20);
+		super(pMinecraft, pWidth, pHeight, pY0, 20);
 		this.screen = screen;
 		this.rocketSensor = rocketSensor;
-		this.setRenderSelection(false);
-		this.setRenderTopAndBottom(false);
-		this.setRenderBackground(false);
+
 		this.refreshList();
 	}
 
@@ -36,19 +34,24 @@ public class RocketSensingTypeList extends ObjectSelectionList<RocketSensingType
 	}
 
 	@Override
-	protected void renderBackground(GuiGraphics guiGraphics)
+	protected void renderListBackground(GuiGraphics guiGraphics)
 	{
-		super.renderBackground(guiGraphics);
+		super.renderListBackground(guiGraphics);
 
-		guiGraphics.fill(this.x0 - 2, this.y0, this.x1 + 2, this.y1, 0xFF000000);
-		guiGraphics.fill(this.x0, this.y0 + 2, this.x1, this.y1 - 2, 0xFF202020);
+		var x0 = this.getX();
+		var x1 = this.getRight();
+		var y0 = this.getY();
+		var y1 = this.getBottom();
+
+		guiGraphics.fill(x0 - 2, y0, x1 + 2, y1, 0xFF000000);
+		guiGraphics.fill(x0, y0 + 2, x1, y1 - 2, 0xFF202020);
 	}
 
 	public void renderTooltip(GuiGraphics guiGraphics, int mouseX, int mouseY)
 	{
 		RocketSensingTypeEntry entry = this.getEntryAtPosition(mouseX, mouseY);
 
-		if (entry != null && this.y0 <= mouseY && mouseY <= this.y1)
+		if (entry != null && this.getY() <= mouseY && mouseY <= this.getBottom())
 		{
 			guiGraphics.renderComponentTooltip(this.minecraft.font, entry.getType().getTooltip(), mouseX, mouseY);
 		}
@@ -90,7 +93,7 @@ public class RocketSensingTypeList extends ObjectSelectionList<RocketSensingType
 	@Override
 	protected int getScrollbarPosition()
 	{
-		return this.x0 + this.width;
+		return this.getRight();
 	}
 
 	@Override
@@ -115,8 +118,8 @@ public class RocketSensingTypeList extends ObjectSelectionList<RocketSensingType
 		{
 			RocketSensingTypeList parent = this.getParent();
 			Minecraft minecraft = parent.minecraft;
-			int y0 = Math.max(pTop, parent.y0 + 2);
-			int y1 = Math.min(pTop + pHeight, parent.y1 - 2);
+			int y0 = Math.max(pTop, parent.getY() + 2);
+			int y1 = Math.min(pTop + pHeight, parent.getBottom() - 2);
 
 			if (y1 - y0 <= 0)
 			{
@@ -124,8 +127,8 @@ public class RocketSensingTypeList extends ObjectSelectionList<RocketSensingType
 			}
 
 			int y = pTop + pHeight + 1;
-			int y2 = Math.max(y + 0, parent.y0);
-			int y3 = Math.min(y + 1, parent.y1 - 1);
+			int y2 = Math.max(y + 0, parent.getY());
+			int y3 = Math.min(y + 1, parent.getBottom() - 1);
 
 			if (y3 > y2)
 			{
@@ -138,8 +141,8 @@ public class RocketSensingTypeList extends ObjectSelectionList<RocketSensingType
 
 			if (parent.getSelected() == this)
 			{
-				int y4 = Math.max(pTop - 2, parent.y0 + 2);
-				int y5 = Math.min(pTop + pHeight + 2, parent.y1 - 2);
+				int y4 = Math.max(pTop - 2, parent.getY() + 2);
+				int y5 = Math.min(pTop + pHeight + 2, parent.getBottom() - 2);
 
 				try (var si = RenderUtils.createScissorBox(minecraft, guiGraphics.pose(), pLeft - 2, y4, pWidth, y5 - y4))
 				{
@@ -169,7 +172,7 @@ public class RocketSensingTypeList extends ObjectSelectionList<RocketSensingType
 			RocketSensorBlockEntity rocketSensor = this.getParent().getRocketSensor();
 			IRocketSensingType newSensingType = this.getType();
 			rocketSensor.setSensingType(newSensingType);
-			AddonNetwork.CHANNEL.sendToServer(new RocketSensorMessage.SensingType(rocketSensor, newSensingType));
+			AddonNetwork.CHANNEL.sendToServer(new ServerboundRocketSensorMessage.SensingType(rocketSensor, newSensingType));
 			return true;
 		}
 

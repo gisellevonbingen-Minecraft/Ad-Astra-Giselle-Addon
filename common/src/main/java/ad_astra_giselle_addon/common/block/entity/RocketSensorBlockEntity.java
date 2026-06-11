@@ -15,6 +15,7 @@ import earth.terrarium.adastra.common.constants.ConstantComponents;
 import earth.terrarium.adastra.common.entities.vehicles.Vehicle;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Inventory;
@@ -54,9 +55,9 @@ public class RocketSensorBlockEntity extends ContainerMachineBlockEntity impleme
 	}
 
 	@Override
-	public void load(CompoundTag tag)
+	protected void loadAdditional(CompoundTag tag, Provider provider)
 	{
-		super.load(tag);
+		super.loadAdditional(tag, provider);
 		this.workingAreaVisible = tag.getBoolean(DATA_WORKINGAREA_VISIBLE_KEY);
 		this.sensingType = IRocketSensingType.readNBT(tag.get(DATA_SENSING_TYPE_KEY));
 		this.inverted = tag.getBoolean(DATA_INVERTED_KEY);
@@ -64,9 +65,9 @@ public class RocketSensorBlockEntity extends ContainerMachineBlockEntity impleme
 	}
 
 	@Override
-	public void saveAdditional(CompoundTag tag)
+	protected void saveAdditional(@NotNull CompoundTag tag, Provider provider)
 	{
-		super.saveAdditional(tag);
+		super.saveAdditional(tag, provider);
 		tag.putBoolean(DATA_WORKINGAREA_VISIBLE_KEY, this.workingAreaVisible);
 		tag.put(DATA_SENSING_TYPE_KEY, IRocketSensingType.writeNBT(this.sensingType));
 		tag.putBoolean(DATA_INVERTED_KEY, this.inverted);
@@ -144,7 +145,7 @@ public class RocketSensorBlockEntity extends ContainerMachineBlockEntity impleme
 	@Override
 	public int getWorkingRange()
 	{
-		return MachinesConfig.ROCKET_SENSOR_WORKING_RANGE;
+		return MachinesConfig.ROCKET_SENSOR.workingRange;
 	}
 
 	@Override

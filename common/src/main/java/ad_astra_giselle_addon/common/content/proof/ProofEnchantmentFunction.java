@@ -6,11 +6,13 @@ import com.mojang.datafixers.util.Pair;
 
 import ad_astra_giselle_addon.common.enchantment.EnchantmentHelper2;
 import ad_astra_giselle_addon.common.entity.LivingHelper;
-import ad_astra_giselle_addon.common.item.ItemStackReference;
 import ad_astra_giselle_addon.common.item.ItemUsableResource;
+import ad_astra_giselle_addon.common.item.StorageSlotContext;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.enchantment.Enchantment;
 
 public abstract class ProofEnchantmentFunction implements ProofFunction
@@ -18,10 +20,10 @@ public abstract class ProofEnchantmentFunction implements ProofFunction
 	@Override
 	public int provide(Entity entity)
 	{
-		if (entity instanceof LivingEntity living)
+		if (entity instanceof Player living)
 		{
 			@NotNull
-			Pair<EquipmentSlot, Integer> pair = EnchantmentHelper2.getEnchantmentItemAndLevel(this.getEnchantment(), living);
+			Pair<EquipmentSlot, Integer> pair = EnchantmentHelper2.getEnchantmentItemAndLevel(living.level().registryAccess().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(this.getEnchantment()), living);
 			EquipmentSlot slot = pair.getFirst();
 			int enchantLevel = pair.getSecond();
 
@@ -31,8 +33,8 @@ public abstract class ProofEnchantmentFunction implements ProofFunction
 			}
 			else if (LivingHelper.isPlayingMode(living))
 			{
-				ItemStackReference enchantedItem = LivingHelper.getEquipmentItem(living, slot);
-				ItemUsableResource resource = ItemUsableResource.first(enchantedItem.getStack());
+				StorageSlotContext enchantedItem = LivingHelper.getEquipmentSlot(living, slot);
+				ItemUsableResource resource = ItemUsableResource.first(enchantedItem);
 
 				if (resource != null && this.consume(living, slot, enchantedItem, resource, true))
 				{
@@ -51,14 +53,14 @@ public abstract class ProofEnchantmentFunction implements ProofFunction
 		return 0;
 	}
 
-	public boolean consume(LivingEntity living, EquipmentSlot slot, ItemStackReference enchantedItem, ItemUsableResource resource, boolean simulate)
+	public boolean consume(Player living, EquipmentSlot slot, StorageSlotContext enchantedItem, ItemUsableResource resource, boolean simulate)
 	{
 		long extracting = this.getResourceUsingAmount(resource);
 		long extracted = resource.extract(living, slot, enchantedItem, extracting, simulate);
 		return extracted >= extracting;
 	}
 
-	public abstract Enchantment getEnchantment();
+	public abstract ResourceKey<Enchantment> getEnchantment();
 
 	public abstract long getResourceUsingAmount(ItemUsableResource resource);
 

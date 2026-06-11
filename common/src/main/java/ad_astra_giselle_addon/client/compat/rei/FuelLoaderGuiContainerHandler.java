@@ -6,7 +6,8 @@ import ad_astra_giselle_addon.client.screen.FuelLoaderScreen;
 import ad_astra_giselle_addon.client.screen.GuiUtils2;
 import ad_astra_giselle_addon.common.compat.rei.AddonReiCommonPlugin;
 import dev.architectury.event.CompoundEventResult;
-import earth.terrarium.botarium.common.fluid.base.FluidHolder;
+import earth.terrarium.common_storage_lib.resources.ResourceStack;
+import earth.terrarium.common_storage_lib.resources.fluid.FluidResource;
 import me.shedaniel.math.Point;
 import me.shedaniel.rei.api.client.registry.screen.FocusedStackProvider;
 import me.shedaniel.rei.api.common.entry.EntryStack;
@@ -34,8 +35,8 @@ public class FuelLoaderGuiContainerHandler extends AddonClickArea<FuelLoaderScre
 		{
 			if (this.getBounds(screen).contains(mouse.getX(), mouse.getY()))
 			{
-				FluidHolder fluid = screen.getMenu().getEntity().getFluidContainer().getFluids().get(0);
-				return CompoundEventResult.interruptTrue(EntryStacks.of(fluid.getFluid(), fluid.getFluidAmount()));
+				ResourceStack<FluidResource> fluid = screen.getMenu().getEntity().getFluids(null).getContents(0);
+				return CompoundEventResult.interruptTrue(EntryStacks.of(fluid.resource().getType(), fluid.amount()));
 			}
 
 		}

@@ -1,14 +1,11 @@
 package ad_astra_giselle_addon.common.item;
 
-import java.util.function.Consumer;
-
 import org.jetbrains.annotations.Nullable;
 
-import earth.terrarium.botarium.common.energy.EnergyApi;
-import earth.terrarium.botarium.common.energy.base.EnergyContainer;
-import net.minecraft.world.InteractionHand;
+import earth.terrarium.common_storage_lib.energy.EnergyApi;
+import earth.terrarium.common_storage_lib.storage.base.ValueStorage;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
 public enum ItemUsableResource
@@ -16,88 +13,50 @@ public enum ItemUsableResource
 	Energy()
 		{
 			@Override
-			public boolean test(ItemStack item)
+			public boolean test(StorageSlotContext context)
 			{
-				return EnergyApi.isEnergyItem(item);
+				return context.isPresent(EnergyApi.ITEM);
 			}
 
 			@Override
-			public long extract(LivingEntity living, EquipmentSlot slot, ItemStackReference item, long amount, boolean simulate)
+			public long extract(Player living, EquipmentSlot slot, StorageSlotContext context, long amount, boolean simulate)
 			{
-				return this.extract(item, amount, simulate);
-			}
-
-			@Override
-			public long extract(LivingEntity living, byte slot, ItemStackReference item, long amount, boolean simulate)
-			{
-				return this.extract(item, amount, simulate);
-			}
-
-			@Override
-			public long extract(LivingEntity living, InteractionHand hand, ItemStackReference item, long amount, boolean simulate)
-			{
-				return this.extract(item, amount, simulate);
-			}
-
-			private Long extract(ItemStackReference item, long amount, boolean simulate)
-			{
-				EnergyContainer energyContainer = EnergyContainer.of(item);
-				return energyContainer != null ? energyContainer.extractEnergy(amount, simulate) : 0L;
+				ValueStorage energyContainer = context.find(EnergyApi.ITEM);
+				return energyContainer != null ? energyContainer.extract(amount, simulate) : 0L;
 			}
 
 		},
 	Durability()
 		{
 			@Override
-			public boolean test(ItemStack item)
+			public boolean test(StorageSlotContext context)
 			{
 				return true;
 			}
 
 			@Override
-			public long extract(LivingEntity living, byte slot, ItemStackReference item, long amount, boolean simulate)
+			public long extract(Player living, EquipmentSlot slot, StorageSlotContext context, long amount, boolean simulate)
 			{
-				return extract(living, item, amount, simulate, l -> l.level().broadcastEntityEvent(l, slot));
-			}
-
-			@Override
-			public long extract(LivingEntity living, EquipmentSlot slot, ItemStackReference item, long amount, boolean simulate)
-			{
-				return extract(living, item, amount, simulate, l -> l.broadcastBreakEvent(slot));
-			}
-
-			@Override
-			public long extract(LivingEntity living, InteractionHand hand, ItemStackReference item, long amount, boolean simulate)
-			{
-				return extract(living, item, amount, simulate, l -> l.broadcastBreakEvent(hand));
-			}
-
-			private long extract(LivingEntity living, ItemStackReference item, long amount, boolean simulate, Consumer<LivingEntity> onBreak)
-			{
-				ItemStack stack = item.getStack();
-
-				if (stack.isDamageableItem())
+				if (!simulate)
 				{
-					if (!simulate)
-					{
-						stack.hurtAndBreak((int) amount, living, onBreak);
-						item.setStack(stack);
-					}
-
+					ItemStack stack = context.getItemStack();
+					stack.hurtAndBreak((int) amount, living, slot);
+					context.update(stack);
 				}
 
 				return amount;
 			}
+
 		},
 	// EOL
 	;
 
 	@Nullable
-	public static ItemUsableResource first(ItemStack item)
+	public static ItemUsableResource first(StorageSlotContext context)
 	{
 		for (ItemUsableResource resource : ItemUsableResource.values())
 		{
-			if (resource.test(item))
+			if (resource.test(context))
 			{
 				return resource;
 			}
@@ -112,11 +71,7 @@ public enum ItemUsableResource
 
 	}
 
-	public abstract boolean test(ItemStack item);
+	public abstract boolean test(StorageSlotContext context);
 
-	public abstract long extract(LivingEntity living, byte slot, ItemStackReference item, long amount, boolean simulate);
-
-	public abstract long extract(LivingEntity living, EquipmentSlot slot, ItemStackReference item, long amount, boolean simulate);
-
-	public abstract long extract(LivingEntity living, InteractionHand hand, ItemStackReference item, long amount, boolean simulate);
+	public abstract long extract(Player living, EquipmentSlot slot, StorageSlotContext context, long amount, boolean simulate);
 }

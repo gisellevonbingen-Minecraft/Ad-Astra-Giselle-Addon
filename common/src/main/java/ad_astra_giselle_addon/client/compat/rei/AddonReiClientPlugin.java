@@ -75,9 +75,9 @@ public class AddonReiClientPlugin implements REIClientPlugin
 			category.registerRecipes(registry);
 		}
 
-		registry.add(this.createDisplayInfo(AddonBlocks.FUEL_LOADER.get(), MachinesConfig.FUEL_LOADER_WORKING_RANGE, ModFluidTags.FUEL.location()));
-		registry.add(this.createDisplayInfo(AddonBlocks.GRAVITY_NORMALIZER.get(), MachinesConfig.GRAVITY_NORMALIZER_MAX_LENGTH));
-		registry.add(this.createDisplayInfo(AddonBlocks.ROCKET_SENSOR.get(), MachinesConfig.ROCKET_SENSOR_WORKING_RANGE));
+		registry.add(this.createDisplayInfo(AddonBlocks.FUEL_LOADER.get(), MachinesConfig.FUEL_LOADER.workingRange, ModFluidTags.FUEL.location().toString()));
+		registry.add(this.createDisplayInfo(AddonBlocks.GRAVITY_NORMALIZER.get(), MachinesConfig.GRAVITY_NORMALIZER.maxLength));
+		registry.add(this.createDisplayInfo(AddonBlocks.ROCKET_SENSOR.get(), MachinesConfig.ROCKET_SENSOR.workingRange));
 	}
 
 	public DefaultInformationDisplay createDisplayInfo(ItemLike itemLike, Object... objects)

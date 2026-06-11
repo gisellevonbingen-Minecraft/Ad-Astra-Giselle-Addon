@@ -1,0 +1,37 @@
+{
+	"replace": false,
+	"values": [
+		{
+			"required": false,
+			"id": "#c:biofuel"
+		},
+		{
+			"required": false,
+			"id": "modern_industrialization:diesel"
+		},
+		{
+			"required": false,
+			"id": "modern_industrialization:biodiesel"
+		},
+		{
+			"required": false,
+			"id": "techreborn:diesel"
+		},
+		{
+			"required": false,
+			"id": "techreborn:biofuel"
+		},
+		{
+			"required": false,
+			"id": "thermal:refined_fuel"
+		},
+		{
+			"required": false,
+			"id": "vehicle:fuelium"
+		},
+		{
+			"required": false,
+			"id": "car:bio_diesel"
+		}
+	]
+}

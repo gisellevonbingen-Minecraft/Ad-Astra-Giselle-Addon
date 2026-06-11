@@ -7,26 +7,26 @@ import java.util.function.Predicate;
 
 import ad_astra_giselle_addon.common.AdAstraGiselleAddon;
 import ad_astra_giselle_addon.common.entity.LivingHelper;
-import ad_astra_giselle_addon.common.item.ItemStackReference;
+import ad_astra_giselle_addon.common.item.StorageSlotContext;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 
 public enum ChargeMode implements IChargeMode
 {
 	NONE(AdAstraGiselleAddon.rl("none"), e -> Collections.emptyList(), slot -> false),
-	ARMORS(AdAstraGiselleAddon.rl("armors"), LivingHelper::getEquipmentItems, slot -> true),
-	ALL(AdAstraGiselleAddon.rl("all"), LivingHelper::getInventoryItems, slot -> true),
+	ARMORS(AdAstraGiselleAddon.rl("armors"), LivingHelper::getEquipmentSlots, slot -> true),
+	ALL(AdAstraGiselleAddon.rl("all"), LivingHelper::getInventorySlots, slot -> true),
 	//
 	;
 
 	private final ResourceLocation name;
-	private final Function<LivingEntity, List<ItemStackReference>> function;
+	private final Function<Player, List<StorageSlotContext>> function;
 	private final Predicate<EquipmentSlot> predicate;
 	private final Component displayName;
 
-	private ChargeMode(ResourceLocation name, Function<LivingEntity, List<ItemStackReference>> function, Predicate<EquipmentSlot> predicate)
+	private ChargeMode(ResourceLocation name, Function<Player, List<StorageSlotContext>> function, Predicate<EquipmentSlot> predicate)
 	{
 		this.name = name;
 		this.function = function;
@@ -41,7 +41,7 @@ public enum ChargeMode implements IChargeMode
 	}
 
 	@Override
-	public List<ItemStackReference> getItems(LivingEntity living)
+	public List<StorageSlotContext> getSlots(Player living)
 	{
 		return this.function.apply(living);
 	}

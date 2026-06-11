@@ -1,0 +1,29 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"result": {
+		"id": "minecraft:enchanted_book",
+		"components": {
+			"minecraft:stored_enchantments": {
+				"levels": {
+					"ad_astra_giselle_addon:space_breathing": 1
+				}
+			}
+		}
+	},
+	"pattern": [
+		"R#R",
+		"RBR",
+		"RRR"
+	],
+	"key": {
+		"B": {
+			"item": "minecraft:book"
+		},
+		"#": {
+			"item": "ad_astra:space_suit"
+		},
+		"R": {
+			"item": "ad_astra:moon_stone"
+		}
+	}
+}

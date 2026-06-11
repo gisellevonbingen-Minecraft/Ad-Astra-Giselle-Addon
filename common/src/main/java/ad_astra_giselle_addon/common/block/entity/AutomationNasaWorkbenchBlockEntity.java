@@ -1,7 +1,9 @@
 package ad_astra_giselle_addon.common.block.entity;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Predicate;
 
 import org.apache.commons.lang3.ArrayUtils;
@@ -9,35 +11,43 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import ad_astra_giselle_addon.common.config.MachinesConfig;
-import ad_astra_giselle_addon.common.item.SidedItemContainerBlock;
 import ad_astra_giselle_addon.common.menu.AutomationNasaWorkbenchMenu;
+import earth.terrarium.adastra.common.blockentities.base.ContainerRecipeWrapper;
 import earth.terrarium.adastra.common.blockentities.base.RecipeMachineBlockEntity;
 import earth.terrarium.adastra.common.blockentities.base.sideconfig.Configuration;
 import earth.terrarium.adastra.common.blockentities.base.sideconfig.ConfigurationEntry;
 import earth.terrarium.adastra.common.blockentities.base.sideconfig.ConfigurationType;
 import earth.terrarium.adastra.common.constants.ConstantComponents;
 import earth.terrarium.adastra.common.recipes.machines.NasaWorkbenchRecipe;
+import earth.terrarium.adastra.common.registry.ModDataManagers;
 import earth.terrarium.adastra.common.registry.ModRecipeTypes;
 import earth.terrarium.adastra.common.utils.ItemUtils;
 import earth.terrarium.adastra.common.utils.ModUtils;
 import earth.terrarium.adastra.common.utils.TransferUtils;
-import earth.terrarium.botarium.common.energy.impl.InsertOnlyEnergyContainer;
-import earth.terrarium.botarium.common.energy.impl.WrappedBlockEnergyContainer;
+import earth.terrarium.common_storage_lib.energy.impl.SimpleValueStorage;
+import earth.terrarium.common_storage_lib.item.impl.vanilla.VanillaDelegatingSlot;
+import earth.terrarium.common_storage_lib.item.impl.vanilla.WrappedVanillaContainer;
+import earth.terrarium.common_storage_lib.resources.item.ItemResource;
+import earth.terrarium.common_storage_lib.storage.base.CommonStorage;
+import earth.terrarium.common_storage_lib.storage.base.StorageSlot;
+import earth.terrarium.common_storage_lib.storage.base.UpdateManager;
+import earth.terrarium.common_storage_lib.storage.base.ValueStorage;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.RecipeInput;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class AutomationNasaWorkbenchBlockEntity extends RecipeMachineBlockEntity<NasaWorkbenchRecipe> implements SidedItemContainerBlock
+public class AutomationNasaWorkbenchBlockEntity extends RecipeMachineBlockEntity<NasaWorkbenchRecipe>
 {
 	public static final List<ConfigurationEntry> SIDE_CONFIG = List.of(//
 			new ConfigurationEntry(ConfigurationType.SLOT, Configuration.NONE, ConstantComponents.SIDE_CONFIG_INPUT_SLOTS), //
@@ -50,16 +60,96 @@ public class AutomationNasaWorkbenchBlockEntity extends RecipeMachineBlockEntity
 	public static final int[] SLOTS_FOR_FACE = ArrayUtils.addAll(INPUT_SLOTS, OUTPUT_SLOTS);
 	public static final int CONTAINER_SIZE = 1 + INPUT_SLOTS.length + OUTPUT_SLOTS.length;
 
+	private SimpleValueStorage energyContainer;
 	private VirtualInputOnlyContainer recipeContainer;
 	private boolean firstTick;
 	private List<RecipeCache> recipeCaches;
+	private Map<Direction, CommonStorage<ItemResource>> dir2Items;
 
 	public AutomationNasaWorkbenchBlockEntity(BlockPos pos, BlockState state)
 	{
 		super(pos, state, CONTAINER_SIZE, ModRecipeTypes.NASA_WORKBENCH);
+		this.energyContainer = new SimpleValueStorage(this, ModDataManagers.VALUE_CONTENT, MachinesConfig.AUTOMATION_NASA_WORKBENCH.energyCapacity);
 		this.recipeContainer = new VirtualInputOnlyContainer(this, INPUT_SLOTS[0], INPUT_SLOTS.length);
 		this.firstTick = true;
 		this.recipeCaches = new ArrayList<>();
+		this.dir2Items = new HashMap<>();
+
+		WrappedVanillaContainer original = new WrappedVanillaContainer(this);
+		{
+			@SuppressWarnings("unchecked")
+			StorageSlot<ItemResource>[] slots = new StorageSlot[CONTAINER_SIZE];
+
+			for (int i = 0; i < slots.length; i++)
+			{
+				slots[i] = this.createDirectionalSlot(original, null, i);
+			}
+
+			this.dir2Items.put(null, new WrappedVanillaContainer(this)
+			{
+				@Override
+				public @NotNull StorageSlot<ItemResource> get(int index)
+				{
+					return slots[index];
+				}
+			});
+
+		}
+
+		for (Direction direction : Direction.values())
+		{
+			@SuppressWarnings("unchecked")
+			StorageSlot<ItemResource>[] slots = new StorageSlot[CONTAINER_SIZE];
+
+			for (int i = 0; i < slots.length; i++)
+			{
+				slots[i] = this.createDirectionalSlot(original, direction, i);
+			}
+
+			this.dir2Items.put(direction, new WrappedVanillaContainer(this)
+			{
+				@Override
+				public @NotNull StorageSlot<ItemResource> get(int index)
+				{
+					return slots[index];
+				}
+			});
+		}
+
+	}
+
+	private StorageSlot<ItemResource> createDirectionalSlot(WrappedVanillaContainer container, Direction direction, int slotNumber)
+	{
+		return new VanillaDelegatingSlot(container, slotNumber)
+		{
+			@Override
+			public long insert(ItemResource resource, long amount, boolean simulate)
+			{
+				if (canPlaceItemThroughFace(slotNumber, resource.toStack(), direction))
+				{
+					return super.insert(resource, amount, simulate);
+				}
+				else
+				{
+					return 0;
+				}
+
+			}
+
+			@Override
+			public long extract(ItemResource resource, long amount, boolean simulate)
+			{
+				if (canTakeItemThroughFace(slotNumber, resource.toStack(), direction))
+				{
+					return super.extract(resource, amount, simulate);
+				}
+				else
+				{
+					return 0;
+				}
+
+			}
+		};
 	}
 
 	@Override
@@ -69,14 +159,20 @@ public class AutomationNasaWorkbenchBlockEntity extends RecipeMachineBlockEntity
 	}
 
 	@Override
-	public WrappedBlockEnergyContainer getEnergyStorage()
+	public ValueStorage getEnergy(@Nullable Direction direction)
 	{
-		if (this.energyContainer == null)
-		{
-			this.energyContainer = new WrappedBlockEnergyContainer(this, new InsertOnlyEnergyContainer(MachinesConfig.AUTOMATION_NASA_WORKBENCH_ENERGY_CAPACITY, MachinesConfig.AUTOMATION_NASA_WORKBENCH_ENERGY_CAPACITY));
-		}
-
 		return this.energyContainer;
+	}
+
+	public CommonStorage<ItemResource> getItems(@Nullable Direction direction)
+	{
+		return this.dir2Items.get(direction);
+	}
+
+	@Override
+	public int getMaxStackSize()
+	{
+		return 1;
 	}
 
 	@Override
@@ -87,8 +183,14 @@ public class AutomationNasaWorkbenchBlockEntity extends RecipeMachineBlockEntity
 		TransferUtils.pullItemsNearby(this, pos, INPUT_SLOTS, sideConfig.get(0), filter);
 		TransferUtils.pushItemsNearby(this, pos, OUTPUT_SLOTS, sideConfig.get(1), filter);
 
-		TransferUtils.pushEnergyNearby(this, pos, this.getEnergyStorage().maxExtract(), sideConfig.get(2), filter);
-		TransferUtils.pullEnergyNearby(this, pos, this.getEnergyStorage().maxInsert(), sideConfig.get(2), filter);
+		TransferUtils.pushEnergyNearby(this, pos, this.maxInsertExtract(), sideConfig.get(2), filter);
+		TransferUtils.pullEnergyNearby(this, pos, this.maxInsertExtract(), sideConfig.get(2), filter);
+	}
+
+	@Override
+	public boolean canPlaceItem(int slot, ItemStack stack)
+	{
+		return super.canPlaceItem(slot, stack);
 	}
 
 	@Override
@@ -112,7 +214,7 @@ public class AutomationNasaWorkbenchBlockEntity extends RecipeMachineBlockEntity
 	}
 
 	@Override
-	public void recipeTick(ServerLevel level, WrappedBlockEnergyContainer energyStroage)
+	public void recipeTick(ServerLevel level, ValueStorage energyStroage)
 	{
 		if (this.recipe == null)
 		{
@@ -124,22 +226,26 @@ public class AutomationNasaWorkbenchBlockEntity extends RecipeMachineBlockEntity
 			return;
 		}
 
-		energyStroage.internalExtract(MachinesConfig.AUTOMATION_NASA_WORKBENCH_ENERGY_USAGE, false);
+		energyStroage.extract(MachinesConfig.AUTOMATION_NASA_WORKBENCH.energyUsage, false);
+		UpdateManager.batch(energyStroage);
 		this.cookTime++;
 
-		if (this.cookTime < this.cookTimeTotal)
+		if (this.cookTime >= this.cookTimeTotal)
 		{
-			return;
+			this.craft();
 		}
 
-		this.craft();
+		this.sync();
+		this.setChanged();
 	}
 
 	@Override
 	public boolean canCraft()
 	{
-		long energy = MachinesConfig.AUTOMATION_NASA_WORKBENCH_ENERGY_USAGE;
-		return this.getEnergyStorage().internalExtract(energy, true) >= energy && this.recipe != null && this.recipe.matches(this.recipeContainer, this.getLevel()) && ItemUtils.canAddItem(this, this.recipe.result(), OUTPUT_SLOTS);
+		long energy = MachinesConfig.AUTOMATION_NASA_WORKBENCH.energyUsage;
+		RecipeInput input = new ContainerRecipeWrapper(this.recipeContainer);
+		RecipeInput self = new ContainerRecipeWrapper(this);
+		return this.getEnergyStorage().extract(energy, true) >= energy && this.recipe != null && this.recipe.matches(input, this.getLevel()) && ItemUtils.canAddItem(self, this.recipe.result(), OUTPUT_SLOTS);
 	}
 
 	@Override
@@ -214,11 +320,11 @@ public class AutomationNasaWorkbenchBlockEntity extends RecipeMachineBlockEntity
 
 	private void cacheRecipes()
 	{
-		VirtualInputOnlyContainer container = this.recipeContainer;
-		List<NasaWorkbenchRecipe> recipes = this.getLevel().getRecipeManager().getAllRecipesFor(ModRecipeTypes.NASA_WORKBENCH.get());
+		RecipeInput input = new ContainerRecipeWrapper(this.recipeContainer);
+		List<RecipeHolder<NasaWorkbenchRecipe>> recipes = this.getLevel().getRecipeManager().getAllRecipesFor(ModRecipeTypes.NASA_WORKBENCH.get());
 
 		this.recipeCaches.clear();
-		this.recipeCaches.addAll(recipes.stream().map(recipe -> this.cache(recipe, container)).filter(cache -> cache != null).toList());
+		this.recipeCaches.addAll(recipes.stream().map(recipe -> this.cache(recipe.value(), input)).filter(cache -> cache != null).toList());
 		this.recipe = this.recipeCaches.stream().filter(cache -> cache.isComplete()).map(RecipeCache::recipe).findFirst().orElse(null);
 
 		if (this.recipe == null)
@@ -227,12 +333,12 @@ public class AutomationNasaWorkbenchBlockEntity extends RecipeMachineBlockEntity
 		}
 		else
 		{
-			this.cookTimeTotal = MachinesConfig.AUTOMATION_NASA_WORKBENCH_COOK_TIME;
+			this.cookTimeTotal = MachinesConfig.AUTOMATION_NASA_WORKBENCH.cookTime;
 		}
 
 	}
 
-	private RecipeCache cache(NasaWorkbenchRecipe recipe, VirtualInputOnlyContainer container)
+	private RecipeCache cache(NasaWorkbenchRecipe recipe, RecipeInput input)
 	{
 		List<Ingredient> ingredients = recipe.ingredients();
 		List<SlotWithIngredient> remainIngredients = new ArrayList<>();
@@ -241,7 +347,7 @@ public class AutomationNasaWorkbenchBlockEntity extends RecipeMachineBlockEntity
 
 		for (int i = 0; i < ingredients.size(); i++)
 		{
-			ItemStack item = container.getItem(i);
+			ItemStack item = input.getItem(i);
 			Ingredient ingredient = ingredients.get(i);
 			boolean needAdd = false;
 
@@ -311,18 +417,6 @@ public class AutomationNasaWorkbenchBlockEntity extends RecipeMachineBlockEntity
 	public int[] getSlotsForFace(Direction pSide)
 	{
 		return SLOTS_FOR_FACE;
-	}
-
-	@Override
-	public int getSideSlotLimit(int slot, @Nullable Direction directon)
-	{
-		return directon == null ? this.getMaxStackSize() : 1;
-	}
-
-	@Override
-	public WorldlyContainer getContainer()
-	{
-		return this;
 	}
 
 }

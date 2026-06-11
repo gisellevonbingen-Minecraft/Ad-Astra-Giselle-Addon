@@ -9,12 +9,15 @@ import com.google.common.collect.Sets;
 import ad_astra_giselle_addon.common.config.EnchantmentsConfig;
 import ad_astra_giselle_addon.common.enchantment.EnchantmentHelper2;
 import ad_astra_giselle_addon.common.registry.AddonEnchantments;
-import earth.terrarium.botarium.util.CommonHooks;
+import ad_astra_giselle_addon.common.util.ModHooks;
+import earth.terrarium.adastra.AdAstra;
+import net.minecraft.core.Holder.Reference;
+import net.minecraft.core.HolderLookup.RegistryLookup;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.contents.TranslatableContents;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.EnchantedBookItem;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.enchantment.Enchantment;
 
 public class EnchantedBookTooltipHelper
@@ -35,7 +38,7 @@ public class EnchantedBookTooltipHelper
 	{
 		for (String mod : DESCRIPTION_MODS)
 		{
-			if (CommonHooks.isModLoaded(mod))
+			if (ModHooks.isLoaded(mod))
 			{
 				return true;
 			}
@@ -50,22 +53,36 @@ public class EnchantedBookTooltipHelper
 		return Collections.unmodifiableSet(DESCRIPTION_MODS);
 	}
 
-	public static void addTooltip(ItemStack item, TooltipFlag flags, List<Component> lines)
+	public static void addTooltip(ItemTooltipModifier modifier)
 	{
-		if (item.getItem() instanceof EnchantedBookItem && tooltipEnabled())
+		if (modifier.item().getItem() instanceof EnchantedBookItem && tooltipEnabled())
 		{
-			for (Enchantment enchantment : AddonEnchantments.ENCHANTMENTS.getValues())
+			List<Component> lines = modifier.lines();
+			RegistryLookup<Enchantment> lookupOrThrow = AdAstra.getRegistryAccess().lookupOrThrow(Registries.ENCHANTMENT);
+
+			for (ResourceKey<Enchantment> key : AddonEnchantments.ENCHANTMENTS)
 			{
-				for (Component line : lines)
+				Reference<Enchantment> holder = lookupOrThrow.getOrThrow(key);
+
+				if (holder.value().description().getContents() instanceof TranslatableContents contents1)
 				{
-					if (line.getContents() instanceof TranslatableContents contents)
+					for (Component line : lines)
 					{
-						if (contents.getKey().equals(enchantment.getDescriptionId()))
+						if (line.getContents() instanceof TranslatableContents contents2)
 						{
-							lines.addAll(lines.indexOf(line) + 1, EnchantmentHelper2.getDescriptionTexts(enchantment));
-							break;
+							if (contents2.getKey().equals(contents1.getKey()))
+							{
+								modifier.lines().addAll(modifier.lines().indexOf(line) + 1, EnchantmentHelper2.getDescriptionTexts(holder));
+								break;
+							}
+
 						}
 
+					}
+
+					if (modifier.item().getEnchantmentLevel(holder) > 0)
+					{
+						modifier.lines().addAll(EnchantmentHelper2.getDescriptionTexts(holder));
 					}
 
 				}

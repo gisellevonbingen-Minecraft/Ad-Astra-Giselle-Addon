@@ -1,7 +1,8 @@
 package ad_astra_giselle_addon.common.fluid;
 
 import earth.terrarium.adastra.common.tags.ModFluidTags;
-import earth.terrarium.botarium.common.fluid.base.FluidHolder;
+import earth.terrarium.common_storage_lib.resources.ResourceStack;
+import earth.terrarium.common_storage_lib.resources.fluid.FluidResource;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.material.Fluid;
 
@@ -13,22 +14,22 @@ public class FluidPredicates
 		return fluid.is(tag);
 	}
 
-	public static boolean hasTag(FluidHolder fluid, TagKey<Fluid> tag)
+	public static boolean hasTag(FluidResource fluid, TagKey<Fluid> tag)
 	{
-		return hasTag(fluid.getFluid(), tag);
+		return fluid.is(tag);
 	}
 
-	public static boolean isOxygen(Fluid fluid)
+	public static boolean isOxygen(FluidResource fluid)
 	{
 		return hasTag(fluid, ModFluidTags.OXYGEN);
 	}
 
-	public static boolean isOxygen(FluidHolder fluid)
+	public static boolean isOxygen(ResourceStack<FluidResource> fluid)
 	{
-		return isOxygen(fluid.getFluid());
+		return isOxygen(fluid.resource());
 	}
 
-	public static boolean isOxygen(int tank, FluidHolder fluid)
+	public static boolean isOxygen(int tank, FluidResource fluid)
 	{
 		return isOxygen(fluid);
 	}

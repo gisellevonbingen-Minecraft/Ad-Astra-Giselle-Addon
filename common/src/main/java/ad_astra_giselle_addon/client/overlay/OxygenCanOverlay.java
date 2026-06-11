@@ -13,13 +13,17 @@ import earth.terrarium.adastra.client.config.AdAstraConfigClient;
 import earth.terrarium.adastra.client.screens.player.OverlayScreen;
 import earth.terrarium.adastra.common.items.armor.SpaceSuitItem;
 import net.minecraft.Util;
+import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.core.Holder.Reference;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 
 public class OxygenCanOverlay
@@ -31,7 +35,11 @@ public class OxygenCanOverlay
 
 	static
 	{
-		SHOULD_RENDER_EVENT.register(player -> EnchantmentHelper.getEnchantmentLevel(AddonEnchantments.OXYGEN_PROOF.get(), player) > 0);
+		SHOULD_RENDER_EVENT.register(player ->
+		{
+			Reference<Enchantment> holderOrThrow = player.registryAccess().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(AddonEnchantments.OXYGEN_PROOF);
+			return EnchantmentHelper.getEnchantmentLevel(holderOrThrow, player) > 0;
+		});
 	}
 
 	public static Component getOxygenComponent(double ratio)
@@ -59,7 +67,7 @@ public class OxygenCanOverlay
 		return false;
 	}
 
-	public static void renderHud(GuiGraphics guiGraphics, float partialTick)
+	public static void renderHud(GuiGraphics guiGraphics, DeltaTracker partialTick)
 	{
 		Minecraft minecraft = Minecraft.getInstance();
 		LocalPlayer player = minecraft.player;
@@ -68,7 +76,7 @@ public class OxygenCanOverlay
 		{
 			return;
 		}
-		else if (minecraft.options.renderDebug)
+		else if (minecraft.getDebugOverlay().showDebugScreen())
 		{
 			return;
 		}
@@ -117,7 +125,7 @@ public class OxygenCanOverlay
 		PoseStack poseStack = graphics.pose();
 		poseStack.pushPose();
 		poseStack.scale(scale, scale, scale);
-		graphics.blit(OverlayScreen.OXYGEN_TANK_EMPTY, x, y, 0, 0, textureWidth, textureHeight, textureWidth, textureHeight);
+		graphics.blitSprite(OverlayScreen.OXYGEN_TANK_EMPTY, x, y, textureWidth, textureHeight);
 		graphics.blit(OverlayScreen.OXYGEN_TANK, x, y + textureHeight - barHeight, 0, textureHeight - barHeight, textureWidth, barHeight, textureWidth, textureHeight);
 
 		var font = minecraft.font;

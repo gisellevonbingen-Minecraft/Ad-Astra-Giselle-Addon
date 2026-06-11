@@ -10,20 +10,22 @@ import ad_astra_giselle_addon.common.config.MachinesConfig;
 import ad_astra_giselle_addon.common.content.proof.GravityProofUtils;
 import ad_astra_giselle_addon.common.menu.GravityNormalizerMenu;
 import ad_astra_giselle_addon.common.registry.AddonProofs;
+import ad_astra_giselle_addon.common.util.SerializationUtils;
 import ad_astra_giselle_addon.common.util.Vec3iUtils;
 import earth.terrarium.adastra.common.blockentities.base.EnergyContainerMachineBlockEntity;
 import earth.terrarium.adastra.common.blockentities.base.sideconfig.Configuration;
 import earth.terrarium.adastra.common.blockentities.base.sideconfig.ConfigurationEntry;
 import earth.terrarium.adastra.common.blockentities.base.sideconfig.ConfigurationType;
 import earth.terrarium.adastra.common.constants.ConstantComponents;
+import earth.terrarium.adastra.common.registry.ModDataManagers;
 import earth.terrarium.adastra.common.utils.TransferUtils;
-import earth.terrarium.botarium.common.energy.impl.InsertOnlyEnergyContainer;
-import earth.terrarium.botarium.common.energy.impl.WrappedBlockEnergyContainer;
+import earth.terrarium.common_storage_lib.energy.impl.SimpleValueStorage;
+import earth.terrarium.common_storage_lib.storage.base.ValueStorage;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NbtOps;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -44,6 +46,7 @@ public class GravityNormalizerBlockEntity extends EnergyContainerMachineBlockEnt
 
 	public static final int CONTAINER_SIZE = 1;
 
+	private SimpleValueStorage energyContainer;
 	private Vec3i length;
 	private Vec3i offset;
 	private int timer;
@@ -52,6 +55,7 @@ public class GravityNormalizerBlockEntity extends EnergyContainerMachineBlockEnt
 	public GravityNormalizerBlockEntity(BlockPos pos, BlockState state)
 	{
 		super(pos, state, CONTAINER_SIZE);
+		this.energyContainer = new SimpleValueStorage(this, ModDataManagers.VALUE_CONTENT, MachinesConfig.GRAVITY_NORMALIZER.energyCapacity);
 		this.length = new Vec3i(3, 3, 3);
 		this.offset = offsetFromLength(this.length);
 		this.timer = 0;
@@ -59,21 +63,22 @@ public class GravityNormalizerBlockEntity extends EnergyContainerMachineBlockEnt
 	}
 
 	@Override
-	public void load(CompoundTag tag)
+	protected void loadAdditional(CompoundTag tag, Provider provider)
 	{
-		super.load(tag);
-		this.length = Vec3i.CODEC.parse(NbtOps.INSTANCE, tag.get(DATA_LENGTH_KEY)).result().get();
-		this.offset = Vec3i.CODEC.parse(NbtOps.INSTANCE, tag.get(DATA_OFFSET_KEY)).result().get();
+		super.loadAdditional(tag, provider);
+
+		this.length = SerializationUtils.readTag(Vec3i.CODEC, tag.get(DATA_LENGTH_KEY));
+		this.offset = SerializationUtils.readTag(Vec3i.CODEC, tag.get(DATA_OFFSET_KEY));
 		this.timer = tag.getInt(DATA_TIMER_KEY);
 		this.workingAreaVisible = tag.getBoolean(DATA_WORKINGAREA_VISIBLE_KEY);
 	}
 
 	@Override
-	public void saveAdditional(CompoundTag tag)
+	protected void saveAdditional(@NotNull CompoundTag tag, Provider provider)
 	{
-		super.saveAdditional(tag);
-		tag.put(DATA_LENGTH_KEY, Vec3i.CODEC.encodeStart(NbtOps.INSTANCE, this.length).result().get());
-		tag.put(DATA_OFFSET_KEY, Vec3i.CODEC.encodeStart(NbtOps.INSTANCE, this.offset).result().get());
+		super.saveAdditional(tag, provider);
+		tag.put(DATA_LENGTH_KEY, SerializationUtils.writeTag(Vec3i.CODEC, this.length));
+		tag.put(DATA_OFFSET_KEY, SerializationUtils.writeTag(Vec3i.CODEC, this.offset));
 		tag.putInt(DATA_TIMER_KEY, this.timer);
 		tag.putBoolean(DATA_WORKINGAREA_VISIBLE_KEY, this.workingAreaVisible);
 	}
@@ -86,13 +91,8 @@ public class GravityNormalizerBlockEntity extends EnergyContainerMachineBlockEnt
 	}
 
 	@Override
-	public WrappedBlockEnergyContainer getEnergyStorage()
+	public ValueStorage getEnergy(@Nullable Direction direction)
 	{
-		if (this.energyContainer == null)
-		{
-			this.energyContainer = new WrappedBlockEnergyContainer(this, new WrappedBlockEnergyContainer(this, new InsertOnlyEnergyContainer(MachinesConfig.GRAVITY_NORMALIZER_ENERGY_CAPACITY, MachinesConfig.GRAVITY_NORMALIZER_ENERGY_CAPACITY)));
-		}
-
 		return this.energyContainer;
 	}
 
@@ -125,9 +125,9 @@ public class GravityNormalizerBlockEntity extends EnergyContainerMachineBlockEnt
 		Level level = this.getLevel();
 		GravityProofUtils proof = AddonProofs.GRAVITY;
 		long energyUsing = this.getEnergyUsing(workingArea);
-		WrappedBlockEnergyContainer energyStorage = this.getEnergyStorage();
+		ValueStorage energyStorage = this.getEnergy(null);
 
-		if (energyStorage.internalExtract(energyUsing, true) < energyUsing)
+		if (energyStorage.extract(energyUsing, true) < energyUsing)
 		{
 			return;
 		}
@@ -139,7 +139,7 @@ public class GravityNormalizerBlockEntity extends EnergyContainerMachineBlockEnt
 			return;
 		}
 
-		energyStorage.internalExtract(energyUsing, false);
+		energyStorage.extract(energyUsing, false);
 		int proofDuration = this.getMaxTimer() + 1;
 
 		for (Entity entity : entities)
@@ -157,7 +157,7 @@ public class GravityNormalizerBlockEntity extends EnergyContainerMachineBlockEnt
 	@Override
 	public void tickSideInteractions(BlockPos pos, Predicate<Direction> filter, List<ConfigurationEntry> sideConfig)
 	{
-		TransferUtils.pullEnergyNearby(this, pos, getEnergyStorage().maxInsert(), sideConfig.get(0), filter);
+		TransferUtils.pullEnergyNearby(this, pos, this.maxInsertExtract(), sideConfig.get(0), filter);
 	}
 
 	public long getEnergyUsing()
@@ -168,7 +168,7 @@ public class GravityNormalizerBlockEntity extends EnergyContainerMachineBlockEnt
 	public long getEnergyUsing(AABB workingArea)
 	{
 		double blocks = workingArea.getXsize() * workingArea.getYsize() * workingArea.getZsize();
-		return (long) (MachinesConfig.GRAVITY_NORMALIZER_ENERGY_PER_BLOCKS * blocks);
+		return (long) (MachinesConfig.GRAVITY_NORMALIZER.energyPerBlocks * blocks);
 	}
 
 	public static int getMinLength()
@@ -178,7 +178,7 @@ public class GravityNormalizerBlockEntity extends EnergyContainerMachineBlockEnt
 
 	public static int getMaxLength()
 	{
-		return MachinesConfig.GRAVITY_NORMALIZER_MAX_LENGTH;
+		return MachinesConfig.GRAVITY_NORMALIZER.maxLength;
 	}
 
 	public Vec3i getLength()
@@ -219,12 +219,12 @@ public class GravityNormalizerBlockEntity extends EnergyContainerMachineBlockEnt
 
 	public static int getMinOffset()
 	{
-		return -half(MachinesConfig.GRAVITY_NORMALIZER_MAX_LENGTH);
+		return -half(MachinesConfig.GRAVITY_NORMALIZER.maxLength);
 	}
 
 	public static int getMaxOffset()
 	{
-		return +half(MachinesConfig.GRAVITY_NORMALIZER_MAX_LENGTH);
+		return +half(MachinesConfig.GRAVITY_NORMALIZER.maxLength);
 	}
 
 	public Vec3i getOffset()
@@ -263,7 +263,7 @@ public class GravityNormalizerBlockEntity extends EnergyContainerMachineBlockEnt
 
 	public int getMaxTimer()
 	{
-		return MachinesConfig.GRAVITY_NORMALIZER_PROOF_DURATION;
+		return MachinesConfig.GRAVITY_NORMALIZER.proofDuration;
 	}
 
 	@Override

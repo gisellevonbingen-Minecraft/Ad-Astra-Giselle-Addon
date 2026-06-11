@@ -1,185 +1,186 @@
 package ad_astra_giselle_addon.common.fluid;
 
-import java.util.List;
-import java.util.function.BiPredicate;
+import java.util.function.Predicate;
 
-import earth.terrarium.botarium.Botarium;
-import earth.terrarium.botarium.common.fluid.base.FluidContainer;
-import earth.terrarium.botarium.common.fluid.base.FluidHolder;
-import earth.terrarium.botarium.common.fluid.base.FluidSnapshot;
-import earth.terrarium.botarium.common.fluid.impl.SimpleFluidContainer;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.Tag;
+import org.jetbrains.annotations.NotNull;
 
-public class CreativeFluidContainer implements FluidContainer
+import earth.terrarium.common_storage_lib.context.ItemContext;
+import earth.terrarium.common_storage_lib.fluid.util.FluidStorageData;
+import earth.terrarium.common_storage_lib.resources.ResourceStack;
+import earth.terrarium.common_storage_lib.resources.fluid.FluidResource;
+import earth.terrarium.common_storage_lib.storage.base.CommonStorage;
+import earth.terrarium.common_storage_lib.storage.base.StorageSlot;
+import earth.terrarium.common_storage_lib.storage.base.UpdateManager;
+import earth.terrarium.common_storage_lib.storage.util.TransferUtil;
+import net.minecraft.core.NonNullList;
+import net.minecraft.core.component.DataComponentType;
+
+public class CreativeFluidContainer implements CommonStorage<FluidResource>, UpdateManager<FluidStorageData>
 {
 	public static final Long CAPACITY = (long) Integer.MAX_VALUE;
 
-	private final BiPredicate<Integer, FluidHolder> fluidFilter;
-	private FluidHolder fluid;
+	protected final NonNullList<Slot> slots;
+	private final Runnable update;
+	private final Runnable save;
 
-	public CreativeFluidContainer(BiPredicate<Integer, FluidHolder> fluidFilter)
+	public CreativeFluidContainer(ItemContext context, DataComponentType<FluidStorageData> componentType, Predicate<FluidResource> fluidFilter)
 	{
-		this.fluidFilter = fluidFilter;
-	}
+		this.update = context::updateAll;
+		this.save = () -> context.set(componentType, FluidStorageData.from(this));
+		this.slots = NonNullList.withSize(1, new Slot(this::update, this.save, fluidFilter));
 
-	@Override
-	public long insertFluid(FluidHolder fluid, boolean simulate)
-	{
-		if (this.isEmpty() && this.fluidFilter.test(0, fluid))
+		FluidStorageData data = context.getResource().get(componentType);
+
+		if (data != null)
 		{
-			return fluid.getFluidAmount();
-		}
-		else
-		{
-			return 0;
+			readSnapshot(data);
 		}
 
 	}
 
 	@Override
-	public FluidHolder extractFluid(FluidHolder fluid, boolean simulate)
+	public int size()
 	{
-		if (this.isEmpty() || !this.fluidFilter.test(0, fluid) || !this.fluid.matches(fluid))
-		{
-			return FluidHolder.empty();
-		}
-		else
-		{
-			return this.fluid.copyWithAmount(fluid.getFluidAmount());
-		}
-
+		return slots.size();
 	}
 
 	@Override
-	public void setFluid(int slot, FluidHolder fluid)
+	public @NotNull StorageSlot<FluidResource> get(int index)
 	{
-		if (slot == 0)
-		{
-			this.fluid = fluid.copyHolder();
-		}
-
+		return slots.get(index);
 	}
 
 	@Override
-	public List<FluidHolder> getFluids()
+	public FluidStorageData createSnapshot()
 	{
-		if (this.isEmpty())
+		return FluidStorageData.from(this);
+	}
+
+	@Override
+	public void readSnapshot(FluidStorageData snapshot)
+	{
+		for (int i = 0; i < this.slots.size() && i < snapshot.stacks().size(); i++)
 		{
-			return List.of(FluidHolder.empty());
-		}
-		else
-		{
-			return List.of(this.fluid.copyWithAmount(CAPACITY));
+			this.slots.get(i).readSnapshot(snapshot.stacks().get(i));
 		}
 
 	}
 
 	@Override
-	public int getSize()
+	public void update()
 	{
-		return 1;
+		this.update.run();
 	}
 
 	@Override
-	public boolean isEmpty()
+	public long insert(FluidResource resource, long amount, boolean simulate)
 	{
-		return this.fluid.isEmpty();
+		return TransferUtil.insertSlots(this, resource, amount, simulate);
 	}
 
 	@Override
-	public FluidContainer copy()
+	public long extract(FluidResource resource, long amount, boolean simulate)
 	{
-		return new CreativeFluidContainer(this.fluidFilter);
+		return TransferUtil.extractSlots(this, resource, amount, simulate);
 	}
 
-	@Override
-	public long getTankCapacity(int tankSlot)
+	public static class Slot implements StorageSlot<FluidResource>, UpdateManager<ResourceStack<FluidResource>>
 	{
-		return CAPACITY;
-	}
+		private final Runnable update;
+		private final Runnable save;
+		private final Predicate<FluidResource> fluidFilter;
 
-	@Override
-	public void fromContainer(FluidContainer container)
-	{
-		if (container.getSize() > 0)
+		private FluidResource resource = FluidResource.BLANK;
+
+		public Slot(Runnable update, Runnable save, Predicate<FluidResource> fluidFilter)
 		{
-			this.fluid = container.getFluids().get(0).copyHolder();
-		}
-		else
-		{
-			this.fluid = FluidHolder.empty();
+			this.update = update;
+			this.save = save;
+			this.fluidFilter = fluidFilter;
 		}
 
-	}
-
-	@Override
-	public long extractFromSlot(FluidHolder fluidHolder, FluidHolder toInsert, Runnable snapshot)
-	{
-		return 0;
-	}
-
-	@Override
-	public boolean allowsInsertion()
-	{
-		return this.fluid.isEmpty();
-	}
-
-	@Override
-	public boolean allowsExtraction()
-	{
-		return !this.fluid.isEmpty();
-	}
-
-	@Override
-	public FluidSnapshot createSnapshot()
-	{
-		return new FluidSnapshot()
+		@Override
+		public long insert(FluidResource resource, long amount, boolean simulate)
 		{
-			@Override
-			public void loadSnapshot(FluidContainer container)
+			if (this.getResource().isBlank() && this.fluidFilter.test(resource))
 			{
+				if (!simulate)
+				{
+					this.save.run();
+				}
 
+				return amount;
 			}
-		};
-	}
+			else
+			{
+				return 0;
+			}
 
-	@Override
-	public void deserialize(CompoundTag root)
-	{
-		CompoundTag tag = root.getCompound(Botarium.BOTARIUM_DATA);
-		ListTag fluids = tag.getList(SimpleFluidContainer.FLUID_KEY, Tag.TAG_COMPOUND);
-
-		if (fluids.size() > 0)
-		{
-			CompoundTag fluid = fluids.getCompound(0);
-			this.fluid = FluidHolder.fromCompound(fluid);
-		}
-		else
-		{
-			this.fluid = FluidHolder.empty();
 		}
 
-	}
+		@Override
+		public long extract(FluidResource resource, long amount, boolean simulate)
+		{
+			FluidResource holding = this.getResource();
 
-	@Override
-	public CompoundTag serialize(CompoundTag root)
-	{
-		CompoundTag tag = root.getCompound(Botarium.BOTARIUM_DATA);
-		root.put(Botarium.BOTARIUM_DATA, tag);
+			if (holding.isBlank() || !this.fluidFilter.test(resource) || !holding.equals(resource))
+			{
+				return 0;
+			}
+			else
+			{
+				if (!simulate)
+				{
+					this.save.run();
+				}
 
-		ListTag fluids = new ListTag();
-		fluids.add(this.fluid.serialize());
-		tag.put(SimpleFluidContainer.FLUID_KEY, fluids);
+				return amount;
+			}
 
-		return root;
-	}
+		}
 
-	@Override
-	public void clearContent()
-	{
-		this.fluid = FluidHolder.empty();
+		@Override
+		public boolean isResourceValid(FluidResource resource)
+		{
+			return this.fluidFilter.test(resource);
+		}
+
+		@Override
+		public FluidResource getResource()
+		{
+			return this.resource;
+		}
+
+		@Override
+		public long getAmount()
+		{
+			return this.resource.isBlank() ? 0 : CAPACITY;
+		}
+
+		@Override
+		public long getLimit(FluidResource resource)
+		{
+			return CAPACITY;
+		}
+
+		@Override
+		public ResourceStack<FluidResource> createSnapshot()
+		{
+			return this.resource.toStack(this.getAmount());
+		}
+
+		@Override
+		public void readSnapshot(ResourceStack<FluidResource> snapshot)
+		{
+			this.resource = snapshot.resource();
+		}
+
+		@Override
+		public void update()
+		{
+			this.update.run();
+		}
+
 	}
 
 }

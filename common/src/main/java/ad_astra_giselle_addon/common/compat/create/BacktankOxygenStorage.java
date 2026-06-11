@@ -6,9 +6,9 @@ import com.simibubi.create.content.equipment.armor.BacktankItem;
 import com.simibubi.create.content.equipment.armor.BacktankUtil;
 
 import ad_astra_giselle_addon.common.content.oxygen.IOxygenStorage;
-import ad_astra_giselle_addon.common.content.proof.ProofAbstractUtils;
-import earth.terrarium.botarium.common.fluid.FluidConstants;
-import earth.terrarium.botarium.common.item.ItemStackHolder;
+import ad_astra_giselle_addon.common.item.StorageSlotContext;
+import earth.terrarium.common_storage_lib.resources.fluid.util.FluidAmounts;
+import net.minecraft.core.Holder;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ArmorMaterials;
@@ -16,37 +16,37 @@ import net.minecraft.world.item.ItemStack;
 
 public class BacktankOxygenStorage implements IOxygenStorage
 {
-	public static IOxygenStorage getOxygenStroage(ItemStackHolder holder)
+	public static IOxygenStorage getOxygenStroage(StorageSlotContext slot)
 	{
-		if (holder.getStack().getItem() instanceof BacktankItem item)
+		if (slot.getItem() instanceof BacktankItem item)
 		{
-			return new BacktankOxygenStorage(holder, item.getMaterial());
+			return new BacktankOxygenStorage(slot, item.getMaterial());
 		}
 
 		return null;
 	}
 
-	private final ItemStackHolder holder;
-	private final ArmorMaterial material;
+	private final StorageSlotContext slot;
+	private final Holder<ArmorMaterial> material;
 
-	public BacktankOxygenStorage(ItemStackHolder holder, ArmorMaterial material)
+	public BacktankOxygenStorage(StorageSlotContext slot, Holder<ArmorMaterial> material)
 	{
-		this.holder = holder;
+		this.slot = slot;
 		this.material = material;
 	}
 
 	@Override
 	public long extractOxygen(@Nullable LivingEntity living, long amount, boolean simulate)
 	{
-		ItemStack stack = this.getHolder().getStack();
-		float air = BacktankUtil.getAir(stack);
-		float neededAir = this.toAir(amount);
-		float usingAir = Math.min(air, neededAir);
+		ItemStack stack = this.getSlot().getItemStack();
+		int air = BacktankUtil.getAir(stack);
+		long neededAir = this.toAir(amount);
+		int usingAir =  (int)Math.min(air, neededAir);
 
 		if (!simulate)
 		{
 			BacktankUtil.consumeAir(living, stack, usingAir);
-			this.getHolder().setStack(stack);
+			this.getSlot().update(stack);
 		}
 
 		return this.toAmount(usingAir);
@@ -55,27 +55,25 @@ public class BacktankOxygenStorage implements IOxygenStorage
 	@Override
 	public long getOxygenAmount()
 	{
-		ItemStack stack = this.getHolder().getStack();
-		float air = BacktankUtil.getAir(stack);
+		int air = BacktankUtil.getAir(this.getSlot().getItemStack());
 		return this.toAmount(air);
 	}
 
 	@Override
 	public long getOxygenCapacity()
 	{
-		ItemStack stack = this.getHolder().getStack();
-		float air = BacktankUtil.maxAir(stack);
+		int air = BacktankUtil.maxAir(this.getSlot().getItemStack());
 		return this.toAmount(air);
 	}
 
-	private float toAir(long amount)
+	private long toAir(long amount)
 	{
-		return (FluidConstants.toMillibuckets(amount) * ProofAbstractUtils.OXYGEN_PROOF_INTERVAL) / 20.0F;
+		return FluidAmounts.toMillibuckets(amount);
 	}
 
-	private long toAmount(float air)
+	private long toAmount(long air)
 	{
-		return (long) ((air * 20.0F * FluidConstants.fromMillibuckets(1)) / ProofAbstractUtils.OXYGEN_PROOF_INTERVAL);
+		return air * FluidAmounts.toPlatformAmount(1);
 	}
 
 	@Override
@@ -90,12 +88,12 @@ public class BacktankOxygenStorage implements IOxygenStorage
 		return this.getMaterial() == ArmorMaterials.NETHERITE;
 	}
 
-	public ItemStackHolder getHolder()
+	public StorageSlotContext getSlot()
 	{
-		return this.holder;
+		return this.slot;
 	}
 
-	public ArmorMaterial getMaterial()
+	public Holder<ArmorMaterial> getMaterial()
 	{
 		return this.material;
 	}

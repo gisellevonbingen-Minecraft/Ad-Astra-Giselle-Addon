@@ -3,14 +3,15 @@ package ad_astra_giselle_addon.common.content.proof;
 import ad_astra_giselle_addon.common.config.EnchantmentsConfig;
 import ad_astra_giselle_addon.common.item.ItemUsableResource;
 import ad_astra_giselle_addon.common.registry.AddonEnchantments;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.enchantment.Enchantment;
 
 public class GravityProofEnchantmentFunction extends ProofEnchantmentFunction
 {
 	@Override
-	public Enchantment getEnchantment()
+	public ResourceKey<Enchantment> getEnchantment()
 	{
-		return AddonEnchantments.GRAVITY_PROOF.get();
+		return AddonEnchantments.GRAVITY_PROOF;
 	}
 
 	@Override
@@ -18,11 +19,11 @@ public class GravityProofEnchantmentFunction extends ProofEnchantmentFunction
 	{
 		if (resource == ItemUsableResource.Energy)
 		{
-			return EnchantmentsConfig.GRAVITY_PROOF_ENERGY_USING;
+			return EnchantmentsConfig.GRAVITY_PROOF.energyUsing;
 		}
 		else if (resource == ItemUsableResource.Durability)
 		{
-			return EnchantmentsConfig.GRAVITY_PROOF_DURABILITY_USING;
+			return EnchantmentsConfig.GRAVITY_PROOF.durabilityUsing;
 		}
 		else
 		{
@@ -40,7 +41,7 @@ public class GravityProofEnchantmentFunction extends ProofEnchantmentFunction
 		}
 		else if (resource == ItemUsableResource.Durability)
 		{
-			return EnchantmentsConfig.GRAVITY_PROOF_DURABILITY_DURATION;
+			return EnchantmentsConfig.GRAVITY_PROOF.durabilityDuration;
 		}
 		else
 		{

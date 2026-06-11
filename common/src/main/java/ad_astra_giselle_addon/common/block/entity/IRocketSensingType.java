@@ -6,16 +6,22 @@ import java.util.List;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import com.mojang.serialization.Codec;
+
 import earth.terrarium.adastra.common.entities.vehicles.Vehicle;
+import io.netty.buffer.ByteBuf;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
 public interface IRocketSensingType
 {
 	public static final String LANGUGE_CATEGORY_ROCKET_SENSING_TYPE = "rocket_sensing_type";
+	public static final Codec<IRocketSensingType> CODEC = ResourceLocation.CODEC.xmap(IRocketSensingType::find, IRocketSensingType::getName);
+	public static final StreamCodec<ByteBuf, IRocketSensingType> STREAM_CODEC = ResourceLocation.STREAM_CODEC.map(IRocketSensingType::find, IRocketSensingType::getName);
 
 	public static List<IRocketSensingType> getRocketSensingTypes()
 	{

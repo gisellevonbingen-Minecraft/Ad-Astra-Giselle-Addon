@@ -17,7 +17,7 @@ public class RecipeHelper
 
 	public static ResourceLocation createUid(ResourceLocation key)
 	{
-		return new ResourceLocation(key.getNamespace(), JEI_CATEGORY + "." + key.getPath());
+		return ResourceLocation.fromNamespaceAndPath(key.getNamespace(), JEI_CATEGORY + "." + key.getPath());
 	}
 
 	public static Component getCategoryTitle(ResourceLocation key)

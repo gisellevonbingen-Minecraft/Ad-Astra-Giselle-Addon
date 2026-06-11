@@ -4,22 +4,22 @@ import org.jetbrains.annotations.Nullable;
 
 import ad_astra_giselle_addon.common.fluid.FluidPredicates;
 import ad_astra_giselle_addon.common.fluid.FluidUtils2;
-import ad_astra_giselle_addon.common.item.ItemStackReference;
+import ad_astra_giselle_addon.common.item.StorageSlotContext;
 import earth.terrarium.adastra.common.items.ZipGunItem;
 import earth.terrarium.adastra.common.items.armor.SpaceSuitItem;
-import earth.terrarium.botarium.common.fluid.FluidConstants;
-import earth.terrarium.botarium.common.fluid.base.FluidContainer;
-import earth.terrarium.botarium.common.fluid.base.FluidHolder;
-import earth.terrarium.botarium.common.fluid.base.ItemFluidContainer;
-import earth.terrarium.botarium.common.item.ItemStackHolder;
-import net.minecraft.world.entity.LivingEntity;
+import earth.terrarium.common_storage_lib.fluid.FluidApi;
+import earth.terrarium.common_storage_lib.resources.ResourceStack;
+import earth.terrarium.common_storage_lib.resources.fluid.FluidResource;
+import earth.terrarium.common_storage_lib.resources.fluid.util.FluidAmounts;
+import earth.terrarium.common_storage_lib.storage.base.CommonStorage;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 
 public class OxygenChargerUtils
 {
-	public static final long LEAST_DISTRIBUTION_AMOUNT = FluidConstants.fromMillibuckets(1L);
+	public static final long LEAST_DISTRIBUTION_AMOUNT = FluidAmounts.toPlatformAmount(1L);
 
-	public static void distributeToItems(LivingEntity living)
+	public static void distributeToItems(Player living)
 	{
 		OxygenStorageUtils.streamExtractable(living, LEAST_DISTRIBUTION_AMOUNT).forEach(source ->
 		{
@@ -32,30 +32,30 @@ public class OxygenChargerUtils
 
 	}
 
-	public static void distributeToItems(LivingEntity living, IOxygenCharger oxygenCharger)
+	public static void distributeToItems(Player living, IOxygenCharger oxygenCharger)
 	{
-		FluidContainer fluidContainer = oxygenCharger.getFluidContainer();
-		Iterable<ItemStackReference> items = oxygenCharger.getChargeMode().getItems(living);
+		CommonStorage<FluidResource> fluidContainer = oxygenCharger.getFluidContainer();
+		Iterable<StorageSlotContext> slots = oxygenCharger.getChargeMode().getSlots(living);
 		long transfer = oxygenCharger.getTransferAmount();
 
-		for (ItemStackReference itemRef : items)
+		for (StorageSlotContext slot : slots)
 		{
-			Item item = itemRef.getStack().getItem();
+			Item item = slot.getItem();
 
 			if (item instanceof SpaceSuitItem || item instanceof ZipGunItem)
 			{
-				ItemFluidContainer itemFluidContainer = FluidContainer.of(itemRef);
+				CommonStorage<FluidResource> itemFluidContainer = slot.find(FluidApi.ITEM);
 
 				if (itemFluidContainer == null)
 				{
 					continue;
 				}
 
-				FluidHolder moved = FluidUtils2.moveFluidAny(fluidContainer, itemFluidContainer, FluidPredicates::isOxygen, transfer, false);
+				ResourceStack<FluidResource> moved = FluidUtils2.moveFluidAny(fluidContainer, itemFluidContainer, FluidPredicates::isOxygen, transfer, false);
 
 				if (!moved.isEmpty())
 				{
-					transfer -= moved.getFluidAmount();
+					transfer -= moved.amount();
 
 					if (transfer <= 0)
 					{
@@ -71,17 +71,14 @@ public class OxygenChargerUtils
 	}
 
 	@Nullable
-	public static IOxygenCharger get(ItemStackHolder item)
+	public static IOxygenCharger get(StorageSlotContext slot)
 	{
-		if (item.getStack().getItem() instanceof IOxygenChargerItem oxygenChargerItem)
+		if (slot.getItem() instanceof IOxygenChargerItem oxygenChargerItem)
 		{
-			return oxygenChargerItem.getOxygenCharger(item);
-		}
-		else
-		{
-			return null;
+			return oxygenChargerItem.getOxygenCharger(slot);
 		}
 
+		return null;
 	}
 
 	private OxygenChargerUtils()

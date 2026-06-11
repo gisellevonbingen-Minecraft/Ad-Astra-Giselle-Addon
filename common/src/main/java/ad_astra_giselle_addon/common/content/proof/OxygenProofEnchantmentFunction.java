@@ -3,16 +3,17 @@ package ad_astra_giselle_addon.common.content.proof;
 import ad_astra_giselle_addon.common.content.oxygen.IOxygenStorage;
 import ad_astra_giselle_addon.common.content.oxygen.OxygenStorageUtils;
 import ad_astra_giselle_addon.common.entity.LivingHelper;
-import ad_astra_giselle_addon.common.item.ItemStackReference;
 import ad_astra_giselle_addon.common.item.ItemUsableResource;
+import ad_astra_giselle_addon.common.item.StorageSlotContext;
 import ad_astra_giselle_addon.common.registry.AddonEnchantments;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.enchantment.Enchantment;
 
 public class OxygenProofEnchantmentFunction extends ProofEnchantmentFunction
 {
-	public static boolean consumeOxygen(LivingEntity living, long oxygenUsing, boolean simulate)
+	public static boolean consumeOxygen(Player living, long oxygenUsing, boolean simulate)
 	{
 		if (!LivingHelper.isPlayingMode(living))
 		{
@@ -31,13 +32,13 @@ public class OxygenProofEnchantmentFunction extends ProofEnchantmentFunction
 	}
 
 	@Override
-	public Enchantment getEnchantment()
+	public ResourceKey<Enchantment> getEnchantment()
 	{
-		return AddonEnchantments.OXYGEN_PROOF.get();
+		return AddonEnchantments.OXYGEN_PROOF;
 	}
 
 	@Override
-	public boolean consume(LivingEntity living, EquipmentSlot slot, ItemStackReference enchantedItem, ItemUsableResource resource, boolean simulate)
+	public boolean consume(Player living, EquipmentSlot slot, StorageSlotContext enchantedItem, ItemUsableResource resource, boolean simulate)
 	{
 		return consumeOxygen(living, this.getOxygenUsing(resource), simulate);
 	}

@@ -1,0 +1,16 @@
+{
+	"type": "minecraft:smelting",
+	"neoforge:conditions": [
+		{
+			"type": "neoforge:mod_loaded",
+			"modid": "ae2"
+		}
+	],
+	"ingredient": {
+		"item": "ad_astra:sky_stone"
+	},
+	"result": {
+		"id": "ae2:smooth_sky_stone_block"
+	},
+	"experience": 0.35
+}

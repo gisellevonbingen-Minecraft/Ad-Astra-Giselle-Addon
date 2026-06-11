@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.function.Predicate;
 
 import org.apache.commons.lang3.ArrayUtils;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import ad_astra_giselle_addon.common.config.MachinesConfig;
@@ -22,18 +23,20 @@ import earth.terrarium.adastra.common.blockentities.base.sideconfig.Configuratio
 import earth.terrarium.adastra.common.constants.ConstantComponents;
 import earth.terrarium.adastra.common.entities.vehicles.Rocket;
 import earth.terrarium.adastra.common.entities.vehicles.Vehicle;
+import earth.terrarium.adastra.common.registry.ModDataManagers;
 import earth.terrarium.adastra.common.tags.ModFluidTags;
 import earth.terrarium.adastra.common.utils.TransferUtils;
-import earth.terrarium.botarium.common.fluid.FluidConstants;
-import earth.terrarium.botarium.common.fluid.base.BotariumFluidBlock;
-import earth.terrarium.botarium.common.fluid.base.FluidContainer;
-import earth.terrarium.botarium.common.fluid.base.FluidHolder;
-import earth.terrarium.botarium.common.fluid.base.ItemFluidContainer;
-import earth.terrarium.botarium.common.fluid.impl.SimpleFluidContainer;
-import earth.terrarium.botarium.common.fluid.impl.WrappedBlockFluidContainer;
-import earth.terrarium.botarium.common.item.ItemStackHolder;
+import earth.terrarium.common_storage_lib.context.impl.IsolatedSlotContext;
+import earth.terrarium.common_storage_lib.fluid.FluidApi;
+import earth.terrarium.common_storage_lib.fluid.impl.SimpleFluidStorage;
+import earth.terrarium.common_storage_lib.fluid.util.FluidProvider;
+import earth.terrarium.common_storage_lib.resources.ResourceStack;
+import earth.terrarium.common_storage_lib.resources.fluid.FluidResource;
+import earth.terrarium.common_storage_lib.resources.fluid.util.FluidAmounts;
+import earth.terrarium.common_storage_lib.storage.base.CommonStorage;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.TagKey;
@@ -46,7 +49,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.phys.AABB;
 
-public class FuelLoaderBlockEntity extends ContainerMachineBlockEntity implements BotariumFluidBlock<WrappedBlockFluidContainer>, IRangedWorkingAreaBlockEntity
+public class FuelLoaderBlockEntity extends ContainerMachineBlockEntity implements FluidProvider.BlockEntity, IRangedWorkingAreaBlockEntity
 {
 	public static final List<ConfigurationEntry> SIDE_CONFIG = List.of(//
 			new ConfigurationEntry(ConfigurationType.SLOT, Configuration.NONE, ConstantComponents.SIDE_CONFIG_INPUT_SLOTS), //
@@ -70,9 +73,9 @@ public class FuelLoaderBlockEntity extends ContainerMachineBlockEntity implement
 		return list;
 	}
 
-	public static boolean isFuel(FluidHolder fluidHolder)
+	public static boolean isFuel(FluidResource fluidHolder)
 	{
-		return FuelLoaderBlockEntity.isFuel(fluidHolder.getFluid());
+		return FuelLoaderBlockEntity.isFuel(fluidHolder.getType());
 	}
 
 	public static boolean isFuel(Fluid fluid)
@@ -81,24 +84,25 @@ public class FuelLoaderBlockEntity extends ContainerMachineBlockEntity implement
 	}
 
 	private boolean workingAreaVisible;
-	private WrappedBlockFluidContainer fluidTank;
+	private SimpleFluidStorage fluidTank;
 
 	public FuelLoaderBlockEntity(BlockPos pos, BlockState state)
 	{
 		super(pos, state, CONTAINER_SIZE);
+		this.fluidTank = new SimpleFluidStorage(this, ModDataManagers.FLUID_CONTENTS, 1, FluidAmounts.toPlatformAmount(MachinesConfig.FUEL_LOADER.fluidCapacity)).filter(0, FuelLoaderBlockEntity::isFuel);
 	}
 
 	@Override
-	public void load(CompoundTag tag)
+	protected void loadAdditional(CompoundTag tag, HolderLookup.Provider provider)
 	{
-		super.load(tag);
+		super.loadAdditional(tag, provider);
 		this.workingAreaVisible = tag.getBoolean(DATA_WORKINGAREA_VISIBLE_KEY);
 	}
 
 	@Override
-	public void saveAdditional(CompoundTag tag)
+	protected void saveAdditional(@NotNull CompoundTag tag, HolderLookup.Provider provider)
 	{
-		super.saveAdditional(tag);
+		super.saveAdditional(tag, provider);
 		tag.putBoolean(DATA_WORKINGAREA_VISIBLE_KEY, this.workingAreaVisible);
 	}
 
@@ -110,13 +114,8 @@ public class FuelLoaderBlockEntity extends ContainerMachineBlockEntity implement
 	}
 
 	@Override
-	public WrappedBlockFluidContainer getFluidContainer()
+	public CommonStorage<FluidResource> getFluids(@Nullable Direction direction)
 	{
-		if (this.fluidTank == null)
-		{
-			this.fluidTank = new WrappedBlockFluidContainer(this, new SimpleFluidContainer(tank -> FluidConstants.fromMillibuckets(MachinesConfig.FUEL_LOADER_FLUID_CAPACITY), 1, (tank, fluid) -> isFuel(fluid)));
-		}
-
 		return this.fluidTank;
 	}
 
@@ -130,8 +129,8 @@ public class FuelLoaderBlockEntity extends ContainerMachineBlockEntity implement
 		TransferUtils.pushItemsNearby(this, pos, FLUID_SINK_SLOTS, sideConfig.get(1), filter);
 		TransferUtils.pullItemsNearby(this, pos, FLUID_SINK_SLOTS, sideConfig.get(1), filter);
 
-		WrappedBlockFluidContainer fluidContainer = this.getFluidContainer();
-		long fluidCapacity = FluidConstants.fromMillibuckets(MachinesConfig.FUEL_LOADER_FLUID_CAPACITY);
+		CommonStorage<FluidResource> fluidContainer = this.getFluids(null);
+		long fluidCapacity = FluidAmounts.toPlatformAmount(MachinesConfig.FUEL_LOADER.fluidCapacity);
 		TransferUtils.pushFluidNearby(this, pos, fluidContainer, fluidCapacity, 0, sideConfig.get(2), filter);
 		TransferUtils.pullFluidNearby(this, pos, fluidContainer, fluidCapacity, 0, sideConfig.get(2), filter);
 	}
@@ -149,11 +148,19 @@ public class FuelLoaderBlockEntity extends ContainerMachineBlockEntity implement
 
 		if (ArrayUtils.contains(FLUID_SOURCE_SLOTS, slot))
 		{
-			ItemFluidContainer fluidContainer = FluidContainer.of(new ItemStackHolder(stack));
+			CommonStorage<FluidResource> fluidContainer = new IsolatedSlotContext(stack).find(FluidApi.ITEM);
 
 			if (fluidContainer != null)
 			{
-				return fluidContainer.getFluids().stream().anyMatch(FuelLoaderBlockEntity::isFuel);
+				for (int i = 0; i < fluidContainer.size(); i++)
+				{
+					if (isFuel(fluidContainer.get(i).getResource()))
+					{
+						return true;
+					}
+
+				}
+
 			}
 
 			return false;
@@ -171,11 +178,19 @@ public class FuelLoaderBlockEntity extends ContainerMachineBlockEntity implement
 	{
 		if (ArrayUtils.contains(FLUID_SOURCE_SLOTS, slot))
 		{
-			ItemFluidContainer fluidContainer = FluidContainer.of(new ItemStackHolder(stack));
+			CommonStorage<FluidResource> fluidContainer = new IsolatedSlotContext(stack).find(FluidApi.ITEM);
 
 			if (fluidContainer != null)
 			{
-				return !fluidContainer.getFluids().stream().anyMatch(FuelLoaderBlockEntity::isFuel);
+				for (int i = 0; i < fluidContainer.size(); i++)
+				{
+					if (isFuel(fluidContainer.get(i).getResource()))
+					{
+						return false;
+					}
+
+				}
+
 			}
 
 		}
@@ -202,11 +217,11 @@ public class FuelLoaderBlockEntity extends ContainerMachineBlockEntity implement
 
 	public void processTank()
 	{
-		FluidContainer tank = FluidContainer.of(this, null);
+		CommonStorage<FluidResource> tank = this.getFluids(null);
 
 		for (int slot : FLUID_SOURCE_SLOTS)
 		{
-			ItemFluidContainer source = FluidContainer.of(ContainerHelper.getItem(this, slot));
+			CommonStorage<FluidResource> source = ContainerHelper.getItem(this, slot).find(FluidApi.ITEM);
 
 			if (source != null)
 			{
@@ -217,7 +232,7 @@ public class FuelLoaderBlockEntity extends ContainerMachineBlockEntity implement
 
 		for (int slot : FLUID_SINK_SLOTS)
 		{
-			ItemFluidContainer sink = FluidContainer.of(ContainerHelper.getItem(this, slot));
+			CommonStorage<FluidResource> sink = ContainerHelper.getItem(this, slot).find(FluidApi.ITEM);
 
 			if (sink != null)
 			{
@@ -262,7 +277,7 @@ public class FuelLoaderBlockEntity extends ContainerMachineBlockEntity implement
 	@Override
 	public int getWorkingRange()
 	{
-		return MachinesConfig.FUEL_LOADER_WORKING_RANGE;
+		return MachinesConfig.FUEL_LOADER.workingRange;
 	}
 
 	@Override
@@ -271,24 +286,23 @@ public class FuelLoaderBlockEntity extends ContainerMachineBlockEntity implement
 		return this.getWorkingArea(this.getBlockPos(), range);
 	}
 
-	public FluidHolder giveFuel(Vehicle vehicle)
+	public ResourceStack<FluidResource> giveFuel(Vehicle vehicle)
 	{
-		return this.giveFuel(vehicle, FluidConstants.fromMillibuckets(MachinesConfig.FUEL_LOADER_FLUID_TRANSFER));
+		return this.giveFuel(vehicle, FluidAmounts.toPlatformAmount(MachinesConfig.FUEL_LOADER.fluidTransfer));
 	}
 
-	private FluidHolder giveFuel(Vehicle vehicle, long transfer)
+	private ResourceStack<FluidResource> giveFuel(Vehicle vehicle, long transfer)
 	{
 		VehicleFuelInformation fuelInfo = VehicleHelper.getFuelInformation(vehicle);
 
 		if (fuelInfo != null)
 		{
-			FluidContainer from = FluidContainer.of(this, null);
-			FluidHolder moved = FluidUtils2.moveFluidAny(from, fuelInfo.fuelTank(), fluid -> fluid.is(fuelInfo.fuelTag()), transfer, false);
-			return moved;
+			CommonStorage<FluidResource> from = this.getFluids(null);
+			return FluidUtils2.moveFluidAny(from, fuelInfo.fuelTank(), fluid -> fluid.is(fuelInfo.fuelTag()), transfer, false);
 		}
 		else
 		{
-			return FluidHolder.empty();
+			return ResourceStack.EMPTY_FLUID;
 		}
 
 	}

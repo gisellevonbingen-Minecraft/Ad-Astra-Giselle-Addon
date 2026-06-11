@@ -2,10 +2,10 @@ allprojects {
     apply plugin: "java"
     apply plugin: "maven-publish"
 
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
-
-    archivesBaseName = rootProject.archives_base_name
+    java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+    base {
+        archivesName = rootProject.archives_base_name
+    }
     version = "${rootProject.mc_version}-${rootProject.mod_version}"
     group = rootProject.maven_group
 
@@ -47,8 +47,8 @@ allprojects {
             url "https://maven.createmod.net"
         }
         maven {
-            name "tterrag maven"
-            url "https://maven.tterrag.com"
+            name "Registrate"
+            url "https://maven.ithundxr.dev/snapshots"
         }
         flatDir {
             name "LocalFlatDir"
@@ -73,20 +73,19 @@ allprojects {
 
     tasks.withType(JavaCompile) {
         options.encoding = "UTF-8"
-        options.release = 17
     }
 
     java {
         withSourcesJar()
     }
 
-    def resourceTargets = ["META-INF/mods.toml", "*.json"]
+    def resourceTargets = ["META-INF/neoforge.mods.toml", "*.json"]
     def intoTargets = ["$rootDir/out/production/resources/", "$rootDir/out/production/${project.name}.main/", "$rootDir/${project.name}/bin/main/"]
     def replaceProperties = [mc_version: mc_version,
         mod_id: mod_id, mod_version: mod_version, mod_name: mod_name, mod_description: mod_description, mod_license: mod_license, mod_homepage: mod_homepage, mod_source: mod_source, mod_issues: mod_issues,
         fabric_api_version: fabric_api_version, fabric_loader_version: fabric_loader_version,
-        forge_api_version: forge_api_version, forge_loader_version: forge_loader_version,
-        botarium_version: botarium_version, ad_astra_version: ad_astra_version, resourcefulconfig_version: resourcefulconfig_version
+        neoforge_api_version: neoforge_api_version, neoforge_loader_version: neoforge_loader_version, neoforge_api_version_range: neoforge_api_version_range,
+        csl_version: csl_version, ad_astra_version: ad_astra_version, resourcefulconfig_version: resourcefulconfig_version
     ]
 
     processResources {

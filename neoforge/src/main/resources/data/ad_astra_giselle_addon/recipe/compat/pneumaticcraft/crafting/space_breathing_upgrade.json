@@ -1,0 +1,28 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"neoforge:conditions": [
+		{
+			"type": "neoforge:item_exists",
+			"item": "ad_astra_giselle_addon:pneumatic_space_breathing_upgrade"
+		}
+	],
+	"result": {
+		"id": "ad_astra_giselle_addon:pneumatic_space_breathing_upgrade"
+	},
+	"pattern": [
+		"LXL",
+		"XCX",
+		"LXL"
+	],
+	"key": {
+		"L": {
+			"tag": "pneumaticcraft:upgrade_components"
+		},
+		"X": {
+			"item": "ad_astra:moon_stone"
+		},
+		"C": {
+			"item": "ad_astra:space_suit"
+		}
+	}
+}

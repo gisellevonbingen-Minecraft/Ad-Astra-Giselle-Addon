@@ -1,15 +1,15 @@
 package ad_astra_giselle_addon.common.content.oxygen;
 
-import earth.terrarium.botarium.common.item.ItemStackHolder;
+import earth.terrarium.common_storage_lib.context.ItemContext;
 
 public interface IOxygenChargerItem extends IOxygenStorageItem
 {
-	IOxygenCharger getOxygenCharger(ItemStackHolder item);
+	IOxygenCharger getOxygenCharger(ItemContext context);
 
 	@Override
-	default IOxygenStorage getOxygenStorage(ItemStackHolder item)
+	default IOxygenStorage getOxygenStorage(ItemContext context)
 	{
-		return this.getOxygenCharger(item);
+		return this.getOxygenCharger(context);
 	}
 
 }

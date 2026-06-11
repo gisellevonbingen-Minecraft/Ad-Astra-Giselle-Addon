@@ -1,12 +1,12 @@
 package ad_astra_giselle_addon.client.util;
 
-import org.joml.Matrix3f;
 import org.joml.Matrix4f;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
 import ad_astra_giselle_addon.common.AdAstraGiselleAddon;
+import earth.terrarium.adastra.AdAstra;
 import net.minecraft.client.GraphicsStatus;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -19,14 +19,14 @@ import net.minecraft.world.phys.AABB;
 
 public class RenderHelper
 {
+	public static final ResourceLocation SPRITE_FLUID_BAR = ResourceLocation.fromNamespaceAndPath(AdAstra.MOD_ID, "textures/gui/sprites/fluid_bar.png");
+
 	public static final ResourceLocation TILE_SURFACE = AdAstraGiselleAddon.rl("block/tile_surface");
 	private static TextureAtlasSprite atlass = null;
 
 	public static void renderBox(PoseStack poseStack, MultiBufferSource buffer, AABB bounds, int lineR, int lineG, int lineB, int surfaceR, int surfaceG, int surfaceB)
 	{
 		PoseStack.Pose last = poseStack.last();
-		Matrix3f normal = last.normal();
-		Matrix4f matrix4f = last.pose();
 
 		float startX = (float) bounds.minX + 0.005F;
 		float topY = (float) bounds.minY + 0.005F;
@@ -38,27 +38,27 @@ public class RenderHelper
 		VertexConsumer builder = buffer.getBuffer(RenderType.lines());
 
 		// Bottom frame
-		drawShapeOutline(builder, matrix4f, normal, startX, botY, startZ, endX, botY, startZ, lineR, lineG, lineB);
-		drawShapeOutline(builder, matrix4f, normal, startX, botY, endZ, endX, botY, endZ, lineR, lineG, lineB);
-		drawShapeOutline(builder, matrix4f, normal, startX, botY, startZ, startX, botY, endZ, lineR, lineG, lineB);
-		drawShapeOutline(builder, matrix4f, normal, endX, botY, startZ, endX, botY, endZ, lineR, lineG, lineB);
+		drawShapeOutline(builder, last, startX, botY, startZ, endX, botY, startZ, lineR, lineG, lineB);
+		drawShapeOutline(builder, last, startX, botY, endZ, endX, botY, endZ, lineR, lineG, lineB);
+		drawShapeOutline(builder, last, startX, botY, startZ, startX, botY, endZ, lineR, lineG, lineB);
+		drawShapeOutline(builder, last, endX, botY, startZ, endX, botY, endZ, lineR, lineG, lineB);
 
 		// Top frame
-		drawShapeOutline(builder, matrix4f, normal, startX, topY, startZ, endX, topY, startZ, lineR, lineG, lineB);
-		drawShapeOutline(builder, matrix4f, normal, startX, topY, endZ, endX, topY, endZ, lineR, lineG, lineB);
-		drawShapeOutline(builder, matrix4f, normal, startX, topY, startZ, startX, topY, endZ, lineR, lineG, lineB);
-		drawShapeOutline(builder, matrix4f, normal, endX, topY, startZ, endX, topY, endZ, lineR, lineG, lineB);
+		drawShapeOutline(builder, last, startX, topY, startZ, endX, topY, startZ, lineR, lineG, lineB);
+		drawShapeOutline(builder, last, startX, topY, endZ, endX, topY, endZ, lineR, lineG, lineB);
+		drawShapeOutline(builder, last, startX, topY, startZ, startX, topY, endZ, lineR, lineG, lineB);
+		drawShapeOutline(builder, last, endX, topY, startZ, endX, topY, endZ, lineR, lineG, lineB);
 
 		// Vertical lines
-		drawShapeOutline(builder, matrix4f, normal, startX, botY, startZ, startX, topY, startZ, lineR, lineG, lineB);
-		drawShapeOutline(builder, matrix4f, normal, startX, botY, endZ, startX, topY, endZ, lineR, lineG, lineB);
-		drawShapeOutline(builder, matrix4f, normal, endX, botY, startZ, endX, topY, startZ, lineR, lineG, lineB);
-		drawShapeOutline(builder, matrix4f, normal, endX, botY, endZ, endX, topY, endZ, lineR, lineG, lineB);
+		drawShapeOutline(builder, last, startX, botY, startZ, startX, topY, startZ, lineR, lineG, lineB);
+		drawShapeOutline(builder, last, startX, botY, endZ, startX, topY, endZ, lineR, lineG, lineB);
+		drawShapeOutline(builder, last, endX, botY, startZ, endX, topY, startZ, lineR, lineG, lineB);
+		drawShapeOutline(builder, last, endX, botY, endZ, endX, topY, endZ, lineR, lineG, lineB);
 
-		drawSurfaces(buffer, matrix4f, normal, startX, startZ, endX, endZ, botY, topY, surfaceR, surfaceG, surfaceB);
+		drawSurfaces(buffer, last, startX, startZ, endX, endZ, botY, topY, surfaceR, surfaceG, surfaceB);
 	}
 
-	private static void drawShapeOutline(VertexConsumer builder, Matrix4f matrix, Matrix3f normal, float x1, float y1, float z1, float x2, float y2, float z2, int r, int g, int b)
+	private static void drawShapeOutline(VertexConsumer builder, PoseStack.Pose pose, float x1, float y1, float z1, float x2, float y2, float z2, int r, int g, int b)
 	{
 		float nX = x2 - x1;
 		float nY = y2 - y1;
@@ -68,11 +68,12 @@ public class RenderHelper
 		nY = nY / sqrt;
 		nZ = nZ / sqrt;
 
-		builder.vertex(matrix, x1, y1, z1).color(r, g, b, 0xFF).normal(normal, nX, nY, nZ).endVertex();
-		builder.vertex(matrix, x2, y2, z2).color(r, g, b, 0xFF).normal(normal, nX, nY, nZ).endVertex();
+		Matrix4f matrix = pose.pose();
+		builder.addVertex(matrix, x1, y1, z1).setColor(r, g, b, 0xFF).setNormal(pose, nX, nY, nZ);
+		builder.addVertex(matrix, x2, y2, z2).setColor(r, g, b, 0xFF).setNormal(pose, nX, nY, nZ);
 	}
 
-	private static void drawSurfaces(MultiBufferSource buffer, Matrix4f matrix, Matrix3f normal, float startX, float startZ, float endX, float endZ, float botY, float topY, int r, int g, int b)
+	private static void drawSurfaces(MultiBufferSource buffer, PoseStack.Pose pose, float startX, float startZ, float endX, float endZ, float botY, float topY, int r, int g, int b)
 	{
 		VertexConsumer builder;
 		Minecraft minecraft = Minecraft.getInstance();
@@ -84,7 +85,7 @@ public class RenderHelper
 		}
 		else
 		{
-			builder = buffer.getBuffer(RenderType.translucentNoCrumbling());
+			builder = buffer.getBuffer(RenderType.translucent());
 		}
 
 		if (atlass == null)
@@ -92,6 +93,7 @@ public class RenderHelper
 			atlass = minecraft.getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(TILE_SURFACE);
 		}
 
+		Matrix4f matrix = pose.pose();
 		float maxU = atlass.getU1();
 		float minU = atlass.getU0();
 		float maxV = atlass.getV1();
@@ -100,78 +102,78 @@ public class RenderHelper
 		int alpha = 0x20;
 
 		// Down
-		builder.vertex(matrix, startX, botY, startZ).color(r, g, b, alpha).uv(minU, minV).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(light).normal(normal, 0, -1, 0).endVertex();
-		builder.vertex(matrix, endX, botY, startZ).color(r, g, b, alpha).uv(maxU, minV).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(light).normal(normal, 0, -1, 0).endVertex();
-		builder.vertex(matrix, endX, botY, endZ).color(r, g, b, alpha).uv(maxU, maxV).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(light).normal(normal, 0, -1, 0).endVertex();
-		builder.vertex(matrix, startX, botY, endZ).color(r, g, b, alpha).uv(minU, maxV).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(light).normal(normal, 0, -1, 0).endVertex();
+		builder.addVertex(matrix, startX, botY, startZ).setColor(r, g, b, alpha).setUv(minU, minV).setOverlay(OverlayTexture.NO_OVERLAY).setLight(light).setNormal(pose, 0, -1, 0);
+		builder.addVertex(matrix, endX, botY, startZ).setColor(r, g, b, alpha).setUv(maxU, minV).setOverlay(OverlayTexture.NO_OVERLAY).setLight(light).setNormal(pose, 0, -1, 0);
+		builder.addVertex(matrix, endX, botY, endZ).setColor(r, g, b, alpha).setUv(maxU, maxV).setOverlay(OverlayTexture.NO_OVERLAY).setLight(light).setNormal(pose, 0, -1, 0);
+		builder.addVertex(matrix, startX, botY, endZ).setColor(r, g, b, alpha).setUv(minU, maxV).setOverlay(OverlayTexture.NO_OVERLAY).setLight(light).setNormal(pose, 0, -1, 0);
 
 		// Top
-		builder.vertex(matrix, endX, topY, startZ).color(r, g, b, alpha).uv(minU, minV).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(light).normal(normal, 0, 1, 0).endVertex();
-		builder.vertex(matrix, startX, topY, startZ).color(r, g, b, alpha).uv(maxU, minV).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(light).normal(normal, 0, 1, 0).endVertex();
-		builder.vertex(matrix, startX, topY, endZ).color(r, g, b, alpha).uv(maxU, maxV).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(light).normal(normal, 0, 1, 0).endVertex();
-		builder.vertex(matrix, endX, topY, endZ).color(r, g, b, alpha).uv(minU, maxV).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(light).normal(normal, 0, 1, 0).endVertex();
+		builder.addVertex(matrix, endX, topY, startZ).setColor(r, g, b, alpha).setUv(minU, minV).setOverlay(OverlayTexture.NO_OVERLAY).setLight(light).setNormal(pose, 0, 1, 0);
+		builder.addVertex(matrix, startX, topY, startZ).setColor(r, g, b, alpha).setUv(maxU, minV).setOverlay(OverlayTexture.NO_OVERLAY).setLight(light).setNormal(pose, 0, 1, 0);
+		builder.addVertex(matrix, startX, topY, endZ).setColor(r, g, b, alpha).setUv(maxU, maxV).setOverlay(OverlayTexture.NO_OVERLAY).setLight(light).setNormal(pose, 0, 1, 0);
+		builder.addVertex(matrix, endX, topY, endZ).setColor(r, g, b, alpha).setUv(minU, maxV).setOverlay(OverlayTexture.NO_OVERLAY).setLight(light).setNormal(pose, 0, 1, 0);
 
 		// North
-		builder.vertex(matrix, startX, botY, startZ).color(r, g, b, alpha).uv(minU, minV).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(light).normal(normal, 0, 0, -1).endVertex();
-		builder.vertex(matrix, startX, topY, startZ).color(r, g, b, alpha).uv(minU, maxV).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(light).normal(normal, 0, 0, -1).endVertex();
-		builder.vertex(matrix, endX, topY, startZ).color(r, g, b, alpha).uv(maxU, maxV).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(light).normal(normal, 0, 0, -1).endVertex();
-		builder.vertex(matrix, endX, botY, startZ).color(r, g, b, alpha).uv(maxU, minV).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(light).normal(normal, 0, 0, -1).endVertex();
+		builder.addVertex(matrix, startX, botY, startZ).setColor(r, g, b, alpha).setUv(minU, minV).setOverlay(OverlayTexture.NO_OVERLAY).setLight(light).setNormal(pose, 0, 0, -1);
+		builder.addVertex(matrix, startX, topY, startZ).setColor(r, g, b, alpha).setUv(minU, maxV).setOverlay(OverlayTexture.NO_OVERLAY).setLight(light).setNormal(pose, 0, 0, -1);
+		builder.addVertex(matrix, endX, topY, startZ).setColor(r, g, b, alpha).setUv(maxU, maxV).setOverlay(OverlayTexture.NO_OVERLAY).setLight(light).setNormal(pose, 0, 0, -1);
+		builder.addVertex(matrix, endX, botY, startZ).setColor(r, g, b, alpha).setUv(maxU, minV).setOverlay(OverlayTexture.NO_OVERLAY).setLight(light).setNormal(pose, 0, 0, -1);
 
 		// South
-		builder.vertex(matrix, endX, botY, endZ).color(r, g, b, alpha).uv(minU, minV).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(light).normal(normal, 0, 0, 1).endVertex();
-		builder.vertex(matrix, endX, topY, endZ).color(r, g, b, alpha).uv(minU, maxV).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(light).normal(normal, 0, 0, 1).endVertex();
-		builder.vertex(matrix, startX, topY, endZ).color(r, g, b, alpha).uv(maxU, maxV).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(light).normal(normal, 0, 0, 1).endVertex();
-		builder.vertex(matrix, startX, botY, endZ).color(r, g, b, alpha).uv(maxU, minV).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(light).normal(normal, 0, 0, 1).endVertex();
+		builder.addVertex(matrix, endX, botY, endZ).setColor(r, g, b, alpha).setUv(minU, minV).setOverlay(OverlayTexture.NO_OVERLAY).setLight(light).setNormal(pose, 0, 0, 1);
+		builder.addVertex(matrix, endX, topY, endZ).setColor(r, g, b, alpha).setUv(minU, maxV).setOverlay(OverlayTexture.NO_OVERLAY).setLight(light).setNormal(pose, 0, 0, 1);
+		builder.addVertex(matrix, startX, topY, endZ).setColor(r, g, b, alpha).setUv(maxU, maxV).setOverlay(OverlayTexture.NO_OVERLAY).setLight(light).setNormal(pose, 0, 0, 1);
+		builder.addVertex(matrix, startX, botY, endZ).setColor(r, g, b, alpha).setUv(maxU, minV).setOverlay(OverlayTexture.NO_OVERLAY).setLight(light).setNormal(pose, 0, 0, 1);
 
 		// West
-		builder.vertex(matrix, startX, botY, endZ).color(r, g, b, alpha).uv(minU, minV).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(light).normal(normal, -1, 0, 0).endVertex();
-		builder.vertex(matrix, startX, topY, endZ).color(r, g, b, alpha).uv(minU, maxV).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(light).normal(normal, -1, 0, 0).endVertex();
-		builder.vertex(matrix, startX, topY, startZ).color(r, g, b, alpha).uv(maxU, maxV).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(light).normal(normal, -1, 0, 0).endVertex();
-		builder.vertex(matrix, startX, botY, startZ).color(r, g, b, alpha).uv(maxU, minV).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(light).normal(normal, -1, 0, 0).endVertex();
+		builder.addVertex(matrix, startX, botY, endZ).setColor(r, g, b, alpha).setUv(minU, minV).setOverlay(OverlayTexture.NO_OVERLAY).setLight(light).setNormal(pose, -1, 0, 0);
+		builder.addVertex(matrix, startX, topY, endZ).setColor(r, g, b, alpha).setUv(minU, maxV).setOverlay(OverlayTexture.NO_OVERLAY).setLight(light).setNormal(pose, -1, 0, 0);
+		builder.addVertex(matrix, startX, topY, startZ).setColor(r, g, b, alpha).setUv(maxU, maxV).setOverlay(OverlayTexture.NO_OVERLAY).setLight(light).setNormal(pose, -1, 0, 0);
+		builder.addVertex(matrix, startX, botY, startZ).setColor(r, g, b, alpha).setUv(maxU, minV).setOverlay(OverlayTexture.NO_OVERLAY).setLight(light).setNormal(pose, -1, 0, 0);
 
 		// East
-		builder.vertex(matrix, endX, botY, startZ).color(r, g, b, alpha).uv(minU, minV).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(light).normal(normal, 1, 0, 0).endVertex();
-		builder.vertex(matrix, endX, topY, startZ).color(r, g, b, alpha).uv(minU, maxV).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(light).normal(normal, 1, 0, 0).endVertex();
-		builder.vertex(matrix, endX, topY, endZ).color(r, g, b, alpha).uv(maxU, maxV).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(light).normal(normal, 1, 0, 0).endVertex();
-		builder.vertex(matrix, endX, botY, endZ).color(r, g, b, alpha).uv(maxU, minV).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(light).normal(normal, 1, 0, 0).endVertex();
+		builder.addVertex(matrix, endX, botY, startZ).setColor(r, g, b, alpha).setUv(minU, minV).setOverlay(OverlayTexture.NO_OVERLAY).setLight(light).setNormal(pose, 1, 0, 0);
+		builder.addVertex(matrix, endX, topY, startZ).setColor(r, g, b, alpha).setUv(minU, maxV).setOverlay(OverlayTexture.NO_OVERLAY).setLight(light).setNormal(pose, 1, 0, 0);
+		builder.addVertex(matrix, endX, topY, endZ).setColor(r, g, b, alpha).setUv(maxU, maxV).setOverlay(OverlayTexture.NO_OVERLAY).setLight(light).setNormal(pose, 1, 0, 0);
+		builder.addVertex(matrix, endX, botY, endZ).setColor(r, g, b, alpha).setUv(maxU, minV).setOverlay(OverlayTexture.NO_OVERLAY).setLight(light).setNormal(pose, 1, 0, 0);
 
 		// Inside
 
 		// Down
-		builder.vertex(matrix, endX, botY, startZ).color(r, g, b, alpha).uv(minU, minV).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(light).normal(normal, 0, -1, 0).endVertex();
-		builder.vertex(matrix, startX, botY, startZ).color(r, g, b, alpha).uv(maxU, minV).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(light).normal(normal, 0, -1, 0).endVertex();
-		builder.vertex(matrix, startX, botY, endZ).color(r, g, b, alpha).uv(maxU, maxV).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(light).normal(normal, 0, -1, 0).endVertex();
-		builder.vertex(matrix, endX, botY, endZ).color(r, g, b, alpha).uv(minU, maxV).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(light).normal(normal, 0, -1, 0).endVertex();
+		builder.addVertex(matrix, endX, botY, startZ).setColor(r, g, b, alpha).setUv(minU, minV).setOverlay(OverlayTexture.NO_OVERLAY).setLight(light).setNormal(pose, 0, -1, 0);
+		builder.addVertex(matrix, startX, botY, startZ).setColor(r, g, b, alpha).setUv(maxU, minV).setOverlay(OverlayTexture.NO_OVERLAY).setLight(light).setNormal(pose, 0, -1, 0);
+		builder.addVertex(matrix, startX, botY, endZ).setColor(r, g, b, alpha).setUv(maxU, maxV).setOverlay(OverlayTexture.NO_OVERLAY).setLight(light).setNormal(pose, 0, -1, 0);
+		builder.addVertex(matrix, endX, botY, endZ).setColor(r, g, b, alpha).setUv(minU, maxV).setOverlay(OverlayTexture.NO_OVERLAY).setLight(light).setNormal(pose, 0, -1, 0);
 
 		// Top
-		builder.vertex(matrix, startX, topY, startZ).color(r, g, b, alpha).uv(minU, minV).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(light).normal(normal, 0, 1, 0).endVertex();
-		builder.vertex(matrix, endX, topY, startZ).color(r, g, b, alpha).uv(maxU, minV).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(light).normal(normal, 0, 1, 0).endVertex();
-		builder.vertex(matrix, endX, topY, endZ).color(r, g, b, alpha).uv(maxU, maxV).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(light).normal(normal, 0, 1, 0).endVertex();
-		builder.vertex(matrix, startX, topY, endZ).color(r, g, b, alpha).uv(minU, maxV).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(light).normal(normal, 0, 1, 0).endVertex();
+		builder.addVertex(matrix, startX, topY, startZ).setColor(r, g, b, alpha).setUv(minU, minV).setOverlay(OverlayTexture.NO_OVERLAY).setLight(light).setNormal(pose, 0, 1, 0);
+		builder.addVertex(matrix, endX, topY, startZ).setColor(r, g, b, alpha).setUv(maxU, minV).setOverlay(OverlayTexture.NO_OVERLAY).setLight(light).setNormal(pose, 0, 1, 0);
+		builder.addVertex(matrix, endX, topY, endZ).setColor(r, g, b, alpha).setUv(maxU, maxV).setOverlay(OverlayTexture.NO_OVERLAY).setLight(light).setNormal(pose, 0, 1, 0);
+		builder.addVertex(matrix, startX, topY, endZ).setColor(r, g, b, alpha).setUv(minU, maxV).setOverlay(OverlayTexture.NO_OVERLAY).setLight(light).setNormal(pose, 0, 1, 0);
 
 		// North
-		builder.vertex(matrix, endX, botY, startZ).color(r, g, b, alpha).uv(minU, minV).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(light).normal(normal, 0, 0, -1).endVertex();
-		builder.vertex(matrix, endX, topY, startZ).color(r, g, b, alpha).uv(minU, maxV).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(light).normal(normal, 0, 0, -1).endVertex();
-		builder.vertex(matrix, startX, topY, startZ).color(r, g, b, alpha).uv(maxU, maxV).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(light).normal(normal, 0, 0, -1).endVertex();
-		builder.vertex(matrix, startX, botY, startZ).color(r, g, b, alpha).uv(maxU, minV).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(light).normal(normal, 0, 0, -1).endVertex();
+		builder.addVertex(matrix, endX, botY, startZ).setColor(r, g, b, alpha).setUv(minU, minV).setOverlay(OverlayTexture.NO_OVERLAY).setLight(light).setNormal(pose, 0, 0, -1);
+		builder.addVertex(matrix, endX, topY, startZ).setColor(r, g, b, alpha).setUv(minU, maxV).setOverlay(OverlayTexture.NO_OVERLAY).setLight(light).setNormal(pose, 0, 0, -1);
+		builder.addVertex(matrix, startX, topY, startZ).setColor(r, g, b, alpha).setUv(maxU, maxV).setOverlay(OverlayTexture.NO_OVERLAY).setLight(light).setNormal(pose, 0, 0, -1);
+		builder.addVertex(matrix, startX, botY, startZ).setColor(r, g, b, alpha).setUv(maxU, minV).setOverlay(OverlayTexture.NO_OVERLAY).setLight(light).setNormal(pose, 0, 0, -1);
 
 		// South
-		builder.vertex(matrix, startX, botY, endZ).color(r, g, b, alpha).uv(minU, minV).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(light).normal(normal, 0, 0, 1).endVertex();
-		builder.vertex(matrix, startX, topY, endZ).color(r, g, b, alpha).uv(minU, maxV).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(light).normal(normal, 0, 0, 1).endVertex();
-		builder.vertex(matrix, endX, topY, endZ).color(r, g, b, alpha).uv(maxU, maxV).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(light).normal(normal, 0, 0, 1).endVertex();
-		builder.vertex(matrix, endX, botY, endZ).color(r, g, b, alpha).uv(maxU, minV).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(light).normal(normal, 0, 0, 1).endVertex();
+		builder.addVertex(matrix, startX, botY, endZ).setColor(r, g, b, alpha).setUv(minU, minV).setOverlay(OverlayTexture.NO_OVERLAY).setLight(light).setNormal(pose, 0, 0, 1);
+		builder.addVertex(matrix, startX, topY, endZ).setColor(r, g, b, alpha).setUv(minU, maxV).setOverlay(OverlayTexture.NO_OVERLAY).setLight(light).setNormal(pose, 0, 0, 1);
+		builder.addVertex(matrix, endX, topY, endZ).setColor(r, g, b, alpha).setUv(maxU, maxV).setOverlay(OverlayTexture.NO_OVERLAY).setLight(light).setNormal(pose, 0, 0, 1);
+		builder.addVertex(matrix, endX, botY, endZ).setColor(r, g, b, alpha).setUv(maxU, minV).setOverlay(OverlayTexture.NO_OVERLAY).setLight(light).setNormal(pose, 0, 0, 1);
 
 		// West
-		builder.vertex(matrix, endX, botY, endZ).color(r, g, b, alpha).uv(minU, minV).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(light).normal(normal, -1, 0, 0).endVertex();
-		builder.vertex(matrix, endX, topY, endZ).color(r, g, b, alpha).uv(minU, maxV).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(light).normal(normal, -1, 0, 0).endVertex();
-		builder.vertex(matrix, endX, topY, startZ).color(r, g, b, alpha).uv(maxU, maxV).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(light).normal(normal, -1, 0, 0).endVertex();
-		builder.vertex(matrix, endX, botY, startZ).color(r, g, b, alpha).uv(maxU, minV).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(light).normal(normal, -1, 0, 0).endVertex();
+		builder.addVertex(matrix, endX, botY, endZ).setColor(r, g, b, alpha).setUv(minU, minV).setOverlay(OverlayTexture.NO_OVERLAY).setLight(light).setNormal(pose, -1, 0, 0);
+		builder.addVertex(matrix, endX, topY, endZ).setColor(r, g, b, alpha).setUv(minU, maxV).setOverlay(OverlayTexture.NO_OVERLAY).setLight(light).setNormal(pose, -1, 0, 0);
+		builder.addVertex(matrix, endX, topY, startZ).setColor(r, g, b, alpha).setUv(maxU, maxV).setOverlay(OverlayTexture.NO_OVERLAY).setLight(light).setNormal(pose, -1, 0, 0);
+		builder.addVertex(matrix, endX, botY, startZ).setColor(r, g, b, alpha).setUv(maxU, minV).setOverlay(OverlayTexture.NO_OVERLAY).setLight(light).setNormal(pose, -1, 0, 0);
 
 		// East
-		builder.vertex(matrix, startX, botY, startZ).color(r, g, b, alpha).uv(minU, minV).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(light).normal(normal, 1, 0, 0).endVertex();
-		builder.vertex(matrix, startX, topY, startZ).color(r, g, b, alpha).uv(minU, maxV).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(light).normal(normal, 1, 0, 0).endVertex();
-		builder.vertex(matrix, startX, topY, endZ).color(r, g, b, alpha).uv(maxU, maxV).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(light).normal(normal, 1, 0, 0).endVertex();
-		builder.vertex(matrix, startX, botY, endZ).color(r, g, b, alpha).uv(maxU, minV).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(light).normal(normal, 1, 0, 0).endVertex();
+		builder.addVertex(matrix, startX, botY, startZ).setColor(r, g, b, alpha).setUv(minU, minV).setOverlay(OverlayTexture.NO_OVERLAY).setLight(light).setNormal(pose, 1, 0, 0);
+		builder.addVertex(matrix, startX, topY, startZ).setColor(r, g, b, alpha).setUv(minU, maxV).setOverlay(OverlayTexture.NO_OVERLAY).setLight(light).setNormal(pose, 1, 0, 0);
+		builder.addVertex(matrix, startX, topY, endZ).setColor(r, g, b, alpha).setUv(maxU, maxV).setOverlay(OverlayTexture.NO_OVERLAY).setLight(light).setNormal(pose, 1, 0, 0);
+		builder.addVertex(matrix, startX, botY, endZ).setColor(r, g, b, alpha).setUv(maxU, minV).setOverlay(OverlayTexture.NO_OVERLAY).setLight(light).setNormal(pose, 1, 0, 0);
 	}
 
 	private RenderHelper()

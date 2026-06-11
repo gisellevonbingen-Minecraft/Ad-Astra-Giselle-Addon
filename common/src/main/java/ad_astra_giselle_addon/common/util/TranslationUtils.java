@@ -10,9 +10,11 @@ import ad_astra_giselle_addon.common.AdAstraGiselleAddon;
 import ad_astra_giselle_addon.common.content.oxygen.IChargeMode;
 import ad_astra_giselle_addon.common.fluid.FluidHelper;
 import ad_astra_giselle_addon.common.registry.ObjectRegistry;
-import earth.terrarium.botarium.common.fluid.FluidConstants;
-import earth.terrarium.botarium.common.fluid.base.FluidContainer;
-import earth.terrarium.botarium.common.fluid.base.FluidHolder;
+import earth.terrarium.common_storage_lib.resources.ResourceStack;
+import earth.terrarium.common_storage_lib.resources.fluid.FluidResource;
+import earth.terrarium.common_storage_lib.resources.fluid.util.FluidAmounts;
+import earth.terrarium.common_storage_lib.storage.base.CommonStorage;
+import earth.terrarium.common_storage_lib.storage.base.StorageSlot;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -26,7 +28,7 @@ public class TranslationUtils
 	public static final int DEFAULT_DIGITS = 1;
 
 	private static final Map<CanUseTuple, List<Component>> CAN_USES = new HashMap<>();
-	private static final Map<Boolean, Component> CAN_USE_AVAILABLES = new HashMap<>();
+	private static final Map<DescriptionTuple, Component> CAN_USE_AVAILABLES = new HashMap<>();
 	public static final String CAN_USE = AdAstraGiselleAddon.tl("description", "can_use");
 	public static final String CAN_USE_COLD = AdAstraGiselleAddon.tl("description", "can_use.cold");
 	public static final String CAN_USE_HOT = AdAstraGiselleAddon.tl("description", "can_use.hot");
@@ -84,7 +86,7 @@ public class TranslationUtils
 
 	private static Component descriptionCanUse(String key, boolean canUse)
 	{
-		return CAN_USE_AVAILABLES.computeIfAbsent(canUse, k -> description(key, Component.translatable(k ? CAN_USE_AVAILABLE : CAN_USE_UNAVAILABLE).withStyle(k ? ChatFormatting.GREEN : ChatFormatting.RED)));
+		return CAN_USE_AVAILABLES.computeIfAbsent(new DescriptionTuple(key, canUse), t -> description(t.description(), Component.translatable(t.canUse() ? CAN_USE_AVAILABLE : CAN_USE_UNAVAILABLE).withStyle(t.canUse() ? ChatFormatting.GREEN : ChatFormatting.RED)));
 	}
 
 	public static Component descriptionChargeMode(IChargeMode mode)
@@ -99,8 +101,8 @@ public class TranslationUtils
 
 	public static Component oxygenStorage(long amount, long capacity)
 	{
-		long amountMB = FluidConstants.toMillibuckets(amount);
-		long capacityMB = FluidConstants.toMillibuckets(capacity);
+		long amountMB = FluidAmounts.toMillibuckets(amount);
+		long capacityMB = FluidAmounts.toMillibuckets(capacity);
 		Style style = Style.EMPTY.withColor(amountMB > 0 ? ChatFormatting.GREEN : ChatFormatting.RED);
 		return Component.translatable("tooltip.ad_astra.space_suit", amountMB, capacityMB).setStyle(style);
 	}
@@ -114,28 +116,27 @@ public class TranslationUtils
 		});
 	}
 
-	public static List<Component> fluid(FluidContainer container)
+	public static List<Component> fluid(CommonStorage<FluidResource> container)
 	{
 		List<Component> list = new ArrayList<>();
-		int size = container.getSize();
-		List<FluidHolder> fluids = container.getFluids();
+		int size = container.size();
 
 		for (int i = 0; i < size; i++)
 		{
-			FluidHolder fluid = fluids.get(i);
-			long capacity = container.getTankCapacity(i);
-			list.addAll(fluid(fluid, capacity));
+			StorageSlot<FluidResource> slot = container.get(i);
+			long capacity = slot.getLimit(slot.getResource());
+			list.addAll(fluid(slot.getContents(), capacity));
 		}
 
 		return list;
 	}
 
-	public static List<Component> fluid(FluidHolder fluid, long capacity)
+	public static List<Component> fluid(ResourceStack<FluidResource> fluid, long capacity)
 	{
-		String modid = ObjectRegistry.get(Registries.FLUID).getId(fluid.getFluid()).getNamespace();
+		String modid = ObjectRegistry.get(Registries.FLUID).getId(fluid.resource().getType()).getNamespace();
 		Component name = FluidHelper.getDisplayName(fluid);
-		long amountMB = FluidConstants.toMillibuckets(fluid.getFluidAmount());
-		long capacityMB = FluidConstants.toMillibuckets(capacity);
+		long amountMB = FluidAmounts.toMillibuckets(fluid.amount());
+		long capacityMB = FluidAmounts.toMillibuckets(capacity);
 		MutableComponent storage = Component.translatable("gauge_text.ad_astra.liquid_storage", amountMB, capacityMB);
 
 		List<Component> list = new ArrayList<>();
@@ -155,6 +156,11 @@ public class TranslationUtils
 	}
 
 	private record CanUseTuple(boolean canUseOnCold, boolean canUseOnHot)
+	{
+
+	}
+
+	private record DescriptionTuple(String description, boolean canUse)
 	{
 
 	}

@@ -110,9 +110,9 @@ public class AddonJeiPlugin implements IModPlugin
 			category.registerRecipes(registry);
 		}
 
-		this.addIngredientInfo(registry, AddonBlocks.FUEL_LOADER.get(), MachinesConfig.FUEL_LOADER_WORKING_RANGE, ModFluidTags.FUEL.location());
-		this.addIngredientInfo(registry, AddonBlocks.GRAVITY_NORMALIZER.get(), MachinesConfig.GRAVITY_NORMALIZER_MAX_LENGTH);
-		this.addIngredientInfo(registry, AddonBlocks.ROCKET_SENSOR.get(), MachinesConfig.ROCKET_SENSOR_WORKING_RANGE);
+		this.addIngredientInfo(registry, AddonBlocks.FUEL_LOADER.get(), MachinesConfig.FUEL_LOADER.workingRange, ModFluidTags.FUEL.location().toString());
+		this.addIngredientInfo(registry, AddonBlocks.GRAVITY_NORMALIZER.get(), MachinesConfig.GRAVITY_NORMALIZER.maxLength);
+		this.addIngredientInfo(registry, AddonBlocks.ROCKET_SENSOR.get(), MachinesConfig.ROCKET_SENSOR.workingRange);
 	}
 
 	public void addIngredientInfo(IRecipeRegistration registration, ItemLike itemLike, Object... objects)

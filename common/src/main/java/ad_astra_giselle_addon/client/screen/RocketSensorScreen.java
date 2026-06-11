@@ -4,8 +4,9 @@ import ad_astra_giselle_addon.common.AdAstraGiselleAddon;
 import ad_astra_giselle_addon.common.block.entity.RocketSensorBlockEntity;
 import ad_astra_giselle_addon.common.menu.RocketSensorMenu;
 import ad_astra_giselle_addon.common.network.AddonNetwork;
-import ad_astra_giselle_addon.common.network.RocketSensorMessage;
+import ad_astra_giselle_addon.common.network.ServerboundRocketSensorMessage;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.Checkbox;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
@@ -17,7 +18,7 @@ public class RocketSensorScreen extends AddonMachineScreen<RocketSensorMenu, Roc
 	public static String CURRENT_KEY = ctl("rocket_sensor.current");
 
 	private RocketSensingTypeList list;
-	private CustomCheckbox invertedCheckBox;
+	private Checkbox invertedCheckBox;
 
 	public RocketSensorScreen(RocketSensorMenu handler, Inventory inventory, Component title)
 	{
@@ -35,12 +36,13 @@ public class RocketSensorScreen extends AddonMachineScreen<RocketSensorMenu, Roc
 		int y0 = this.topPos + 18;
 		int y1 = this.topPos + this.imageHeight - 38;
 
-		this.list = new RocketSensingTypeList(this, rocketSensor, this.minecraft, x1 - x0, y1 - y0, y0, y1);
-		this.list.setLeftPos(x0);
+		this.list = new RocketSensingTypeList(this, rocketSensor, this.minecraft, x1 - x0, y1 - y0, y0);
+		this.list.setX(x0);
 		this.list.select(rocketSensor.getSensingType());
 		this.addRenderableWidget(this.list);
 
-		this.invertedCheckBox = new CustomCheckbox(x0, y1 + 3, x1 - x0, 10, Component.translatable(INVERTED_KEY), rocketSensor.isInverted());
+		this.invertedCheckBox = Checkbox.builder(Component.translatable(INVERTED_KEY), this.font).pos(x0, y1 + 3).maxWidth(x1 - x0).selected(rocketSensor.isInverted()).build();
+		this.invertedCheckBox.setHeight(10);
 		this.addRenderableWidget(this.invertedCheckBox);
 
 		var selected = this.list.getSelected();
@@ -50,12 +52,6 @@ public class RocketSensorScreen extends AddonMachineScreen<RocketSensorMenu, Roc
 			this.list.centerScrollOn(this.list.getSelected());
 		}
 
-	}
-
-	@Override
-	protected void renderBg(GuiGraphics guiGraphics, float delta, int mouseX, int mouseY)
-	{
-		super.renderBg(guiGraphics, delta, mouseX, mouseY);
 	}
 
 	@Override
@@ -84,7 +80,7 @@ public class RocketSensorScreen extends AddonMachineScreen<RocketSensorMenu, Roc
 		if (rocketSensor.isInverted() != newInverted)
 		{
 			rocketSensor.setInverted(newInverted);
-			AddonNetwork.CHANNEL.sendToServer(new RocketSensorMessage.Inverted(rocketSensor, newInverted));
+			AddonNetwork.CHANNEL.sendToServer(new ServerboundRocketSensorMessage.Inverted(rocketSensor, newInverted));
 		}
 
 	}

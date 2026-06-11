@@ -1,0 +1,13 @@
+{
+	"required": true,
+	"package": "ad_astra_giselle_addon.client.mixin",
+	"minVersion": "0.8.5",
+	"compatibilityLevel": "JAVA_21",
+	"client": [
+		"minecraft.ItemMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	},
+	"refmap": "${mod_id}.mixin.refmap.json"
+}

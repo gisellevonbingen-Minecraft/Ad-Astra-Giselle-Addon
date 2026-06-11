@@ -46,7 +46,7 @@ public class FuelLoaderMenu extends AddonMachineMenu<FuelLoaderBlockEntity>
 		FuelLoaderBlockEntity blockEntity = this.getEntity();
 		MenuHelper.addConfigSlots(this, this::addConfigSlot, 0, FuelLoaderBlockEntity.FLUID_SOURCE_SLOTS);
 		MenuHelper.addConfigSlots(this, this::addConfigSlot, 1, FuelLoaderBlockEntity.FLUID_SINK_SLOTS);
-		this.addConfigSlot(new FluidConfiguration(2, FLUID_BAR_LEFT, FLUID_BAR_TOP, blockEntity.getFluidContainer(), 0));
+		this.addConfigSlot(new FluidConfiguration(2, FLUID_BAR_LEFT, FLUID_BAR_TOP, blockEntity.getFluids(null), 0));
 	}
 
 	@Override

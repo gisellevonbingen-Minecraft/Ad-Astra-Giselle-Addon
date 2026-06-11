@@ -14,7 +14,7 @@ import ad_astra_giselle_addon.common.AdAstraGiselleAddon;
 import ad_astra_giselle_addon.common.block.entity.GravityNormalizerBlockEntity;
 import ad_astra_giselle_addon.common.menu.GravityNormalizerMenu;
 import ad_astra_giselle_addon.common.network.AddonNetwork;
-import ad_astra_giselle_addon.common.network.GravityNormalizerMessage;
+import ad_astra_giselle_addon.common.network.ServerboundGravityNormalizerMessage;
 import ad_astra_giselle_addon.common.util.Vec3iUtils;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
@@ -206,7 +206,7 @@ public class GravityNormalizerScreen extends AddonMachineScreen<GravityNormalize
 		if (!blockEntity.getLength().equals(length))
 		{
 			blockEntity.setLength(length);
-			AddonNetwork.CHANNEL.sendToServer(new GravityNormalizerMessage.Length(blockEntity, length));
+			AddonNetwork.CHANNEL.sendToServer(new ServerboundGravityNormalizerMessage.Length(blockEntity, length));
 		}
 
 	}
@@ -216,7 +216,7 @@ public class GravityNormalizerScreen extends AddonMachineScreen<GravityNormalize
 		if (!blockEntity.getOffset().equals(offset))
 		{
 			blockEntity.setOffset(offset);
-			AddonNetwork.CHANNEL.sendToServer(new GravityNormalizerMessage.Offset(blockEntity, offset));
+			AddonNetwork.CHANNEL.sendToServer(new ServerboundGravityNormalizerMessage.Offset(blockEntity, offset));
 		}
 
 	}

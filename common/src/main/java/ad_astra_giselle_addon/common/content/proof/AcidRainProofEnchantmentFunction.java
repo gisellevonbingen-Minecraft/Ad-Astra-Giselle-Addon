@@ -3,14 +3,15 @@ package ad_astra_giselle_addon.common.content.proof;
 import ad_astra_giselle_addon.common.config.EnchantmentsConfig;
 import ad_astra_giselle_addon.common.item.ItemUsableResource;
 import ad_astra_giselle_addon.common.registry.AddonEnchantments;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.enchantment.Enchantment;
 
 public class AcidRainProofEnchantmentFunction extends ProofEnchantmentFunction
 {
 	@Override
-	public Enchantment getEnchantment()
+	public ResourceKey<Enchantment> getEnchantment()
 	{
-		return AddonEnchantments.ACID_RAIN_PROOF.get();
+		return AddonEnchantments.ACID_RAIN_PROOF;
 	}
 
 	@Override
@@ -18,11 +19,11 @@ public class AcidRainProofEnchantmentFunction extends ProofEnchantmentFunction
 	{
 		if (resource == ItemUsableResource.Energy)
 		{
-			return EnchantmentsConfig.ACID_RAIN_PROOF_ENERGY_USING;
+			return EnchantmentsConfig.ACID_RAIN_PROOF.energyUsing;
 		}
 		else if (resource == ItemUsableResource.Durability)
 		{
-			return EnchantmentsConfig.ACID_RAIN_PROOF_DURABILITY_USING;
+			return EnchantmentsConfig.ACID_RAIN_PROOF.durabilityUsing;
 		}
 		else
 		{
@@ -40,7 +41,7 @@ public class AcidRainProofEnchantmentFunction extends ProofEnchantmentFunction
 		}
 		else if (resource == ItemUsableResource.Durability)
 		{
-			return EnchantmentsConfig.ACID_RAIN_PROOF_DURABILITY_DURATION;
+			return EnchantmentsConfig.ACID_RAIN_PROOF.durabilityDuration;
 		}
 		else
 		{

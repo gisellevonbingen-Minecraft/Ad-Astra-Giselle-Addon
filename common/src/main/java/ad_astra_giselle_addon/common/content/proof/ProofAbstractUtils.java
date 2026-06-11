@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 import ad_astra_giselle_addon.common.AdAstraGiselleAddon;
-import earth.terrarium.botarium.common.fluid.FluidConstants;
+import earth.terrarium.common_storage_lib.resources.fluid.util.FluidAmounts;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 
@@ -18,7 +18,7 @@ public abstract class ProofAbstractUtils
 
 	public static final int GENERAL_PROOF_INTERVAL = 10;
 	public static final int OXYGEN_PROOF_INTERVAL = 30;
-	public static final long OXYGEN_PROOF_USING = FluidConstants.fromMillibuckets(1L);
+	public static final long OXYGEN_PROOF_USING = FluidAmounts.toPlatformAmount(1L);
 
 	public static void reduceProofDuration(Entity entity)
 	{

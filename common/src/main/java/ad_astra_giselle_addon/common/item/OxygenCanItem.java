@@ -1,5 +1,6 @@
 package ad_astra_giselle_addon.common.item;
 
+import java.util.Collections;
 import java.util.List;
 
 import ad_astra_giselle_addon.common.config.ItemsConfig;
@@ -10,18 +11,20 @@ import ad_astra_giselle_addon.common.content.oxygen.IOxygenChargerItem;
 import ad_astra_giselle_addon.common.content.oxygen.OxygenChargerUtils;
 import ad_astra_giselle_addon.common.fluid.FluidPredicates;
 import ad_astra_giselle_addon.common.fluid.FluidUtils2;
-import ad_astra_giselle_addon.common.util.NBTUtils;
+import ad_astra_giselle_addon.common.registry.AddonDataComponentTypes;
 import ad_astra_giselle_addon.common.util.TranslationUtils;
+import earth.terrarium.adastra.common.registry.ModDataManagers;
 import earth.terrarium.adastra.common.registry.ModFluids;
 import earth.terrarium.adastra.common.utils.TooltipUtils;
-import earth.terrarium.botarium.common.fluid.FluidConstants;
-import earth.terrarium.botarium.common.fluid.base.BotariumFluidItem;
-import earth.terrarium.botarium.common.fluid.base.FluidContainer;
-import earth.terrarium.botarium.common.fluid.base.FluidHolder;
-import earth.terrarium.botarium.common.fluid.impl.SimpleFluidContainer;
-import earth.terrarium.botarium.common.fluid.impl.WrappedItemFluidContainer;
-import earth.terrarium.botarium.common.item.ItemStackHolder;
-import net.minecraft.nbt.CompoundTag;
+import earth.terrarium.common_storage_lib.context.ItemContext;
+import earth.terrarium.common_storage_lib.fluid.FluidApi;
+import earth.terrarium.common_storage_lib.fluid.impl.SimpleFluidStorage;
+import earth.terrarium.common_storage_lib.fluid.util.FluidProvider;
+import earth.terrarium.common_storage_lib.fluid.util.FluidStorageData;
+import earth.terrarium.common_storage_lib.resources.ResourceStack;
+import earth.terrarium.common_storage_lib.resources.fluid.FluidResource;
+import earth.terrarium.common_storage_lib.resources.fluid.util.FluidAmounts;
+import earth.terrarium.common_storage_lib.storage.base.CommonStorage;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
@@ -33,10 +36,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 
-public class OxygenCanItem extends Item implements BotariumFluidItem<WrappedItemFluidContainer>, IOxygenChargerItem, ICreativeTabOutputProvider
+public class OxygenCanItem extends Item implements FluidProvider.Item, IOxygenChargerItem, ICreativeTabOutputProvider
 {
 	public static final String KEY_OXYGEN_CHARGER = "oxygencharger";
-	public static final String KEY_CHARGE_MODE = "chargemode";
 
 	public OxygenCanItem(Properties properties)
 	{
@@ -44,34 +46,33 @@ public class OxygenCanItem extends Item implements BotariumFluidItem<WrappedItem
 	}
 
 	@Override
-	public WrappedItemFluidContainer getFluidContainer(ItemStack holder)
+	public CommonStorage<FluidResource> getFluids(ItemStack stack, ItemContext context)
 	{
-		return new WrappedItemFluidContainer(holder, new SimpleFluidContainer(this.getFluidCapacity(), 1, FluidPredicates::isOxygen));
+		return new SimpleFluidStorage(context, ModDataManagers.FLUID_CONTENTS.componentType(), 1, this.getFluidCapacity()).filter(0, FluidPredicates::isOxygen);
 	}
 
 	protected long getFluidCapacity()
 	{
-		return FluidConstants.fromMillibuckets(ItemsConfig.OXYGEN_CAN_FLUID_CAPACITY);
+		return FluidAmounts.toPlatformAmount(ItemsConfig.OXYGEN_CAN.fluidCapacity);
 	}
 
 	protected long getFluidTransfer()
 	{
-		return FluidConstants.fromMillibuckets(ItemsConfig.OXYGEN_CAN_FLUID_TRANSFER);
+		return FluidAmounts.toPlatformAmount(ItemsConfig.OXYGEN_CAN.fluidTransfer);
 	}
 
 	@Override
 	public void provideCreativeTabOutput(Output output)
 	{
-		ItemStack full = new ItemStack(this);
-		WrappedItemFluidContainer fluidContainer = this.getFluidContainer(full);
-		fluidContainer.setFluid(0, FluidHolder.of(ModFluids.OXYGEN.get(), this.getFluidCapacity(), null));
-		output.accept(full);
+		ItemStack stack = new ItemStack(this);
+		stack.set(ModDataManagers.FLUID_CONTENTS.componentType(), new FluidStorageData(Collections.singletonList(FluidResource.of(ModFluids.OXYGEN.get()).toStack(this.getFluidCapacity()))));
+		output.accept(stack);
 	}
 
 	@Override
 	public boolean isFoil(ItemStack item)
 	{
-		IOxygenCharger oxygenCharger = OxygenChargerUtils.get(new ItemStackHolder(item));
+		IOxygenCharger oxygenCharger = OxygenChargerUtils.get(StorageSlotContext.ofIsolated(item));
 
 		if (oxygenCharger != null && oxygenCharger.getChargeMode() != ChargeMode.NONE)
 		{
@@ -97,8 +98,8 @@ public class OxygenCanItem extends Item implements BotariumFluidItem<WrappedItem
 			return InteractionResultHolder.pass(item);
 		}
 
-		ItemStackReference holder = new ItemStackReference(item, ItemStackConsumers.hand(hand, player::setItemInHand));
-		IOxygenCharger oxygenCharger = OxygenChargerUtils.get(holder);
+		StorageSlotContext slot = StorageSlotContext.ofIsolated(item);
+		IOxygenCharger oxygenCharger = OxygenChargerUtils.get(slot);
 
 		if (oxygenCharger != null && !player.isShiftKeyDown())
 		{
@@ -110,33 +111,34 @@ public class OxygenCanItem extends Item implements BotariumFluidItem<WrappedItem
 			player.sendSystemMessage(TranslationUtils.descriptionChargeMode(nextMode));
 		}
 
-		return InteractionResultHolder.pass(item);
+		return InteractionResultHolder.pass(slot.getItemStack());
 	}
 
 	@Override
-	public void appendHoverText(ItemStack item, Level level, List<Component> tooltip, TooltipFlag flag)
+	public void appendHoverText(ItemStack item, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flag)
 	{
-		super.appendHoverText(item, level, tooltip, flag);
+		super.appendHoverText(item, context, tooltip, flag);
 
-		IOxygenCharger oxygenCharger = OxygenChargerUtils.get(new ItemStackHolder(item));
+		IOxygenCharger oxygenCharger = OxygenChargerUtils.get(StorageSlotContext.ofIsolated(item));
 
 		if (oxygenCharger != null)
 		{
 			tooltip.addAll(TranslationUtils.descriptionCanUse(oxygenCharger.canUseOnCold(), oxygenCharger.canUseOnHot()));
 			tooltip.add(TranslationUtils.descriptionChargeMode(oxygenCharger.getChargeMode()));
 
-			FluidContainer fluidContainer = oxygenCharger.getFluidContainer();
-			List<FluidHolder> fluids = fluidContainer.getFluids();
+			CommonStorage<FluidResource> fluidContainer = oxygenCharger.getFluidContainer();
 
-			for (int i = 0; i < fluids.size(); i++)
+			for (int i = 0; i < fluidContainer.size(); i++)
 			{
+				ResourceStack<FluidResource> contents = fluidContainer.getContents(i);
+
 				if (this instanceof CreativeOxygenCanItem)
 				{
-					tooltip.add(TranslationUtils.descriptionCreativeOxygen(fluids.get(i).isEmpty()));
+					tooltip.add(TranslationUtils.descriptionCreativeOxygen(contents.isEmpty()));
 				}
 				else
 				{
-					tooltip.add(TooltipUtils.getFluidComponent(fluids.get(i), fluidContainer.getTankCapacity(i)));
+					tooltip.add(TooltipUtils.getFluidComponent(contents, fluidContainer.getLimit(i, contents.resource())));
 				}
 
 			}
@@ -153,7 +155,7 @@ public class OxygenCanItem extends Item implements BotariumFluidItem<WrappedItem
 
 	private double getOxygenStoredRatio(ItemStack item)
 	{
-		IOxygenCharger oxygenCharnger = OxygenChargerUtils.get(new ItemStackHolder(item));
+		IOxygenCharger oxygenCharnger = OxygenChargerUtils.get(StorageSlotContext.ofIsolated(item));
 		long amount = oxygenCharnger.getOxygenAmount();
 		long capacity = oxygenCharnger.getOxygenCapacity();
 		return FluidUtils2.getStoredRatio(amount, capacity);
@@ -174,9 +176,9 @@ public class OxygenCanItem extends Item implements BotariumFluidItem<WrappedItem
 	}
 
 	@Override
-	public IOxygenCharger getOxygenCharger(ItemStackHolder item)
+	public IOxygenCharger getOxygenCharger(ItemContext context)
 	{
-		return new AbstractOxygenCharger(item)
+		return new AbstractOxygenCharger(context)
 		{
 			@Override
 			public boolean canUseOnCold()
@@ -196,25 +198,23 @@ public class OxygenCanItem extends Item implements BotariumFluidItem<WrappedItem
 
 	public abstract class AbstractOxygenCharger implements IOxygenCharger
 	{
-		private final ItemStackHolder item;
+		private final ItemContext context;
 
-		public AbstractOxygenCharger(ItemStackHolder item)
+		public AbstractOxygenCharger(ItemContext context)
 		{
-			this.item = item;
+			this.context = context;
 		}
 
 		@Override
 		public void setChargeMode(IChargeMode mode)
 		{
-			CompoundTag tag = NBTUtils.getOrCreateTag(this.getItem().getStack(), KEY_OXYGEN_CHARGER);
-			tag.put(KEY_CHARGE_MODE, IChargeMode.writeNBT(mode));
+			this.getContext().set(AddonDataComponentTypes.CHARGE_MODE.get(), mode);
 		}
 
 		@Override
 		public IChargeMode getChargeMode()
 		{
-			CompoundTag tag = NBTUtils.getTag(this.getItem().getStack(), KEY_OXYGEN_CHARGER);
-			return IChargeMode.readNBT(tag.get(KEY_CHARGE_MODE));
+			return this.getContext().getOrDefault(AddonDataComponentTypes.CHARGE_MODE.get(), ChargeMode.NONE);
 		}
 
 		@Override
@@ -224,14 +224,14 @@ public class OxygenCanItem extends Item implements BotariumFluidItem<WrappedItem
 		}
 
 		@Override
-		public FluidContainer getFluidContainer()
+		public CommonStorage<FluidResource> getFluidContainer()
 		{
-			return FluidContainer.of(this.getItem());
+			return this.getContext().find(FluidApi.ITEM);
 		}
 
-		public final ItemStackHolder getItem()
+		public final ItemContext getContext()
 		{
-			return this.item;
+			return this.context;
 		}
 
 	}

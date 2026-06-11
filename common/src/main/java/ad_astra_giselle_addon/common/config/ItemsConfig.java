@@ -1,35 +1,51 @@
 package ad_astra_giselle_addon.common.config;
 
-import com.teamresourceful.resourcefulconfig.common.annotations.Category;
-import com.teamresourceful.resourcefulconfig.common.annotations.ConfigEntry;
-import com.teamresourceful.resourcefulconfig.common.annotations.ConfigSeparator;
-import com.teamresourceful.resourcefulconfig.common.config.EntryType;
+import com.teamresourceful.resourcefulconfig.api.annotations.Category;
+import com.teamresourceful.resourcefulconfig.api.annotations.ConfigEntry;
+import com.teamresourceful.resourcefulconfig.api.annotations.ConfigInfo;
+import com.teamresourceful.resourcefulconfig.api.annotations.ConfigObject;
+import com.teamresourceful.resourcefulconfig.api.types.options.EntryType;
 
-@Category(id = ItemsConfig.ID, translation = ItemsConfig.PREFIX)
+@SuppressWarnings("deprecation")
+@Category(ItemsConfig.ID)
+@ConfigInfo(icon = "items", title = "Items Config")
 public final class ItemsConfig
 {
 	public static final String ID = "items";
 	public static final String PREFIX = AddonConfigs.PREFIX + "." + ID;
 
-	public static final String OXYGEN_CHARGERS_ID = "oxygen_chargers";
-	public static final String OXYGEN_CHARGERS_PREFIX = PREFIX + "." + OXYGEN_CHARGERS_ID;
-	@ConfigSeparator(translation = OXYGEN_CHARGERS_PREFIX)
-	@ConfigEntry(id = OXYGEN_CHARGERS_ID + "_distribution_interval", type = EntryType.INTEGER, translation = OXYGEN_CHARGERS_PREFIX + "_distribution_interval")
-	public static int OXYGEN_CHARGERS_DISTRUBUTION_INTERVAL = 20;
+	@ConfigEntry(id = "oxygen_chargers", type = EntryType.OBJECT, translation = PREFIX + ".oxygen_chargers")
+	public static final OxygenChargersConfigObject OXYGEN_CHARGERS = new OxygenChargersConfigObject();
 
-	public static final String OXYGEN_CAN_ID = "oxygen_can";
-	public static final String OXYGEN_CAN_PREFIX = PREFIX + "." + OXYGEN_CAN_ID;
-	@ConfigSeparator(translation = OXYGEN_CAN_PREFIX)
-	@ConfigEntry(id = OXYGEN_CAN_ID + "_fluid_capacity", type = EntryType.LONG, translation = OXYGEN_CAN_PREFIX + "_fluid_capacity")
-	public static long OXYGEN_CAN_FLUID_CAPACITY = 500L;
-	@ConfigEntry(id = OXYGEN_CAN_ID + "_fluid_transfer", type = EntryType.LONG, translation = OXYGEN_CAN_PREFIX + "_fluid_transfer")
-	public static long OXYGEN_CAN_FLUID_TRANSFER = 125L;
+	@ConfigEntry(id = "oxygen_can", type = EntryType.OBJECT, translation = PREFIX + ".oxygen_can")
+	public static final OxygenCanConfigObject OXYGEN_CAN = new OxygenCanConfigObject(500L, 125L);
 
-	public static final String NETHERITE_OXYGEN_CAN_ID = "netherite_oxygen_can";
-	public static final String NETHERITE_OXYGEN_CAN_PREFIX = PREFIX + "." + NETHERITE_OXYGEN_CAN_ID;
-	@ConfigSeparator(translation = NETHERITE_OXYGEN_CAN_PREFIX)
-	@ConfigEntry(id = NETHERITE_OXYGEN_CAN_ID + "_fluid_capacity", type = EntryType.LONG, translation = NETHERITE_OXYGEN_CAN_PREFIX + "_fluid_capacity")
-	public static long NETHERITE_OXYGEN_CAN_FLUID_CAPACITY = 1_000L;
-	@ConfigEntry(id = NETHERITE_OXYGEN_CAN_ID + "_fluid_transfer", type = EntryType.LONG, translation = NETHERITE_OXYGEN_CAN_PREFIX + "_fluid_transfer")
-	public static long NETHERITE_OXYGEN_CAN_FLUID_TRANSFER = 250L;
+	@ConfigEntry(id = "netherite_oxygen_can", type = EntryType.OBJECT, translation = PREFIX + ".netherite_oxygen_can")
+	public static final OxygenCanConfigObject NETHERITE_OXYGEN_CAN = new OxygenCanConfigObject(1_000L, 250L);
+
+	@ConfigObject
+	public static class OxygenChargersConfigObject
+	{
+		public static final String OXYGEN_CHARGERS_PREFIX = PREFIX + ".oxygen_chargers";
+		@ConfigEntry(id = "distribution_interval", type = EntryType.INTEGER, translation = OXYGEN_CHARGERS_PREFIX + "_distribution_interval")
+		public int distributionInterval = 10;
+	}
+
+	@ConfigObject
+	public static class OxygenCanConfigObject
+	{
+		public static final String OXYGEN_CAN_PREFIX = PREFIX + ".oxygen_can";
+		@ConfigEntry(id = "fluid_capacity", type = EntryType.LONG, translation = OXYGEN_CAN_PREFIX + "_fluid_capacity")
+		public long fluidCapacity = 0L;
+		@ConfigEntry(id = "fluid_transfer", type = EntryType.LONG, translation = OXYGEN_CAN_PREFIX + "_fluid_transfer")
+		public long fluidTransfer = 0L;
+
+		public OxygenCanConfigObject(long fluidCapacity, long fluidTransfer)
+		{
+			this.fluidCapacity = fluidCapacity;
+			this.fluidTransfer = fluidTransfer;
+		}
+
+	}
+
 }

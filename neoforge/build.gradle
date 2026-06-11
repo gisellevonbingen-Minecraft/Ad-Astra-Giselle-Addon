@@ -1,0 +1,70 @@
+plugins {
+    id "net.neoforged.gradle.userdev" version "7.1.20"
+}
+
+version = "neoforge-${rootProject.mc_version}-${rootProject.mod_version}"
+
+runs {
+    configureEach {
+        systemProperty "forge.logging.markers", "REGISTRIES"
+        systemProperty "forge.logging.console.level", "debug"
+
+        modSource project.sourceSets.main
+    }
+
+    client {
+        //taskName "neoforge_client"
+        systemProperty "forge.enabledGameTestNamespaces", project.mod_id
+    }
+
+    server {
+        //taskName "neoforge_server"
+        systemProperty "forge.enabledGameTestNamespaces", project.mod_id
+    }
+
+    gameTestServer {
+        //taskName "neoforge_game_test_server"
+        systemProperty "forge.enabledGameTestNamespaces", project.mod_id
+    }
+
+    data {
+        //taskName "neoforge_data"
+        programArguments.addAll "--mod", project.mod_id, "--all", "--output", file("src/generated/resources/").getAbsolutePath(), "--existing", file("src/main/resources/").getAbsolutePath()
+    }
+}
+
+sourceSets.main.resources { srcDir "src/generated/resources" }
+
+dependencies {
+    // Mod
+    implementation "net.neoforged:neoforge:${neoforge_api_version}"
+
+    // Ad Astra - Required
+    implementation "earth.terrarium.common_storage_lib:common-storage-lib-neoforge-${mc_version}:${csl_version}"
+    //implementation "earth.terrarium.adastra:ad_astra-neoforge-${mc_version}:${ad_astra_version}"
+    //implementation "curse.maven:ad-astra-635042:${ad_astra_neoforge_file}")
+    implementation "blank:adastra-${mc_version}-lib:neoforge"
+    implementation "com.teamresourceful.resourcefullib:resourcefullib-neoforge-1.21:${resourcefullib_version}"
+    implementation "com.teamresourceful.resourcefulconfig:resourcefulconfig-neoforge-1.21:${resourcefulconfig_version}"
+
+    // Ad Astra - Optional
+    implementation "mezz.jei:jei-${mc_version}-neoforge:${jei_version}"
+    compileOnly "me.shedaniel.cloth:cloth-config-neoforge:${cloth_config_version}"
+    compileOnly "me.shedaniel:RoughlyEnoughItems-neoforge:${rei_version}"
+    //implementation "vazkii.patchouli:Patchouli:${mc_version}-${patchouli_version}"
+
+    // Implementation
+    implementation "curse.maven:curios-309927:${curios_file}"
+    implementation "mekanism:Mekanism:${mc_version}-${mekanism_version}"
+    implementation "curse.maven:pneumaticcraft-repressurized-281849:${pneumaticcraft_repressurized_file}"
+    implementation ("com.simibubi.create:create-${mc_version}:${create_version}:slim") { transitive = false }
+    implementation "dev.engine-room.flywheel:flywheel-neoforge-${mc_version}:${flywheel_version}"
+    implementation "com.tterrag.registrate:Registrate:${registrate_version}"
+    implementation "net.createmod.ponder:ponder-neoforge:${ponder_version}+mc${mc_version}"
+
+    // Runtiem Only
+    runtimeOnly "curse.maven:the-one-probe-245211:${top_file}"
+    runtimeOnly "curse.maven:jade-324717:${jade_file}"
+    //runtimeOnly "curse.maven:refined-storage-243076:${refined_storage_file}"
+    //runtimeOnly "blusunrize.immersiveengineering:ImmersiveEngineering:${mc_version}-${immersive_engineering_version}"
+}

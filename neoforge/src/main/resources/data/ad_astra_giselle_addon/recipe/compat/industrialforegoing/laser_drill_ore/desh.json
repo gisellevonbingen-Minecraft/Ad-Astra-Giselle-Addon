@@ -1,0 +1,32 @@
+{
+	"type": "industrialforegoing:laser_drill_ore",
+	"neoforge:conditions": [
+		{
+			"type": "neoforge:mod_loaded",
+			"modid": "industrialforegoing"
+		}
+	],
+	"catalyst": {
+		"item": "industrialforegoing:orange_laser_lens"
+	},
+	"output": {
+		"tag": "c:raw_materials/desh"
+	},
+	"rarity": [
+		{
+			"biome_filter": {
+				"blacklist": [],
+				"whitelist": []
+			},
+			"dimension_filter": {
+				"blacklist": [],
+				"whitelist": [
+					"ad_astra:moon"
+				]
+			},
+			"depth_min": 0,
+			"depth_max": 80,
+			"weight": 10
+		}
+	]
+}

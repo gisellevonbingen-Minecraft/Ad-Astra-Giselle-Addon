@@ -1,0 +1,22 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"result": {
+		"id": "ad_astra_giselle_addon:fuel_loader"
+	},
+	"pattern": [
+		"SSS",
+		"PBP",
+		"SSS"
+	],
+	"key": {
+		"S": {
+			"tag": "ad_astra:steel_ingots"
+		},
+		"P": {
+			"tag": "ad_astra:iron_plates"
+		},
+		"B": {
+			"item": "minecraft:bucket"
+		}
+	}
+}

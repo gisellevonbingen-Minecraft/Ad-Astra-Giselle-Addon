@@ -21,11 +21,11 @@ public class VehicleHelper
 				return null;
 			}
 
-			return new VehicleFuelInformation(rocket.fluidContainer(), properties.fuel());
+			return new VehicleFuelInformation(rocket.getFluids(null), properties.fuel());
 		}
 		else if (vehicle instanceof Rover rover)
 		{
-			return new VehicleFuelInformation(rover.fluidContainer(), ModFluidTags.TIER_1_ROVER_FUEL);
+			return new VehicleFuelInformation(rover.getFluids(null), ModFluidTags.TIER_1_ROVER_FUEL);
 		}
 		else
 		{

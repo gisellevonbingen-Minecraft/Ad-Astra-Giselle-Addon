@@ -5,6 +5,8 @@ import java.util.Map.Entry;
 import ad_astra_giselle_addon.common.AdAstraGiselleAddon;
 import ad_astra_giselle_addon.common.item.ICreativeTabOutputProvider;
 import ad_astra_giselle_addon.common.util.ModHooks;
+import net.minecraft.core.Holder.Reference;
+import net.minecraft.core.HolderLookup.RegistryLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
@@ -40,12 +42,17 @@ public class AddonTabs
 				}
 
 			}
+			
+			RegistryLookup<Enchantment> enchantmentLookup = pEnabledFeatures.holders().lookupOrThrow(Registries.ENCHANTMENT);
 
-			for (Enchantment enchantment : AddonEnchantments.ENCHANTMENTS.getValues())
+			for (ResourceKey<Enchantment> key : AddonEnchantments.ENCHANTMENTS)
 			{
-				for (int i = enchantment.getMinLevel(); i <= enchantment.getMaxLevel(); i++)
+				Reference<Enchantment> holder = enchantmentLookup.getOrThrow(key);
+				Enchantment enchantment = holder.value();
+				
+				for (int i = 1; i <= enchantment.getMaxLevel(); i++)
 				{
-					ItemStack enchantedBook = EnchantedBookItem.createForEnchantment(new EnchantmentInstance(enchantment, i));
+					ItemStack enchantedBook = EnchantedBookItem.createForEnchantment(new EnchantmentInstance(holder, i));
 					pOutput.accept(enchantedBook);
 				}
 

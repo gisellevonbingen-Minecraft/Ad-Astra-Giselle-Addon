@@ -7,7 +7,7 @@ import ad_astra_giselle_addon.common.AdAstraGiselleAddon;
 import ad_astra_giselle_addon.common.block.entity.IWorkingAreaBlockEntity;
 import ad_astra_giselle_addon.common.compat.CompatibleManager;
 import ad_astra_giselle_addon.common.network.AddonNetwork;
-import ad_astra_giselle_addon.common.network.WorkingAreaVisibleMessage;
+import ad_astra_giselle_addon.common.network.ServerboundWorkingAreaVisibleMessage;
 import earth.terrarium.adastra.client.components.PressableImageButton;
 import earth.terrarium.adastra.client.components.machines.FluidBarWidget;
 import earth.terrarium.adastra.client.components.machines.OptionsBarWidget.Builder;
@@ -83,7 +83,7 @@ public abstract class AddonMachineScreen<MENU extends MachineMenu<BLOCK_ENTITY>,
 	{
 		if (this.entity instanceof IWorkingAreaBlockEntity blockEntity)
 		{
-			return new PressableImageButton(0, 0, 18, 18, 0, 0, 18, blockEntity.isWorkingAreaVisible() ? GuiUtils.SHOW_BUTTON : GuiUtils.HIDE_BUTTON, 18, 54, button ->
+			return new PressableImageButton(0, 0, 18, 18, blockEntity.isWorkingAreaVisible() ? GuiUtils.SHOW_BUTTON_SPRITES : GuiUtils.HIDE_BUTTON_SPRITES, button ->
 			{
 				this.setWorkingAreaVisible(!this.isWorkingAreaVisible());
 			}, WORKINGAREA_TEXT);
@@ -133,7 +133,7 @@ public abstract class AddonMachineScreen<MENU extends MachineMenu<BLOCK_ENTITY>,
 		if (machine instanceof IWorkingAreaBlockEntity blockEntity)
 		{
 			blockEntity.setWorkingAreaVisible(visible);
-			AddonNetwork.CHANNEL.sendToServer(new WorkingAreaVisibleMessage(machine.getBlockPos(), visible));
+			AddonNetwork.CHANNEL.sendToServer(new ServerboundWorkingAreaVisibleMessage(machine.getBlockPos(), visible));
 		}
 
 	}
@@ -145,7 +145,7 @@ public abstract class AddonMachineScreen<MENU extends MachineMenu<BLOCK_ENTITY>,
 		if (this.cachedWorkingAreaVisible != next)
 		{
 			this.cachedWorkingAreaVisible = next;
-			this.workingAreaVisibleButton.setTexture(next ? GuiUtils.SHOW_BUTTON : GuiUtils.HIDE_BUTTON);
+			this.workingAreaVisibleButton.setSprites(next ? GuiUtils.SHOW_BUTTON_SPRITES : GuiUtils.HIDE_BUTTON_SPRITES);
 		}
 
 	}

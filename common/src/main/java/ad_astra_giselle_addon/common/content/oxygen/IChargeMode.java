@@ -6,17 +6,23 @@ import java.util.List;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import ad_astra_giselle_addon.common.item.ItemStackReference;
+import com.mojang.serialization.Codec;
+
+import ad_astra_giselle_addon.common.item.StorageSlotContext;
+import io.netty.buffer.ByteBuf;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 
 public interface IChargeMode
 {
 	public static final String LANGUGE_CATEGORY_CHARGEMODE = "chargemode";
+	public static final Codec<IChargeMode> CODEC = ResourceLocation.CODEC.xmap(IChargeMode::find, IChargeMode::getName);
+	public static final StreamCodec<ByteBuf, IChargeMode> STREAM_CODEC = ResourceLocation.STREAM_CODEC.map(IChargeMode::find, IChargeMode::getName);
 
 	public static List<IChargeMode> getAllChargeModes()
 	{
@@ -65,7 +71,8 @@ public interface IChargeMode
 
 	public Component getDisplayName();
 
-	public List<ItemStackReference> getItems(LivingEntity living);
+	// TODO: Support LivingEntity
+	public List<StorageSlotContext> getSlots(Player living);
 
 	public boolean contains(EquipmentSlot slot);
 }

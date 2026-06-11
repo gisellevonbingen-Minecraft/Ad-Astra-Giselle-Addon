@@ -9,20 +9,21 @@ import org.jetbrains.annotations.Nullable;
 import ad_astra_giselle_addon.common.compat.CompatibleManager;
 import ad_astra_giselle_addon.common.compat.create.BacktankOxygenStorage;
 import ad_astra_giselle_addon.common.entity.LivingHelper;
+import ad_astra_giselle_addon.common.fluid.CreativeFluidContainer;
 import ad_astra_giselle_addon.common.item.CreativeOxygenCanItem;
-import ad_astra_giselle_addon.common.item.ItemStackReference;
+import ad_astra_giselle_addon.common.item.StorageSlotContext;
 import ad_astra_giselle_addon.common.item.OxygenCanItem;
 import earth.terrarium.adastra.api.systems.TemperatureApi;
 import earth.terrarium.adastra.common.registry.ModFluids;
-import earth.terrarium.botarium.common.fluid.base.FluidContainer;
-import earth.terrarium.botarium.common.fluid.base.FluidHolder;
-import earth.terrarium.botarium.common.item.ItemStackHolder;
+import earth.terrarium.common_storage_lib.fluid.FluidApi;
+import earth.terrarium.common_storage_lib.resources.ResourceStack;
+import earth.terrarium.common_storage_lib.resources.fluid.FluidResource;
+import earth.terrarium.common_storage_lib.storage.base.CommonStorage;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.material.Fluid;
 
+// TODO: Support LivingEntity
 public class OxygenStorageUtils
 {
 	/**
@@ -30,7 +31,7 @@ public class OxygenStorageUtils
 	 * @param living
 	 * @return 0..1, Double.MAX_VALUE
 	 */
-	public static OptionalDouble getStoredRatio(LivingEntity living)
+	public static OptionalDouble getStoredRatio(Player living)
 	{
 		return getStoredRatio(stream(living));
 	}
@@ -40,13 +41,13 @@ public class OxygenStorageUtils
 	 * @param living
 	 * @return 0..1, Double.MAX_VALUE
 	 */
-	public static OptionalDouble getStoredRatio(Stream<ItemStackHolder> items)
+	public static OptionalDouble getStoredRatio(Stream<StorageSlotContext> slots)
 	{
-		ItemStackHolder[] array = items.toArray(ItemStackHolder[]::new);
+		StorageSlotContext[] array = slots.toArray(StorageSlotContext[]::new);
 
-		for (ItemStackHolder stack : array)
+		for (StorageSlotContext slot : array)
 		{
-			if (isInfinifySource(stack.getStack()))
+			if (isInfinifySource(slot))
 			{
 				return OptionalDouble.of(Double.POSITIVE_INFINITY);
 			}
@@ -56,14 +57,14 @@ public class OxygenStorageUtils
 		long stored = 0L;
 		long capacity = 0L;
 
-		for (ItemStackHolder item : array)
+		for (StorageSlotContext slot : array)
 		{
-			if (item.getStack().getItem() instanceof CreativeOxygenCanItem)
+			if (slot.getItem() instanceof CreativeOxygenCanItem)
 			{
 				continue;
 			}
 
-			IOxygenStorage oxygenStorage = OxygenStorageUtils.get(item);
+			IOxygenStorage oxygenStorage = OxygenStorageUtils.get(slot);
 
 			if (oxygenStorage != null)
 			{
@@ -85,35 +86,35 @@ public class OxygenStorageUtils
 	}
 
 	@Nullable
-	public static IOxygenStorage firstExtractable(LivingEntity living, long extracting)
+	public static IOxygenStorage firstExtractable(Player living, long extracting)
 	{
 		return streamExtractable(living, extracting).findFirst().orElse(null);
 	}
 
 	@Nullable
-	public static Stream<ItemStackHolder> stream(LivingEntity living)
+	public static Stream<StorageSlotContext> stream(Player living)
 	{
 		Level level = living.level();
 		BlockPos pos = living.blockPosition();
 		boolean isCold = TemperatureApi.API.isCold(level, pos);
 		boolean isHot = TemperatureApi.API.isHot(level, pos);
-		List<ItemStackReference> items = LivingHelper.getInventoryItems(living);
+		List<StorageSlotContext> slots = LivingHelper.getInventorySlots(living);
 
-		return Stream.concat(items.stream().filter(item ->
+		return Stream.concat(slots.stream().filter(slot ->
 		{
-			return isInfinifySource(item.getStack());
-		}), items.stream().filter(item ->
+			return isInfinifySource(slot);
+		}), slots.stream().filter(item ->
 		{
-			return !(item.getStack().getItem() instanceof CreativeOxygenCanItem);
-		}).filter(item ->
+			return !(item.getItem() instanceof CreativeOxygenCanItem);
+		}).filter(slot ->
 		{
-			var oxygenStorage = OxygenStorageUtils.get(item);
+			var oxygenStorage = OxygenStorageUtils.get(slot);
 			return oxygenStorage != null && oxygenStorage.canUse(isCold, isHot);
 		}));
 	}
 
 	@Nullable
-	public static Stream<IOxygenStorage> streamExtractable(LivingEntity living, long extracting)
+	public static Stream<IOxygenStorage> streamExtractable(Player living, long extracting)
 	{
 		return stream(living).map(OxygenStorageUtils::get).filter(oxygenStorage ->
 		{
@@ -122,22 +123,29 @@ public class OxygenStorageUtils
 		});
 	}
 
-	public static boolean isInfinifySource(ItemStack item)
+	public static boolean isInfinifySource(StorageSlotContext slot)
 	{
-		return item.getItem() instanceof CreativeOxygenCanItem type && !type.getFluidContainer(item).isEmpty();
+		return slot.find(FluidApi.ITEM) instanceof CreativeFluidContainer container && !container.getResource(0).isBlank();
 	}
 
 	@Nullable
-	public static IOxygenStorage get(ItemStackHolder item)
+	public static IOxygenStorage get(StorageSlotContext slot)
 	{
-		if (item.getStack().getItem() instanceof IOxygenStorageItem oxygenStorageItem)
+		IOxygenCharger oxygenCharger = OxygenChargerUtils.get(slot);
+
+		if (oxygenCharger != null)
 		{
-			return oxygenStorageItem.getOxygenStorage(item);
+			return oxygenCharger;
+		}
+
+		if (slot.getItem() instanceof IOxygenStorageItem oxygenStorageItem)
+		{
+			return oxygenStorageItem.getOxygenStorage(slot);
 		}
 
 		if (CompatibleManager.Create.isLoaded())
 		{
-			var storage = BacktankOxygenStorage.getOxygenStroage(item);
+			var storage = BacktankOxygenStorage.getOxygenStroage(slot);
 
 			if (storage != null)
 			{
@@ -149,27 +157,26 @@ public class OxygenStorageUtils
 		return null;
 	}
 
-	public static long insert(LivingEntity living, long amount)
+	public static long insert(Player living, long amount)
 	{
-		for (ItemStackReference item : LivingHelper.getSlotItems(living))
+		for (StorageSlotContext slot : LivingHelper.getSlots(living))
 		{
 			if (amount <= 0)
 			{
 				break;
 			}
-			else if (item.getStack().getItem() instanceof OxygenCanItem)
+			else if (slot.getItem() instanceof OxygenCanItem)
 			{
-				FluidContainer tank = FluidContainer.of(item);
-				FluidHolder containedStack = tank.getFirstFluid();
-				Fluid insertingFluid = ModFluids.OXYGEN.get();
+				CommonStorage<FluidResource> tank = slot.find(FluidApi.ITEM);
+				ResourceStack<FluidResource> containedStack = tank.size() == 0 ? ResourceStack.EMPTY_FLUID : tank.getContents(0);
+				FluidResource insertingFluid = FluidResource.of(ModFluids.OXYGEN.get());
 
 				if (!containedStack.isEmpty())
 				{
-					insertingFluid = containedStack.getFluid();
+					insertingFluid = containedStack.resource();
 				}
 
-				FluidHolder inserting = FluidHolder.of(insertingFluid, amount, null);
-				long inserted = tank.insertFluid(inserting, false);
+				long inserted = tank.insert(insertingFluid, amount, false);
 				amount -= inserted;
 			}
 

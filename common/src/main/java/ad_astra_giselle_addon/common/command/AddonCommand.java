@@ -10,19 +10,25 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 
 import ad_astra_giselle_addon.common.AdAstraGiselleAddon;
 import ad_astra_giselle_addon.common.compat.CompatibleMod;
+import ad_astra_giselle_addon.common.item.StorageSlotContext;
 import ad_astra_giselle_addon.common.registry.AddonEnchantments;
 import ad_astra_giselle_addon.common.registry.ObjectRegistry;
 import earth.terrarium.adastra.common.registry.ModFluids;
 import earth.terrarium.adastra.common.registry.ModItems;
-import earth.terrarium.botarium.common.energy.base.EnergyContainer;
-import earth.terrarium.botarium.common.fluid.base.FluidContainer;
-import earth.terrarium.botarium.common.fluid.base.FluidHolder;
-import earth.terrarium.botarium.common.fluid.base.ItemFluidContainer;
-import earth.terrarium.botarium.common.item.ItemStackHolder;
+import earth.terrarium.common_storage_lib.energy.EnergyApi;
+import earth.terrarium.common_storage_lib.fluid.FluidApi;
+import earth.terrarium.common_storage_lib.resources.fluid.FluidResource;
+import earth.terrarium.common_storage_lib.storage.base.CommonStorage;
+import earth.terrarium.common_storage_lib.storage.base.ValueStorage;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
+import net.minecraft.core.Holder.Reference;
+import net.minecraft.core.HolderGetter;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -130,28 +136,32 @@ public class AddonCommand
 		{
 			CommandSourceStack source = context.getSource();
 			ServerPlayer player = source.getPlayerOrException();
+			RegistryAccess registryAccess = player.registryAccess();
 
-			player.setItemSlot(EquipmentSlot.HEAD, makeFullWithEnchantments(Items.DIAMOND_HELMET));
-			player.setItemSlot(EquipmentSlot.CHEST, makeFullWithEnchantments(Items.DIAMOND_CHESTPLATE));
-			player.setItemSlot(EquipmentSlot.LEGS, makeFullWithEnchantments(Items.DIAMOND_LEGGINGS));
-			player.setItemSlot(EquipmentSlot.FEET, makeFullWithEnchantments(Items.DIAMOND_BOOTS));
+			player.setItemSlot(EquipmentSlot.HEAD, makeFullWithEnchantments(Items.DIAMOND_HELMET, registryAccess));
+			player.setItemSlot(EquipmentSlot.CHEST, makeFullWithEnchantments(Items.DIAMOND_CHESTPLATE, registryAccess));
+			player.setItemSlot(EquipmentSlot.LEGS, makeFullWithEnchantments(Items.DIAMOND_LEGGINGS, registryAccess));
+			player.setItemSlot(EquipmentSlot.FEET, makeFullWithEnchantments(Items.DIAMOND_BOOTS, registryAccess));
 
 			return sendEquipedMessage(source);
 		}
 
-		public static ItemStack makeFullWithEnchantments(ResourceLocation name)
+		public static ItemStack makeFullWithEnchantments(ResourceLocation name, HolderLookup.Provider provider)
 		{
 			Item item = ObjectRegistry.get(Registries.ITEM).getValue(name);
-			return makeFullWithEnchantments(item);
+			return makeFullWithEnchantments(item, provider);
 		}
 
-		private static ItemStack makeFullWithEnchantments(Item item)
+		private static ItemStack makeFullWithEnchantments(Item item, HolderLookup.Provider provider)
 		{
 			ItemStack stack = makeFull(item);
+			HolderGetter<Enchantment> enchantmentLookup = provider.asGetterLookup().lookupOrThrow(Registries.ENCHANTMENT);
 
-			for (Enchantment enchantment : AddonEnchantments.ENCHANTMENTS.getValues())
+			for (ResourceKey<Enchantment> key : AddonEnchantments.ENCHANTMENTS)
 			{
-				if (enchantment.canEnchant(stack))
+				Reference<Enchantment> enchantment = enchantmentLookup.getOrThrow(key);
+
+				if (stack.supportsEnchantment(enchantment))
 				{
 					stack.enchant(enchantment, 1);
 				}
@@ -163,15 +173,15 @@ public class AddonCommand
 
 		private static ItemStack makeFull(Item item)
 		{
-			ItemStackHolder holder = new ItemStackHolder(new ItemStack(item));
-			EnergyContainer energyContainer = EnergyContainer.of(holder);
-			ItemFluidContainer fluidContainer = FluidContainer.of(holder);
+			StorageSlotContext context = StorageSlotContext.ofIsolated(new ItemStack(item));
+			ValueStorage energyContainer = context.find(EnergyApi.ITEM);
+			CommonStorage<FluidResource> fluidContainer = context.find(FluidApi.ITEM);
 
 			if (energyContainer != null)
 			{
 				for (int i = 0; i < 100000; i++)
 				{
-					if (energyContainer.insertEnergy(energyContainer.getMaxCapacity(), false) == 0)
+					if (energyContainer.insert(energyContainer.getCapacity(), false) == 0)
 					{
 						break;
 					}
@@ -182,10 +192,10 @@ public class AddonCommand
 
 			if (fluidContainer != null)
 			{
-				fluidContainer.insertFluid(FluidHolder.of(ModFluids.OXYGEN.get(), Integer.MAX_VALUE, null), false);
+				fluidContainer.insert(FluidResource.of(ModFluids.OXYGEN.get()), Integer.MAX_VALUE, false);
 			}
 
-			return holder.getStack();
+			return context.getItemStack();
 		}
 
 	}

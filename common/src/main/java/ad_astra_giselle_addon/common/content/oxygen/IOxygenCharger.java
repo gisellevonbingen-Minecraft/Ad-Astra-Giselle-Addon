@@ -2,15 +2,16 @@ package ad_astra_giselle_addon.common.content.oxygen;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import ad_astra_giselle_addon.common.fluid.FluidPredicates;
 import ad_astra_giselle_addon.common.fluid.FluidUtils2;
-import earth.terrarium.botarium.common.fluid.base.FluidContainer;
-import earth.terrarium.botarium.common.fluid.base.FluidHolder;
+import earth.terrarium.common_storage_lib.resources.ResourceStack;
+import earth.terrarium.common_storage_lib.resources.fluid.FluidResource;
+import earth.terrarium.common_storage_lib.storage.base.CommonStorage;
+import earth.terrarium.common_storage_lib.storage.base.StorageSlot;
 import net.minecraft.world.entity.LivingEntity;
 
 public interface IOxygenCharger extends IOxygenStorage
@@ -27,31 +28,45 @@ public interface IOxygenCharger extends IOxygenStorage
 
 	long getTransferAmount();
 
-	FluidContainer getFluidContainer();
+	CommonStorage<FluidResource> getFluidContainer();
 
 	@Override
 	default long extractOxygen(@Nullable LivingEntity entity, long amount, boolean simulate)
 	{
-		FluidContainer fluidContainer = this.getFluidContainer();
-		return FluidUtils2.extractFluid(fluidContainer, FluidPredicates::isOxygen, amount, simulate).getFluidAmount();
+		CommonStorage<FluidResource> fluidContainer = this.getFluidContainer();
+		return FluidUtils2.extractFluid(fluidContainer, FluidPredicates::isOxygen, amount, simulate).amount();
 	}
 
 	@Override
 	default long getOxygenAmount()
 	{
-		return this.getFluidContainer().getFluids().stream().filter(FluidPredicates::isOxygen).collect(Collectors.summingLong(FluidHolder::getFluidAmount));
+		CommonStorage<FluidResource> fluidContainer = this.getFluidContainer();
+		long sum = 0L;
+
+		for (int i = 0; i < fluidContainer.size(); i++)
+		{
+			ResourceStack<FluidResource> fluid = fluidContainer.getContents(i);
+
+			if (FluidPredicates.isOxygen(fluid))
+			{
+				sum += fluid.amount();
+			}
+
+		}
+
+		return sum;
 	}
 
 	@Override
 	default long getOxygenCapacity()
 	{
-		FluidContainer fluidContainer = this.getFluidContainer();
-		int size = fluidContainer.getSize();
+		CommonStorage<FluidResource> fluidContainer = this.getFluidContainer();
 		long capacity = 0L;
 
-		for (int i = 0; i < size; i++)
+		for (int i = 0; i < fluidContainer.size(); i++)
 		{
-			capacity += fluidContainer.getTankCapacity(i);
+			StorageSlot<FluidResource> slot = fluidContainer.get(i);
+			capacity += slot.getLimit(slot.getResource());
 		}
 
 		return capacity;
