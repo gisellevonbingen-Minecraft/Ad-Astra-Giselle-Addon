@@ -26,7 +26,7 @@ public class TranslationUtils
 	public static final int DEFAULT_DIGITS = 1;
 
 	private static final Map<CanUseTuple, List<Component>> CAN_USES = new HashMap<>();
-	private static final Map<Boolean, Component> CAN_USE_AVAILABLES = new HashMap<>();
+	private static final Map<DescriptionTuple, Component> CAN_USE_AVAILABLES = new HashMap<>();
 	public static final String CAN_USE = AdAstraGiselleAddon.tl("description", "can_use");
 	public static final String CAN_USE_COLD = AdAstraGiselleAddon.tl("description", "can_use.cold");
 	public static final String CAN_USE_HOT = AdAstraGiselleAddon.tl("description", "can_use.hot");
@@ -84,7 +84,7 @@ public class TranslationUtils
 
 	private static Component descriptionCanUse(String key, boolean canUse)
 	{
-		return CAN_USE_AVAILABLES.computeIfAbsent(canUse, k -> description(key, Component.translatable(k ? CAN_USE_AVAILABLE : CAN_USE_UNAVAILABLE).withStyle(k ? ChatFormatting.GREEN : ChatFormatting.RED)));
+		return CAN_USE_AVAILABLES.computeIfAbsent(new DescriptionTuple(key, canUse), t -> description(t.description(), Component.translatable(t.canUse() ? CAN_USE_AVAILABLE : CAN_USE_UNAVAILABLE).withStyle(t.canUse() ? ChatFormatting.GREEN : ChatFormatting.RED)));
 	}
 
 	public static Component descriptionChargeMode(IChargeMode mode)
@@ -155,6 +155,11 @@ public class TranslationUtils
 	}
 
 	private record CanUseTuple(boolean canUseOnCold, boolean canUseOnHot)
+	{
+
+	}
+
+	private record DescriptionTuple(String description, boolean canUse)
 	{
 
 	}
