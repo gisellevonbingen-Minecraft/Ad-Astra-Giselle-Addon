@@ -7,6 +7,14 @@
 		},
 		{
 			"required": false,
+			"id": "#c:turbofuel"
+		},
+		{
+			"required": false,
+			"id": "#c:high_power_biodiesel"
+		},
+		{
+			"required": false,
 			"id": "modern_industrialization:diesel"
 		},
 		{
