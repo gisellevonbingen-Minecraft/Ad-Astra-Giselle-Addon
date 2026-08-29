@@ -42,8 +42,7 @@ dependencies {
     // Ad Astra - Required
     implementation "earth.terrarium.common_storage_lib:common-storage-lib-neoforge-${mc_version}:${csl_version}"
     //implementation "earth.terrarium.adastra:ad_astra-neoforge-${mc_version}:${ad_astra_version}"
-    //implementation "curse.maven:ad-astra-635042:${ad_astra_neoforge_file}")
-    implementation "blank:adastra-${mc_version}-lib:neoforge"
+    implementation "curse.maven:ad-astra-635042:${ad_astra_neoforge_file}"
     implementation "com.teamresourceful.resourcefullib:resourcefullib-neoforge-1.21:${resourcefullib_version}"
     implementation "com.teamresourceful.resourcefulconfig:resourcefulconfig-neoforge-1.21:${resourcefulconfig_version}"
 
