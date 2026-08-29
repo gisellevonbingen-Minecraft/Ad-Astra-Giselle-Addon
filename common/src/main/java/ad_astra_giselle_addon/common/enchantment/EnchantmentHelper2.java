@@ -53,7 +53,7 @@ public class EnchantmentHelper2
 			}
 			else
 			{
-				descriptionId = Util.makeDescriptionId("enchantment", e.getKey().location());
+				descriptionId = Util.makeDescriptionId("enchantment", e.unwrapKey().get().location());
 			}
 
 			for (String suffix : DESCRIPTION_SUFFIXES)

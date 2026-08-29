@@ -22,7 +22,7 @@ public class CanUpgradeRecipe extends ShapedRecipe
 {
 	public CanUpgradeRecipe(ShapedRecipe parent)
 	{
-		super(parent.getGroup(), parent.category(), parent.pattern, ((ShapedRecipeAccessor) parent).getResult(), parent.showNotification());
+		super(parent.getGroup(), parent.category(), ((ShapedRecipeAccessor) parent).getPattern(), ((ShapedRecipeAccessor) parent).getResult(), parent.showNotification());
 	}
 
 	@Override

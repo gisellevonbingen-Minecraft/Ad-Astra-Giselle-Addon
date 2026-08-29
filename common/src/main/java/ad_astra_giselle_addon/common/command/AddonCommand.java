@@ -161,7 +161,7 @@ public class AddonCommand
 			{
 				Reference<Enchantment> enchantment = enchantmentLookup.getOrThrow(key);
 
-				if (stack.supportsEnchantment(enchantment))
+				if (enchantment.value().isSupportedItem(stack))
 				{
 					stack.enchant(enchantment, 1);
 				}

@@ -29,15 +29,18 @@ import earth.terrarium.adastra.client.AdAstraClient.BlockEntityRegistrar;
 import earth.terrarium.adastra.client.ClientPlatformUtils;
 import earth.terrarium.adastra.client.models.entities.vehicles.LanderModel;
 import earth.terrarium.adastra.client.renderers.entities.vehicles.LanderRenderer;
+import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.gui.screens.inventory.MenuAccess;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.server.packs.resources.PreparableReloadListener;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.ResourceManagerReloadListener;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 
 public class AdAstraGiselleAddonClient
 {
@@ -60,7 +63,7 @@ public class AdAstraGiselleAddonClient
 		ITEM_RENDERERS.put(AddonItems.LANDER_ICON.get(), new LanderIconItemRenderer(LanderModel.LAYER, LanderRenderer.TEXTURE));
 	}
 
-	public static void registerScreens(RegisterMenuScreensEvent e)
+	public static void registerScreens(ScreenRegister e)
 	{
 		e.register(AddonMenuTypes.FUEL_LOADER.get(), FuelLoaderScreen::new);
 		e.register(AddonMenuTypes.AUTOMATION_NASA_WORKBENCH.get(), AutomationNasaWorkbenchScreen::new);
@@ -80,7 +83,7 @@ public class AdAstraGiselleAddonClient
 		registrar.register(AddonBlockEntityTypes.ROCKET_SENSOR.get(), WorkingAreaBlockEntityRenderer::new);
 	}
 
-	public static void registerItemTooltip(Consumer<Consumer<ItemTooltipModifier>> register)
+	public static void registerItemTooltip(Consumer<ItemTooltipModifier> register)
 	{
 		register.accept(EnchantedBookTooltipHelper::addTooltip);
 	}
@@ -113,6 +116,11 @@ public class AdAstraGiselleAddonClient
 	public static Set<Entry<IClientExtensionItem, BlockEntityWithoutLevelRenderer>> getItemRenderers()
 	{
 		return ITEM_RENDERERS.entrySet();
+	}
+
+	public interface ScreenRegister
+	{
+		<M extends AbstractContainerMenu, U extends Screen & MenuAccess<M>> void register(MenuType<? extends M> menuType, MenuScreens.ScreenConstructor<M, U> screenConstructor);
 	}
 
 	public interface BlockEntityRendererRegister

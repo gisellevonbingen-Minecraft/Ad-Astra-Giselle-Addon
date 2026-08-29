@@ -10,6 +10,8 @@ import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.fabricmc.fabric.api.resource.IdentifiableResourceReloadListener;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
+import net.fabricmc.fabric.impl.client.rendering.BlockEntityRendererRegistryImpl;
+import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.resources.ResourceManager;
@@ -21,9 +23,11 @@ public class AdAstraGiselleAddonClientFabric implements ClientModInitializer
 	public void onInitializeClient()
 	{
 		AdAstraGiselleAddonClient.initializeClient();
+		AdAstraGiselleAddonClient.registerScreens(MenuScreens::register);
 		AdAstraGiselleAddonClient.onRegisterHud(hud -> HudRenderCallback.EVENT.register(hud::renderHud));
-		AdAstraGiselleAddonClient.registerItemTooltip(register -> ItemTooltipCallback.EVENT.register(register::accept));
+		AdAstraGiselleAddonClient.registerItemTooltip(register -> ItemTooltipCallback.EVENT.register(register::getTooltip));
 		AdAstraGiselleAddonClient.getItemRenderers().forEach(entry -> BuiltinItemRendererRegistry.INSTANCE.register(entry.getKey(), entry.getValue()::renderByItem));
+		AdAstraGiselleAddonClient.registerBlockEntityRenderer(BlockEntityRendererRegistryImpl::register);
 
 		AdAstraGiselleAddonClient.registerReloadListeners((id, listener) -> ResourceManagerHelper.get(PackType.CLIENT_RESOURCES).registerReloadListener(new IdentifiableResourceReloadListener()
 		{

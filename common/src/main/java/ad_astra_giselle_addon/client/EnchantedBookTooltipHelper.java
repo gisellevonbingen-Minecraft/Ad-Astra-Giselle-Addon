@@ -18,7 +18,11 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.EnchantedBookItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 
 public class EnchantedBookTooltipHelper
 {
@@ -53,11 +57,10 @@ public class EnchantedBookTooltipHelper
 		return Collections.unmodifiableSet(DESCRIPTION_MODS);
 	}
 
-	public static void addTooltip(ItemTooltipModifier modifier)
+	public static void addTooltip(ItemStack stack, Item.TooltipContext context, TooltipFlag flags, List<Component> lines)
 	{
-		if (modifier.item().getItem() instanceof EnchantedBookItem && tooltipEnabled())
+		if (stack.getItem() instanceof EnchantedBookItem && tooltipEnabled())
 		{
-			List<Component> lines = modifier.lines();
 			RegistryLookup<Enchantment> lookupOrThrow = AdAstra.getRegistryAccess().lookupOrThrow(Registries.ENCHANTMENT);
 
 			for (ResourceKey<Enchantment> key : AddonEnchantments.ENCHANTMENTS)
@@ -72,7 +75,7 @@ public class EnchantedBookTooltipHelper
 						{
 							if (contents2.getKey().equals(contents1.getKey()))
 							{
-								modifier.lines().addAll(modifier.lines().indexOf(line) + 1, EnchantmentHelper2.getDescriptionTexts(holder));
+								lines.addAll(lines.indexOf(line) + 1, EnchantmentHelper2.getDescriptionTexts(holder));
 								break;
 							}
 
@@ -80,9 +83,9 @@ public class EnchantedBookTooltipHelper
 
 					}
 
-					if (modifier.item().getEnchantmentLevel(holder) > 0)
+					if (EnchantmentHelper.getItemEnchantmentLevel(holder, stack) > 0)
 					{
-						modifier.lines().addAll(EnchantmentHelper2.getDescriptionTexts(holder));
+						lines.addAll(EnchantmentHelper2.getDescriptionTexts(holder));
 					}
 
 				}

@@ -17,12 +17,12 @@ public class AdAstraGiselleAddonClientForge
 	{
 		IEventBus fml_bus = ModLoadingContext.get().getActiveContainer().getEventBus();
 		fml_bus.addListener((FMLClientSetupEvent e) -> AdAstraGiselleAddonClient.initializeClient());
-		fml_bus.addListener((RegisterMenuScreensEvent e) -> AdAstraGiselleAddonClient.registerScreens(e));
+		fml_bus.addListener((RegisterMenuScreensEvent e) -> AdAstraGiselleAddonClient.registerScreens(e::register));
 		fml_bus.addListener((RegisterClientReloadListenersEvent e) -> AdAstraGiselleAddonClient.registerReloadListeners((id, listener) -> e.registerReloadListener(listener)));
 		fml_bus.addListener((EntityRenderersEvent.RegisterRenderers e) -> AdAstraGiselleAddonClient.registerBlockEntityRenderer(e::registerBlockEntityRenderer));
 
 		IEventBus forge_bus = NeoForge.EVENT_BUS;
-		forge_bus.addListener((ItemTooltipEvent e) -> AdAstraGiselleAddonClient.registerItemTooltip(register -> register.accept(new ItemTooltipModifier(e.getItemStack(), e.getFlags(), e.getToolTip(), e.getContext()))));
+		forge_bus.addListener((ItemTooltipEvent e) -> AdAstraGiselleAddonClient.registerItemTooltip(register -> register.getTooltip(e.getItemStack(), e.getContext(), e.getFlags(), e.getToolTip())));
 		forge_bus.addListener(AdAstraGiselleAddonClientForge::onRegisterClientHud);
 
 		ModLoadingContext.get().getActiveContainer().registerExtensionPoint(IConfigScreenFactory.class, (container, screen) ->

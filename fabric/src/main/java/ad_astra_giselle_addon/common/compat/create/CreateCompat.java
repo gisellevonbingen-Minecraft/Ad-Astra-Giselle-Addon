@@ -1,4 +1,4 @@
-package ad_astra_giselle_addon.common.compat.techreborn;
+package ad_astra_giselle_addon.common.compat.create;
 
 import java.util.List;
 
@@ -6,12 +6,11 @@ import com.mojang.brigadier.builder.ArgumentBuilder;
 
 import ad_astra_giselle_addon.common.compat.CompatibleMod;
 import net.minecraft.commands.CommandSourceStack;
-import net.minecraft.commands.Commands;
 import net.minecraft.resources.ResourceLocation;
 
-public class TechRebornCompat extends CompatibleMod
+public class CreateCompat extends CompatibleMod
 {
-	public static final String MOD_ID = "techreborn";
+	public static final String MOD_ID = "create";
 
 	public static ResourceLocation rl(String path)
 	{
@@ -34,7 +33,6 @@ public class TechRebornCompat extends CompatibleMod
 	public void collectEquipCommands(List<ArgumentBuilder<CommandSourceStack, ?>> list)
 	{
 		super.collectEquipCommands(list);
-		list.add(Commands.literal("quantum_armor").executes(TechRebornCommand::quantum_armor));
 	}
 
 }

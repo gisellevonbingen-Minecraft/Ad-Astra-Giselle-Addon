@@ -25,12 +25,6 @@ public class WorkingAreaBlockEntityRenderer<BE extends BlockEntity & IWorkingAre
 	}
 
 	@Override
-	public AABB getRenderBoundingBox(BE blockEntity)
-	{
-		return blockEntity.getWorkingArea(blockEntity.getBlockPos());
-	}
-
-	@Override
 	public void render(BE blockEntity, float partialTick, PoseStack poseStack, MultiBufferSource renderer, int light, int overlayLight)
 	{
 		WorkingAreaBlockEntityRenderer.renderWorkingArea(blockEntity, poseStack, renderer);

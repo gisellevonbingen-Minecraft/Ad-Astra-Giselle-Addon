@@ -4,7 +4,8 @@
 	"minVersion": "0.8.5",
 	"compatibilityLevel": "JAVA_21",
 	"client": [
-		"minecraft.ItemMixin"
+		"minecraft.ItemMixin",
+		"self.WorkingAreaBlockEntityRendererMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
