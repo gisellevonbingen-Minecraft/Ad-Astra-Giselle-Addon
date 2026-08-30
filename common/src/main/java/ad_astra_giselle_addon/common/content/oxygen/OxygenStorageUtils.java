@@ -9,10 +9,9 @@ import org.jetbrains.annotations.Nullable;
 import ad_astra_giselle_addon.common.compat.CompatibleManager;
 import ad_astra_giselle_addon.common.compat.create.BacktankOxygenStorage;
 import ad_astra_giselle_addon.common.entity.LivingHelper;
-import ad_astra_giselle_addon.common.fluid.CreativeFluidContainer;
 import ad_astra_giselle_addon.common.item.CreativeOxygenCanItem;
-import ad_astra_giselle_addon.common.item.StorageSlotContext;
 import ad_astra_giselle_addon.common.item.OxygenCanItem;
+import ad_astra_giselle_addon.common.item.StorageSlotContext;
 import earth.terrarium.adastra.api.systems.TemperatureApi;
 import earth.terrarium.adastra.common.registry.ModFluids;
 import earth.terrarium.common_storage_lib.fluid.FluidApi;
@@ -125,7 +124,7 @@ public class OxygenStorageUtils
 
 	public static boolean isInfinifySource(StorageSlotContext slot)
 	{
-		return slot.find(FluidApi.ITEM) instanceof CreativeFluidContainer container && !container.getResource(0).isBlank();
+		return slot.getItem() instanceof CreativeOxygenCanItem type && !type.getFluids(slot.getItemStack(), slot).getResource(0).isBlank();
 	}
 
 	@Nullable
