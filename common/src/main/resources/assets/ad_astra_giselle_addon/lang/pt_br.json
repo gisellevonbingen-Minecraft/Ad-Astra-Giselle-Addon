@@ -6,7 +6,7 @@
   
   "item.ad_astra_giselle_addon.oxygen_can": "Cilindro de Oxigênio",
   "item.ad_astra_giselle_addon.netherite_oxygen_can": "Cilindro de Oxigênio de Netherita",
-  "item.ad_astra_giselle_addon.creative_oxygen_can": "Cilindro de Oxigênio Criativa",
+  "item.ad_astra_giselle_addon.creative_oxygen_can": "Cilindro de Oxigênio Criativo",
   
   "item.ad_astra_giselle_addon.fuel_loader.tooltip": "Abastece um astromóvel ou foguete próximo",
   "item.ad_astra_giselle_addon.gravity_normalizer.tooltip": "Normaliza a gravidade de seres vivos dentro do alcance",
@@ -26,7 +26,7 @@
   "enchantment.ad_astra_giselle_addon.gravity_normalizing": "Normalização de Gravidade",
   "enchantment.ad_astra_giselle_addon.gravity_normalizing.desc": "Normaliza a gravidade como na Superfície em dimensões do Ad Astra\nConsome energia ou durabilidade",
   
-  "gui.ad_astra_giselle_addon.workingarea": "Área de Trabalho",
+  "gui.ad_astra_giselle_addon.workingarea": "Área de trabalho",
   
   "gui.ad_astra_giselle_addon.gravity_normalizer.vector_element_tooltip": "Clique: %1$s\nShift+Clique: %2$s",
   "gui.ad_astra_giselle_addon.gravity_normalizer.length.x": "Comprimento X: %s",
@@ -36,7 +36,7 @@
   "gui.ad_astra_giselle_addon.gravity_normalizer.offset.y": "Deslocamento Y: %s",
   "gui.ad_astra_giselle_addon.gravity_normalizer.offset.z": "Deslocamento Z: %s",
   "gui.ad_astra_giselle_addon.gravity_normalizer.move_to_pos": "Mover para o centro inferior",
-  "gui.ad_astra_giselle_addon.gravity_normalizer.energy_using": "%1$s ⚡ / %2$stick",
+  "gui.ad_astra_giselle_addon.gravity_normalizer.energy_using": "%1$s ⚡ / %2$stique",
   
   "gui.ad_astra_giselle_addon.rocket_sensor.inverted": "Inverter saída",
   "gui.ad_astra_giselle_addon.rocket_sensor.current": "Saída atual: %s",
@@ -48,8 +48,8 @@
   
   "description.ad_astra_giselle_addon.charge_mode": "Modo de carga",
   "chargemode.ad_astra_giselle_addon.none": "Desativado",
-  "chargemode.ad_astra_giselle_addon.armors": "Ativado: Toda a Armadura",
-  "chargemode.ad_astra_giselle_addon.all": "Ativado: Todo o Inventário",
+  "chargemode.ad_astra_giselle_addon.armors": "Ativado: toda a armadura",
+  "chargemode.ad_astra_giselle_addon.all": "Ativado: todo o inventário",
   
   "description.ad_astra_giselle_addon.creative_oxygen": "Oxigênio",
   "creative_oxygen.ad_astra_giselle_addon.empty": "Vazio",
@@ -72,7 +72,7 @@
   
   "jei.category.ad_astra_giselle_addon.fuel_loader": "Carregador de Combustível",
   "jei.info.ad_astra_giselle_addon.fuel_loader": "Pode receber fluido com a tag '%2$s'.\nEm seguida, abastece um astromóvel ou foguete dentro de %1$s blocos.",
-  "jei.info.ad_astra_giselle_addon.gravity_normalizer": "Normaliza a gravidade de seres vivos como no Mundo Superficial na área de trabalho.\nO comprimento máximo é %1$s.",
+  "jei.info.ad_astra_giselle_addon.gravity_normalizer": "Normaliza a gravidade de seres vivos como na Superfície na área de trabalho.\nO comprimento máximo é %1$s.",
   "jei.info.ad_astra_giselle_addon.rocket_sensor": "Encontra um foguete a até %1$s blocos.\nEm seguida, envia o estado do foguete como sinal de redstone por meio de um comparador.\nO tipo de sinal pode ser alterado na interface.",
   
   
@@ -83,7 +83,7 @@
   "module.ad_astra_giselle_addon.acid_rain_proof_unit": "Unidade à Prova de Chuva Ácida",
   "description.ad_astra_giselle_addon.acid_rain_proof_unit": "Evita dano de chuva ácida em dimensões do Ad Astra",
   "module.ad_astra_giselle_addon.gravity_normalizing_unit": "Unidade Normalizadora de Gravidade",
-  "description.ad_astra_giselle_addon.gravity_normalizing_unit": "Normaliza a gravidade como no Mundo Superficial em dimensões do Ad Astra",
+  "description.ad_astra_giselle_addon.gravity_normalizing_unit": "Normaliza a gravidade como na Superfície em dimensões do Ad Astra",
   
   
   "item.ad_astra_giselle_addon.pneumatic_space_breathing_upgrade": "Melhoria de Respiração Espacial",
@@ -99,7 +99,7 @@
   "pneumaticcraft.gui.tab.info.item.armor.generic.ad_astra_giselle_addon.space_breathingUpgrade": "Permite respirar em dimensões do Ad Astra.\nRequer 'Cilindro de Oxigênio' no inventário",
   "pneumaticcraft.gui.tab.info.item.armor.generic.ad_astra_giselle_addon.space_fire_proofUpgrade": "Evita que o jogador pegue fogo em dimensões do Ad Astra",
   "pneumaticcraft.gui.tab.info.item.armor.generic.ad_astra_giselle_addon.acid_rain_proofUpgrade": "Evita dano de chuva ácida em dimensões do Ad Astra",
-  "pneumaticcraft.gui.tab.info.item.armor.generic.ad_astra_giselle_addon.gravity_normalizingUpgrade": "Normaliza a gravidade como no Mundo Superficial em dimensões do Ad Astra",
+  "pneumaticcraft.gui.tab.info.item.armor.generic.ad_astra_giselle_addon.gravity_normalizingUpgrade": "Normaliza a gravidade como na Superfície em dimensões do Ad Astra",
   
   "modifier.ad_astra_giselle_addon.space_breathing": "Respiração Espacial",
   "modifier.ad_astra_giselle_addon.space_breathing.flavor": "Respiração Espacial",
@@ -112,7 +112,7 @@
   "modifier.ad_astra_giselle_addon.acid_rain_proof.description": "Evita dano de chuva ácida em dimensões do Ad Astra",
   "modifier.ad_astra_giselle_addon.gravity_normalizing": "Normalização de Gravidade",
   "modifier.ad_astra_giselle_addon.gravity_normalizing.flavor": "Normalização de Gravidade",
-  "modifier.ad_astra_giselle_addon.gravity_normalizing.description": "Normaliza a gravidade como no Mundo Superficial em dimensões do Ad Astra",
+  "modifier.ad_astra_giselle_addon.gravity_normalizing.description": "Normaliza a gravidade como na Superfície em dimensões do Ad Astra",
   
   "trinkets.slot.oxygen_can.oxygen_can": "Cilindro de Oxigênio",
   
@@ -151,11 +151,11 @@
   "config.ad_astra_giselle_addon.enchantments.tooltip_ignore": "Ignorar outros mods de dicas",
   "config.ad_astra_giselle_addon.enchantments.tooltip_ignore.comment": "A dica não será exibida quando 'Enchantment Descriptions', 'Enchantment Lore' ou 'CoFH Core' estiverem instalados.\nPorém, se esta opção for verdadeira, exibirá a dica ignorando estes mods.",
   "config.ad_astra_giselle_addon.enchantments.proof_energy_using": "Consumo de energia",
-  "config.ad_astra_giselle_addon.enchantments.proof_energy_using.comment": "Consumo de energia para proteção [a cada 10 ticks]",
+  "config.ad_astra_giselle_addon.enchantments.proof_energy_using.comment": "Consumo de energia para proteção [a cada 10 tiques]",
   "config.ad_astra_giselle_addon.enchantments.proof_durability_using": "Consumo de durabilidade",
   "config.ad_astra_giselle_addon.enchantments.proof_durability_using.comment": "Consumo de durabilidade para proteção",
   "config.ad_astra_giselle_addon.enchantments.proof_durability_duration": "Duração da proteção por durabilidade",
-  "config.ad_astra_giselle_addon.enchantments.proof_durability_duration.comment": "Duração da proteção ao usar durabilidade [ticks, deve ser múltiplo de 10]",
+  "config.ad_astra_giselle_addon.enchantments.proof_durability_duration.comment": "Duração da proteção ao usar durabilidade [tiques, deve ser múltiplo de 10]",
   "config.ad_astra_giselle_addon.enchantments.space_breathing": "Respiração no espaço",
   "config.ad_astra_giselle_addon.enchantments.space_fire_proof": "Proteção contra fogo espacial",
   "config.ad_astra_giselle_addon.enchantments.acid_rain_proof": "Proteção contra chuva ácida",
@@ -168,27 +168,27 @@
   "config.ad_astra_giselle_addon.compats.mekanism.modules_space_breathing_energy_using_produce.comment": "Consumo de energia por mB ao produzir oxigênio do Mekanism para o jogador na água ou chuva",
   "config.ad_astra_giselle_addon.compats.mekanism.modules_space_fire_proof": "Unidade de Proteção contra Fogo Espacial",
   "config.ad_astra_giselle_addon.compats.mekanism.modules_space_fire_proof_energy_using": "Consumo de energia",
-  "config.ad_astra_giselle_addon.compats.mekanism.modules_space_fire_proof_energy_using.comment": "Consumo de energia para proteção a cada tick [a cada 10 ticks]",
+  "config.ad_astra_giselle_addon.compats.mekanism.modules_space_fire_proof_energy_using.comment": "Consumo de energia para proteção a cada tique [a cada 10 tiques]",
   "config.ad_astra_giselle_addon.compats.mekanism.modules_acid_rain_proof": "Unidade de Proteção contra Chuva Ácida",
   "config.ad_astra_giselle_addon.compats.mekanism.modules_acid_rain_proof_energy_using": "Consumo de energia",
-  "config.ad_astra_giselle_addon.compats.mekanism.modules_acid_rain_proof_energy_using.comment": "Consumo de energia para proteção a cada tick [a cada 10 ticks]",
+  "config.ad_astra_giselle_addon.compats.mekanism.modules_acid_rain_proof_energy_using.comment": "Consumo de energia para proteção a cada tique [a cada 10 tiques]",
   "config.ad_astra_giselle_addon.compats.mekanism.modules_gravity_normalizing": "Unidade de Normalização de Gravidade",
   "config.ad_astra_giselle_addon.compats.mekanism.modules_gravity_normalizing_energy_using": "Consumo de energia",
-  "config.ad_astra_giselle_addon.compats.mekanism.modules_gravity_normalizing_energy_using.comment": "Consumo de energia para normalização a cada tick [a cada 10 ticks]",
+  "config.ad_astra_giselle_addon.compats.mekanism.modules_gravity_normalizing_energy_using.comment": "Consumo de energia para normalização a cada tique [a cada 10 tiques]",
   "config.ad_astra_giselle_addon.compats.pneumaticcraft": "PneumaticCraft",
   "config.ad_astra_giselle_addon.compats.pneumaticcraft.upgades": "Melhorias da Armadura Pneumática",
   "config.ad_astra_giselle_addon.compats.pneumaticcraft.upgades_space_breathing": "Melhoria de Respiração no Espaço",
   "config.ad_astra_giselle_addon.compats.pneumaticcraft.upgades_space_breathing_air_using": "Consumo de ar",
-  "config.ad_astra_giselle_addon.compats.pneumaticcraft.upgades_space_breathing_air_using.comment": "Consumo de ar para fornecer oxigênio [a cada 30 ticks]",
+  "config.ad_astra_giselle_addon.compats.pneumaticcraft.upgades_space_breathing_air_using.comment": "Consumo de ar para fornecer oxigênio [a cada 30 tiques]",
   "config.ad_astra_giselle_addon.compats.pneumaticcraft.upgades_space_fire_proof": "Melhoria de Proteção contra Fogo Espacial",
   "config.ad_astra_giselle_addon.compats.pneumaticcraft.upgades_space_fire_proof_air_using": "Consumo de ar",
-  "config.ad_astra_giselle_addon.compats.pneumaticcraft.upgades_space_fire_proof_air_using.comment": "Consumo de ar para proteção [a cada 10 ticks]",
+  "config.ad_astra_giselle_addon.compats.pneumaticcraft.upgades_space_fire_proof_air_using.comment": "Consumo de ar para proteção [a cada 10 tiques]",
   "config.ad_astra_giselle_addon.compats.pneumaticcraft.upgades_acid_rain_proof": "Melhoria de Proteção contra Chuva Ácida",
   "config.ad_astra_giselle_addon.compats.pneumaticcraft.upgades_acid_rain_proof_air_using": "Consumo de ar",
-  "config.ad_astra_giselle_addon.compats.pneumaticcraft.upgades_acid_rain_proof_air_using.comment": "Consumo de ar para proteção [a cada 10 ticks]",
+  "config.ad_astra_giselle_addon.compats.pneumaticcraft.upgades_acid_rain_proof_air_using.comment": "Consumo de ar para proteção [a cada 10 tiques]",
   "config.ad_astra_giselle_addon.compats.pneumaticcraft.upgades_gravity_normalizing": "Melhoria de Normalização de Gravidade",
   "config.ad_astra_giselle_addon.compats.pneumaticcraft.upgades_gravity_normalizing_air_using": "Consumo de ar",
-  "config.ad_astra_giselle_addon.compats.pneumaticcraft.upgades_gravity_normalizing_air_using.comment": "Consumo de ar para proteção [a cada 10 ticks]",
+  "config.ad_astra_giselle_addon.compats.pneumaticcraft.upgades_gravity_normalizing_air_using.comment": "Consumo de ar para proteção [a cada 10 tiques]",
   
   "_eof": "eof"
 }
