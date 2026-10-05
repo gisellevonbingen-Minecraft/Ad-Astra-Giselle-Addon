@@ -46,7 +46,7 @@ public class FluidUtils2
 			}
 
 			long extracting = fluidContainer.extract(fluid.resource(), amount, simulate);
-	        UpdateManager.batch(fluidContainer);
+			UpdateManager.batch(fluidContainer);
 
 			if (extracting > 0L)
 			{
@@ -70,7 +70,7 @@ public class FluidUtils2
 			}
 
 			long extracting = fluidContainer.extract(fluid.resource(), fluid.amount(), simulate);
-	        UpdateManager.batch(fluidContainer);
+			UpdateManager.batch(fluidContainer);
 
 			if (extracting > 0L)
 			{
@@ -94,7 +94,7 @@ public class FluidUtils2
 			}
 
 			long insertAmount = fluidHandler.insert(fluid.resource(), fluid.amount(), simulate);
-	        UpdateManager.batch(fluidHandler);
+			UpdateManager.batch(fluidHandler);
 
 			if (insertAmount > 0L)
 			{
@@ -121,7 +121,7 @@ public class FluidUtils2
 		{
 			long inserted = to.insert(inserting.resource(), inserting.amount(), false);
 			from.extract(inserting.resource(), inserted, false);
-	        UpdateManager.batch(from, to);
+			UpdateManager.batch(from, to);
 		}
 
 		return inserting;
@@ -142,7 +142,7 @@ public class FluidUtils2
 		{
 			long inserted = to.insert(inserting.resource(), inserting.amount(), false);
 			from.extract(inserting.resource(), inserted, false);
-	        UpdateManager.batch(from, to);
+			UpdateManager.batch(from, to);
 		}
 
 		return inserting;

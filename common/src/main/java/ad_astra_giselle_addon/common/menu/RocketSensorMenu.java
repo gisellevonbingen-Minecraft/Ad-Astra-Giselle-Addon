@@ -13,7 +13,7 @@ public class RocketSensorMenu extends AddonMachineMenu<RocketSensorBlockEntity>
 	{
 		super(AddonMenuTypes.ROCKET_SENSOR.get(), windowId, inv, blockEntity);
 	}
-	
+
 	@Override
 	public List<MenuConfiguration> getConfigurations()
 	{

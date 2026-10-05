@@ -42,14 +42,14 @@ public class AddonTabs
 				}
 
 			}
-			
+
 			RegistryLookup<Enchantment> enchantmentLookup = pEnabledFeatures.holders().lookupOrThrow(Registries.ENCHANTMENT);
 
 			for (ResourceKey<Enchantment> key : AddonEnchantments.ENCHANTMENTS)
 			{
 				Reference<Enchantment> holder = enchantmentLookup.getOrThrow(key);
 				Enchantment enchantment = holder.value();
-				
+
 				for (int i = 1; i <= enchantment.getMaxLevel(); i++)
 				{
 					ItemStack enchantedBook = EnchantedBookItem.createForEnchantment(new EnchantmentInstance(holder, i));
