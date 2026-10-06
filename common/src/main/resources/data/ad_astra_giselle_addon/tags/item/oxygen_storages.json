@@ -1,0 +1,8 @@
+{
+	"replace": false,
+	"values": [
+		"#ad_astra_giselle_addon:oxygen_cans",
+		"#ad_astra_giselle_addon:oxygen_storages/cold",
+		"#ad_astra_giselle_addon:oxygen_storages/hot"
+	]
+}

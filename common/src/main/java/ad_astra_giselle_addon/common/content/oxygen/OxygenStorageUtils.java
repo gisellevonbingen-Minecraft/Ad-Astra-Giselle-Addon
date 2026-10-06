@@ -12,6 +12,7 @@ import ad_astra_giselle_addon.common.entity.LivingHelper;
 import ad_astra_giselle_addon.common.item.CreativeOxygenCanItem;
 import ad_astra_giselle_addon.common.item.OxygenCanItem;
 import ad_astra_giselle_addon.common.item.StorageSlotContext;
+import ad_astra_giselle_addon.common.registry.AddonTags;
 import earth.terrarium.adastra.api.systems.TemperatureApi;
 import earth.terrarium.adastra.common.registry.ModFluids;
 import earth.terrarium.common_storage_lib.fluid.FluidApi;
@@ -20,6 +21,7 @@ import earth.terrarium.common_storage_lib.resources.fluid.FluidResource;
 import earth.terrarium.common_storage_lib.storage.base.CommonStorage;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
 // TODO: Support LivingEntity
@@ -149,6 +151,20 @@ public class OxygenStorageUtils
 			if (storage != null)
 			{
 				return storage;
+			}
+
+		}
+
+		if (slot.getItemStack().is(AddonTags.Items.OXYGEN_STORAGES))
+		{
+			CommonStorage<FluidResource> fluidContainer = slot.find(FluidApi.ITEM);
+
+			if (fluidContainer != null)
+			{
+				ItemStack stack = slot.getItemStack();
+				boolean canUseOnCold = stack.is(AddonTags.Items.OXYGEN_STORAGES_COLD);
+				boolean canUseOnHot = stack.is(AddonTags.Items.OXYGEN_STORAGES_HOT);
+				return new FluidContainerOxygenStorage(fluidContainer, canUseOnCold, canUseOnHot);
 			}
 
 		}

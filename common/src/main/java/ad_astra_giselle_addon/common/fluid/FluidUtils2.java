@@ -34,6 +34,38 @@ public class FluidUtils2
 		return capacity == 0L ? 0.0D : (double) amount / capacity;
 	}
 
+	public static long getAmount(CommonStorage<FluidResource> fluidContainer, @Nullable Predicate<FluidResource> predicate)
+	{
+		long amount = 0L;
+
+		for (int i = 0; i < fluidContainer.size(); i++)
+		{
+			ResourceStack<FluidResource> fluid = fluidContainer.getContents(i);
+
+			if (!notEmptyAndTest(fluid, predicate))
+			{
+				continue;
+			}
+
+			amount += fluid.amount();
+		}
+
+		return amount;
+	}
+
+	public static long getCapacity(CommonStorage<FluidResource> fluidContainer)
+	{
+		long capacity = 0L;
+
+		for (int i = 0; i < fluidContainer.size(); i++)
+		{
+			ResourceStack<FluidResource> fluid = fluidContainer.getContents(i);
+			capacity += fluidContainer.getLimit(i, fluid.resource());
+		}
+
+		return capacity;
+	}
+
 	public static ResourceStack<FluidResource> extractFluid(CommonStorage<FluidResource> fluidContainer, @Nullable Predicate<FluidResource> predicate, long amount, boolean simulate)
 	{
 		for (int i = 0; i < fluidContainer.size(); i++)
