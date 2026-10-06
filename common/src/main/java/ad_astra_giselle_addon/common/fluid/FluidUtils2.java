@@ -33,6 +33,35 @@ public class FluidUtils2
 		return capacity == 0L ? 0.0D : (double) amount / capacity;
 	}
 
+	public static long getAmount(FluidContainer fluidContainer, @Nullable Predicate<FluidHolder> predicate)
+	{
+		long amount = 0L;
+
+		for (FluidHolder fluid : fluidContainer.getFluids())
+		{
+			if (!notEmptyAndTest(fluid, predicate))
+			{
+				continue;
+			}
+
+			amount += fluid.getFluidAmount();
+		}
+
+		return amount;
+	}
+
+	public static long getCapacity(FluidContainer fluidContainer)
+	{
+		long capacity = 0L;
+
+		for (int i = 0; i < fluidContainer.getSize(); i++)
+		{
+			capacity += fluidContainer.getTankCapacity(i);
+		}
+
+		return capacity;
+	}
+
 	public static FluidHolder extractFluid(FluidContainer fluidContainer, @Nullable Predicate<FluidHolder> predicate, long amount, boolean simulate)
 	{
 		List<FluidHolder> fluids = fluidContainer.getFluids();

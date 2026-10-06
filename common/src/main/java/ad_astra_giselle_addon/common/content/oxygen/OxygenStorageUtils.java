@@ -12,6 +12,7 @@ import ad_astra_giselle_addon.common.entity.LivingHelper;
 import ad_astra_giselle_addon.common.item.CreativeOxygenCanItem;
 import ad_astra_giselle_addon.common.item.ItemStackReference;
 import ad_astra_giselle_addon.common.item.OxygenCanItem;
+import ad_astra_giselle_addon.common.registry.AddonTags;
 import earth.terrarium.adastra.api.systems.TemperatureApi;
 import earth.terrarium.adastra.common.registry.ModFluids;
 import earth.terrarium.botarium.common.fluid.base.FluidContainer;
@@ -149,6 +150,20 @@ public class OxygenStorageUtils
 			if (storage != null)
 			{
 				return storage;
+			}
+
+		}
+
+		if (item.getStack().is(AddonTags.Items.OXYGEN_STORAGES))
+		{
+			FluidContainer fluidContainer = FluidContainer.of(item);
+
+			if (fluidContainer != null)
+			{
+				ItemStack stack = item.getStack();
+				boolean canUseOnCold = stack.is(AddonTags.Items.OXYGEN_STORAGES_COLD);
+				boolean canUseOnHot = stack.is(AddonTags.Items.OXYGEN_STORAGES_HOT);
+				return new FluidContainerOxygenStorage(fluidContainer, canUseOnCold, canUseOnHot);
 			}
 
 		}
