@@ -22,7 +22,7 @@ public class AddonTabs
 	public static final ObjectRegistryHolder<CreativeModeTab> tab = TABS.add("tab", builder ->
 	{
 		builder.title(Component.literal(ModHooks.getName(AdAstraGiselleAddon.MOD_ID)));
-		builder.icon(() -> new ItemStack(AddonBlocks.FUEL_LOADER));
+		builder.icon(() -> new ItemStack(AddonItems.OXYGEN_CAN.get()));
 		builder.displayItems((CreativeModeTab.ItemDisplayParameters pEnabledFeatures, CreativeModeTab.Output pOutput) ->
 		{
 			for (Entry<ResourceKey<Item>, Item> entry : ObjectRegistry.get(Registries.ITEM).getEntries())
