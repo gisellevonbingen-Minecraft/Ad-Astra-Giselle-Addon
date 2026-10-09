@@ -13,7 +13,7 @@ import net.minecraft.world.item.enchantment.EnchantmentInstance;
 
 public class AddonTabs
 {
-	public static final CreativeModeTab tab_main = new CreativeModeTabBuilder(AdAstraGiselleAddon.rl("tab_main")).icon(() -> new ItemStack(AddonBlocks.FUEL_LOADER)).fillItems(() ->
+	public static final CreativeModeTab tab_main = new CreativeModeTabBuilder(AdAstraGiselleAddon.rl("tab_main")).icon(() -> new ItemStack(AddonItems.OXYGEN_CAN.get())).fillItems(() ->
 	{
 		NonNullList<ItemStack> list = NonNullList.create();
 
