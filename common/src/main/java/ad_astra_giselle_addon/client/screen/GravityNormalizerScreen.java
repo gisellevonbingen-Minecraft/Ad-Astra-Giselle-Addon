@@ -252,6 +252,12 @@ public class GravityNormalizerScreen extends AddonMachineScreen<GravityNormalize
 		return GuiUtil.getEnergyBounds(this.leftPos + ENERGY_LEFT, this.topPos + ENERGY_TOP);
 	}
 
+	@Override
+	public int getTextColour()
+	{
+		return 0x303030;
+	}
+
 	public class VectorElementButtonTooltip implements Button.OnTooltip
 	{
 		public static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("+#;-#");

@@ -62,6 +62,12 @@ public class FuelLoaderScreen extends AddonMachineScreen<FuelLoaderBlockEntity, 
 		return GuiUtil.getFluidTankBounds(this.leftPos + TANK_LEFT, this.topPos + TANK_TOP);
 	}
 
+	@Override
+	public int getTextColour()
+	{
+		return 0x303030;
+	}
+
 	public List<Component> getFluidTankTooltip()
 	{
 		FluidHolder fluid = this.getFluid();

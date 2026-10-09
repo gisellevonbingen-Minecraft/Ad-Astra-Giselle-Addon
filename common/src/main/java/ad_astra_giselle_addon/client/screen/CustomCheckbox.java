@@ -48,7 +48,7 @@ public class CustomCheckbox extends Checkbox
 
 		if (this.isShowLabel())
 		{
-			font.draw(pPoseStack, this.getMessage(), this.x + this.height + 2, this.y + (this.height - 8) / 2, 0x404040 | Mth.ceil(this.alpha * 255.0F) << 24);
+			font.draw(pPoseStack, this.getMessage(), this.x + this.height + 2, this.y + (this.height - 8) / 2, 0x303030 | Mth.ceil(this.alpha * 255.0F) << 24);
 		}
 
 	}

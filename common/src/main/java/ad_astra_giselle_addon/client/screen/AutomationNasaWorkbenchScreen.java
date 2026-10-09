@@ -84,7 +84,7 @@ public class AutomationNasaWorkbenchScreen extends AddonMachineScreen<Automation
 	@Override
 	public int getTextColour()
 	{
-		return 0x2C282E;
+		return 0x303030;
 	}
 
 }

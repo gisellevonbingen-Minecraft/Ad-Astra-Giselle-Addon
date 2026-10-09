@@ -92,4 +92,10 @@ public class RocketSensorScreen extends AddonMachineScreen<RocketSensorBlockEnti
 
 	}
 
+	@Override
+	public int getTextColour()
+	{
+		return 0x303030;
+	}
+
 }
